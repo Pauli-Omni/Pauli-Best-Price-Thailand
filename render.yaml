@@ -51,3 +51,9 @@ services:
         value: "180"
       - key: OSG_AI_DAILY_MAX
         value: "220"
+      - key: OSG_SUPPORT_EMAIL
+        value: support@omnisolutionsglobal.com
+      - key: OSG_SUPPORT_TICKET_START
+        value: "10001"
+      - key: OSG_RL_SUPPORT_TICKET_MAX
+        value: "24"
