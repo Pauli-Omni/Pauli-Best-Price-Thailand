@@ -1,0 +1,64 @@
+Omni Solutions Global — application & registry templates (placeholders only)
+=============================================================================
+These are NOT pre-filled legal filings. Insert values from your official DBD /
+business-registration documents. Have counsel review before you submit anything.
+
+-----------------------------------------------------------------------------
+1) D-U-N-S Number (Dun & Bradstreet)
+    Purpose: often required for Apple Developer / some enterprise partner checks.
+    Where to start: https://www.dnb.com/duns-number/get-a-duns.html
+    Attach / prepare: company legal name as on DBD extract, registered address,
+    contact email/phone, VAT/tax IDs if asked.
+
+-----------------------------------------------------------------------------
+2) Apple Developer Program (iOS / App Store)
+    Purpose: distribute an iOS app under your legal entity.
+    Enrol: https://developer.apple.com/programs/enroll/
+    Docs: https://developer.apple.com/documentation/
+    Prepare: legal entity name, D-U-N-S if enrolling as organization, banking
+    for fees, privacy policy URL on your domain.
+
+-----------------------------------------------------------------------------
+3) Google Play Console (Android)
+    Purpose: distribute an Android app.
+    Sign up: https://play.google.com/console/signup
+    Policy centre: https://developer.android.com/google-play/guides
+    Prepare: same legal identity story as Apple; privacy policy and data safety.
+
+-----------------------------------------------------------------------------
+4) Lazada — partner / seller / affiliate (choose the programme that matches)
+    Thailand marketplace hub: https://www.lazada.co.th/
+    Seller / partner entry is typically via Lazada Seller Center (regional).
+    Search Lazadas official site for Seller Center or Affiliate for the
+    latest Thailand intake — programmes and URLs change; do not rely on
+    deep links from third parties.
+
+    Cover letter template (paste into web form or email body):
+    ---
+    Subject: Application — affiliate/seller integration — Omni Solutions Global
+
+    We operate Omni Solutions Global / PAULI BEST PRICE, a Thailand-focused
+    shopping orientation web application. Legal entity registered in Thailand
+    with DBD registration number: [DBD_REGISTRATION_NUMBER].
+
+    We request access to the appropriate [affiliate / seller / API] programme
+    to create compliant deep links and, if applicable, order-status endpoints
+    for user-requested purchase verification. Responsible contact:
+    Chatchadapha Hausser — legal@omni-solutions-global.com
+    ---
+
+-----------------------------------------------------------------------------
+5) Shopee — partner / affiliate
+    Official regional portals vary; start from Shopees corporate / seller pages
+    for Thailand and use only forms hosted on shopee.* domains.
+    Example entry point to locate current programmes:
+    https://shopee.com/ (switch region to Thailand, then follow seller/affiliate)
+
+    Use the same bracketed facts as in section 4; replace programme name.
+
+-----------------------------------------------------------------------------
+Ready to send?
+--------------
+Replace every [BRACKET] with your official extracted data first. These drafts
+do not include your confidential DBD number or full address — add them from the
+certificate you hold.

@@ -1,0 +1,27 @@
+{
+  "name": "pauli-best-price",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "gencerts": "mkdir -p certs && openssl req -x509 -nodes -days 825 -newkey rsa:2048 -keyout certs/localhost-key.pem -out certs/localhost.pem -subj /CN=localhost",
+    "check:html": "html-validate index.html",
+    "vip:gen": "node scripts/generate-vip-zugang.mjs",
+    "icons:app": "node scripts/build-app-icons.mjs",
+    "build:stores": "bash scripts/build-store-artifacts.sh"
+  },
+  "devDependencies": {
+    "html-validate": "^9.0.0",
+    "puppeteer": "^24.42.0",
+    "qrcode": "^1.5.4",
+    "sharp": "^0.34.5"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

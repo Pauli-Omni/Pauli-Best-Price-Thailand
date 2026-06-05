@@ -1,0 +1,27 @@
+.DS_Store
+node_modules/
+.flutter-sdk/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+*.iml
+.idea/
+.vscode/
+
+# Secrets & local config (never commit)
+.env
+stores/credentials.env
+secrets/
+certs/*.pem
+osg-runtime-config.js
+osg-admin-secret.prod.js
+deploy-omni-solutions/php-proxy/osg-proxy-config.php
+
+# Runtime / sensitive data (never commit)
+data/*
+!data/.gitkeep
+
+# VIP codes, QR assets & link lists (local generation only)
+VIP Zugang/

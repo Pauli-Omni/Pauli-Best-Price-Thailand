@@ -1,0 +1,89 @@
+PAULI BEST PRICE — HTTPS SOFORT-FIX (omnisolutionsglobal.com)
+=============================================================
+Stand: Domain registriert bei Namecheap, Nameserver = Cloudflare.
+Problem: Keine DNS-Einträge → weltweit SERVFAIL → Partner lehnen ab (kein HTTPS erreichbar).
+
+WICHTIG: DNS änderst du in CLOUDFLARE, nicht in Namecheap Advanced DNS
+(solange Nameserver auf buck.ns.cloudflare.com / imani.ns.cloudflare.com stehen).
+
+────────────────────────────────────────────────────────────────
+SCHRITT 1 — Render: Custom Domains anbinden
+────────────────────────────────────────────────────────────────
+1. https://dashboard.render.com → Service „pauli-best-price-api“
+2. Settings → Custom Domains → Add:
+   - omnisolutionsglobal.com
+   - www.omnisolutionsglobal.com
+   - api.omnisolutionsglobal.com
+3. Render zeigt dir die Ziel-Hostnames (meist pauli-best-price-api.onrender.com).
+4. Warte bis Render „Verified“ meldet (nach Schritt 2).
+
+Falls der Service offline/timeouted: Manual Deploy → Deploy latest commit.
+Health-Test (von deinem PC):
+  curl -sS https://pauli-best-price-api.onrender.com/api/health
+Erwartung: {"ok":true,...}
+
+────────────────────────────────────────────────────────────────
+SCHRITT 2 — Cloudflare DNS (entscheidend!)
+────────────────────────────────────────────────────────────────
+Login: https://dash.cloudflare.com → Zone omnisolutionsglobal.com → DNS → Records
+
+Neu anlegen (Proxy = Proxied / orange Wolke für HTTPS):
+
+| Type  | Name | Content / Target                    | Proxy |
+|-------|------|-------------------------------------|-------|
+| CNAME | www  | pauli-best-price-api.onrender.com   | ON    |
+| CNAME | api  | pauli-best-price-api.onrender.com   | ON    |
+| CNAME | @    | pauli-best-price-api.onrender.com   | ON    |
+
+Hinweis @ (Root): Cloudflare erlaubt CNAME-Flattening auf der Apex-Domain.
+
+Alte/fehlerhafte A-Records oder Parkplatz-Einträge für @ / www / api LÖSCHEN.
+
+────────────────────────────────────────────────────────────────
+SCHRITT 3 — Cloudflare SSL
+────────────────────────────────────────────────────────────────
+SSL/TLS → Overview → Modus: **Full** (nicht „Flexible“ allein bei Render-Origin).
+Edge Certificates → „Always Use HTTPS“ = ON
+Optional: Automatic HTTPS Rewrites = ON
+
+────────────────────────────────────────────────────────────────
+SCHRITT 4 — App API-URL (nach DNS live)
+────────────────────────────────────────────────────────────────
+In osg-runtime-config.js (im Projektroot, mit index.html deployen):
+
+  window.OSG_API_BASE = "https://api.omnisolutionsglobal.com";
+
+Bis DNS propagiert ist, kann temporär bleiben:
+  window.OSG_API_BASE = "https://pauli-best-price-api.onrender.com";
+
+────────────────────────────────────────────────────────────────
+SCHRITT 5 — Prüfen (5 Minuten nach DNS-Änderung)
+────────────────────────────────────────────────────────────────
+  curl -sS https://omnisolutionsglobal.com/ | head -3
+  curl -sS https://omnisolutionsglobal.com/api/health
+  curl -sS https://api.omnisolutionsglobal.com/api/health
+
+Browser: Schloss-Symbol, gültiges Zertifikat.
+Involve Asia / Stores: dieselbe URL eintragen wie in Anträgen.
+
+DNS-Propagation: oft 5–30 Min., maximal einige Stunden.
+
+────────────────────────────────────────────────────────────────
+SCHRITT 6 — Namecheap (nur falls du OHNE Cloudflare willst)
+────────────────────────────────────────────────────────────────
+Nur wenn du Nameserver zurück auf Namecheap BasicDNS stellst:
+Namecheap → Domain List → Manage → Nameservers → Namecheap BasicDNS
+Dann Advanced DNS wie Render-Anleitung (CNAME www/api, URL Redirect @).
+
+Empfehlung: Bei Cloudflare bleiben (bereits aktiv), nur Records in Schritt 2 setzen.
+
+────────────────────────────────────────────────────────────────
+Häufige Ablehnungsgründe Partner — Checkliste
+────────────────────────────────────────────────────────────────
+[ ] https://omnisolutionsglobal.com lädt (nicht timeout, nicht SERVFAIL)
+[ ] Impressum/AGB im Footer erreichbar (legal-pages.js)
+[ ] Property-URL in Involve Asia = exakt diese HTTPS-URL
+[ ] Kein Mixed Content (Seite nur HTTPS-Assets)
+
+Support Cloudflare: https://dash.cloudflare.com/?to=/:account/support
+Support Render: https://render.com/docs/custom-domains

@@ -1,0 +1,20 @@
+PAULI BEST PRICE — Legal-Platzhalter vor Go-Live ersetzen
+=========================================================
+
+Datei: legal-pages.js (alle Sprachen durchsuchen)
+
+Pflicht-Ersetzungen (Impressum):
+  [DBD_REGISTRATION_NUMBER]     → echte DBD-Registernummer aus Urkunde
+  [REGISTERED_OFFICE_ADDRESS_TH] → eingetragener Sitz laut Registereintrag
+
+Prüfen / anpassen:
+  - Vertretungsberechtigte Person (aktuell: Chatchadapha Hausser)
+  - Kontakt-E-Mail
+  - Kasikornbank-Hinweis (falls Kontodaten sich ändern)
+
+Vor Veröffentlichung:
+  [ ] Fachkanzlei / Rechtsberatung hat DE + EN (+ TH/PL/RU/ZH falls Zielgruppe) freigegeben
+  [ ] Keine Platzhalter-Hinweise mehr sichtbar („Replace placeholders…“ in Live-UI)
+
+Hinweis: Der Code zeigt die Texte 1:1 aus legal-pages.js — ohne Code-Deploy
+keine Änderung nach Upload der Datei auf den Server.

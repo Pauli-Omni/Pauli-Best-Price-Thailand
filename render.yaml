@@ -1,0 +1,53 @@
+# Render.com — PAULI BEST PRICE API + statische App
+# Secrets (ELEVENLABS, OPENAI) im Render-Dashboard setzen: sync: false
+
+services:
+  - type: web
+    name: pauli-best-price-api
+    runtime: node
+    plan: starter
+    rootDir: .
+    buildCommand: npm ci --omit=dev
+    startCommand: node server.js
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "3000"
+      - key: DISABLE_HTTPS
+        value: "1"
+      - key: OSG_PUBLIC_ORIGIN
+        value: https://omnisolutionsglobal.com
+      - key: OSG_API_PUBLIC_ORIGIN
+        value: https://api.omnisolutionsglobal.com
+      - key: OSG_CORS_ORIGINS
+        value: https://omnisolutionsglobal.com,https://www.omnisolutionsglobal.com
+      - key: OSG_API_ALLOWED_ORIGINS
+        value: https://omnisolutionsglobal.com,https://www.omnisolutionsglobal.com
+      - key: OSG_INSTALL_FP_SALT
+        generateValue: true
+      # --- Im Render-Dashboard eintragen (nicht im Repo) ---
+      - key: ELEVENLABS_API_KEY
+        sync: false
+      - key: ELEVENLABS_VOICE_ID
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_MODEL
+        value: gpt-4o-mini
+      - key: OPENAI_VISION_MODEL
+        value: gpt-4o-mini
+      - key: OSG_RL_TTS_MAX
+        value: "50"
+      - key: OSG_RL_STT_MAX
+        value: "60"
+      - key: OSG_RL_CLIP_MAX
+        value: "30"
+      - key: OSG_RL_PRICES_MAX
+        value: "180"
+      - key: OSG_AI_DAILY_MAX
+        value: "220"

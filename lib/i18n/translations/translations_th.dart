@@ -1,0 +1,140 @@
+const Map<String, String> translationsTh = {
+  'app.title': 'Pauli Best Price Thailand',
+  'nav.home': 'หน้าหลัก',
+  'nav.cart': 'ตะกร้า',
+  'nav.alerts': 'แจ้งเตือนราคา',
+  'nav.scanner': 'สแกน',
+  'nav.settings': 'ตั้งค่า',
+
+  'consent.title': 'ต้องยอมรับข้อกำหนดการใช้งาน',
+  'consent.body':
+      'กรุณาอ่านและยืนยันข้อกำหนดการใช้งาน หากไม่ยอมรับ จะไม่สามารถใช้แอปได้\n\n'
+      '• แพลตฟอร์มเปรียบเทียบและเชื่อมโยงผู้ให้บริการในประเทศไทย\n'
+      '• ราคาที่แสดงรวมค่าธรรมเนียมทั้งหมดแล้ว\n'
+      '• ตรวจสอบรีวิวเพื่อกรองรีวิวปลอม\n'
+      '• คุ้มครองข้อมูลตาม PDPA และ GDPR',
+  'consent.checkbox': 'ฉันได้อ่านและยอมรับข้อกำหนดการใช้งาน',
+  'consent.accept': 'ยอมรับและเริ่มใช้งาน',
+
+  'search.hint': 'ค้นหาสินค้า',
+  'search.button': 'ค้นหา',
+  'search.no_results': 'ไม่พบสินค้าหรือ API ใช้งานไม่ได้',
+  'search.error': 'ค้นหาไม่สำเร็จ กรุณาลองใหม่',
+
+  'cta.buchen': 'จอง',
+  'cta.kaufen': 'ซื้อ',
+  'cta.anfragen': 'สอบถาม',
+
+  'trust.verified': 'ผ่านการตรวจสอบ',
+  'trust.warning': 'ระวัง',
+  'trust.promo': 'โปรโมชั่น',
+  'trust.cross_industry': 'ข้ามอุตสาหกรรม',
+  'trust.banned': 'ถูกระงับ',
+
+  'voice.normal': 'เสียงปกติ',
+  'voice.whisper': 'โหมดกระซิบ',
+
+  'track.ordered': 'สั่งซื้อแล้ว',
+  'track.packed': 'แพ็คสินค้าแล้ว',
+  'track.in_transit': 'กำลังจัดส่ง',
+  'track.at_seven_eleven': 'พร้อมรับที่ 7-Eleven',
+  'track.picked_up': 'รับสินค้าแล้ว',
+  'track.delivered_home': 'ส่งถึงบ้านแล้ว',
+  'track.returned': 'ส่งคืน',
+
+  'category.auto_services': 'บริการรถยนต์',
+  'category.vehicle_purchase': 'ซื้อรถ',
+  'category.real_estate': 'อสังหาริมทรัพย์',
+  'category.financing': 'สินเชื่อ',
+  'category.insurance': 'ประกัน',
+  'category.groceries': 'ของชำ',
+  'category.hardware': 'วัสดุก่อสร้าง',
+  'category.electronics': 'อิเล็กทรอนิกส์',
+  'category.travel': 'ท่องเที่ยวและขนส่ง',
+  'category.telecom': 'โทรคมนาคม',
+  'category.home_services': 'บริการในบ้าน',
+  'category.health_beauty': 'สุขภาพและความงาม',
+  'category.lottery': 'ลอตเตอรี่',
+
+  'subcategory.oil_change': 'เปลี่ยนน้ำมันเครื่อง',
+  'subcategory.maintenance': 'บำรุงรักษา',
+  'subcategory.repairs': 'ซ่อม',
+  'subcategory.tyre_change': 'เปลี่ยนยาง',
+  'subcategory.car_wash': 'ล้างรถ',
+  'subcategory.diagnostics': 'ตรวจสอบปัญหา',
+
+  'subcategory.new_cars': 'รถใหม่',
+  'subcategory.used_cars': 'รถมือสอง',
+  'subcategory.motorcycles': 'รถจักรยานยนต์',
+  'subcategory.scooters': 'สกู๊ตเตอร์',
+
+  'subcategory.houses_buy': 'ซื้อบ้าน',
+  'subcategory.houses_rent': 'เช่าบ้าน',
+  'subcategory.apartments_buy': 'ซื้อคอนโด',
+  'subcategory.apartments_rent': 'เช่าคอนโด',
+  'subcategory.land': 'ที่ดิน',
+
+  'subcategory.mortgage_loans': 'สินเชื่อบ้าน',
+  'subcategory.personal_loans': 'สินเชื่อส่วนบุคคล',
+  'subcategory.car_loans': 'สินเชื่อรถ',
+  'subcategory.credit_cards': 'เปรียบเทียบบัตรเครดิต',
+
+  'subcategory.car_insurance': 'ประกันรถยนต์',
+  'subcategory.motorcycle_insurance': 'ประกันรถจักรยานยนต์',
+  'subcategory.moped_insurance': 'ประกันรถมอเตอร์ไซค์เล็ก',
+  'subcategory.scooter_insurance': 'ประกันสกู๊ตเตอร์',
+  'subcategory.truck_insurance': 'ประกันรถบรรทุก',
+  'subcategory.health_insurance': 'ประกันสุขภาพ',
+  'subcategory.life_insurance': 'ประกันชีวิต',
+  'subcategory.accident_insurance': 'ประกันอุบัติเหตุ',
+  'subcategory.home_contents_insurance': 'ประกันของในบ้าน',
+  'subcategory.building_insurance': 'ประกันอาคาร',
+  'subcategory.travel_health_insurance': 'ประกันสุขภาพการเดินทาง',
+  'subcategory.travel_cancellation_insurance': 'ประกันการยกเลิกการเดินทาง',
+
+  'subcategory.supermarkets': 'ซูเปอร์มาร์เก็ต',
+  'subcategory.local_fresh_markets': 'ตลาดสด',
+  'subcategory.online_delivery': 'จัดส่งออนไลน์',
+  'subcategory.beverage_delivery': 'ส่งเครื่องดื่ม',
+
+  'subcategory.tools': 'เครื่องมือ',
+  'subcategory.building_materials': 'วัสดุก่อสร้าง',
+  'subcategory.gardening': 'อุปกรณ์สวน',
+  'subcategory.paints': 'สี',
+  'subcategory.sanitary': 'สุขภัณฑ์',
+
+  'subcategory.smartphones': 'สมาร์ทโฟน',
+  'subcategory.tablets': 'แท็บเล็ต',
+  'subcategory.computers': 'คอมพิวเตอร์',
+  'subcategory.televisions': 'โทรทัศน์',
+  'subcategory.household_appliances': 'เครื่องใช้ในบ้าน',
+  'subcategory.air_conditioners': 'เครื่องปรับอากาศ',
+
+  'subcategory.domestic_flights': 'เที่ยวบินในประเทศ',
+  'subcategory.international_flights': 'เที่ยวบินต่างประเทศ',
+  'subcategory.hotel_bookings': 'จองโรงแรม',
+  'subcategory.train_tickets': 'ตั๋วรถไฟ',
+  'subcategory.bus_tickets': 'ตั๋วรถบัส',
+  'subcategory.ferry_tickets': 'ตั๋วเรือ',
+  'subcategory.public_transport': 'ขนส่งสาธารณะ (BTS, MRT)',
+  'subcategory.taxis': 'แท็กซี่',
+  'subcategory.minivans': 'รถตู้',
+
+  'subcategory.mobile_contracts': 'แพ็กเกจมือถือ',
+  'subcategory.prepaid_sim': 'ซิมเติมเงิน',
+  'subcategory.landline_internet': 'อินเทอร์เน็ตบ้าน',
+  'subcategory.fiber_optic': 'ไฟเบอร์ออปติก',
+
+  'subcategory.aircon_cleaning': 'ล้างแอร์',
+  'subcategory.cleaners': 'แม่บ้าน',
+  'subcategory.plumbers': 'ช่างประปา',
+  'subcategory.electricians': 'ช่างไฟ',
+  'subcategory.pest_control': 'กำจัดแมลง',
+
+  'subcategory.hospital_checkups': 'ตรวจสุขภาพโรงพยาบาล',
+  'subcategory.dentist_appointments': 'นัดทันตแพทย์',
+  'subcategory.massage_bookings': 'จองนวด',
+
+  'subcategory.official_state_providers': 'ผู้ให้บริการรัฐอย่างเป็นทางการ',
+  'subcategory.number_comparison': 'เปรียบเทียบตัวเลข',
+};

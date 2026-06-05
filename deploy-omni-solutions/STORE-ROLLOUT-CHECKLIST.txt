@@ -1,0 +1,74 @@
+Omni Solutions Global / PAULI BEST PRICE — Mehrkanal-Rollout (Checkliste)
+============================================================================
+
+Diese Web-App (index.html + api.*) ist die technische Basis. „Gleichzeitiger Start“
+in mehreren Stores bedeutet parallel: Build-Pipelines, Store-Konten, Prüfungen
+und Marketing — nicht nur ein Code-Commit.
+
+-------------------------------------------------------------------------------
+1) Architektur (bereits vorgesehen)
+-------------------------------------------------------------------------------
+- Hauptseite: https://omni-solutions-global.com
+- API:         https://api.omni-solutions-global.com
+- Client:      window.OSG_API_BASE via osg-runtime-config.js (vor anderen Skripten)
+- CORS:        .env → OSG_CORS_ORIGINS + OSG_API_ALLOWED_ORIGINS (kommagetrennte Origins)
+- API-Calls:   osgApiFetch() sendet X-OSG-Channel + X-OSG-Build (Shell überschreibt:
+               window.OSG_CLIENT_CHANNEL, window.OSG_CLIENT_BUILD)
+
+-------------------------------------------------------------------------------
+2) Store-Mapping (typisch)
+-------------------------------------------------------------------------------
+Apple App Store
+  → iOS-App mit WKWebView / Capacitor, die diese URL lädt (oder gebündeltes Web).
+  → App Transport Security: api.* muss HTTPS, gültiges Zertifikat.
+  → Datenschutz / App Privacy bei Apple ausfüllen (zu eurer tatsächlichen Datenverarbeitung).
+
+Google Play Store
+  → Android: meist AAB/APK mit WebView/TWA/Capacitor + gleicher API-Basis.
+  → „Data safety“ / Play Console wie von Google verlangt.
+
+Samsung Galaxy Store
+  → Oft dieselbe Android-Binary wie Play, zusätzlicher Samsung-Listing-Prozess.
+  → CORS/Origins: ggf. apk-spezifische Custom-Tab-Origins — nach erstem Build testen.
+
+Aptoide
+  → Hostet typischerweise dasselbe Android-APK; eigenes Partner-Onboarding.
+
+LG Content Store (webOS)
+  → Eigene TV-App-Plattform (oft nicht identisch mit Android-WebView).
+  → UI für 10-Fuß: ggf. separates TV-Layout oder angepasste Web-Route (später).
+
+Sony (Bravia / Android TV)
+  → Viele Geräte laufen unter Android TV → oft Play Store; regionale Bundles variieren.
+
+Hinweis „Top-Empfehlungen / Stories“: Das steuern Store-Algorithmen und Partner-
+programme. Code allein garantiert keine Featured-Platzierung — ASO, Qualität,
+Richtlinien und ggf. geschäftliche Gespräche mit Plattformen.
+
+-------------------------------------------------------------------------------
+3) Security — realistisch (kein „Hack-sicher durch Obfuskation“)
+-------------------------------------------------------------------------------
+- TLS auf api.* und Hauptdomain (Terminator: nginx/cPanel).
+- Geheime Salze nur auf dem Server (.env, nie im Client): z. B. OSG_INSTALL_FP_SALT.
+- OSG_API_ALLOWED_ORIGINS für schreibende API-Requests hart setzen.
+- Rate-Limits (OSG_RL_*) aktiv lassen; bei Skalierung Redis-Store für Limits prüfen.
+- Client-JavaScript ist für Angreifer lesbar: Minify/Bundle reduziert nur Laune, nicht
+  echte Geheimnisse. Schützenswert: API-Keys, Signing-Secrets, DB — ausschließlich serverseitig.
+- Device-Fingerprint (/api/install-fingerprint): IP-gehashter Anker — Misbrauch dämpfen,
+  kein Ersatz für starke Auth.
+
+-------------------------------------------------------------------------------
+4) Vor jedem breiten Rollout
+-------------------------------------------------------------------------------
+[ ] .env auf api.* mit echten Werten; OSG_INSTALL_FP_SALT gesetzt
+[ ] OSG_CORS_ORIGINS / OSG_API_ALLOWED_ORIGINS: alle produktiven Web-/Wrapper-Origins
+[ ] GET https://api.…/api/health → {"ok":true}
+[ ] Smoke-Test: Lead, Referral, VIP, TTS (falls aktiv) vom Produktiv-Origin
+[ ] Optional: PHP-Proxy-Pfad B — README-DEPLOY.txt
+
+-------------------------------------------------------------------------------
+5) Nächste technische Ausbaustufen (optional, nicht im aktuellen MVP)
+-------------------------------------------------------------------------------
+- Signierte App-Requests (HMAC) zwischen Shell und API
+- Echtes Geräte-/Nutzer-Login statt nur Fingerprint
+- Separate TV- optimierte Route (größere Schrift, Fernbedienung-Fokus)
