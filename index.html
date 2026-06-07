@@ -10223,7 +10223,7 @@
           ttsLoading = true;
           const estMs = Math.min(12000, Math.max(1800, line.length * 68));
           try {
-            await playElevenLabs(line, { whisper });
+            await playPauliVoice(line, { whisper });
           } catch (e) {
             osgLipSyncBegin({ durationMs: estMs });
             try {
@@ -10425,7 +10425,7 @@
           osgLipSyncStart(6500);
           const isNight = !isPauliDayPhase();
           try {
-            await playElevenLabs(line, { whisper: isNight });
+            await playPauliVoice(line, { whisper: isNight });
             introRetryOnGesture = false;
           } catch (e) {
             if (String(e && e.message) !== "rate_limited") {
@@ -10450,29 +10450,18 @@
           }
         }
 
-        async function playElevenLabs(text, opts) {
-          const whisper = !!(opts && opts.whisper);
-          const res = await osgApiFetch("/api/tts", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              text: typeof text === "string" ? text : "",
-              whisper,
-            }),
-          });
-          if (res.status === 429) {
-            const pack =
-              window.__OSG_CURRENT_PACK_CACHE ||
-              (typeof T !== "undefined" ? T.de : {});
-            osgAlertRateLimitedIfSo(res, pack);
-            throw new Error("rate_limited");
-          }
-          if (!res.ok) {
-            const err = await res.text();
-            throw new Error(err || res.statusText);
-          }
+        /** ElevenLabs-Stimme offline (aus Assets Referenz / Audio_Sprachen). */
+        const OSG_PAULI_BUNDLED_VOICE_URLS = [
+          "/sounds/pauli-avatar-voice.m4a",
+          "./sounds/pauli-avatar-voice.m4a",
+          "/public/sounds/pauli-avatar-voice.m4a",
+          "./public/sounds/pauli-avatar-voice.m4a",
+        ];
 
-          const arrayBuf = await res.arrayBuffer();
+        async function playPauliAudioBuffer(arrayBuf, opts) {
+          const whisper = !!(opts && opts.whisper);
+          const mimeType =
+            (opts && opts.mimeType) || "audio/mpeg";
           const Ctx = window.AudioContext || window.webkitAudioContext;
           const gainVal = whisper ? 0.28 : 1.0;
 
@@ -10510,7 +10499,7 @@
           }
 
           if (!Ctx) {
-            const blob = new Blob([arrayBuf], { type: "audio/mpeg" });
+            const blob = new Blob([arrayBuf], { type: mimeType });
             const url = URL.createObjectURL(blob);
             const audio = new Audio(url);
             audio.volume = gainVal;
@@ -10545,7 +10534,7 @@
           } catch (_) {}
 
           if (ctx.state === "suspended") {
-            const blob = new Blob([arrayBuf], { type: "audio/mpeg" });
+            const blob = new Blob([arrayBuf], { type: mimeType });
             const url = URL.createObjectURL(blob);
             const audio = new Audio(url);
             audio.setAttribute("playsinline", "");
@@ -10574,8 +10563,67 @@
             return;
           }
 
-          const audioBuffer = await ctx.decodeAudioData(arrayBuf);
+          const audioBuffer = await ctx.decodeAudioData(arrayBuf.slice(0));
           await playWithAnalyser(ctx, audioBuffer, null);
+        }
+
+        async function playPauliBundledElevenLabsVoice(opts) {
+          let lastErr = null;
+          for (let i = 0; i < OSG_PAULI_BUNDLED_VOICE_URLS.length; i += 1) {
+            const url = OSG_PAULI_BUNDLED_VOICE_URLS[i];
+            try {
+              const res = await fetch(url, { credentials: "same-origin" });
+              if (!res.ok) continue;
+              const arrayBuf = await res.arrayBuffer();
+              if (!arrayBuf || arrayBuf.byteLength < 128) continue;
+              await playPauliAudioBuffer(arrayBuf, {
+                whisper: !!(opts && opts.whisper),
+                mimeType: "audio/mp4",
+              });
+              return;
+            } catch (e) {
+              lastErr = e;
+            }
+          }
+          throw lastErr || new Error("bundled_voice_missing");
+        }
+
+        async function playElevenLabs(text, opts) {
+          const whisper = !!(opts && opts.whisper);
+          const res = await osgApiFetch("/api/tts", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              text: typeof text === "string" ? text : "",
+              whisper,
+            }),
+          });
+          if (res.status === 429) {
+            const pack =
+              window.__OSG_CURRENT_PACK_CACHE ||
+              (typeof T !== "undefined" ? T.de : {});
+            osgAlertRateLimitedIfSo(res, pack);
+            throw new Error("rate_limited");
+          }
+          if (!res.ok) {
+            const err = await res.text();
+            throw new Error(err || res.statusText);
+          }
+          const arrayBuf = await res.arrayBuffer();
+          await playPauliAudioBuffer(arrayBuf, {
+            whisper,
+            mimeType: "audio/mpeg",
+          });
+        }
+
+        /** Live-TTS (API) → offline ElevenLabs-Sample → Aufrufer nutzt ggf. Web-Speech. */
+        async function playPauliVoice(text, opts) {
+          try {
+            await playElevenLabs(text, opts);
+          } catch (e) {
+            if (String(e && e.message) === "rate_limited") throw e;
+            await playPauliBundledElevenLabsVoice(opts);
+          }
         }
 
         let osgAudioGestureUnlocked = false;
@@ -10714,7 +10762,7 @@
 
           try {
             /* Primär: ElevenLabs mit Flüster-Modus bei Nacht */
-            await playElevenLabs(spruch, { whisper: isNight });
+            await playPauliVoice(spruch, { whisper: isNight });
           } catch (e) {
             console.error(e);
             /* Fallback: Web-Speech-API mit gleichem Flüster-Profil */

@@ -9,7 +9,7 @@ npm install
 npm start
 ```
 
-Standard laut `server.js` (HTTPS/Port je nach Repo‑Konfiguration). Münz-Texturen: **`public/Frontseite02.png`** (Vorderseite, Avatar + Zylinder-Oberseite; lange Kante ≤1024px) und **`public/hinterseite.jpg`** (Rückseite, ebenfalls ≤1024px, JPEG mit höherer Qualität für QR-Lesbarkeit bei moderater Dateigröße). Optional **`hinterseite.png`** in `public/` als Fallback. Audio wie bisher relativ zur App‑Route.
+Standard laut `server.js` (HTTPS/Port je nach Repo‑Konfiguration). Münz-Texturen: **`public/Frontseite02.png`** (Vorderseite, Avatar + Zylinder-Oberseite; lange Kante ≤1024px) und **`public/hinterseite.jpg`** (Rückseite, ebenfalls ≤1024px, JPEG mit höherer Qualität für QR-Lesbarkeit bei moderater Dateigröße). Optional **`hinterseite.png`** in `public/` als Fallback. Avatar-Stimme (ElevenLabs-Sample, offline-Fallback): **`public/sounds/pauli-avatar-voice.m4a`** (~420 KB). Live-Sprache weiter über `/api/tts`; ohne API nutzt die App diese Datei vor der Browser-Stimme.
 
 Öffnen per `http://localhost:…`; für die 3D‑Münze und absolute Pfade unter `/ …` ohne Server hilft lokales Serving statt nur `file://`.
 

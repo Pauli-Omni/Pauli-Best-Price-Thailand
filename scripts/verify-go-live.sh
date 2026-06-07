@@ -44,7 +44,7 @@ else
 fi
 
 # --- Assets ---
-for f in public/Frontseite02.png public/hinterseite.jpg index.html server.js render.yaml; do
+for f in public/Frontseite02.png public/hinterseite.jpg public/sounds/pauli-avatar-voice.m4a index.html server.js render.yaml; do
   if [[ -f "$f" ]]; then ok "Asset/Datei: $f"
   else fail "Fehlt: $f"
   fi
