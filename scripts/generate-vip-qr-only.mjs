@@ -7,7 +7,7 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
 const vipDir = path.join(root, "VIP Zugang");
-const dataDir = path.join(root, "data");
+const dataDir = path.join(process.cwd(), "03_Datenbank_und_Preise", "data");
 const codesPath = path.join(dataDir, "vip_codes.json");
 const baseUrl = process.env.OSG_VIP_BASE_URL || "http://localhost:3000/index.html";
 const EXPECTED = 56;

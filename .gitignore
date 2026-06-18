@@ -14,14 +14,16 @@ build/
 .env
 stores/credentials.env
 secrets/
+05_Dokumente_und_Rechtliches/API_Keys_Secrets/*
+!05_Dokumente_und_Rechtliches/API_Keys_Secrets/.gitkeep
 certs/*.pem
 osg-runtime-config.js
 osg-admin-secret.prod.js
 deploy-omni-solutions/php-proxy/osg-proxy-config.php
 
 # Runtime / sensitive data (never commit)
-data/*
-!data/.gitkeep
+03_Datenbank_und_Preise/data/*
+!03_Datenbank_und_Preise/data/.gitkeep
 
 # VIP codes, QR assets & link lists (local generation only)
 VIP Zugang/

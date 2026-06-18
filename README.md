@@ -1,4 +1,4 @@
-# PAULI BEST PRICE THAILAND (Omni Solutions Global)
+# PAULI BEST PRICE THAILAND (Omni Solutions Global® Co. Ltd.)
 
 Landingpage für Preis-/Affiliate‑Orientierung in Thailand: `index.html` + gemeinsames Layout in `style.css`, UI‑Texte für alle Sprachen in `i18n-locales.js` (`window.OSG_LOCALES`, vor dem Hauptskript laden).
 

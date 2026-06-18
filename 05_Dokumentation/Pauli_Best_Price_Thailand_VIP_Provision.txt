@@ -1,0 +1,103 @@
+PAULI BEST PRICE THAILAND — VIP, Geschenk-Overlay & Provision
+============================================================
+Stand: 2026-05-30
+Gültig nur für: Pauli Best Price/ (nicht OmniSolutionsGlobal WEBSEITE)
+
+1. VIP-Münze — Druckvorlage (01_Design_und_Branding/)
+----------------------------------------------------
+Dateien:
+  · vip-coin-druckvorlage.html — 3D-Münze mit eingebettetem QR + Seriennummer (VIP-01 … VIP-56)
+  · vip-qr-geschenk-3d-vorlage.html — Übergabe-Präsentation (Bildschirm / optional Druck)
+
+vip-coin-druckvorlage.html:
+  - SVG-Münze mit 3D-Gold-Look (rollenabhängige Randtöne), Ringtext, QR aus Tresor
+  - Auflösung: 1417×1417 px (~120 mm @ 300 dpi) — für hochauflösenden Fotodruck
+  - URL: ?slot=01&label=VIP-01
+  - QR-Quelle: 05_Dokumentation/VIP_QR_Codes_Master/vip-qr-{NN}-{CODE}.svg
+  - PNG-Export weiterhin: npm run vip:qr (scripts/generate-vip-qr-only.mjs)
+
+2. Geschenk-Overlay bei osg_vip-Scan
+------------------------------------
+Locale-Packs (Kultur-Persönlichkeit): assets/locales/
+  de.json · en.json · th.json · zh.json · ru.json · pl.json
+  Polnisch: vipGiftBodyFromTplMale/Female (Pauli podarował / Wii podarowała).
+  osgVipWithLocalePackReady + osgBootAppLang laden pl.json bei Systemsprache pl.
+  Schlüssel vipCultureGreetTts / vipCultureGreetBubble — Avatar-Spruch beim ersten VIP-QR-Scan.
+
+Ablauf:
+  1. Nutzer öffnet Link mit ?osg_vip=CODE oder löst Code manuell ein
+  2. POST /api/vip/redeem → { ok, profile, gift }
+  3. Bei gift.giftThb > 0: Overlay (Thai-Text) BEVOR osgVipActive gesetzt wird
+  4. Button „รับของขวัญและเริ่มใช้งาน“ → Vollzugriff (VIP aktiv)
+
+Berechnung (server.js: vipGiftFromProfile):
+  - Einheit = inviteCascadePerFriend (falls > 0), sonst inviteFreeCount
+  - giftThb = Einheiten × 59 THB
+
+Beispiele (dynamisch im Overlay):
+  | Situation                         | THB  | Thai (vipGiftBodyTpl / vipGiftBodyFromTpl)        |
+  |-----------------------------------|------|---------------------------------------------------|
+  | 1 Einladung (Slots 01–30)         | 59   | คุณได้รับของขวัญ 59 บาท!                          |
+  | 2 Zugänge / Kaskade (55, 56)      | 118  | Pauli/Wii มอบของขวัญ 118 บาทให้คุณแล้ว!            |
+  | 3 Einladungen (Familie 51–54)     | 177  | คุณได้รับของขวัญ 177 บาท!                          |
+  | Influencer 31–50 (keine Einlad.)  | —    | kein Overlay                                      |
+
+Deutsche Referenz (nur zur Erläuterung, Anzeige immer Thai):
+  · „Dir wurden 59 THB geschenkt!“
+  · „Pauli hat dir gerade 118 THB geschenkt!“ / „Wii hat dir …“
+
+Client: index.html — osgBootAppLang, osgLoadLocaleOverlay, osgConsumeVipParamOnce,
+osgVipShowGiftOverlay (Texte aus T[lang] nach JSON-Merge, UI-Sprache des Nutzers)
+
+Geschenk-Overlay je Sprache (Beispiele):
+  de: „Dir wurden {AMOUNT} THB geschenkt!“ / „{SENDER} hat dir gerade {AMOUNT} THB geschenkt!“
+  en: „You received a gift of {AMOUNT} THB!“ / „{SENDER} just gifted you {AMOUNT} THB!“
+  th: „คุณได้รับของขวัญ {AMOUNT} บาท!“ / „{SENDER} มอบของขวัญ {AMOUNT} บาทให้คุณแล้ว!“
+
+Absender-Erkennung (server.js vipGiftFromProfile + Client):
+  | Slot    | giftSenderDisplay        |
+  |---------|--------------------------|
+  | 55      | Wii                      |
+  | 56      | Pauli                    |
+  | 51–54   | Label (Mama, Schwester …)|
+  | 01–30   | — (nur Betrag)           |
+
+3. VIP-Provision pro Kauf-Event (02_Quellcode/Core_Logik/server.js)
+-------------------------------------------------------------------
+vipBuildProfiles → commissionPerPurchaseThb:
+
+  | Slot    | Rolle           | THB / Kauf (aktuell) | früher |
+  |---------|-----------------|----------------------|--------|
+  | 31–40   | influencer      | 1,00                 | 0,50   |
+  | 41–50   | vip_influencer  | 5,00                 | 1,00   |
+  | übrige  | —               | 0                    | 0      |
+
+Erfassung: POST /api/vip/event mit eventType=purchase → commissionThb in vip_events.jsonl
+
+4. Kontonummer im Profil (lokal)
+--------------------------------
+UI: Abschnitt personal-payout-panel in index.html
+Speicher: localStorage osg-user-profile-v1 → Feld payoutAccountNumber
+Nur Ziffern, max. 24 Zeichen — ausschließlich auf dem Gerät (kein Server-Upload in dieser Version)
+
+i18n-Schlüssel (alle 6 Sprachen): personalPayoutHeading, personalPayoutLead,
+personalPayoutAccountLabel, personalPayoutAccountInputAria, personalPayoutHint
+
+5. QR-Master-Tresor
+-------------------
+05_Dokumentation/VIP_QR_Codes_Master/ — 56 SVG-Master + README_LOGIK.txt
+
+6. Betroffene Dateien (Pauli Best Price only)
+---------------------------------------------
+  01_Design_und_Branding/vip-coin-druckvorlage.html
+  01_Design_und_Branding/vip-qr-geschenk-3d-vorlage.html
+  02_Quellcode/Core_Logik/server.js
+  index.html, style.css, i18n-locales.js
+  assets/locales/de.json
+  assets/locales/en.json
+  assets/locales/th.json
+  assets/locales/zh.json
+  assets/locales/ru.json
+  assets/locales/pl.json
+  05_Dokumentation/Pauli_Best_Price_Thailand_VIP_Provision.txt (diese Datei)
+  05_Dokumentation/VIP_QR_Codes_Master/README_LOGIK.txt

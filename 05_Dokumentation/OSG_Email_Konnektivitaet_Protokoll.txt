@@ -1,0 +1,63 @@
+OSG E-Mail-Konnektivität — Technisches Protokoll
+=================================================
+Omni Solutions Global® Co. Ltd.
+Stand: Juni 2026
+App: Pauli Best Price Thailand
+
+1. ZIEL
+-------
+SMTP/IMAP-Erreichbarkeit für info@ und support@omnisolutionsglobal.com prüfen,
+Echo-Protokolle bei Skill-/Respekt-Events an support@ senden,
+Fehler im Owner-Dashboard (VIP QR 55/56) als „E-Mail-Status: KRITISCH“ anzeigen.
+
+2. MAILBOXEN
+------------
+  info@omnisolutionsglobal.com    — Reply-To / Unternehmenskanal
+  support@omnisolutionsglobal.com — Support, Tickets, Echo-Protokolle
+
+3. APP-REGISTRY (support@-Bindung)
+-----------------------------------
+  pauli_best_price_thailand       → support@ OK
+  omniqr_ai_thailand              → support@ OK
+  omnisolutionsglobal_web         → support@ OK
+
+4. SERVER-MODUL
+---------------
+  02_Quellcode/Core_Logik/services/osg-email-connectivity.js
+  - runEmailConnectivityProbe()   MX, SMTP/IMAP TCP, nodemailer verify()
+  - sendEchoProtocol()            Events: skill_learn_success, respect_escalation
+  - getEmailSystemStatus()        Statusdatei für Dashboard
+
+5. API-ENDPUNKTE
+----------------
+  POST /api/ops/echo-protocol     Client-Echo (rate-limited)
+  GET  /api/ops/email-probe       Owner Slot 55/56 only
+  GET  /api/health                emailSystem + appEmailRegistry
+
+6. UMGEGUNGSVARIABLEN
+---------------------
+  OSG_SMTP_HOST, OSG_SMTP_PORT, OSG_SMTP_USER, OSG_SMTP_PASS, OSG_SMTP_FROM
+  OSG_IMAP_HOST, OSG_IMAP_PORT
+  OSG_INFO_EMAIL, OSG_SUPPORT_EMAIL
+  (Fallback: OMNI_SMTP_* / OMNI_IMAP_* für OmniQR-Hub)
+
+7. DATENPFADE (Kopien im Tresor, Originale in Dev)
+-------------------------------------------------
+  03_Datenbank_und_Preise/data/email-system-status.json
+  03_Datenbank_und_Preise/data/email-echo-protocol.jsonl
+  03_Datenbank_und_Preise/data/email-outbox/
+
+8. CLIENT-HOOKS
+---------------
+  skill_learn_success  → Detektiv execute, Sprachwechsel confirm_yes
+  respect_escalation   → Cross-Sell gift_bundle_th + Wai
+
+9. PROBE
+--------
+  npm run email:probe
+  Startup-Probe in server.js nach app.listen()
+
+10. HINWEIS MX vs. SUBMISSION
+-----------------------------
+  MX-Hosts (privateemail.com) sind Empfangs-Server.
+  Für SMTP-Auth OSG_SMTP_HOST=mail.privateemail.com setzen (Render-Dashboard).

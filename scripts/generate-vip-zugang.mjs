@@ -20,7 +20,7 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
 const vipDir = path.join(root, "VIP Zugang");
-const dataDir = path.join(root, "data");
+const dataDir = path.join(process.cwd(), "03_Datenbank_und_Preise", "data");
 const codesPath = path.join(dataDir, "vip_codes.json");
 const CODE_COUNT = 56;
 

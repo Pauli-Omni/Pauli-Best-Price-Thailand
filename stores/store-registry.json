@@ -1,5 +1,5 @@
 {
-  "publisherLegalName": "Omni Solutions Global Co., Ltd.",
+  "publisherLegalName": "Omni Solutions Global® Co. Ltd.",
   "androidPackageId": "com.omnisolutions.pauli_best_price",
   "iosBundleId": "com.omnisolutions.pauliBestPrice",
   "webOrigin": "https://omnisolutionsglobal.com",
@@ -186,7 +186,7 @@
     }
   ],
   "appleOrganizationChecklist": {
-    "legalEntity": "Omni Solutions Global Co., Ltd.",
+    "legalEntity": "Omni Solutions Global® Co. Ltd.",
     "dunsLookupUrl": "https://developer.apple.com/enroll/duns-lookup/",
     "dunsFreeRequestUrl": "https://www.dnb.com/duns-number.html",
     "note": "Apple verlangt für Firmenkonten eine D-U-N-S-Nummer (9 Ziffern), die zum Firmennamen passt. Das ist NICHT die DNS-Einstellung deiner Website."

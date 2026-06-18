@@ -1,0 +1,79 @@
+{
+  "label": "E-Mail-Status: KRITISCH",
+  "level": "critical",
+  "critical": true,
+  "lastError": "smtp_not_configured",
+  "lastErrorAt": "2026-06-17T19:21:28.845Z",
+  "lastSuccessAt": "",
+  "lastProbeAt": "2026-06-17T19:21:28.843Z",
+  "updatedAt": "2026-06-17T19:21:28.845Z",
+  "lastDetail": {
+    "checkedAt": "2026-06-17T19:21:28.843Z",
+    "mailboxes": {
+      "info": "info@omnisolutionsglobal.com",
+      "support": "support@omnisolutionsglobal.com"
+    },
+    "mx": [
+      "mx2.privateemail.com",
+      "mx1.privateemail.com"
+    ],
+    "smtp": {
+      "host": "mx2.privateemail.com",
+      "port": 587,
+      "tcp": {
+        "ok": false,
+        "host": "mx2.privateemail.com",
+        "port": 587,
+        "error": "timeout"
+      },
+      "auth": {
+        "configured": false,
+        "ok": false,
+        "reason": "smtp_not_configured"
+      }
+    },
+    "imap": {
+      "host": "mx2.privateemail.com",
+      "port": 993,
+      "tcp": {
+        "ok": false,
+        "host": "mx2.privateemail.com",
+        "port": 993,
+        "error": "timeout"
+      }
+    },
+    "apps": [
+      {
+        "appId": "pauli_best_price_thailand",
+        "display": "Pauli Best Price Thailand",
+        "supportEmail": "support@omnisolutionsglobal.com",
+        "infoEmail": "info@omnisolutionsglobal.com",
+        "supportOk": true
+      },
+      {
+        "appId": "omniqr_ai_thailand",
+        "display": "OmniQR-AI for Tourist of Thailand",
+        "supportEmail": "support@omnisolutionsglobal.com",
+        "infoEmail": "info@omnisolutionsglobal.com",
+        "supportOk": true
+      },
+      {
+        "appId": "omnisolutionsglobal_web",
+        "display": "Omni Solutions Global Website",
+        "supportEmail": "support@omnisolutionsglobal.com",
+        "infoEmail": "info@omnisolutionsglobal.com",
+        "supportOk": true
+      }
+    ],
+    "status": {
+      "label": "E-Mail-Status: OK",
+      "level": "ok",
+      "critical": false,
+      "lastError": "",
+      "lastErrorAt": "",
+      "lastSuccessAt": "",
+      "lastProbeAt": "",
+      "updatedAt": "2026-06-17T19:21:28.845Z"
+    }
+  }
+}

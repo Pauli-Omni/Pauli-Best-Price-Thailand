@@ -2,8 +2,8 @@
 window.OSG_LOCALES = {
           de: {
             lead:
-              "Preisvergleich und Orientierung für Thailand — unter der Dachmarke Omni Solutions Global.",
-            umbrellaBrandLegal: "Omni Solutions Global Co., Ltd.",
+              "Preisvergleich und Orientierung für Thailand — unter der Dachmarke Omni Solutions Global®.",
+            umbrellaBrandLegal: "Omni Solutions Global® Co. Ltd.",
             b2bSectionAria: "Geschäftskunden — Branchenüberblick",
             b2bSectionHeading: "B2B & Projektportfolio",
             b2bSectionLead:
@@ -12,7 +12,7 @@ window.OSG_LOCALES = {
               '<ul class="osg-b2b-list"><li>Automotive, Antriebs- und Prüfstandsumgebungen</li><li>Broadcasting, Studios und Sendetechnik</li><li>Kino- und Großbildtechnik</li><li>Sicherheits- und Infrastrukturrollen (international)</li><li>Handel, Marktplätze und grenzüberschreitende Fertigung — Integrationspfade</li></ul>',
             introTitle: "Willkommen",
             intro:
-              "Willkommen bei PAULI BEST PRICE THAILAND von Omni Solutions Global. Hier findest du strukturierte Infos rund um Einkaufen und Lieferung in Thailand — korrekt geschrieben: Thailand (nicht „Thallands“). Die Tabelle zeigt illustrative Beispielpreise über Lazada, Shopee und 7-Eleven.",
+              "Willkommen bei PAULI BEST PRICE THAILAND von Omni Solutions Global®. Hier findest du strukturierte Infos rund um Einkaufen und Lieferung in Thailand — korrekt geschrieben: Thailand (nicht „Thallands“). Die Tabelle zeigt illustrative Beispielpreise über Lazada, Shopee und 7-Eleven.",
             compareTitle: "Preisbeispiele (Thailand)",
             clipScanHeading: "Clip-Scan — Live-Preisvergleich im Laden",
             clipScanLead:
@@ -100,6 +100,10 @@ window.OSG_LOCALES = {
               "Aus — ohne Schalter keine Gutscheinanzeige, auch wenn „7‑Eleven“ gewählt ist.",
             liveTrackingHintOn:
               "Ein — neue Tracking‑Sitzung aktiv; höchstens einmal pro Sitzung „Pauli‑001 aktivieren“. Gutschrift gilt nur mit Mindest‑WKZ 45 THB.",
+            liveTrackingFirstExplainTts:
+              "Hi, ich bin Pauli. Damit dein Paket sicher bei deinem 7-Eleven ankommt, brauche ich kurz deine Erlaubnis für das Tracking. Ohne das kann ich dir die Lieferung nicht garantieren und du zahlst bei Shopee oder Lazada wieder die hohen Versandkosten. Also, klick auf 'Aktivieren' und spar dir das Geld!",
+            liveTrackingFirstExplainBubble:
+              "Pauli: Tracking für sichere 7-Eleven-Lieferung — bitte aktivieren.",
             pickupHintMarketChosen:
               "Es werden keine Rabatt‑Gutscheine angezeigt; die Shop-Buttons nutzen ausschließlich osg_*‑Affiliate ohne Gutschein-Parameter.",
             pickupHintSevenChosen:
@@ -178,8 +182,11 @@ window.OSG_LOCALES = {
             navAria: "Sprachwahl",
             brandAvatarAlt:
               "Avatar — Motiv der Münzvorderseite, PAULI BEST PRICE THAILAND",
+            brandStandAvatarAlt:
+              "Festes Münzmotiv — Garuda-Rückseite, PAULI BEST PRICE THAILAND",
+            avatarThaiReliefLabel: "พอลลี่ · เบสต์ไพรซ์",
             coinAriaLabel:
-              "Interaktive 3D-Münze — Pauli; tippen für Begrüßung, oder „Hallo Pauli“ / Chat",
+              "Pauli-Avatar — tippen für Begrüßung, frei beweglich; oder „Hallo Pauli“ / Chat",
             navLinkAria: {
               de: "Oberfläche auf Deutsch stellen",
               en: "Oberfläche auf Englisch stellen",
@@ -192,6 +199,36 @@ window.OSG_LOCALES = {
               "Sawatdee khrap! Ich bin Pauli. Was kann ich heute für dich tun?",
             coinDoctorGreetBubble:
               "Sawatdee khrap! Ich bin Pauli. Was kann ich heute für dich tun?",
+            pauliSawadeeTts: "Sawadee khrap — สวัสดีครับ",
+            pauliIntroTts:
+              "Ich bin Pauli, dein Wegweiser, der dafür sorgt, dass du deinen Geldbeutel dicker hast!",
+            avatarCompanionIntroTts:
+              "Hi, ich bin Pauli, dein persönlicher Wegweiser. Wie soll ich dich nennen, damit wir direkt auf Augenhöhe starten?",
+            avatarCompanionIntroBubble:
+              "Pauli — dein Wegweiser. Wie darf ich dich nennen?",
+            avatarNameAskFollowTts:
+              "Sag's einfach laut oder tippe ihn unten ein — bleibt nur auf deinem Gerät.",
+            avatarNameAskFollowBubble:
+              "Name lokal speichern — nur auf diesem Gerät.",
+            avatarNameSavedTts: "Cool, {NAME}! Auf Augenhöhe — legen wir los.",
+            checkoutPromptpayHint:
+              "Thailand-Checkout: PromptPay per QR ist oft der schnellste Weg — scanne im Partner-Checkout, wenn angeboten.",
+            avatarFinanceDisclaimerTts:
+              "Du musst wissen: Ich bin kein Berater, ich bin nur dein Wegweiser, wie du dein Geld sparen kannst.",
+            avatarFinanceDisclaimerBubble:
+              "Nur Wegweiser — kein Finanzberater.",
+            avatarFinanceGuideCreditTts:
+              "Schau mal, als dein Wegweiser sehe ich hier eine Möglichkeit, wie du deine Zinsen senken kannst. Ob du das nutzt, entscheidest du natürlich ganz allein.",
+            avatarFinanceGuideInsuranceTts:
+              "Als dein Wegweiser sehe ich hier einen Weg, wie du bei Versicherungen cleverer sparen könntest. Ob du mitmachst, liegt ganz bei dir.",
+            avatarFinanceGuideFinanceTts:
+              "Schau mal, als dein Wegweiser sehe ich hier eine Chance, wie du bei Finanzprodukten besser sparen kannst. Die Entscheidung triffst du natürlich selbst.",
+            pauliSpruch0:
+              "Ich bin dein Wegweiser, aber kein Berater! Ich sorge nur dafür, dass du kräftig Geld sparst und dein Geldbeutel geschont wird.",
+            pauliSpruch1:
+              "Denk daran, Pauli ist dein Wegweiser zum besten Preis. Kein Berater, der dir was aufquatscht, sondern dein Spar-Kompass!",
+            pauliSpruch2:
+              "Mit First-Class-Zulassung direkt zum besten Deal. Ich berate dich nicht, ich weise dir nur den Weg zum gesparten Geld!",
             pauliSpeechBubbleAria: "Pauli — gesprochene Antwort und Text",
             pauliWakeMicBtn: "Hallo / Hey Pauli (Mikro)",
             pauliWakeMicAria: "Kurz zuhören: Sprich „Hallo Pauli“, „Hey Pauli“ oder „Hi Pauli“",
@@ -208,6 +245,12 @@ window.OSG_LOCALES = {
               "Zu viele Anfragen an den Server. Bitte in einigen Minuten erneut versuchen.",
             pauliChatUnavailable:
               "OpenAI-/Chat-Endpunkt nicht konfiguriert oder nicht erreichbar.",
+            pauliLiveStartPrompt:
+              "Ich höre zu. Erzähl mir, was dich beschäftigt — zuhause, bei der Arbeit oder was du kaufen möchtest.",
+            pauliLiveAckPool:
+              "Mhm …|Verstehe …|Ah, okay …|Das klingt nach viel.",
+            pauliWisdomPoliticsReligionDeflect:
+              "Du, mein Lieber — lass uns Politik und Religion lieber schnell beiseitelegen! Wenn wir in die Geschichte schauen, wurde wegen genau diesen zwei Dingen schon genug Unruhe gestiftet und Kriege geführt. Ich möchte lieber gut mit dir befreundet bleiben, statt mich hier am Tisch zu streiten. Lass uns über die schönen Dinge quatschen — tolle Autos, Mode, guter Geschmack oder was dich gerade glücklich macht! Was steht denn als Nächstes auf deinem Wunschzettel?",
             pauliMicUnsupported:
               "Spracherkennung wird von diesem Browser nicht unterstützt.",
             vipRedeemHeading: "Pauli-Freunde — VIP-Zugang",
@@ -244,6 +287,9 @@ window.OSG_LOCALES = {
               "Pauli Ranking (Top-Code) · Heute {TODAY} · Woche {WEEK} · Monat {MONTH} · Jahr {YEAR} · Gesamt {ALL}",
             vipLivePauliStoresTpl:
               "Pauli Store-Top (Käufe/Downloads): {TOP}",
+            vipLiveEmailStatusOkTpl: "E-Mail-Status: OK",
+            vipLiveEmailStatusCriticalTpl:
+              "E-Mail-Status: KRITISCH · {ERROR}",
             vipGroupBadgeTpl: "Gruppe: {GROUP}",
             vipGroupBadgeAria: "VIP-Gruppe: {GROUP}",
             vipGroupFriendsCore: "Freunde",
@@ -251,6 +297,12 @@ window.OSG_LOCALES = {
             vipGroupVipInfluencer: "VIP-Influencer",
             vipGroupFamily: "Familie",
             vipGroupOwners: "Wii + Pauli",
+            vipGiftOverlayAria: "VIP-Geschenk beim ersten Start",
+            vipGiftHeading: "ของขวัญพิเศษ",
+            vipGiftBodyTpl: "คุณได้รับของขวัญ {AMOUNT} บาท!",
+            vipGiftBodyFromTpl: "{SENDER} มอบของขวัญ {AMOUNT} บาทให้คุณแล้ว!",
+            vipGiftContinueBtn: "รับของขวัญและเริ่มใช้งาน",
+            vipGiftContinueBtnAria: "Geschenk annehmen und Vollzugriff starten",
 
             autoserviceHeading: "Autoservice & Reparatur-Pool",
             autoserviceSub: "B-Quik, FIT Auto, Cockpit — für alle Automarken in Thailand.",
@@ -317,7 +369,7 @@ window.OSG_LOCALES = {
 
             voiceCmdListening: "Was möchtest du tun?",
             voiceCmdNoMatch:
-              "Ich habe das nicht verstanden. Sage zum Beispiel: Werkstatt, Smartphones, oder Sprache Englisch.",
+              "Hmm — meinst du eher Werkstatt, Smartphones oder Sprache wechseln?",
             voiceCmdAcknowledge: "Okay.",
             voiceCmdLangSwitched: "Sprache gewechselt.",
             voiceCmdGoAutoservice:
@@ -407,6 +459,18 @@ window.OSG_LOCALES = {
             affiliateDeeplinkFail:
               "Der Involve-Asia-Tracking-Link konnte gerade nicht erzeugt werden. Bitte in Kürze erneut versuchen — ohne invol.co-Link wird der Klick nicht abgerechnet.",
             brandAppTitle: "PAULI BEST PRICE THAILAND",
+            brandAppTitleLine1: "Pauli BestPrice",
+            brandAppTitleLine2: "Thailand",
+            brandCompanyChromeFullLine:
+              "produkt by   OMNI SOLUTIONS GLOBAL®  Co. Ltd.",
+            brandProductByPrefix: "produkt by   ",
+            brandCompanyChromeName: "OMNI SOLUTIONS GLOBAL®  Co. Ltd.",
+            footerBrandLine: "Omni Solutions Global® Co. Ltd.",
+            footerCopyrightLine:
+              "© 2026 Omni Solutions Global® Co. Ltd. Alle Rechte vorbehalten.",
+            footerAiDisclaimer:
+              "Pauli-Avatar ist eine AI und kann Fehler machen. Omni Solutions Global Co., Ltd.",
+            liveCaptionAria: "Live-Untertitel — gesprochener Text von Pauli",
             supportContactBtn: "Kontakt",
             supportContactBtnAria:
               "Kontakt und Support — Problem melden, Frage stellen oder Kontakt bitte",
@@ -441,10 +505,12 @@ window.OSG_LOCALES = {
               "Zu jedem weitergeleiteten Versuch werden Zeitstempel, Lead-ID und deine lokale Kunden-ID (osg_cid) im Geräte‑Journal geschrieben; optional Server‑Spiegel für spätere Partner‑Abrechnung — ohne Garantie, dass Fremdseiten die Parameter weiterverarbeiten.",
             legalGuidanceBannerAria: "Rechtlicher Hinweis — Vermittlerstatus",
             legalGuidanceStatement: "Wir sind die Wegweiser und keine Berater.",
+            bindingAdviceDisclaimerHtml:
+              'Pauli Best Price bietet Vergleich & Weiterleitung — keine Beratung. Verträge nur zwischen Ihnen und Partnern.<span class="legal-guidance-services"><a href="#partner-affiliate-panel">Immobilienvergleich</a><a href="#partner-affiliate-panel">Finanzen</a><a href="#partner-affiliate-panel">Versicherungen</a></span> Keine Haftung für Falschangaben Dritter. Altersnachweis 20+ ausschließlich bei Immobilien-, Finanz- und Versicherungs‑Vertragsabschlüssen.',
             bindingAdviceDisclaimerPlain:
-              "BestPrice bietet keine Anlage-, Immobilien-, Finanz- oder Versicherungsberatung. Wir sind reiner Vermittler (Tippgeber). Haftungsausschluss für Falschangaben Dritter, Warenzustand bei Fremdangeboten sowie falsche Alters-/Identitätsangaben. Verträge kommen nur zwischen Nutzer und Partner zustande.",
+              "Pauli Best Price bietet Vergleich & Weiterleitung — keine Beratung. Verträge nur zwischen Ihnen und Partnern. Keine Haftung für Falschangaben Dritter.",
             intermediaryScopeDisclaimer:
-              "Immobilien, Kfz-Kauf und Finanzen/Kreditkarten: zwingender Altersnachweis 20+; BestPrice bleibt reiner Vermittler — keine Anlage-/Finanz-/Immo-/Versicherungsberatung.",
+              "Immobilien, Finanzprodukte/Kredite und Versicherungen: Altersnachweis 20+ nur bei rechtsgültigen Vertragsabschlüssen; Omni Solutions Global® Co. Ltd. bleibt reiner Vermittler — keine Anlage-/Finanz-/Immo-/Versicherungsberatung.",
             affiliateSectionBanks: "Bank-Partner",
             affiliateSectionMofa: "Motorrad-/Mofa-Marken Thailand (Orientierung)",
             bookingBtnLabel: "Buchungs-Button: Besuch beim Händler vorab melden",
@@ -560,7 +626,7 @@ window.OSG_LOCALES = {
 
             ageGateHeading: "Nachweis: mindestens 20 Jahre",
             ageGateLead:
-              "Immobilien, Fahrzeug-Lead und Finanz-Partner können nach thailändischen Vorgaben nur Nutzerinnen und Nutzer ab 20 Jahren freischalten. Dein Geburtsdatum wird ausschließlich lokal in diesem Browser gespeichert und nie an Omnis Server geschickt.",
+              "Immobilien-, Finanz- und Versicherungs‑Partner können nach thailändischen Vorgaben rechtsgültige Abschlüsse nur mit Nutzerinnen und Nutzern ab 20 Jahren freischalten. Dein Geburtsdatum wird ausschließlich lokal in diesem Browser gespeichert und nie an Omni Solutions Global® Server geschickt.",
             ageGateBirthLabel: "Geburtsdatum",
             ageGateSubmitBtn: "Bestätigen und fortfahren",
             ageGateDismissBtn: "Abbrechen",
@@ -700,6 +766,14 @@ window.OSG_LOCALES = {
             personalMembershipLead:
               "Beim Preisabruf gilt: Sind bei Makro, Big C, Lotus's, Tops Daily, Central Food Hall, Gourmet Market, Villa Market oder Foodland Rabatte aktiv, wenn <em>diese</em> Daten von dir dokumentiert wurden? Gespeicherter Mitgliedsbezug liegt ausschließlich lokal; der für dich angezeigte Preispfad kann um persönliche Vorteile virtuell gekürzt werden.",
 
+            personalPayoutHeading: "Provision — Kontonummer (lokal)",
+            personalPayoutLead:
+              "Trage hier deine Kontonummer ein, damit wir dir Provisionen aus „Pauli Best Price Thailand“ auszahlen können. Die Nummer bleibt nur auf diesem Gerät gespeichert.",
+            personalPayoutAccountLabel: "Kontonummer (Banküberweisung)",
+            personalPayoutAccountInputAria: "Kontonummer für Provisionsauszahlung eingeben",
+            personalPayoutHint:
+              "Nur Ziffern, maximal 24 Stellen — wird lokal im Profil gespeichert.",
+
             personalMapsTitle: "Standort-Thailand über Google Maps (nur mit Zustimmung)",
             personalMapsLead:
               "Optional liest diese Seite dein aktuelles GPS‑Signal (ganz Thailand), um dich in eingebetteter Google Maps‑Ansicht zu platzieren. Du kannst dort z. B. deinen nächsten 7‑Eleven oder Big C Mini ansteuern. Ohne Erlaubnis bleibt die Karte zu — sämtliche Preislogik funktioniert weiter.",
@@ -771,8 +845,8 @@ window.OSG_LOCALES = {
           },
           en: {
             lead:
-              "Price orientation for Thailand — under the Omni Solutions Global umbrella brand.",
-            umbrellaBrandLegal: "Omni Solutions Global Co., Ltd.",
+              "Price orientation for Thailand — under the Omni Solutions Global® umbrella brand.",
+            umbrellaBrandLegal: "Omni Solutions Global® Co. Ltd.",
             b2bSectionAria: "Business clients — industry overview",
             b2bSectionHeading: "B2B & project portfolio",
             b2bSectionLead:
@@ -781,7 +855,7 @@ window.OSG_LOCALES = {
               '<ul class="osg-b2b-list"><li>Automotive, powertrain, and test-environment programmes</li><li>Broadcast, studio, and transmission infrastructure</li><li>Cinema and large-venue display technology</li><li>Security and infrastructure deployments (international)</li><li>Retail, marketplaces, and cross-border manufacturing integration paths</li></ul>',
             introTitle: "Welcome",
             intro:
-              "Welcome to PAULI BEST PRICE THAILAND by Omni Solutions Global: structured shopping and delivery guidance for Thailand — spelled Thailand (not “Thallands”). The table shows illustrative sample prices on Lazada, Shopee, and 7-Eleven.",
+              "Welcome to PAULI BEST PRICE THAILAND by Omni Solutions Global®: structured shopping and delivery guidance for Thailand — spelled Thailand (not “Thallands”). The table shows illustrative sample prices on Lazada, Shopee, and 7-Eleven.",
             compareTitle: "Sample prices (Thailand)",
             clipScanHeading: "Clip scan — in-store live price compare",
             clipScanLead:
@@ -868,6 +942,10 @@ window.OSG_LOCALES = {
               "Off — no voucher surface even after choosing 7‑Eleven fulfilment.",
             liveTrackingHintOn:
               "On — a tracking SID pins issuance to once per session; the rebate only counts with a qualifying ≥ THB 45 Seven basket on the matched trip.",
+            liveTrackingFirstExplainTts:
+              "Hi, I'm Pauli. For your parcel to arrive safely at your 7-Eleven, I need your permission for tracking — just briefly. Without it I can't guarantee delivery and you'll pay high shipping again on Shopee or Lazada. So hit 'Activate' and keep that money in your pocket!",
+            liveTrackingFirstExplainBubble:
+              "Pauli: tracking for safe 7-Eleven delivery — please activate.",
             pickupHintMarketChosen:
               "No discount vouchers appear here — shop buttons carry standard osg_* tagging without voucher parameters.",
             pickupHintSevenChosen:
@@ -945,8 +1023,11 @@ window.OSG_LOCALES = {
               "Omni Solutions Global® / PAULI BEST PRICE THAILAND does not provide legal, tax, or investment advice. Third-party prices and availability may vary.",
             navAria: "Language selection",
             brandAvatarAlt: "Avatar — PAULI BEST PRICE THAILAND coin obverse design",
+            brandStandAvatarAlt:
+              "Fixed coin stand — Garuda reverse, PAULI BEST PRICE THAILAND",
+            avatarThaiReliefLabel: "พอลลี่ · เบสต์ไพรซ์",
             coinAriaLabel:
-              "Interactive 3D coin — Pauli; tap for greeting, or say “Hallo / Hey Pauli”, or use chat",
+              "Pauli avatar — tap for greeting, draggable; or say “Hallo / Hey Pauli”, or use chat",
             navLinkAria: {
               de: "Show site in German",
               en: "Show site in English",
@@ -959,6 +1040,36 @@ window.OSG_LOCALES = {
               "Sawatdee khrap! I'm Pauli. What can I do for you today?",
             coinDoctorGreetBubble:
               "Sawatdee khrap! I'm Pauli. What can I do for you today?",
+            pauliSawadeeTts: "Sawadee khrap — สวัสดีครับ",
+            pauliIntroTts:
+              "I'm Pauli, your guide who helps make your wallet thicker!",
+            avatarCompanionIntroTts:
+              "Hi, I'm Pauli, your personal guide. What should I call you so we start on equal footing?",
+            avatarCompanionIntroBubble:
+              "Pauli — your guide. What should I call you?",
+            avatarNameAskFollowTts:
+              "Just say it out loud or type it below — it stays on your device only.",
+            avatarNameAskFollowBubble:
+              "Name saved locally — on this device only.",
+            avatarNameSavedTts: "Nice, {NAME}! Equal footing — let's go.",
+            checkoutPromptpayHint:
+              "Thailand checkout: PromptPay QR is often fastest — scan at partner checkout when offered.",
+            avatarFinanceDisclaimerTts:
+              "Just so you know: I'm not an advisor — I'm only your guide to saving money.",
+            avatarFinanceDisclaimerBubble:
+              "Guide only — not a financial advisor.",
+            avatarFinanceGuideCreditTts:
+              "Look, as your guide I see a way you might lower your interest costs. Whether you use it is entirely your call.",
+            avatarFinanceGuideInsuranceTts:
+              "As your guide, I see a path where you could save smarter on insurance. Joining in is completely up to you.",
+            avatarFinanceGuideFinanceTts:
+              "As your guide, I spot a chance to save on financial products here. You decide on your own, of course.",
+            pauliSpruch0:
+              "I'm your guide, not an advisor! I just make sure you save serious money and your wallet stays happy.",
+            pauliSpruch1:
+              "Remember — Pauli is your way-finder to the best price. Not a pushy advisor, but your savings compass!",
+            pauliSpruch2:
+              "First-class clearance straight to the best deal. I don't advise — I just point you to the money you keep!",
             notifyVoiceDay: "PauliBestPrice!",
             notifyVoiceNight: "Hi, PauliBestPrice...",
             notifyTitle: "Pauli Best Price Thailand",
@@ -969,6 +1080,18 @@ window.OSG_LOCALES = {
             affiliateDeeplinkFail:
               "We could not create the Involve Asia tracking link right now. Please try again shortly — without an invol.co link the click will not be counted.",
             brandAppTitle: "PAULI BEST PRICE THAILAND",
+            brandAppTitleLine1: "Pauli BestPrice",
+            brandAppTitleLine2: "Thailand",
+            brandCompanyChromeFullLine:
+              "produkt by   OMNI SOLUTIONS GLOBAL®  Co. Ltd.",
+            brandProductByPrefix: "produkt by   ",
+            brandCompanyChromeName: "OMNI SOLUTIONS GLOBAL®  Co. Ltd.",
+            footerBrandLine: "Omni Solutions Global® Co. Ltd.",
+            footerCopyrightLine:
+              "© 2026 Omni Solutions Global® Co. Ltd. All rights reserved.",
+            footerAiDisclaimer:
+              "Pauli Avatar is an AI and may make mistakes. Omni Solutions Global Co., Ltd.",
+            liveCaptionAria: "Live captions — Pauli's spoken text",
             supportContactBtn: "Contact",
             supportContactBtnAria:
               "Contact support — report a problem or ask a question",
@@ -1001,7 +1124,7 @@ window.OSG_LOCALES = {
             affiliateTransparency:
               "Each outbound attempt saves timestamp, osg_lid lead id and your stable local osg_customer id in this browser; the server may also append a mirrored copy for invoicing partnerships — conversion can happen later.",
             intermediaryScopeDisclaimer:
-              "Real estate, motor vehicles & finance: we are a pure intermediary, not advisors. Contracts are concluded only between you and the partner.",
+              "Real estate, finance/credit and insurance: age 20+ only for binding contract steps; Omni Solutions Global® Co. Ltd. is a pure intermediary — not an investment, finance, property or insurance advisor.",
             affiliateSectionBanks: "Bank partners",
             affiliateSectionMofa: "Motor / moped brand routes (TH examples)",
             bookingBtnLabel: "Booking: notify the dealership in advance",
@@ -1136,6 +1259,20 @@ window.OSG_LOCALES = {
             personalMembershipLead:
               "Every sweep asks whether this handset already logged perks that collide with Makro, Big C, Lotus's, Tops Daily, Central Food Hall, Gourmet Market, Villa Market, or Foodland. Stored proof stays encrypted by the OS/browser boundary you trust; illustrative prices should tighten around your rebates.",
 
+            personalPayoutHeading: "Commission — payout account (local)",
+            personalPayoutLead:
+              "Enter your account number here so we can pay out commissions from Pauli Best Price Thailand. Stored only on this device.",
+            personalPayoutAccountLabel: "Account number (bank transfer)",
+            personalPayoutAccountInputAria: "Enter account number for commission payout",
+            personalPayoutHint:
+              "Digits only, up to 24 characters — saved locally in your profile.",
+            vipGiftOverlayAria: "VIP welcome gift on first unlock",
+            vipGiftHeading: "ของขวัญพิเศษ",
+            vipGiftBodyTpl: "คุณได้รับของขวัญ {AMOUNT} บาท!",
+            vipGiftBodyFromTpl: "{SENDER} มอบของขวัญ {AMOUNT} บาทให้คุณแล้ว!",
+            vipGiftContinueBtn: "รับของขวัญและเริ่มใช้งาน",
+            vipGiftContinueBtnAria: "Accept gift and start full access",
+
             personalMapsTitle: "Thailand-wide map unlock (explicit GPS)",
             personalMapsLead:
               "Browser GPS can locate you anywhere across Thailand once you consent, powering an embedded Google map so you can hop to nearby 7‑Eleven or Big C Mini branches. Decline anytime — calculators still operate without geo.",
@@ -1202,8 +1339,8 @@ window.OSG_LOCALES = {
           },
           th: {
             lead:
-              "การเปรียบเทียบราคาและข้อมูลในประเทศไทย — ภายใต้แบรนด์ Omni Solutions Global",
-            umbrellaBrandLegal: "Omni Solutions Global Co., Ltd.",
+              "การเปรียบเทียบราคาและข้อมูลในประเทศไทย — ภายใต้แบรนด์ Omni Solutions Global®",
+            umbrellaBrandLegal: "Omni Solutions Global® Co. Ltd.",
             b2bSectionAria: "ลูกค้าองค์กร — ภาพรวมอุตสาหกรรม",
             b2bSectionHeading: "B2B และผลงานโครงการ",
             b2bSectionLead:
@@ -1212,7 +1349,7 @@ window.OSG_LOCALES = {
               '<ul class="osg-b2b-list"><li>ยานยนต์ ระบบส่งกำลัง และสภาพแวดล้อมทดสอบ</li><li>การออกอากาศ สตูดิโอ และโครงสร้างพื้นฐานส่งสัญญาณ</li><li>โรงภาพยนตร์และเทคโนโลยีจอขนาดใหญ่</li><li>ความปลอดภัยและโครงสร้างพื้นฐาน (ระดับนานาชาติ)</li><li>ค้าปลีก มาร์เก็ตเพลส และเส้นทางบูรณาการการผลิตข้ามพรมแดน</li></ul>',
             introTitle: "ยินดีต้อนรับ",
             intro:
-              "ยินดีต้อนรับสู่ PAULI BEST PRICE THAILAND จาก Omni Solutions Global — ข้อมูลการช้อปและจัดส่งในประเทศไทย เขียนถูกว่า ประเทศไทย ไม่ใช่ “Thallands” ตารางแสดงตัวอย่างราคาบน Lazada Shopee และ 7-Eleven",
+              "ยินดีต้อนรับสู่ PAULI BEST PRICE THAILAND จาก Omni Solutions Global® — ข้อมูลการช้อปและจัดส่งในประเทศไทย เขียนถูกว่า ประเทศไทย ไม่ใช่ “Thallands” ตารางแสดงตัวอย่างราคาบน Lazada Shopee และ 7-Eleven",
             compareTitle: "ตัวอย่างราคา (ประเทศไทย)",
             clipScanHeading: "Clip Scan — เปรียบเทียบราคาในร้านทันที",
             clipScanLead:
@@ -1296,6 +1433,10 @@ window.OSG_LOCALES = {
               "ปิดอยู่ — จะมีแค่หน้าอธิบาย ไม่แสดงคูปอง",
             liveTrackingHintOn:
               "เปิดแล้ว — หนึ่ง SID ออกคูปองได้ครั้งเดียว; ส่วนลดถูกต้องเมื่อซื้อในรอบนั้นรวมไม่ต่ำกว่า 45 THB",
+            liveTrackingFirstExplainTts:
+              "สวัสดีครับ ผม Pauli ครับ เพื่อให้พัสดุของคุณถึง 7-Eleven อย่างปลอดภัย ผมต้องขออนุญาตติดตามพัสดุสักครู่ครับ ถ้าไม่เปิด ผมรับประกันการส่งไม่ได้ และคุณจะเสียค่าส่งแพง ๆ ที่ Shopee หรือ Lazada อีก งั้นกด 'เปิดใช้งาน' แล้วเก็บเงินไว้กับตัวเองเลยครับ!",
+            liveTrackingFirstExplainBubble:
+              "Pauli: เปิดติดตามเพื่อรับที่ 7-Eleven อย่างปลอดภัย — กรุณากดเปิดใช้งาน",
             pickupHintMarketChosen:
               "ไม่แสดงคูปองส่วนลดในหน้านี้ — ปุ่มร้านใช้เฉพาะแท็ก osg_* ไม่มีพารามิเตอร์คูปองสำหรับ marketplace",
             pickupHintSevenChosen:
@@ -1375,8 +1516,11 @@ window.OSG_LOCALES = {
               "Omni Solutions Global® / PAULI BEST PRICE THAILAND ไม่ให้คำปรึกษากฎหมาย ภาษี หรือการลงทุน ราคาจากบุคคลที่สามอาจเปลี่ยนแปลง",
             navAria: "เลือกภาษา",
             brandAvatarAlt: "อวาตาร์ — ลายด้านหน้าเหรียญ PAULI BEST PRICE THAILAND",
+            brandStandAvatarAlt:
+              "ฐานเหรียญคงที่ — ด้านหลังครุฑ Garuda, PAULI BEST PRICE THAILAND",
+            avatarThaiReliefLabel: "พอลลี่ · เบสต์ไพรซ์",
             coinAriaLabel:
-              "เหรียญ 3 มิติ — พอลลี่; แตะเพื่อทักทาย หรือพูด “Hallo / Hey Pauli” หรือเปิดแชท",
+              "อวาตาร์ Pauli — แตะทักทาย ลากได้ทั่วหน้าจอ หรือพูด “Hallo / Hey Pauli”",
             navLinkAria: {
               de: "แสดงเว็บเป็นภาษาเยอรมัน",
               en: "แสดงเว็บเป็นภาษาอังกฤษ",
@@ -1389,6 +1533,36 @@ window.OSG_LOCALES = {
               "สวัสดีครับ! ผมพอลลี่ครับ วันนี้ให้ผมช่วยอะไรดีครับ?",
             coinDoctorGreetBubble:
               "สวัสดีครับ! ผมพอลลี่ครับ วันนี้ให้ผมช่วยอะไรดีครับ?",
+            pauliSawadeeTts: "สวัสดีครับ",
+            pauliIntroTts:
+              "ผมคือ Pauli ไกด์ของคุณที่ช่วยให้กระเป๋าเงินหนาขึ้น!",
+            avatarCompanionIntroTts:
+              "สวัสดีครับ ผม Pauli ไกด์ส่วนตัวของคุณ อยากให้ผมเรียกคุณว่าอะไร เพื่อเริ่มแบบเท่าเทียมกัน?",
+            avatarCompanionIntroBubble:
+              "Pauli — ไกด์ของคุณ เรียกว่าอะไรดี?",
+            avatarNameAskFollowTts:
+              "พูดมาเลยหรือพิมพ์ด้านล่าง — เก็บแค่ในเครื่องคุณครับ",
+            avatarNameAskFollowBubble:
+              "ชื่อเก็บในเครื่อง — ไม่ออกจากอุปกรณ์นี้",
+            avatarNameSavedTts: "เยี่ยมเลย {NAME}! เท่าเทียมกัน — ไปกันต่อครับ",
+            checkoutPromptpayHint:
+              "เช็คเอาต์ไทย: PromptPay ผ่าน QR มักเร็วที่สุด — สแกนในหน้าเช็คเอาต์พาร์ทเนอร์เมื่อมีให้เลือก",
+            avatarFinanceDisclaimerTts:
+              "ขอบอกไว้ก่อนนะครับ: ผมไม่ใช่ที่ปรึกษา ผมเป็นแค่ไกด์ช่วยคุณประหยัดเงินเท่านั้นครับ",
+            avatarFinanceDisclaimerBubble:
+              "เป็นไกด์เท่านั้น — ไม่ใช่ที่ปรึกษาการเงิน",
+            avatarFinanceGuideCreditTts:
+              "ในฐานะไกด์ของคุณ ผมเห็นทางที่อาจช่วยลดดอกเบี้ยได้นะ จะใช้หรือไม่เป็นสิทธิ์ของคุณเลยครับ",
+            avatarFinanceGuideInsuranceTts:
+              "ในฐานะไกด์ ผมเห็นทางประหยัดเรื่องประกันได้ฉลาดขึ้น จะทำต่อหรือไม่ขึ้นกับคุณครับ",
+            avatarFinanceGuideFinanceTts:
+              "ในฐานะไกด์ ผมเห็นโอกาสประหยัดกับผลิตภัณฑ์ทางการเงินตรงนี้ ตัดสินใจเองได้เต็มที่ครับ",
+            pauliSpruch0:
+              "ผมเป็นไกด์นำทางของคุณ ไม่ใช่ที่ปรึกษา! ผมแค่ช่วยให้คุณประหยัดเงินจริง ๆ",
+            pauliSpruch1:
+              "จำไว้ — Pauli คือเข็มทิศสู่ราคาดีที่สุด ไม่ใช่ที่ปรึกษาขายของ!",
+            pauliSpruch2:
+              "ทางลัดเฟิร์สคลาสสู่ดีลที่ดีที่สุด ผมไม่แนะนำ ผมแค่ชี้ทางให้คุณประหยัดเงิน!",
             pauliSpeechBubbleAria: "พอลลี่ — เสียงพูดและข้อความ",
             pauliWakeMicBtn: "「สวัสดี พอลลี่ / เฮ้ พอลลี่」(ไมค์)",
             pauliWakeMicAria: "ฟังสั้นๆ: พูดว่า “สวัสดี พอลลี่” หรือ “Hey Pauli”",
@@ -1405,6 +1579,12 @@ window.OSG_LOCALES = {
               "ส่งคำขอถี่เกินไป ลองใหม่ในอีกสักครู่",
             pauliChatUnavailable:
               "ยังไม่ตั้งค่า OpenAI / แชท หรือเซิร์ฟเวอร์ไม่ตอบ",
+            pauliLiveStartPrompt:
+              "ผมพร้อมฟังครับ เล่าให้ฟังได้เลย — เรื่องบ้าน ที่ทำงาน หรือสิ่งที่อยากซื้อ",
+            pauliLiveAckPool:
+              "ครับ …|เข้าใจครับ …|อ๋อ …|ฟังดูหนักเลยนะครับ",
+            pauliWisdomPoliticsReligionDeflect:
+              "เพื่อนเอ๋ย — เรื่องการเมืองกับศาสนา ขอเว้นไว้ก่อนนะครับ! ในประวัติศาสตร์ สองเรื่องนี้ทำให้เกิดความวุ่นวายและสงครามมาเยอะแล้ว ผมอยากเป็นเพื่อนที่ดีกับคุณมากกว่ามานั่งโต้เถียงที่โต๊ะนี้ มาคุยเรื่องสวยงามของชีวิตกันดีกว่า — รถสวยๆ แฟชั่น รสนิยมดีๆ หรืออะไรที่ทำให้คุณมีความสุข! ต่อไปอยากได้อะไรเป็นพิเศษครับ?",
             pauliMicUnsupported: "เบราว์เซอร์นี้ไม่รองรับการรู้จำเสียงพูด",
             vipRedeemHeading: "Pauli-Friends — VIP",
             vipRedeemLead:
@@ -1440,6 +1620,9 @@ window.OSG_LOCALES = {
               "Pauli อันดับ (รหัสสูงสุด) · วันนี้ {TODAY} · สัปดาห์ {WEEK} · เดือน {MONTH} · ปี {YEAR} · ทั้งหมด {ALL}",
             vipLivePauliStoresTpl:
               "Pauli ร้านอันดับสูง (ซื้อ/ดาวน์โหลด): {TOP}",
+            vipLiveEmailStatusOkTpl: "สถานะอีเมล: ปกติ",
+            vipLiveEmailStatusCriticalTpl:
+              "สถานะอีเมล: วิกฤต · {ERROR}",
             vipGroupBadgeTpl: "กลุ่ม: {GROUP}",
             vipGroupBadgeAria: "กลุ่ม VIP: {GROUP}",
             vipGroupFriendsCore: "เพื่อน",
@@ -1447,6 +1630,12 @@ window.OSG_LOCALES = {
             vipGroupVipInfluencer: "VIP อินฟลูเอนเซอร์",
             vipGroupFamily: "ครอบครัว",
             vipGroupOwners: "Wii + Pauli",
+            vipGiftOverlayAria: "ของขวัญ VIP ตอนเริ่มใช้งาน",
+            vipGiftHeading: "ของขวัญพิเศษ",
+            vipGiftBodyTpl: "คุณได้รับของขวัญ {AMOUNT} บาท!",
+            vipGiftBodyFromTpl: "{SENDER} มอบของขวัญ {AMOUNT} บาทให้คุณแล้ว!",
+            vipGiftContinueBtn: "รับของขวัญและเริ่มใช้งาน",
+            vipGiftContinueBtnAria: "รับของขวัญและเริ่มใช้งานแบบเต็ม",
 
             autoserviceHeading: "บริการรถยนต์ & ศูนย์ซ่อม",
             autoserviceSub: "B-Quik, FIT Auto, Cockpit — ทุกยี่ห้อรถทั่วไทย",
@@ -1513,7 +1702,7 @@ window.OSG_LOCALES = {
 
             voiceCmdListening: "ต้องการให้ทำอะไรครับ?",
             voiceCmdNoMatch:
-              "ขอโทษ ไม่เข้าใจครับ ลองพูดว่า อู่ซ่อม, สมาร์ทโฟน, หรือ เปลี่ยนภาษา",
+              "อืม — หมายถึงอู่ซ่อม สมาร์ทโฟน หรือเปลี่ยนภาษาครับ?",
             voiceCmdAcknowledge: "ได้ครับ",
             voiceCmdLangSwitched: "เปลี่ยนภาษาแล้ว",
             voiceCmdGoAutoservice:
@@ -1603,6 +1792,18 @@ window.OSG_LOCALES = {
             affiliateDeeplinkFail:
               "สร้างลิงก์ติดตาม Involve Asia ไม่ได้ในขณะนี้ กรุณาลองใหม่ — หากไม่มีลิงก์ invol.co การคลิกจะไม่ถูกนับ",
             brandAppTitle: "PAULI BEST PRICE THAILAND",
+            brandAppTitleLine1: "Pauli BestPrice",
+            brandAppTitleLine2: "Thailand",
+            brandCompanyChromeFullLine:
+              "produkt by   OMNI SOLUTIONS GLOBAL®  Co. Ltd.",
+            brandProductByPrefix: "produkt by   ",
+            brandCompanyChromeName: "OMNI SOLUTIONS GLOBAL®  Co. Ltd.",
+            footerBrandLine: "Omni Solutions Global® Co. Ltd.",
+            footerCopyrightLine:
+              "© 2026 Omni Solutions Global® Co. Ltd. สงวนลิขสิทธิ์",
+            footerAiDisclaimer:
+              "Pauli-Avatar เป็น AI และอาจผิดพลาดได้ Omni Solutions Global Co., Ltd.",
+            liveCaptionAria: "คำบรรยายสด — ข้อความที่พอลลี่พูด",
             supportContactBtn: "ติดต่อ",
             supportContactBtnAria: "ติดต่อฝ่ายสนับสนุน — แจ้งปัญหาหรือถามคำถาม",
             supportModalTitle: "ติดต่อ & สนับสนุน",
@@ -1627,12 +1828,18 @@ window.OSG_LOCALES = {
             supportErrorMessage: "กรุณาอธิบายปัญหาให้ละเอียดขึ้นเล็กน้อย",
             supportErrorGeneric: "สร้างตั๋วไม่ได้ในขณะนี้ กรุณาลองใหม่ภายหลัง",
             supportVoiceUnavailable: "เบราว์เซอร์นี้ไม่รองรับการป้อนข้อมูลด้วยเสียง",
+            legalGuidanceBannerAria: "ประกาศทางกฎหมาย — บทบาทผู้นำทาง",
+            legalGuidanceStatement: "เราเป็นผู้นำทาง ไม่ใช่ที่ปรึกษา",
+            bindingAdviceDisclaimerHtml:
+              'Pauli Best Price ช่วยเปรียบเทียบและส่งต่อ — ไม่ใช่คำปรึกษา สัญญาเกิดระหว่างคุณกับพาร์ทเนอร์เท่านั้น<span class="legal-guidance-services"><a href="#partner-affiliate-panel">เปรียบเทียบอสังหาริมทรัพย์</a><a href="#partner-affiliate-panel">การเงิน</a><a href="#partner-affiliate-panel">ประกันภัย</a></span> ไม่รับผิดชอบข้อมูลเท็จจากบุคคลที่สาม อายุ 20+ เฉพาะการทำสัญญาอสังหา การเงิน และประกันภัย',
+            bindingAdviceDisclaimerPlain:
+              "Pauli Best Price ช่วยเปรียบเทียบและส่งต่อ — ไม่ใช่คำปรึกษา สัญญาเกิดระหว่างคุณกับพาร์ทเนอร์เท่านั้น",
             affiliateFundingDisclosure:
               "แอปนี้อาจได้ค่านายหน้าจากพันธมิตร — ผู้ใช้ไม่ต้องจ่ายเพิ่มจากส่วนต่างนี้",
             affiliateTransparency:
               "ทุกคลิกออกเก็บเวลา Lead-ID และ osg_cid ในเครื่อง และอาจส่งสำเนาไปเซิร์ฟเวอร์เพื่อสรุปยอดกับพาร์ทเนอร์ภายหลัง",
             intermediaryScopeDisclaimer:
-              "อสังหา ยานพาหนะ และการเงิน: เราเป็นผู้ประสานเท่านั้น ไม่ใช่ที่ปรึกษาระดับควบคุม สัญญาเกิดกับผู้ให้บริการของคุณโดยตรงเท่านั้น",
+              "อสังหา การเงิน/สินเชื่อ และประกันภัย: อายุ 20+ เฉพาะขั้นตอนทำสัญญา; Omni Solutions Global® Co. Ltd. เป็นผู้ประสานเท่านั้น — ไม่ใช่ที่ปรึกษาการลงทุน การเงิน อสังหา หรือประกันภัย",
             affiliateSectionBanks: "พันธมิตรธนาคาร",
             affiliateSectionMofa: "แบรนด์มอเตอร์ไซค์ / โมฟ่า ไทย (ตัวอย่างเส้นทาง)",
             bookingBtnLabel: "ปุ่มจอง: แจ้งผู้ขายล่วงหน้าว่าจะเข้าชม",
@@ -1720,7 +1927,7 @@ window.OSG_LOCALES = {
 
             ageGateHeading: "ยืนยันอายุ 20 ปีขึ้นไป",
             ageGateLead:
-              "ธีมที่เกี่ยวกับธนาคาร ที่อยู่อาศัย และการซื้อรถในแอปนี้ควรเข้าถึงเมื่อผู้ใช้อายุ 20 ปีขึ้นไป เก็บเฉพาะในคราวเซอร์นี้ ไม่อัปโหลดเกิดในเซิร์ฟเวอร์",
+              "พาร์ทเนอร์อสังหา การเงิน และประกันภัยอาจเปิดขั้นตอนทำสัญญาได้เมื่อผู้ใช้อายุ 20 ปีขึ้นไป วันเกิดเก็บเฉพาะในเบราว์เซอร์นี้ ไม่อัปโหลดไปยัง Omni Solutions Global®",
             ageGateBirthLabel: "วันเกิด",
             ageGateSubmitBtn: "ยืนยันและดำเนินการต่อ",
             ageGateDismissBtn: "ยกเลิก",
@@ -1818,6 +2025,13 @@ window.OSG_LOCALES = {
             personalMembershipLead:
               "ทุกรอบเทียบราจะเช็กว่ามีข้อมูลส่วนลดกับ Makro Big C Lotus's Tops Central Food Hall Gourmet Villa Foodland ตามที่คุณบันทึกไว้หรือไม่ — อยู่เฉพาะเครื่อง และราคาตัวอย่างควรเข้ากับสิทธิ์ของคุณเมื่อมีข้อมูล",
 
+            personalPayoutHeading: "คอมมิชชัน — เลขบัญชีรับเงิน (ในเครื่อง)",
+            personalPayoutLead:
+              "กรอกเลขบัญชีเพื่อรับค่าคอมมิชชันจาก Pauli Best Price Thailand — เก็บเฉพาะในอุปกรณ์นี้",
+            personalPayoutAccountLabel: "เลขบัญชี (โอนเงินผ่านธนาคาร)",
+            personalPayoutAccountInputAria: "กรอกเลขบัญชีสำหรับรับค่าคอมมิชชัน",
+            personalPayoutHint: "ตัวเลขเท่านั้น สูงสุด 24 หลัก — บันทึกในโปรไฟล์ท้องถิ่น",
+
             personalMapsTitle: "เปิดแผนที่ครอบประเทศไทย (ต้องยินยอม GPS)",
             personalMapsLead:
               "เมื่อยินยอมให้ขอพิกัดครั้งหนึ่ง คุณวางจุดบน Google Maps เพื่อเลือก 7‑Eleven ใกล้บ้านหรือ Big C Mini ปฏิเสธได้ทุกเมื่อ — เครื่องคำนวณรายการราต่อได้โดยไม่มีแผนที่",
@@ -1882,8 +2096,8 @@ window.OSG_LOCALES = {
           },
           pl: {
             lead:
-              "Porównanie cen i orientacja dla Tajlandii — pod marką Omni Solutions Global.",
-            umbrellaBrandLegal: "Omni Solutions Global Co., Ltd.",
+              "Porównanie cen i orientacja dla Tajlandii — pod marką Omni Solutions Global®.",
+            umbrellaBrandLegal: "Omni Solutions Global® Co. Ltd.",
             b2bSectionAria: "Klienci B2B — przegląd branż",
             b2bSectionHeading: "B2B i portfolio projektów",
             b2bSectionLead:
@@ -1892,7 +2106,7 @@ window.OSG_LOCALES = {
               '<ul class="osg-b2b-list"><li>Motoryzacja, układy napędowe i środowiska testowe</li><li>Nadawanie, studia i infrastruktura transmisji</li><li>Kino i technologia dużych ekranów</li><li>Bezpieczeństwo i infrastruktura (projekty międzynarodowe)</li><li>Handel, marketplace’y i integracja produkcji transgranicznej</li></ul>',
             introTitle: "Witamy",
             intro:
-              "Witamy w PAULI BEST PRICE THAILAND od Omni Solutions Global — porządkujemy zakupy i dostawy w Tajlandii; poprawna nazwa to Tajlandia (nie „Thallands”). Tabela pokazuje przykładowe ceny na Lazada, Shopee i 7-Eleven.",
+              "Witamy w PAULI BEST PRICE THAILAND od Omni Solutions Global® — porządkujemy zakupy i dostawy w Tajlandii; poprawna nazwa to Tajlandia (nie „Thallands”). Tabela pokazuje przykładowe ceny na Lazada, Shopee i 7-Eleven.",
             compareTitle: "Przykładowe ceny (Tajlandia)",
             clipScanHeading: "Clip Scan — porównanie cen w sklepie na żywo",
             clipScanLead:
@@ -1980,6 +2194,10 @@ window.OSG_LOCALES = {
               "Wyłączone — dostaniesz komunikat ostrzegawczy, nie samą aktywację.",
             liveTrackingHintOn:
               "Włączone — na jeden SID tylko jedno wydanie kodu; zniżka ma sens przy zakupach w jednej wizycie nie niżej 45 THB.",
+            liveTrackingFirstExplainTts:
+              "Cześć, jestem Pauli. Żeby twoja paczka bezpiecznie dotarła do Twojego 7-Eleven, potrzebuję krótkiej zgody na śledzenie. Bez tego nie zagwarantuję dostawy i znów zapłacisz wysokie koszty wysyłki na Shopee albo Lazada. Więc kliknij „Aktywuj” i oszczędź te pieniądze!",
+            liveTrackingFirstExplainBubble:
+              "Pauli: śledzenie dla bezpiecznej dostawy do 7-Eleven — proszę aktywuj.",
             pickupHintMarketChosen:
               "Tu nie pojawiają się kupon rabatowy — przyciski sklepów noszą osg_* bez parametrów vouchera.",
             pickupHintSevenChosen:
@@ -2061,8 +2279,11 @@ window.OSG_LOCALES = {
               "Omni Solutions Global® / PAULI BEST PRICE THAILAND nie świadczy doradztwa prawnego, podatkowego ani inwestycyjnego. Ceny u dostawców mogą się różnić.",
             navAria: "Wybór języka",
             brandAvatarAlt: "Awatar — projekt awersu monety PAULI BEST PRICE THAILAND",
+            brandStandAvatarAlt:
+              "Stałe miejsce monety — rewers Garuda, PAULI BEST PRICE THAILAND",
+            avatarThaiReliefLabel: "พอลลี่ · เบสต์ไพรซ์",
             coinAriaLabel:
-              "Moneta 3D — Pauli; dotknij powitania lub powiedz „Hallo / Hey Pauli” albo czat",
+              "Awatar Pauli — dotknij powitania, przeciągnij po ekranie; „Hallo / Hey Pauli”",
             navLinkAria: {
               de: "Pokaż stronę po niemiecku",
               en: "Pokaż stronę po angielsku",
@@ -2075,6 +2296,36 @@ window.OSG_LOCALES = {
               "Sawatdee khrap! Jestem Pauli. Co mogę dla ciebie dziś zrobić?",
             coinDoctorGreetBubble:
               "Sawatdee khrap! Jestem Pauli. Co mogę dla ciebie dziś zrobić?",
+            pauliSawadeeTts: "Sawadee khrap — สวัสดีครับ",
+            pauliIntroTts:
+              "Jestem Pauli, twój przewodnik, który pomaga zagęścić twój portfel!",
+            avatarCompanionIntroTts:
+              "Cześć, jestem Pauli, twój osobisty przewodnik. Jak mam cię nazywać, żebyśmy zaczęli na równi?",
+            avatarCompanionIntroBubble:
+              "Pauli — twój przewodnik. Jak cię wołać?",
+            avatarNameAskFollowTts:
+              "Powiedz na głos albo wpisz poniżej — zostaje tylko na tym urządzeniu.",
+            avatarNameAskFollowBubble:
+              "Imię lokalnie — tylko na tym urządzeniu.",
+            avatarNameSavedTts: "Super, {NAME}! Na równi — jedziemy.",
+            checkoutPromptpayHint:
+              "Checkout w Tajlandii: PromptPay QR bywa najszybszy — skanuj u partnera, gdy jest dostępny.",
+            avatarFinanceDisclaimerTts:
+              "Wiesz: nie jestem doradcą — jestem tylko twoim przewodnikiem, jak oszczędzać pieniądze.",
+            avatarFinanceDisclaimerBubble:
+              "Tylko przewodnik — nie doradca finansowy.",
+            avatarFinanceGuideCreditTts:
+              "Słuchaj, jako twój przewodnik widzę tu szansę na niższe odsetki. Czy z tego skorzystasz, decydujesz sam.",
+            avatarFinanceGuideInsuranceTts:
+              "Jako przewodnik widzę drogę, żeby mądrzej oszczędzać na ubezpieczeniach. To twoja decyzja.",
+            avatarFinanceGuideFinanceTts:
+              "Jako przewodnik widzę tu sposób na oszczędność przy produktach finansowych. Ty decydujesz.",
+            pauliSpruch0:
+              "Jestem twoim przewodnikiem, a nie doradcą! Dbam tylko o to, żebyś poważnie oszczędzał i twój portfel był zadowolony.",
+            pauliSpruch1:
+              "Pamiętaj — Pauli to twój kompas do najlepszej ceny. Nie nachalny doradca, tylko twój oszczędnościowy drogowskaz!",
+            pauliSpruch2:
+              "Pierwsza klasa prosto do najlepszej oferty. Nie doradzam — wskazuję ci drogę do zaoszczędzonych pieniędzy!",
             pauliSpeechBubbleAria: "Pauli — mowa i tekst",
             pauliWakeMicBtn: "„Hallo / Hey Pauli” (mikrofon)",
             pauliWakeMicAria: "Krótki nasłuch: powiedz „Cześć Pauli”, „Hej Pauli” lub „Halo Pauli”",
@@ -2091,6 +2342,12 @@ window.OSG_LOCALES = {
               "Zbyt wiele żądań do serwera. Spróbuj ponownie za kilka minut.",
             pauliChatUnavailable:
               "Endpoint czatu / OpenAI nie jest skonfigurowany lub nie odpowiada.",
+            pauliLiveStartPrompt:
+              "Słucham. Opowiedz, co cię zajmuje — w domu, w pracy albo co chcesz kupić.",
+            pauliLiveAckPool:
+              "Mhm …|Rozumiem …|Aha …|To brzmi jak sporo.",
+            pauliWisdomPoliticsReligionDeflect:
+              "Słuchaj, drogi — politykę i religię zostawmy od razu na boku! Historia pokazuje, że przez te dwa tematy było już dość zamętu i wojen. Wolę zostać z tobą w dobrych relacjach niż kłócić się przy stole. Porozmawiajmy o pięknych rzeczach — fajne auta, moda, dobry smak albo co cię teraz cieszy! Co jest następne na twojej liście życzeń?",
             pauliMicUnsupported: "Ta przeglądarka nie obsługuje rozpoznawania mowy.",
             vipRedeemHeading: "Pauli-Friends — dostęp VIP",
             vipRedeemLead:
@@ -2126,6 +2383,9 @@ window.OSG_LOCALES = {
               "Ranking Pauli (top kod) · Dziś {TODAY} · Tydzień {WEEK} · Miesiąc {MONTH} · Rok {YEAR} · Całość {ALL}",
             vipLivePauliStoresTpl:
               "Top sklepy Pauli (zakupy/pobrania): {TOP}",
+            vipLiveEmailStatusOkTpl: "Status e-mail: OK",
+            vipLiveEmailStatusCriticalTpl:
+              "Status e-mail: KRYTYCZNY · {ERROR}",
             vipGroupBadgeTpl: "Grupa: {GROUP}",
             vipGroupBadgeAria: "Grupa VIP: {GROUP}",
             vipGroupFriendsCore: "Znajomi",
@@ -2133,6 +2393,12 @@ window.OSG_LOCALES = {
             vipGroupVipInfluencer: "VIP Influencer",
             vipGroupFamily: "Rodzina",
             vipGroupOwners: "Wii + Pauli",
+            vipGiftOverlayAria: "Prezent VIP przy pierwszym uruchomieniu",
+            vipGiftHeading: "ของขวัญพิเศษ",
+            vipGiftBodyTpl: "คุณได้รับของขวัญ {AMOUNT} บาท!",
+            vipGiftBodyFromTpl: "{SENDER} มอบของขวัญ {AMOUNT} บาทให้คุณแล้ว!",
+            vipGiftContinueBtn: "รับของขวัญและเริ่มใช้งาน",
+            vipGiftContinueBtnAria: "Odbierz prezent i uruchom pełny dostęp",
 
             autoserviceHeading: "Serwis & Naprawa Samochodów",
             autoserviceSub: "B-Quik, FIT Auto, Cockpit — wszystkie marki w Tajlandii",
@@ -2199,7 +2465,7 @@ window.OSG_LOCALES = {
 
             voiceCmdListening: "Co chcesz zrobić?",
             voiceCmdNoMatch:
-              "Nie zrozumiałem. Powiedz np. warsztat, smartfony albo angielski.",
+              "Hmm — chodzi o warsztat, smartfony czy zmianę języka?",
             voiceCmdAcknowledge: "Dobrze.",
             voiceCmdLangSwitched: "Język zmieniony.",
             voiceCmdGoAutoservice:
@@ -2289,6 +2555,18 @@ window.OSG_LOCALES = {
             affiliateDeeplinkFail:
               "Nie udało się wygenerować linku śledzącego Involve Asia. Spróbuj ponownie — bez linku invol.co klik nie zostanie zaliczony.",
             brandAppTitle: "PAULI BEST PRICE THAILAND",
+            brandAppTitleLine1: "Pauli Best Price",
+            brandAppTitleLine2: "Thailand",
+            brandCompanyChromeFullLine:
+              "produkt by   OMNI SOLUTIONS GLOBAL®  Co. Ltd.",
+            brandProductByPrefix: "produkt by   ",
+            brandCompanyChromeName: "OMNI SOLUTIONS GLOBAL®  Co. Ltd.",
+            footerBrandLine: "Omni Solutions Global® Co. Ltd.",
+            footerCopyrightLine:
+              "© 2026 Omni Solutions Global® Co. Ltd. Wszelkie prawa zastrzeżone.",
+            footerAiDisclaimer:
+              "Awatar Pauli to AI i może popełniać błędy. Omni Solutions Global Co., Ltd.",
+            liveCaptionAria: "Napisy na żywo — tekst wypowiadany przez Pauli",
             supportContactBtn: "Kontakt",
             supportContactBtnAria:
               "Kontakt z pomocą — zgłoś problem lub zadaj pytanie",
@@ -2316,6 +2594,12 @@ window.OSG_LOCALES = {
               "Nie udało się utworzyć zgłoszenia. Spróbuj później.",
             supportVoiceUnavailable:
               "Wprowadzanie głosowe nie jest dostępne w tej przeglądarce.",
+            legalGuidanceBannerAria: "Informacja prawna — rola pośrednika",
+            legalGuidanceStatement: "Jesteśmy drogowskazem, nie doradcami.",
+            bindingAdviceDisclaimerHtml:
+              'Pauli Best Price oferuje porównanie i przekierowanie — bez doradztwa. Umowy tylko między Tobą a partnerami.<span class="legal-guidance-services"><a href="#partner-affiliate-panel">Porównanie nieruchomości</a><a href="#partner-affiliate-panel">Finanse</a><a href="#partner-affiliate-panel">Ubezpieczenia</a></span> Brak odpowiedzialności za fałszywe dane osób trzecich. Wiek 20+ wyłącznie przy umowach nieruchomości, finansów i ubezpieczeń.',
+            bindingAdviceDisclaimerPlain:
+              "Pauli Best Price oferuje porównanie i przekierowanie — bez doradztwa. Umowy tylko między Tobą a partnerami.",
             affiliateTransparency:
               "Każdy wysłany próbny lead dostaje znacznik czasu oraz lokalnego osg_cid — zapis przydatny do rozliczenia późniejszej konwersji u partnera.",
             affiliateSectionBanks: "Partnerzy bankowi",
@@ -2456,6 +2740,14 @@ window.OSG_LOCALES = {
             personalMembershipLead:
               "Every sweep asks whether this handset already logged perks that collide with Makro, Big C, Lotus's, Tops Daily, Central Food Hall, Gourmet Market, Villa Market, or Foodland. Stored proof stays encrypted by the OS/browser boundary you trust; illustrative prices should tighten around your rebates.",
 
+            personalPayoutHeading: "Prowizja — numer konta (lokalnie)",
+            personalPayoutLead:
+              "Wpisz numer konta, aby otrzymywać prowizje z Pauli Best Price Thailand. Zapis wyłącznie na tym urządzeniu.",
+            personalPayoutAccountLabel: "Numer konta (przelew bankowy)",
+            personalPayoutAccountInputAria: "Wpisz numer konta do wypłaty prowizji",
+            personalPayoutHint:
+              "Tylko cyfry, maks. 24 znaki — zapis lokalny w profilu.",
+
             personalMapsTitle: "Thailand-wide map unlock (explicit GPS)",
             personalMapsLead:
               "Browser GPS can locate you anywhere across Thailand once you consent, powering an embedded Google map so you can hop to nearby 7‑Eleven or Big C Mini branches. Decline anytime — calculators still operate without geo.",
@@ -2541,8 +2833,8 @@ window.OSG_LOCALES = {
           },
           ru: {
             lead:
-              "Ориентация по ценам в Таиланде — под брендом Omni Solutions Global.",
-            umbrellaBrandLegal: "Omni Solutions Global Co., Ltd.",
+              "Ориентация по ценам в Таиланде — под брендом Omni Solutions Global®.",
+            umbrellaBrandLegal: "Omni Solutions Global® Co. Ltd.",
             b2bSectionAria: "Корпоративные клиенты — обзор отраслей",
             b2bSectionHeading: "B2B и портфель проектов",
             b2bSectionLead:
@@ -2551,7 +2843,7 @@ window.OSG_LOCALES = {
               '<ul class="osg-b2b-list"><li>Автомобилестроение, силовые установки и испытательные стенды</li><li>Вещание, студии и инфраструктура передачи</li><li>Кинотехника и крупноформатные дисплеи</li><li>Безопасность и инфраструктурные проекты (международный контекст)</li><li>Ритейл, маркетплейсы и пути интеграции трансграничного производства</li></ul>',
             introTitle: "Добро пожаловать",
             intro:
-              "Добро пожаловать в PAULI BEST PRICE THAILAND от Omni Solutions Global — структурированная информация о покупках и доставке в Таиланде; правильно: Таиланд (не «Thallands»). Таблица — примерные цены Lazada, Shopee и 7-Eleven.",
+              "Добро пожаловать в PAULI BEST PRICE THAILAND от Omni Solutions Global® — структурированная информация о покупках и доставке в Таиланде; правильно: Таиланд (не «Thallands»). Таблица — примерные цены Lazada, Shopee и 7-Eleven.",
             compareTitle: "Примеры цен (Таиланд)",
             clipScanHeading: "Clip Scan — сравнение цен в магазине",
             clipScanLead:
@@ -2639,6 +2931,10 @@ window.OSG_LOCALES = {
               "Выключено — подсказка без полноценного ваучера.",
             liveTrackingHintOn:
               "Включено — на один SID выпуск только один раз; скидка действительна при чеке за одну транзакцию не ниже 45 THB.",
+            liveTrackingFirstExplainTts:
+              "Привет, я Pauli. Чтобы твоя посылка благополучно дошла до твоего 7-Eleven, мне нужно твоё краткое разрешение на отслеживание. Без этого я не могу гарантировать доставку, и ты снова заплатишь высокую доставку на Shopee или Lazada. Так что жми «Включить» и сэкономь эти деньги!",
+            liveTrackingFirstExplainBubble:
+              "Pauli: отслеживание для безопасной доставки в 7-Eleven — пожалуйста, включи.",
             pickupHintMarketChosen:
               "На этой вкладке купоны скрыты — кнопки магазинов несут osg_* без параметров промокода.",
             pickupHintSevenChosen:
@@ -2719,8 +3015,11 @@ window.OSG_LOCALES = {
               "Omni Solutions Global® / PAULI BEST PRICE THAILAND не даёт юридических, налоговых или инвестиционных консультаций. Цены партнёров могут отличаться.",
             navAria: "Выбор языка",
             brandAvatarAlt: "Аватар — дизайн аверса монеты PAULI BEST PRICE THAILAND",
+            brandStandAvatarAlt:
+              "Фиксированная монета — реверс Garuda, PAULI BEST PRICE THAILAND",
+            avatarThaiReliefLabel: "พอลลี่ · เบสต์ไพรซ์",
             coinAriaLabel:
-              "3D-монета — Паули; нажмите для приветствия или скажите «Hallo / Hey Pauli», либо чат",
+              "Аватар Pauli — нажмите для приветствия, перетаскивается; «Hallo / Hey Pauli»",
             navLinkAria: {
               de: "Показать сайт на немецком",
               en: "Показать сайт на английском",
@@ -2733,6 +3032,36 @@ window.OSG_LOCALES = {
               "Саватди крап! Я Паули. Чем могу сегодня помочь?",
             coinDoctorGreetBubble:
               "Саватди крап! Я Паули. Чем могу сегодня помочь?",
+            pauliSawadeeTts: "Sawadee khrap — สวัสดีครับ",
+            pauliIntroTts:
+              "Я Pauli, твой проводник, который помогает сделать кошелёк толще!",
+            avatarCompanionIntroTts:
+              "Привет! Я Pauli, твой личный проводник. Как мне тебя называть, чтобы мы стартовали на равных?",
+            avatarCompanionIntroBubble:
+              "Pauli — твой проводник. Как тебя звать?",
+            avatarNameAskFollowTts:
+              "Скажи вслух или введи ниже — останется только на этом устройстве.",
+            avatarNameAskFollowBubble:
+              "Имя локально — только на устройстве.",
+            avatarNameSavedTts: "Класс, {NAME}! На равных — поехали.",
+            checkoutPromptpayHint:
+              "Оплата в Таиланде: PromptPay по QR часто быстрее всего — сканируй в чекауте партнёра, если есть.",
+            avatarFinanceDisclaimerTts:
+              "Знай: я не советник — я только твой проводник, как экономить деньги.",
+            avatarFinanceDisclaimerBubble:
+              "Только проводник — не финансовый советник.",
+            avatarFinanceGuideCreditTts:
+              "Смотри, как твой проводник я вижу способ снизить проценты. Пользоваться им или нет — решаешь только ты.",
+            avatarFinanceGuideInsuranceTts:
+              "Как проводник, я вижу путь умнее сэкономить на страховке. Участвовать или нет — твоё дело.",
+            avatarFinanceGuideFinanceTts:
+              "Как проводник я вижу здесь шанс сэкономить на финансовых продуктах. Решение за тобой.",
+            pauliSpruch0:
+              "Я твой проводник, а не советник! Я просто слежу, чтобы ты серьёзно экономил и твой кошелёк был доволен.",
+            pauliSpruch1:
+              "Помни — Pauli это твой компас к лучшей цене. Не навязчивый консультант, а спутник по экономии!",
+            pauliSpruch2:
+              "Первый класс прямо к лучшему предложению. Я не советую — я указываю путь к сэкономленным деньгам!",
             pauliSpeechBubbleAria: "Паули — речь и текст",
             pauliWakeMicBtn: "«Hallo / Hey Pauli» (микрофон)",
             pauliWakeMicAria: "Короткое прослушивание: скажите «Привет Pauli», «Эй Pauli» или «Здравствуй Pauli»",
@@ -2749,6 +3078,12 @@ window.OSG_LOCALES = {
               "Слишком много запросов. Повторите через несколько минут.",
             pauliChatUnavailable:
               "Чат / OpenAI не настроен или сервер не отвечает.",
+            pauliLiveStartPrompt:
+              "Я слушаю. Расскажите, что вас волнует — дома, на работе или что хотите купить.",
+            pauliLiveAckPool:
+              "М-м …|Понимаю …|Ага …|Звучит непросто.",
+            pauliWisdomPoliticsReligionDeflect:
+              "Друг мой — давай политику и религию быстро отложим в сторону! История показывает: из‑за этих двух тем уже хватило смута и войн. Я лучше останусь с тобой в хороших отношениях, чем буду спорить за столом. Поговорим о приятном — классные авто, мода, хороший вкус или что делает тебя счастливым! Что дальше в твоём списке желаний?",
             pauliMicUnsupported: "Этот браузер не поддерживает распознавание речи.",
             vipRedeemHeading: "Pauli-Friends — VIP-доступ",
             vipRedeemLead:
@@ -2784,6 +3119,9 @@ window.OSG_LOCALES = {
               "Рейтинг Pauli (топ-код) · Сегодня {TODAY} · Неделя {WEEK} · Месяц {MONTH} · Год {YEAR} · Всего {ALL}",
             vipLivePauliStoresTpl:
               "Топ магазинов Pauli (покупки/скачивания): {TOP}",
+            vipLiveEmailStatusOkTpl: "Статус e-mail: OK",
+            vipLiveEmailStatusCriticalTpl:
+              "Статус e-mail: КРИТИЧНО · {ERROR}",
             vipGroupBadgeTpl: "Группа: {GROUP}",
             vipGroupBadgeAria: "VIP-группа: {GROUP}",
             vipGroupFriendsCore: "Друзья",
@@ -2791,6 +3129,12 @@ window.OSG_LOCALES = {
             vipGroupVipInfluencer: "VIP-инфлюенсер",
             vipGroupFamily: "Семья",
             vipGroupOwners: "Wii + Pauli",
+            vipGiftOverlayAria: "VIP-подарок при первом запуске",
+            vipGiftHeading: "ของขวัญพิเศษ",
+            vipGiftBodyTpl: "คุณได้รับของขวัญ {AMOUNT} บาท!",
+            vipGiftBodyFromTpl: "{SENDER} มอบของขวัญ {AMOUNT} บาทให้คุณแล้ว!",
+            vipGiftContinueBtn: "รับของขวัญและเริ่มใช้งาน",
+            vipGiftContinueBtnAria: "Принять подарок и открыть полный доступ",
 
             autoserviceHeading: "Автосервис и ремонт",
             autoserviceSub: "B-Quik, FIT Auto, Cockpit — все марки авто в Таиланде",
@@ -2857,7 +3201,7 @@ window.OSG_LOCALES = {
 
             voiceCmdListening: "Что вы хотите сделать?",
             voiceCmdNoMatch:
-              "Не понял. Скажите, например: автосервис, смартфоны или английский.",
+              "Хм — вы про автосервис, смартфоны или смену языка?",
             voiceCmdAcknowledge: "Хорошо.",
             voiceCmdLangSwitched: "Язык изменён.",
             voiceCmdGoAutoservice:
@@ -2947,6 +3291,18 @@ window.OSG_LOCALES = {
             affiliateDeeplinkFail:
               "Не удалось создать трекинг-ссылку Involve Asia. Повторите попытку — без ссылки invol.co клик не будет учтён.",
             brandAppTitle: "PAULI BEST PRICE THAILAND",
+            brandAppTitleLine1: "Pauli BestPrice",
+            brandAppTitleLine2: "Thailand",
+            brandCompanyChromeFullLine:
+              "produkt by   OMNI SOLUTIONS GLOBAL®  Co. Ltd.",
+            brandProductByPrefix: "produkt by   ",
+            brandCompanyChromeName: "OMNI SOLUTIONS GLOBAL®  Co. Ltd.",
+            footerBrandLine: "Omni Solutions Global® Co. Ltd.",
+            footerCopyrightLine:
+              "© 2026 Omni Solutions Global® Co. Ltd. Все права защищены.",
+            footerAiDisclaimer:
+              "Аватар Pauli — это AI и может ошибаться. Omni Solutions Global Co., Ltd.",
+            liveCaptionAria: "Живые субтитры — текст, который произносит Pauli",
             supportContactBtn: "Контакт",
             supportContactBtnAria:
               "Связаться с поддержкой — сообщить о проблеме или задать вопрос",
@@ -2974,6 +3330,12 @@ window.OSG_LOCALES = {
               "Не удалось создать тикет. Попробуйте позже.",
             supportVoiceUnavailable:
               "Голосовой ввод недоступен в этом браузере.",
+            legalGuidanceBannerAria: "Правовое уведомление — роль проводника",
+            legalGuidanceStatement: "Мы проводники, а не консультанты.",
+            bindingAdviceDisclaimerHtml:
+              'Pauli Best Price — сравнение и направление, без консультаций. Договоры только между вами и партнёрами.<span class="legal-guidance-services"><a href="#partner-affiliate-panel">Сравнение недвижимости</a><a href="#partner-affiliate-panel">Финансы</a><a href="#partner-affiliate-panel">Страхование</a></span> Нет ответственности за ложные данные третьих лиц. Возраст 20+ только при договорах по недвижимости, финансам и страхованию.',
+            bindingAdviceDisclaimerPlain:
+              "Pauli Best Price — сравнение и направление, без консультаций. Договоры только между вами и партнёрами.",
             affiliateTransparency:
               "Каждое направление сохраняет метку времени, lead id и локальный osg_cid; при возможности дублируется на сервере для расчётов с партнёрами — конверсия может произойти позже.",
             affiliateSectionBanks: "Банки-партнёры",
@@ -3113,6 +3475,14 @@ window.OSG_LOCALES = {
             personalMembershipLead:
               "Every sweep asks whether this handset already logged perks that collide with Makro, Big C, Lotus's, Tops Daily, Central Food Hall, Gourmet Market, Villa Market, or Foodland. Stored proof stays encrypted by the OS/browser boundary you trust; illustrative prices should tighten around your rebates.",
 
+            personalPayoutHeading: "Комиссия — номер счёта (локально)",
+            personalPayoutLead:
+              "Укажите номер счёта для выплаты комиссий Pauli Best Price Thailand. Хранится только на этом устройстве.",
+            personalPayoutAccountLabel: "Номер счёта (банковский перевод)",
+            personalPayoutAccountInputAria: "Введите номер счёта для выплаты комиссии",
+            personalPayoutHint:
+              "Только цифры, до 24 знаков — локально в профиле.",
+
             personalMapsTitle: "Thailand-wide map unlock (explicit GPS)",
             personalMapsLead:
               "Browser GPS can locate you anywhere across Thailand once you consent, powering an embedded Google map so you can hop to nearby 7‑Eleven or Big C Mini branches. Decline anytime — calculators still operate without geo.",
@@ -3203,8 +3573,8 @@ window.OSG_LOCALES = {
           },
           zh: {
             lead:
-              "泰国价格对比与实用指南 — 隶属 Omni Solutions Global。",
-            umbrellaBrandLegal: "Omni Solutions Global Co., Ltd.",
+              "泰国价格对比与实用指南 — 隶属 Omni Solutions Global®。",
+            umbrellaBrandLegal: "Omni Solutions Global® Co. Ltd.",
             b2bSectionAria: "企业客户 — 行业概览",
             b2bSectionHeading: "B2B 与项目履历",
             b2bSectionLead:
@@ -3213,7 +3583,7 @@ window.OSG_LOCALES = {
               '<ul class="osg-b2b-list"><li>汽车、动力总成与试验环境</li><li>广播、演播与传输基础设施</li><li>影院与大型显示技术</li><li>安防与国际基建类项目</li><li>零售、电商平台与跨境制造集成路径</li></ul>',
             introTitle: "欢迎",
             intro:
-              "欢迎访问 Omni Solutions Global 旗下的 PAULI BEST PRICE THAILAND：泰国购物与配送的结构化资讯 — 国家名称请写作<strong>泰国 Thailand</strong>（勿写成 “Thallands”）。下表为 Lazada、Shopee、7-Eleven 的示例价格。",
+              "欢迎访问 Omni Solutions Global® 旗下的 PAULI BEST PRICE THAILAND：泰国购物与配送的结构化资讯 — 国家名称请写作<strong>泰国 Thailand</strong>（勿写成 “Thallands”）。下表为 Lazada、Shopee、7-Eleven 的示例价格。",
             compareTitle: "示例价格（泰国）",
             clipScanHeading: "Clip Scan — 店内实时比价",
             clipScanLead:
@@ -3293,6 +3663,10 @@ window.OSG_LOCALES = {
               "已关闭 — 仅提示，不提供完整代金券流程。",
             liveTrackingHintOn:
               "已开启 — 每个 SID 仅可发券一次；优惠仅当单次购物≥ 45 THB时符合规则。",
+            liveTrackingFirstExplainTts:
+              "嗨，我是 Pauli。为了让你的包裹安全送到你的 7-Eleven，我需要你短暂授权物流追踪。没有它我无法保证送达，你在 Shopee 或 Lazada 又要付高额运费。所以点一下「启用」，把钱省下来！",
+            liveTrackingFirstExplainBubble:
+              "Pauli：启用追踪，安全送达 7-Eleven——请点启用。",
             pickupHintMarketChosen:
               "本页不向 marketplace 结账展示代金券 — 购物按钮仅为 osg_* 追踪，不包含券参数。",
             pickupHintSevenChosen:
@@ -3373,8 +3747,11 @@ window.OSG_LOCALES = {
               "Omni Solutions Global® / PAULI BEST PRICE THAILAND 不提供法律、税务或投资建议。第三方商户的价格与供货情况可能变化。",
             navAria: "语言选择",
             brandAvatarAlt: "头像图像 — PAULI BEST PRICE THAILAND 硬币正面图案",
+            brandStandAvatarAlt:
+              "固定硬币位 — Garuda 背面，PAULI BEST PRICE THAILAND",
+            avatarThaiReliefLabel: "พอลลี่ · เบสต์ไพรซ์",
             coinAriaLabel:
-              "三维硬币 — 保利；点按问候、说 “Hallo / Hey Pauli” 或使用聊天",
+              "保利头像 — 点按问候，可拖动；说 “Hallo / Hey Pauli” 或使用聊天",
             navLinkAria: {
               de: "以德语显示网站",
               en: "以英语显示网站",
@@ -3387,6 +3764,31 @@ window.OSG_LOCALES = {
               "Sawatdee khrap！我是保利。今天需要我帮您做什么？",
             coinDoctorGreetBubble:
               "Sawatdee khrap！我是保利。今天需要我帮您做什么？",
+            pauliSawadeeTts: "Sawadee khrap — สวัสดีครับ",
+            pauliIntroTts: "我是 Pauli，你的向导，帮你让钱包更鼓！",
+            avatarCompanionIntroTts: "嗨，我是 Pauli，你的私人向导。该怎么称呼你，咱们平等地开始？",
+            avatarCompanionIntroBubble: "Pauli——你的向导。怎么称呼你？",
+            avatarNameAskFollowTts: "说出来或在下面输入——只存在你的设备上。",
+            avatarNameAskFollowBubble: "名字本地保存——仅本设备。",
+            avatarNameSavedTts: "好，{NAME}！平等起步——走起。",
+            checkoutPromptpayHint:
+              "泰国结账：PromptPay 二维码往往最快——合作方结账页有就选它扫。",
+            avatarFinanceDisclaimerTts:
+              "你要知道：我不是顾问，只是帮你省钱的向导。",
+            avatarFinanceDisclaimerBubble:
+              "仅为向导——非理财顾问。",
+            avatarFinanceGuideCreditTts:
+              "作为你的向导，我看到这里或许能降低利息。用不用，完全由你决定。",
+            avatarFinanceGuideInsuranceTts:
+              "作为向导，我看到更聪明省保费的路子。参不参与，你自己说了算。",
+            avatarFinanceGuideFinanceTts:
+              "作为向导，我看到这里有机会在金融产品上省钱。决定权在你手里。",
+            pauliSpruch0:
+              "我是你的向导,不是顾问!我只确保你能省下真金白银,让钱包开心。",
+            pauliSpruch1:
+              "记住——Pauli 是你通往最佳价格的指南针,不是推销顾问,而是你的省钱罗盘!",
+            pauliSpruch2:
+              "头等舱直达最佳优惠。我不建议——我只为你指路,带你找回省下的钱!",
             pauliSpeechBubbleAria: "保利 — 语音与文字",
             pauliWakeMicBtn: "「你好 / Hey Pauli」（麦克风）",
             pauliWakeMicAria: "短听：说 “你好保利” 或 “Hey Pauli”",
@@ -3401,6 +3803,12 @@ window.OSG_LOCALES = {
             pauliChatError: "聊天暂时不可用，请稍后重试。",
             apiRateLimitedToast: "请求过于频繁，请几分钟后再试。",
             pauliChatUnavailable: "未配置 OpenAI/聊天或服务端无响应。",
+            pauliLiveStartPrompt:
+              "我在听。说说您的心事——家里、工作，或想买什么，都可以。",
+            pauliLiveAckPool:
+              "嗯 …|明白 …|哦 …|听起来不容易。",
+            pauliWisdomPoliticsReligionDeflect:
+              "朋友，政治和宗教咱们先放一边吧！历史上这两个话题已经带来太多动荡和战争了。我更想和你好好聊天，而不是在桌上争论。咱们聊点美好的——好车、时尚、品味，或任何让你开心的事！你接下来最想实现什么愿望？",
             pauliMicUnsupported: "此浏览器不支持语音识别。",
             vipRedeemHeading: "Pauli 挚友 — VIP 通道",
             vipRedeemLead:
@@ -3433,6 +3841,9 @@ window.OSG_LOCALES = {
               "Pauli 排名（第一代码）· 今日 {TODAY} · 本周 {WEEK} · 本月 {MONTH} · 本年 {YEAR} · 总计 {ALL}",
             vipLivePauliStoresTpl:
               "Pauli 店铺前列（购买/下载）：{TOP}",
+            vipLiveEmailStatusOkTpl: "邮件状态：正常",
+            vipLiveEmailStatusCriticalTpl:
+              "邮件状态：严重 · {ERROR}",
             vipGroupBadgeTpl: "分组：{GROUP}",
             vipGroupBadgeAria: "VIP 分组：{GROUP}",
             vipGroupFriendsCore: "朋友",
@@ -3440,6 +3851,12 @@ window.OSG_LOCALES = {
             vipGroupVipInfluencer: "VIP 达人",
             vipGroupFamily: "家人",
             vipGroupOwners: "Wii + Pauli",
+            vipGiftOverlayAria: "VIP 首次解锁欢迎礼",
+            vipGiftHeading: "ของขวัญพิเศษ",
+            vipGiftBodyTpl: "คุณได้รับของขวัญ {AMOUNT} บาท!",
+            vipGiftBodyFromTpl: "{SENDER} มอบของขวัญ {AMOUNT} บาทให้คุณแล้ว!",
+            vipGiftContinueBtn: "รับของขวัญและเริ่มใช้งาน",
+            vipGiftContinueBtnAria: "领取礼金并开启完整访问",
 
             autoserviceHeading: "汽车服务 & 维修中心",
             autoserviceSub: "B-Quik、FIT Auto、Cockpit — 泰国全品牌汽车服务",
@@ -3506,7 +3923,7 @@ window.OSG_LOCALES = {
 
             voiceCmdListening: "您想做什么？",
             voiceCmdNoMatch:
-              "抱歉，没听清。例如可以说：维修、智能手机、或 切换到英文。",
+              "嗯——你是说维修、智能手机，还是切换语言？",
             voiceCmdAcknowledge: "好的。",
             voiceCmdLangSwitched: "语言已切换。",
             voiceCmdGoAutoservice:
@@ -3596,6 +4013,18 @@ window.OSG_LOCALES = {
             affiliateDeeplinkFail:
               "暂时无法生成 Involve Asia 追踪链接，请稍后再试——没有 invol.co 链接则点击不会被计入。",
             brandAppTitle: "PAULI BEST PRICE THAILAND",
+            brandAppTitleLine1: "Pauli BestPrice",
+            brandAppTitleLine2: "Thailand",
+            brandCompanyChromeFullLine:
+              "produkt by   OMNI SOLUTIONS GLOBAL®  Co. Ltd.",
+            brandProductByPrefix: "produkt by   ",
+            brandCompanyChromeName: "OMNI SOLUTIONS GLOBAL®  Co. Ltd.",
+            footerBrandLine: "Omni Solutions Global® Co. Ltd.",
+            footerCopyrightLine:
+              "© 2026 Omni Solutions Global® Co. Ltd. 保留所有权利。",
+            footerAiDisclaimer:
+              "Pauli 虚拟助手为 AI，可能出现错误。Omni Solutions Global Co., Ltd.",
+            liveCaptionAria: "实时字幕 — Pauli 正在说的文字",
             supportContactBtn: "联系",
             supportContactBtnAria: "联系支持 — 反馈问题或提问",
             supportModalTitle: "联系与支持",
@@ -3619,6 +4048,12 @@ window.OSG_LOCALES = {
             supportErrorMessage: "请更详细地描述您的问题。",
             supportErrorGeneric: "暂时无法创建工单，请稍后再试。",
             supportVoiceUnavailable: "此浏览器不支持语音输入。",
+            legalGuidanceBannerAria: "法律提示 — 中介角色",
+            legalGuidanceStatement: "我们是引路人，不是顾问。",
+            bindingAdviceDisclaimerHtml:
+              'Pauli Best Price 提供比较与跳转 — 非咨询。合同仅在您与合作伙伴之间签订。<span class="legal-guidance-services"><a href="#partner-affiliate-panel">房产比较</a><a href="#partner-affiliate-panel">金融</a><a href="#partner-affiliate-panel">保险</a></span> 对第三方虚假信息不承担责任。年满20岁仅适用于房产、金融与保险合同步骤。',
+            bindingAdviceDisclaimerPlain:
+              "Pauli Best Price 提供比较与跳转 — 非咨询。合同仅在您与合作伙伴之间签订。",
             affiliateTransparency:
               "每次点击都会保存时间戳、Lead ID 与本地 osg_cid；服务器可另存副本以便日后与伙伴结算（成交可能发生在银行端后续流程）。",
             affiliateSectionBanks: "银行合作方",
@@ -3754,6 +4189,13 @@ window.OSG_LOCALES = {
             personalMembershipHeading: "User-specific discount rails (“Schatz”)",
             personalMembershipLead:
               "Every sweep asks whether this handset already logged perks that collide with Makro, Big C, Lotus's, Tops Daily, Central Food Hall, Gourmet Market, Villa Market, or Foodland. Stored proof stays encrypted by the OS/browser boundary you trust; illustrative prices should tighten around your rebates.",
+
+            personalPayoutHeading: "佣金 — 收款账号（本地）",
+            personalPayoutLead:
+              "在此填写账号以接收 Pauli Best Price Thailand 的佣金。仅保存在本设备。",
+            personalPayoutAccountLabel: "银行账号（转账）",
+            personalPayoutAccountInputAria: "输入佣金收款账号",
+            personalPayoutHint: "仅数字，最多 24 位 — 本地保存在个人资料中。",
 
             personalMapsTitle: "Thailand-wide map unlock (explicit GPS)",
             personalMapsLead:
@@ -3899,6 +4341,36 @@ window.OSG_LOCALES = {
               "Sawatdee khrap! I'm Pauli. What can I do for you today?",
             coinDoctorGreetBubble:
               "Sawatdee khrap! I'm Pauli. What can I do for you today?",
+            pauliSawadeeTts: "Sawadee khrap — สวัสดีครับ",
+            pauliIntroTts:
+              "I'm Pauli, your guide who helps make your wallet thicker!",
+            avatarCompanionIntroTts:
+              "Hi, I'm Pauli, your personal guide. What should I call you so we start on equal footing?",
+            avatarCompanionIntroBubble:
+              "Pauli — your guide. What should I call you?",
+            avatarNameAskFollowTts:
+              "Just say it out loud or type it below — it stays on your device only.",
+            avatarNameAskFollowBubble:
+              "Name saved locally — on this device only.",
+            avatarNameSavedTts: "Nice, {NAME}! Equal footing — let's go.",
+            checkoutPromptpayHint:
+              "Thailand checkout: PromptPay QR is often fastest — scan at partner checkout when offered.",
+            avatarFinanceDisclaimerTts:
+              "Just so you know: I'm not an advisor — I'm only your guide to saving money.",
+            avatarFinanceDisclaimerBubble:
+              "Guide only — not a financial advisor.",
+            avatarFinanceGuideCreditTts:
+              "Look, as your guide I see a way you might lower your interest costs. Whether you use it is entirely your call.",
+            avatarFinanceGuideInsuranceTts:
+              "As your guide, I see a path where you could save smarter on insurance. Joining in is completely up to you.",
+            avatarFinanceGuideFinanceTts:
+              "As your guide, I spot a chance to save on financial products here. You decide on your own, of course.",
+            pauliSpruch0:
+              "I'm your guide, not an advisor! I just make sure you save serious money and your wallet stays happy.",
+            pauliSpruch1:
+              "Remember — Pauli is your way-finder to the best price. Not a pushy advisor, but your savings compass!",
+            pauliSpruch2:
+              "First-class clearance straight to the best deal. I don't advise — I just point you to the money you keep!",
             pauliSpeechBubbleAria: "Pauli — spoken reply and text",
             pauliWakeMicBtn: "“Hello / Hey Pauli” (mic)",
             pauliWakeMicAria: "Listen briefly: say “Hello Pauli”, “Hey Pauli” or “Hi Pauli”",
@@ -3915,6 +4387,12 @@ window.OSG_LOCALES = {
               "Too many requests to the server. Please try again in a few minutes.",
             pauliChatUnavailable:
               "OpenAI / chat endpoint not configured or unreachable.",
+            pauliLiveStartPrompt:
+              "I'm listening. Tell me what's on your mind — home, work, or what you'd like to buy.",
+            pauliLiveAckPool:
+              "Mhm …|I see …|Ah, okay …|That sounds like a lot.",
+            pauliWisdomPoliticsReligionDeflect:
+              "Hey friend — let's put politics and religion aside real quick! History shows those two topics stirred enough trouble and wars already. I'd rather stay good friends with you than argue at this table. Let's chat about life's good stuff — great cars, fashion, good taste, or whatever makes you happy right now! What's next on your wish list?",
             pauliMicUnsupported: "Speech recognition is not supported in this browser.",
             vipRedeemHeading: "Pauli friends — VIP access",
             vipRedeemLead:
@@ -3950,6 +4428,9 @@ window.OSG_LOCALES = {
               "Pauli ranking (top code) · Today {TODAY} · Week {WEEK} · Month {MONTH} · Year {YEAR} · All {ALL}",
             vipLivePauliStoresTpl:
               "Pauli top stores (purchases/downloads): {TOP}",
+            vipLiveEmailStatusOkTpl: "Email status: OK",
+            vipLiveEmailStatusCriticalTpl:
+              "Email status: CRITICAL · {ERROR}",
             vipGroupBadgeTpl: "Group: {GROUP}",
             vipGroupBadgeAria: "VIP group: {GROUP}",
             vipGroupFriendsCore: "Friends",
@@ -3957,6 +4438,12 @@ window.OSG_LOCALES = {
             vipGroupVipInfluencer: "VIP Influencer",
             vipGroupFamily: "Family",
             vipGroupOwners: "Wii + Pauli",
+            vipGiftOverlayAria: "VIP welcome gift on first unlock",
+            vipGiftHeading: "ของขวัญพิเศษ",
+            vipGiftBodyTpl: "คุณได้รับของขวัญ {AMOUNT} บาท!",
+            vipGiftBodyFromTpl: "{SENDER} มอบของขวัญ {AMOUNT} บาทให้คุณแล้ว!",
+            vipGiftContinueBtn: "รับของขวัญและเริ่มใช้งาน",
+            vipGiftContinueBtnAria: "Accept gift and start full access",
 
             autoserviceHeading: "Auto Service & Repair Pool",
             autoserviceSub: "B-Quik, FIT Auto, Cockpit — all car brands in Thailand",
@@ -4023,7 +4510,7 @@ window.OSG_LOCALES = {
 
             voiceCmdListening: "What would you like to do?",
             voiceCmdNoMatch:
-              "Sorry, I didn't catch that. Try saying: workshop, smartphones, or German.",
+              "Hmm — do you mean workshop, smartphones, or switching language?",
             voiceCmdAcknowledge: "Okay.",
             voiceCmdLangSwitched: "Language changed.",
             voiceCmdGoAutoservice:
@@ -4106,8 +4593,10 @@ window.OSG_LOCALES = {
 
             legalGuidanceBannerAria: "Legal notice — intermediary role",
             legalGuidanceStatement: "We are the signposts, not advisors.",
+            bindingAdviceDisclaimerHtml:
+              'Pauli Best Price offers comparison & routing — not advice. Contracts are only between you and partners.<span class="legal-guidance-services"><a href="#partner-affiliate-panel">Property comparison</a><a href="#partner-affiliate-panel">Finance</a><a href="#partner-affiliate-panel">Insurance</a></span> No liability for false third-party information. Age 20+ only for property, finance and insurance contract steps.',
             bindingAdviceDisclaimerPlain:
-              "BestPrice does not provide investment, real-estate, finance, or insurance advice. We are a pure intermediary (tipster). No liability for fraudulent third-party offers, product condition on external listings, or false age/identity statements. Contracts exist only between you and the partner.",
+              "Pauli Best Price offers comparison & routing — not advice. Contracts are only between you and partners.",
 
             affiliateSectionRetail: "Retail (store & brand orientation)",
             affiliateSectionTech: "Technology & marketplace electronics",
@@ -4177,7 +4666,7 @@ window.OSG_LOCALES = {
 
             ageGateHeading: "Age check: 20+",
             ageGateLead:
-              "Local apps may restrict property, automotive and finance hops to adults 20+. Your birth date stays only in this browser; it is not uploaded to Omni servers.",
+              "Property, finance and insurance partners may require age 20+ for binding contract steps. Your birth date stays only in this browser; it is not uploaded to Omni Solutions Global® servers.",
             ageGateBirthLabel: "Birth date",
             ageGateSubmitBtn: "Verify and continue",
             ageGateDismissBtn: "Cancel",

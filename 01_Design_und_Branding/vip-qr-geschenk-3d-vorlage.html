@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Pauli Best Price Thailand — VIP-Geschenk 3D</title>
+  <!--
+    Präsentations-Vorlage (Design only — kein App-Runtime-Code).
+    QR-Master: ../05_Dokumentation/VIP_QR_Codes_Master/*.svg
+
+    Aufruf-Beispiele:
+      ?slot=56&from=Pauli&to=Max
+      ?slot=55&from=Wii&to=Freundin
+      ?slot=41  (Gold-Ticket)
+
+    Druck: Browser → „Als PDF speichern“ bei 100 % Zoom.
+  -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Noto+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg-deep: #0c0a14;
+      --bg-glow: #1a1430;
+      --text-silver: #e8ecf2;
+      --text-muted: #9aa3b2;
+      --accent: #c7a45a;
+      --card-face: linear-gradient(145deg, #1f1a2e 0%, #12101c 48%, #0a0812 100%);
+      --ribbon: linear-gradient(90deg, #6e4cff, #9b7bff, #6e4cff);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      min-height: 100%;
+      background: radial-gradient(ellipse 120% 80% at 50% 0%, var(--bg-glow), var(--bg-deep) 62%);
+      color: var(--text-silver);
+      font-family: "Noto Sans Thai", system-ui, sans-serif;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: max(1.25rem, env(safe-area-inset-top)) 1rem 2.5rem;
+      gap: 1.5rem;
+    }
+
+    .brand {
+      text-align: center;
+      letter-spacing: 0.12em;
+    }
+
+    .brand-line1 {
+      font-family: Cinzel, Georgia, serif;
+      font-size: clamp(1.1rem, 4vw, 1.65rem);
+      font-weight: 600;
+      color: #f3e6c8;
+      text-transform: uppercase;
+    }
+
+    .brand-line2 {
+      font-family: Cinzel, Georgia, serif;
+      font-size: clamp(0.75rem, 2.5vw, 0.95rem);
+      color: var(--text-muted);
+      margin-top: 0.35rem;
+      letter-spacing: 0.28em;
+    }
+
+    .gift-caption {
+      text-align: center;
+      max-width: 28rem;
+      line-height: 1.55;
+      font-size: clamp(0.9rem, 2.8vw, 1.05rem);
+      color: var(--text-muted);
+    }
+
+    .gift-caption strong {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* 3D-Bühne */
+    .gift-stage {
+      perspective: 1400px;
+      perspective-origin: 50% 42%;
+      width: min(92vw, 420px);
+      aspect-ratio: 0.78;
+      position: relative;
+    }
+
+    .gift-card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transform: rotateX(14deg) rotateY(-8deg);
+      transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+      animation: gift-float 5s ease-in-out infinite;
+    }
+
+    .gift-stage:hover .gift-card,
+    .gift-stage:focus-within .gift-card {
+      transform: rotateX(6deg) rotateY(4deg) translateY(-6px);
+    }
+
+    @keyframes gift-float {
+      0%, 100% { transform: rotateX(14deg) rotateY(-8deg) translateY(0); }
+      50% { transform: rotateX(12deg) rotateY(-5deg) translateY(-10px); }
+    }
+
+    .card-shadow {
+      position: absolute;
+      inset: auto 8% -6% 8%;
+      height: 18%;
+      background: radial-gradient(ellipse, rgba(0,0,0,0.55), transparent 70%);
+      transform: rotateX(90deg) translateZ(-40px);
+      filter: blur(8px);
+      pointer-events: none;
+    }
+
+    .card-body {
+      position: absolute;
+      inset: 0;
+      border-radius: 22px;
+      background: var(--card-face);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow:
+        0 28px 60px rgba(0,0,0,0.55),
+        0 2px 0 rgba(255,255,255,0.06) inset,
+        0 -1px 0 rgba(0,0,0,0.4) inset;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.1rem 1rem 1.25rem;
+      transform: translateZ(24px);
+    }
+
+    .card-body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(125deg, rgba(255,255,255,0.07) 0%, transparent 42%, rgba(255,255,255,0.03) 100%);
+      pointer-events: none;
+    }
+
+    .role-badge {
+      position: relative;
+      z-index: 1;
+      font-family: Cinzel, Georgia, serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      border: 1px solid currentColor;
+      margin-bottom: 0.75rem;
+      opacity: 0.95;
+    }
+
+    .qr-frame {
+      position: relative;
+      z-index: 1;
+      width: min(72vw, 290px);
+      aspect-ratio: 1;
+      border-radius: 16px;
+      padding: 0.45rem;
+      background: linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02));
+      box-shadow:
+        0 12px 32px rgba(0,0,0,0.45),
+        0 0 0 1px rgba(255,255,255,0.1) inset;
+      transform: translateZ(18px);
+    }
+
+    .qr-frame img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    .card-meta {
+      position: relative;
+      z-index: 1;
+      margin-top: 0.85rem;
+      text-align: center;
+      width: 100%;
+    }
+
+    .card-slot {
+      font-family: Cinzel, Georgia, serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+    }
+
+    .card-code {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+      letter-spacing: 0.06em;
+      word-break: break-all;
+    }
+
+    /* Schleife / Wertgegenstand-Akzent */
+    .ribbon {
+      position: absolute;
+      top: -4px;
+      left: 50%;
+      transform: translateX(-50%) translateZ(36px);
+      width: 58%;
+      height: 14px;
+      border-radius: 0 0 8px 8px;
+      background: var(--ribbon);
+      box-shadow: 0 6px 18px rgba(110,76,255,0.35);
+    }
+
+    .seal {
+      position: absolute;
+      bottom: 1.1rem;
+      right: 1rem;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #fff9e6, #d4af37 45%, #6e5410);
+      border: 2px solid rgba(255,255,255,0.35);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+      display: grid;
+      place-items: center;
+      font-family: Cinzel, Georgia, serif;
+      font-size: 0.62rem;
+      font-weight: 700;
+      color: #3d2e0a;
+      letter-spacing: 0.05em;
+      transform: translateZ(30px) rotate(-12deg);
+    }
+
+    .edge-left, .edge-right {
+      position: absolute;
+      top: 8%;
+      bottom: 8%;
+      width: 10px;
+      border-radius: 4px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(0,0,0,0.35));
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .edge-left { left: -3px; transform: rotateY(90deg) translateZ(8px); }
+    .edge-right { right: -3px; transform: rotateY(-90deg) translateZ(8px); }
+
+    .hint {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-align: center;
+      max-width: 24rem;
+      line-height: 1.45;
+    }
+
+    /* Rollen-Farben */
+    .role-friends_core { --accent: #cd7f32; --ribbon: linear-gradient(90deg, #8e5a20, #d49a4e, #8e5a20); }
+    .role-influencer { --accent: #a8adb4; --ribbon: linear-gradient(90deg, #5c636a, #d8dde3, #5c636a); }
+    .role-vip_influencer { --accent: #c7a45a; --ribbon: linear-gradient(90deg, #7b5b1d, #f0d78c, #7b5b1d); }
+    .role-family_special { --accent: #3bb25a; --ribbon: linear-gradient(90deg, #1d6f31, #6fe08a, #1d6f31); }
+    .role-owners { --accent: #9b7bff; --ribbon: linear-gradient(90deg, #4d35c7, #b39cff, #4d35c7); }
+
+    @media (max-width: 480px) {
+      .gift-stage { width: min(94vw, 360px); }
+      .qr-frame { width: min(78vw, 260px); }
+      .seal { width: 44px; height: 44px; font-size: 0.55rem; }
+      .gift-card { animation: none; transform: rotateX(10deg) rotateY(-4deg); }
+    }
+
+    @media print {
+      body { background: #fff; color: #111; }
+      .gift-card { animation: none; transform: none; }
+      .hint { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="brand">
+      <div class="brand-line1" id="brand-line1">Pauli Best Price</div>
+      <div class="brand-line2" id="brand-line2">Thailand</div>
+    </header>
+
+    <p class="gift-caption" id="gift-caption" hidden></p>
+
+    <div class="gift-stage" id="gift-stage" tabindex="0" aria-label="VIP-Geschenk als 3D-Wertgegenstand">
+      <div class="gift-card" id="gift-card">
+        <div class="card-shadow" aria-hidden="true"></div>
+        <div class="ribbon" aria-hidden="true"></div>
+        <div class="card-body">
+          <div class="edge-left" aria-hidden="true"></div>
+          <div class="edge-right" aria-hidden="true"></div>
+          <span class="role-badge" id="role-badge">VIP</span>
+          <div class="qr-frame">
+            <img id="qr-img" src="" alt="VIP QR-Code" width="290" height="290"/>
+          </div>
+          <div class="card-meta">
+            <div class="card-slot" id="card-slot">Slot 01</div>
+            <div class="card-code" id="card-code"></div>
+          </div>
+          <div class="seal" aria-hidden="true">VIP</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="hint">Vorlage für die persönliche Übergabe durch Wii oder Pauli. Parameter: <code>?slot=01&from=Pauli&to=Name</code></p>
+  </main>
+
+  <script>
+    (function () {
+      var VAULT = "../05_Dokumentation/VIP_QR_Codes_Master/";
+      var SLOTS = [
+        { n: 1, code: "PF-7RQNT6ZG", group: "friends_core", role: "Pauli-Friends", label: "VIP-01" },
+        { n: 2, code: "PF-FZVRU9XB", group: "friends_core", role: "Pauli-Friends", label: "VIP-02" },
+        { n: 3, code: "PF-4T9TS827", group: "friends_core", role: "Pauli-Friends", label: "VIP-03" },
+        { n: 4, code: "PF-JP6W3ZY8", group: "friends_core", role: "Pauli-Friends", label: "VIP-04" },
+        { n: 5, code: "PF-XHBBQY35", group: "friends_core", role: "Pauli-Friends", label: "VIP-05" },
+        { n: 6, code: "PF-Z7TBKNG6", group: "friends_core", role: "Pauli-Friends", label: "VIP-06" },
+        { n: 7, code: "PF-PNDDA5TY", group: "friends_core", role: "Pauli-Friends", label: "VIP-07" },
+        { n: 8, code: "PF-6R8DJENF", group: "friends_core", role: "Pauli-Friends", label: "VIP-08" },
+        { n: 9, code: "PF-4AP84FK3", group: "friends_core", role: "Pauli-Friends", label: "VIP-09" },
+        { n: 10, code: "PF-S27C6WYW", group: "friends_core", role: "Pauli-Friends", label: "VIP-10" },
+        { n: 11, code: "PF-NHH4JZ8X", group: "friends_core", role: "Pauli-Friends", label: "VIP-11" },
+        { n: 12, code: "PF-AZZNZ7VH", group: "friends_core", role: "Pauli-Friends", label: "VIP-12" },
+        { n: 13, code: "PF-UFZUB6BZ", group: "friends_core", role: "Pauli-Friends", label: "VIP-13" },
+        { n: 14, code: "PF-63DZL5VP", group: "friends_core", role: "Pauli-Friends", label: "VIP-14" },
+        { n: 15, code: "PF-33K334Z9", group: "friends_core", role: "Pauli-Friends", label: "VIP-15" },
+        { n: 16, code: "PF-U8Z9XFEB", group: "friends_core", role: "Pauli-Friends", label: "VIP-16" },
+        { n: 17, code: "PF-6CPZ6C22", group: "friends_core", role: "Pauli-Friends", label: "VIP-17" },
+        { n: 18, code: "PF-SGX2EMZX", group: "friends_core", role: "Pauli-Friends", label: "VIP-18" },
+        { n: 19, code: "PF-4PSYL7LF", group: "friends_core", role: "Pauli-Friends", label: "VIP-19" },
+        { n: 20, code: "PF-L353FAM6", group: "friends_core", role: "Pauli-Friends", label: "VIP-20" },
+        { n: 21, code: "PF-NVXYEBFG", group: "friends_core", role: "Pauli-Friends", label: "VIP-21" },
+        { n: 22, code: "PF-B5W5VHLB", group: "friends_core", role: "Pauli-Friends", label: "VIP-22" },
+        { n: 23, code: "PF-NVAN44UV", group: "friends_core", role: "Pauli-Friends", label: "VIP-23" },
+        { n: 24, code: "PF-YKNQXBA7", group: "friends_core", role: "Pauli-Friends", label: "VIP-24" },
+        { n: 25, code: "PF-JJRNWEG9", group: "friends_core", role: "Pauli-Friends", label: "VIP-25" },
+        { n: 26, code: "PF-3BVA2G3R", group: "friends_core", role: "Pauli-Friends", label: "VIP-26" },
+        { n: 27, code: "PF-TDV72KKC", group: "friends_core", role: "Pauli-Friends", label: "VIP-27" },
+        { n: 28, code: "PF-FRZLUGSE", group: "friends_core", role: "Pauli-Friends", label: "VIP-28" },
+        { n: 29, code: "PF-K59D7YCB", group: "friends_core", role: "Pauli-Friends", label: "VIP-29" },
+        { n: 30, code: "PF-ELK2AP9D", group: "friends_core", role: "Pauli-Friends", label: "VIP-30" },
+        { n: 31, code: "PF-PW4GKWWP", group: "influencer", role: "Influencer", label: "VIP-31" },
+        { n: 32, code: "PF-RN595VTS", group: "influencer", role: "Influencer", label: "VIP-32" },
+        { n: 33, code: "PF-LPXPDS3L", group: "influencer", role: "Influencer", label: "VIP-33" },
+        { n: 34, code: "PF-LRCT964T", group: "influencer", role: "Influencer", label: "VIP-34" },
+        { n: 35, code: "PF-SKVAMGZU", group: "influencer", role: "Influencer", label: "VIP-35" },
+        { n: 36, code: "PF-Z9H494K3", group: "influencer", role: "Influencer", label: "VIP-36" },
+        { n: 37, code: "PF-JPZQUT56", group: "influencer", role: "Influencer", label: "VIP-37" },
+        { n: 38, code: "PF-QFQGPW28", group: "influencer", role: "Influencer", label: "VIP-38" },
+        { n: 39, code: "PF-RX9D829Y", group: "influencer", role: "Influencer", label: "VIP-39" },
+        { n: 40, code: "PF-7JA5XJH4", group: "influencer", role: "Influencer", label: "VIP-40" },
+        { n: 41, code: "PF-GESVSXUB", group: "vip_influencer", role: "Gold-Ticket", label: "VIP-41" },
+        { n: 42, code: "PF-7VHQSAGB", group: "vip_influencer", role: "Gold-Ticket", label: "VIP-42" },
+        { n: 43, code: "PF-UM7LPSDW", group: "vip_influencer", role: "Gold-Ticket", label: "VIP-43" },
+        { n: 44, code: "PF-ZJF68QHE", group: "vip_influencer", role: "Gold-Ticket", label: "VIP-44" },
+        { n: 45, code: "PF-2YDTG69F", group: "vip_influencer", role: "Gold-Ticket", label: "VIP-45" },
+        { n: 46, code: "PF-HG7C2DVV", group: "vip_influencer", role: "Gold-Ticket", label: "VIP-46" },
+        { n: 47, code: "PF-L7NAC3FN", group: "vip_influencer", role: "Gold-Ticket", label: "VIP-47" },
+        { n: 48, code: "PF-3XT6U5H5", group: "vip_influencer", role: "Gold-Ticket", label: "VIP-48" },
+        { n: 49, code: "PF-JTEDPJGE", group: "vip_influencer", role: "Gold-Ticket", label: "VIP-49" },
+        { n: 50, code: "PF-83F29VYK", group: "vip_influencer", role: "Gold-Ticket", label: "VIP-50" },
+        { n: 51, code: "PF-GKHXNE5D", group: "family_special", role: "Familie", label: "Mama" },
+        { n: 52, code: "PF-ANL9WG6C", group: "family_special", role: "Familie", label: "Schwester" },
+        { n: 53, code: "PF-NH2MPGGB", group: "family_special", role: "Familie", label: "Bruder" },
+        { n: 54, code: "PF-8MAMYEZY", group: "family_special", role: "Familie", label: "FREUND-in" },
+        { n: 55, code: "PF-6LZ7NYE4", group: "owners", role: "Wii", label: "Wii" },
+        { n: 56, code: "PF-ET97JKNE", group: "owners", role: "Pauli (Admin)", label: "PAULI" }
+      ];
+
+      function pad2(n) {
+        return String(n).padStart(2, "0");
+      }
+
+      function parseParams() {
+        try {
+          return new URL(window.location.href).searchParams;
+        } catch (_) {
+          return { get: function () { return null; } };
+        }
+      }
+
+      function boot() {
+        var params = parseParams();
+        var slotRaw = params.get("slot") || params.get("s") || "56";
+        var slotNum = Math.max(1, Math.min(56, parseInt(slotRaw, 10) || 56));
+        var row = SLOTS[slotNum - 1];
+        var from = (params.get("from") || "").trim();
+        var to = (params.get("to") || "").trim();
+        var stem = "vip-qr-" + pad2(row.n) + "-" + row.code;
+        var svgPath = VAULT + stem + ".svg";
+
+        document.getElementById("gift-card").className = "gift-card role-" + row.group;
+        document.getElementById("role-badge").textContent = row.role;
+        document.getElementById("card-slot").textContent = row.label + " · Slot " + pad2(row.n);
+        document.getElementById("card-code").textContent = row.code;
+        document.getElementById("qr-img").src = svgPath;
+        document.getElementById("qr-img").alt = "VIP QR " + row.code;
+
+        var cap = document.getElementById("gift-caption");
+        if (from || to) {
+          var parts = [];
+          if (from) parts.push("<strong>" + from + "</strong> überreicht dir");
+          else parts.push("Ein persönliches Geschenk aus");
+          parts.push("Pauli Best Price Thailand");
+          if (to) parts.push("— für <strong>" + to + "</strong>");
+          cap.innerHTML = parts.join(" ");
+          cap.hidden = false;
+        }
+
+        document.title = "Pauli Best Price Thailand — " + row.label;
+      }
+
+      boot();
+    })();
+  </script>
+</body>
+</html>

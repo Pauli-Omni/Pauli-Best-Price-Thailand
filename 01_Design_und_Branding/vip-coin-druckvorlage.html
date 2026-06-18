@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8"/>
+  <title>Pauli Best Price Thailand — VIP-Münze Druckvorlage</title>
+  <!--
+    Hochauflösender Fotodruck: 1417×1417 px ≈ 120 mm @ 300 dpi.
+    Browser → „Als PDF speichern“ bei 100 % Zoom oder via Puppeteer/Sharp rendern.
+
+    Parameter:
+      ?slot=01          → lädt QR aus 05_Dokumentation/VIP_QR_Codes_Master/
+      ?label=VIP-01     → Präge-Nummer (optional, Default aus Slot)
+      ?code=PF-XXXX     → nur Anzeige unter QR (optional)
+      ?lang=de          → Begleittext (de · en · th · pl · ru · zh)
+
+    Logo: ../Frontseite02.png (App-Icon, kein Avatar-Portrait)
+    Master-SVGs: ../05_Dokumentation/VIP_QR_Codes_Master/vip-qr-{NN}-{CODE}.svg
+  -->
+  <style>
+    @page { size: 120mm 120mm; margin: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 1417px;
+      height: 1417px;
+      background: #0a0908;
+      font-family: "Noto Sans Thai", "Palatino Linotype", Georgia, serif;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .print-hint {
+      position: fixed;
+      bottom: 8px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 11px;
+      color: #555;
+      pointer-events: none;
+    }
+    @media print { .print-hint { display: none; } }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Noto+Sans+Thai:wght@500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1417 1417" width="1417" height="1417" role="img" aria-label="VIP Münze mit Logo, QR-Code und Seriennummer">
+    <defs>
+      <radialGradient id="coinFace" cx="38%" cy="32%" r="68%">
+        <stop offset="0%" stop-color="#fffef4"/>
+        <stop offset="18%" stop-color="#f3e2a0"/>
+        <stop offset="42%" stop-color="#d4af37"/>
+        <stop offset="68%" stop-color="#8a6a1a"/>
+        <stop offset="100%" stop-color="#3d2e0a"/>
+      </radialGradient>
+      <radialGradient id="coinRim" cx="50%" cy="50%" r="50%">
+        <stop offset="82%" stop-color="#1a1408"/>
+        <stop offset="88%" stop-color="#c9a23a"/>
+        <stop offset="94%" stop-color="#f8ecc0"/>
+        <stop offset="100%" stop-color="#5c4510"/>
+      </radialGradient>
+      <radialGradient id="logoMedallion" cx="35%" cy="30%" r="72%">
+        <stop offset="0%" stop-color="#fffef8"/>
+        <stop offset="45%" stop-color="#e8c868"/>
+        <stop offset="100%" stop-color="#6e5410"/>
+      </radialGradient>
+      <linearGradient id="goldText" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#fff9e6"/>
+        <stop offset="50%" stop-color="#e8c868"/>
+        <stop offset="100%" stop-color="#6e5410"/>
+      </linearGradient>
+      <filter id="coinShadow" x="-20%" y="-20%" width="140%" height="140%">
+        <feDropShadow dx="0" dy="18" stdDeviation="28" flood-color="#000" flood-opacity="0.55"/>
+        <feDropShadow dx="-6" dy="-8" stdDeviation="12" flood-color="#fff8dc" flood-opacity="0.25"/>
+      </filter>
+      <filter id="emboss">
+        <feGaussianBlur in="SourceAlpha" stdDeviation="1.2" result="blur"/>
+        <feOffset dx="1.5" dy="2" result="off"/>
+        <feComposite in="off" in2="SourceAlpha" operator="out" result="shadow"/>
+        <feFlood flood-color="#1a1204" flood-opacity="0.45" result="color"/>
+        <feComposite in="color" in2="shadow" operator="in" result="shadow2"/>
+        <feMerge>
+          <feMergeNode in="shadow2"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+      <filter id="logoEmboss" x="-12%" y="-12%" width="124%" height="124%">
+        <feDropShadow dx="2" dy="3" stdDeviation="2.5" flood-color="#1a1204" flood-opacity="0.5"/>
+        <feDropShadow dx="-1.5" dy="-2" stdDeviation="1.8" flood-color="#fff8dc" flood-opacity="0.42"/>
+        <feMerge>
+          <feMergeNode/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+      <filter id="qrRelief" x="-8%" y="-8%" width="116%" height="116%">
+        <feDropShadow dx="0" dy="4" stdDeviation="2.5" flood-color="#1a1204" flood-opacity="0.42"/>
+        <feDropShadow dx="-1.5" dy="-2.5" stdDeviation="1.5" flood-color="#fff8dc" flood-opacity="0.35"/>
+      </filter>
+      <clipPath id="logoClip">
+        <circle cx="590.5" cy="318" r="108"/>
+      </clipPath>
+      <clipPath id="qrClip">
+        <rect x="393" y="448" width="395" height="395" rx="22"/>
+      </clipPath>
+    </defs>
+
+    <rect width="1417" height="1417" fill="#0a0908"/>
+
+    <g transform="translate(118 88)" filter="url(#coinShadow)">
+      <circle id="coin-rim" cx="590.5" cy="590.5" r="560" fill="url(#coinRim)"/>
+      <circle id="coin-face" cx="590.5" cy="590.5" r="520" fill="url(#coinFace)"/>
+
+      <g fill="#b8942e" opacity="0.85">
+        <polygon points="590,78 596,98 618,98 600,110 606,130 590,118 574,130 580,110 562,98 584,98"/>
+        <polygon points="78,590 98,596 98,618 110,600 130,606 118,590 130,574 110,580 98,562 98,584"/>
+        <polygon points="1103,590 1083,596 1083,618 1071,600 1051,606 1063,590 1051,574 1071,580 1083,562 1083,584"/>
+        <polygon points="590,1103 596,1083 618,1083 600,1071 606,1051 590,1063 574,1051 580,1071 562,1083 584,1083"/>
+      </g>
+
+      <path id="topArc" fill="none" d="M 160 590 A 430 430 0 0 1 1021 590"/>
+      <text font-family="Cinzel,serif" font-size="28" font-weight="700" letter-spacing="0.35em" fill="url(#goldText)" filter="url(#emboss)">
+        <textPath href="#topArc" startOffset="50%" text-anchor="middle">PAULI BEST PRICE THAILAND</textPath>
+      </text>
+
+      <!-- Zentrales Marken-Logo (Icon, kein Avatar-Portrait) -->
+      <circle cx="590.5" cy="318" r="118" fill="url(#logoMedallion)" stroke="#8a6a1a" stroke-width="3" filter="url(#logoEmboss)"/>
+      <circle cx="590.5" cy="318" r="110" fill="none" stroke="#f8ecc0" stroke-width="1.5" opacity="0.55"/>
+      <g clip-path="url(#logoClip)" filter="url(#logoEmboss)">
+        <image id="brand-logo" x="482.5" y="210" width="216" height="216" href="../Frontseite02.png" preserveAspectRatio="xMidYMid meet"/>
+      </g>
+      <text id="logo-fallback" x="590.5" y="332" text-anchor="middle" font-family="Cinzel,serif" font-size="42" font-weight="700" fill="url(#goldText)" filter="url(#emboss)" opacity="0">PB</text>
+
+      <!-- QR-Prägung (groß, gut lesbar) -->
+      <rect x="385" y="440" width="411" height="411" rx="26" fill="#f8f4e8" stroke="#8a6a1a" stroke-width="3" filter="url(#qrRelief)"/>
+      <rect x="393" y="448" width="395" height="395" rx="22" fill="#ffffff" opacity="0.92"/>
+      <g clip-path="url(#qrClip)" filter="url(#qrRelief)">
+        <image id="qr-embed" x="393" y="448" width="395" height="395" href="" preserveAspectRatio="xMidYMid meet"/>
+      </g>
+
+      <text id="vip-code-hint" x="590.5" y="878" text-anchor="middle" font-family="ui-monospace,monospace" font-size="14" fill="#6e5410" opacity="0.78" letter-spacing="0.06em"></text>
+
+      <text id="vip-serial" x="590.5" y="932" text-anchor="middle" font-family="Cinzel,serif" font-size="52" font-weight="700" letter-spacing="0.28em" fill="url(#goldText)" filter="url(#emboss)">VIP-01</text>
+
+      <text x="590.5" y="978" text-anchor="middle" font-family="Cinzel,serif" font-size="18" font-weight="600" letter-spacing="0.22em" fill="#b8942e" opacity="0.85">LIFETIME ACCESS</text>
+    </g>
+
+    <!-- Begleittext unter der Münze -->
+    <foreignObject x="80" y="1210" width="1257" height="180">
+      <div xmlns="http://www.w3.org/1999/xhtml" id="coin-companion-text" style="text-align:center;font-family:'Noto Sans Thai',Georgia,serif;font-size:22px;line-height:1.55;color:#d4c4a0;letter-spacing:0.02em;padding:0 1.5rem;"></div>
+    </foreignObject>
+
+    <rect x="40" y="40" width="1337" height="1337" fill="none" stroke="#333" stroke-width="1" stroke-dasharray="8 8" opacity="0.35"/>
+  </svg>
+  <p class="print-hint">Druck: 1417×1417 px · 300 dpi · Logo + QR mit Präge-Relief</p>
+
+  <script>
+    (function () {
+      var VAULT = "../05_Dokumentation/VIP_QR_Codes_Master/";
+      var LOGO_CANDIDATES = [
+        "../Frontseite02.png",
+        "../Frontseite.jpeg",
+        "../../Frontseite02.png"
+      ];
+      var COMPANION = {
+        de: "Lebenslanger Zugang: Pauli Best Price Thailand. Keine Registrierung. Kein Stress. Inklusive 1 Person Einladung. Scannen und sofort sparen.",
+        en: "Lifetime access: Pauli Best Price Thailand. No registration. No stress. Includes invitation for 1 person. Scan and save instantly.",
+        th: "เข้าถึงตลอดชีวิต: Pauli Best Price Thailand ไม่ต้องลงทะเบียน ไม่เครียด รวมคำเชิญ 1 คน สแกนแล้วประหยัดทันที",
+        pl: "Dożywotni dostęp: Pauli Best Price Thailand. Bez rejestracji. Bez stresu. W zestawie zaproszenie dla 1 osoby. Zeskanuj i od razu oszczędzaj.",
+        ru: "Пожизненный доступ: Pauli Best Price Thailand. Без регистрации. Без стресса. Включено приглашение для 1 человека. Сканируй и сразу экономь.",
+        zh: "终身访问：Pauli Best Price Thailand。无需注册。轻松无忧。含 1 人邀请。扫码即刻省钱。"
+      };
+      var CODES = [
+        "PF-7RQNT6ZG","PF-FZVRU9XB","PF-4T9TS827","PF-JP6W3ZY8","PF-XHBBQY35","PF-Z7TBKNG6",
+        "PF-PNDDA5TY","PF-6R8DJENF","PF-4AP84FK3","PF-S27C6WYW","PF-NHH4JZ8X","PF-AZZNZ7VH",
+        "PF-UFZUB6BZ","PF-63DZL5VP","PF-33K334Z9","PF-U8Z9XFEB","PF-6CPZ6C22","PF-SGX2EMZX",
+        "PF-4PSYL7LF","PF-L353FAM6","PF-NVXYEBFG","PF-B5W5VHLB","PF-NVAN44UV","PF-YKNQXBA7",
+        "PF-JJRNWEG9","PF-3BVA2G3R","PF-TDV72KKC","PF-FRZLUGSE","PF-K59D7YCB","PF-ELK2AP9D",
+        "PF-PW4GKWWP","PF-RN595VTS","PF-LPXPDS3L","PF-LRCT964T","PF-SKVAMGZU","PF-Z9H494K3",
+        "PF-JPZQUT56","PF-QFQGPW28","PF-RX9D829Y","PF-7JA5XJH4","PF-GESVSXUB","PF-7VHQSAGB",
+        "PF-UM7LPSDW","PF-ZJF68QHE","PF-2YDTG69F","PF-HG7C2DVV","PF-L7NAC3FN","PF-3XT6U5H5",
+        "PF-JTEDPJGE","PF-83F29VYK","PF-GKHXNE5D","PF-ANL9WG6C","PF-NH2MPGGB","PF-8MAMYEZY",
+        "PF-6LZ7NYE4","PF-ET97JKNE"
+      ];
+      var RIM = {
+        friends_core: { face: ["#fffef4","#f3e2a0","#d4af37","#cd7f32","#5c3a10"], rim: "#8e5a20" },
+        influencer: { face: ["#f8f9fb","#d8dde3","#a8adb4","#727980","#3f454b"], rim: "#727980" },
+        vip_influencer: { face: ["#fffef4","#f3e2a0","#d4af37","#96732e","#3d2e0a"], rim: "#7b5b1d" },
+        family_special: { face: ["#f0fff4","#b8f0c8","#3bb25a","#1d6f31","#0d3d1a"], rim: "#1d6f31" },
+        owners: { face: ["#f3eeff","#cfc0ff","#9b7bff","#4d35c7","#2d1f75"], rim: "#4d35c7" }
+      };
+
+      function pad2(n) { return String(n).padStart(2, "0"); }
+      function groupForSlot(n) {
+        if (n <= 30) return "friends_core";
+        if (n <= 40) return "influencer";
+        if (n <= 50) return "vip_influencer";
+        if (n <= 54) return "family_special";
+        return "owners";
+      }
+
+      function applyRim(group) {
+        var p = RIM[group] || RIM.friends_core;
+        var faceGrad = document.getElementById("coinFace");
+        if (faceGrad) {
+          var stops = faceGrad.querySelectorAll("stop");
+          if (stops.length >= 5) {
+            stops[0].setAttribute("stop-color", p.face[0]);
+            stops[1].setAttribute("stop-color", p.face[1]);
+            stops[2].setAttribute("stop-color", p.face[2]);
+            stops[3].setAttribute("stop-color", p.face[3]);
+            stops[4].setAttribute("stop-color", p.face[4]);
+          }
+        }
+        var rimGrad = document.getElementById("coinRim");
+        if (rimGrad) {
+          var rimStops = rimGrad.querySelectorAll("stop");
+          if (rimStops[1]) rimStops[1].setAttribute("stop-color", p.rim);
+        }
+      }
+
+      function wireLogo() {
+        var img = document.getElementById("brand-logo");
+        var fb = document.getElementById("logo-fallback");
+        if (!img) return;
+        var idx = 0;
+        function tryNext() {
+          if (idx >= LOGO_CANDIDATES.length) {
+            if (fb) fb.setAttribute("opacity", "1");
+            return;
+          }
+          var probe = new Image();
+          probe.onload = function () {
+            img.setAttribute("href", LOGO_CANDIDATES[idx]);
+            img.setAttributeNS("http://www.w3.org/1999/xlink", "href", LOGO_CANDIDATES[idx]);
+          };
+          probe.onerror = function () {
+            idx += 1;
+            tryNext();
+          };
+          probe.src = LOGO_CANDIDATES[idx];
+        }
+        tryNext();
+      }
+
+      var params = new URLSearchParams(location.search);
+      var slotNum = Math.max(1, Math.min(56, parseInt(params.get("slot") || "1", 10) || 1));
+      var code = params.get("code") || CODES[slotNum - 1];
+      var label = params.get("label") || ("VIP-" + pad2(slotNum));
+      var lang = (params.get("lang") || "de").toLowerCase().split("-")[0];
+      if (!COMPANION[lang]) lang = "de";
+      var stem = "vip-qr-" + pad2(slotNum) + "-" + code;
+      var qrPath = VAULT + stem + ".svg";
+
+      document.getElementById("vip-serial").textContent = label;
+      document.getElementById("vip-code-hint").textContent = code;
+      document.getElementById("qr-embed").setAttribute("href", qrPath);
+      document.getElementById("qr-embed").setAttributeNS("http://www.w3.org/1999/xlink", "href", qrPath);
+      var companionEl = document.getElementById("coin-companion-text");
+      if (companionEl) companionEl.textContent = COMPANION[lang];
+      applyRim(groupForSlot(slotNum));
+      wireLogo();
+      document.title = "Pauli Best Price Thailand — " + label;
+      document.documentElement.lang = lang === "zh" ? "zh-CN" : lang;
+    })();
+  </script>
+</body>
+</html>

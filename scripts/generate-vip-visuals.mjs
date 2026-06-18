@@ -22,7 +22,7 @@ import { fileURLToPath, pathToFileURL } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
 const vipDir = path.join(root, "VIP_ZUGANG");
-const dataDir = path.join(root, "data");
+const dataDir = path.join(process.cwd(), "03_Datenbank_und_Preise", "data");
 /** Rückseite: bevorzugt public/hinterseite.jpg, sonst Muenz_Design/hinterseite.png */
 function resolveCoinBackPath() {
   const jpg = path.join(root, "public", "hinterseite.jpg");

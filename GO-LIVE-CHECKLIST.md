@@ -75,7 +75,7 @@ In der Render-Web-UI unter **Environment** eintragen (Secrets mit „Sync: false
   ```
 - [ ] `osg-admin-secret.prod.js` in `.gitignore` (bereits vorgesehen)
 
-Ohne diese Datei: Dreifach-Tipp auf „Omni Solutions Global“ tut auf Live **nichts** (gewollt).
+Ohne diese Datei: Dreifach-Tipp auf „Omni Solutions Global®“ tut auf Live **nichts** (gewollt).
 
 ---
 
@@ -117,4 +117,4 @@ Ohne `OPENAI_API_KEY`: Wake-**Button** aktiviert Pauli trotzdem (Push-to-Talk).
 
 ---
 
-**Stand:** Automatisch generiert für Omni Solutions Global / PAULI BEST PRICE THAILAND.
+**Stand:** Automatisch generiert für Omni Solutions Global® Co. Ltd. / PAULI BEST PRICE THAILAND.

@@ -1,0 +1,665 @@
+================================================================================
+PAULI BEST PRICE THAILAND — ARCHITEKTUR-DOKUMENTATION
+================================================================================
+Omni Solutions Global Co., Ltd.
+Stand: 7. Juni 2026
+Repository: https://github.com/Pauli-Omni/Pauli-Best-Price-Thailand
+App-ID (Support/Tickets): pauli_best_price_thailand
+
+Legende Status:
+  [FERTIG]     = produktiv nutzbar im Web-Stack (index.html + server.js)
+  [TEILWEISE]  = Kernlogik da, externe Keys/APIs oder UI-Anbindung fehlt
+  [GERÜST]     = Struktur/Dateien vorhanden, nicht an laufende App gekoppelt
+  [FEHLT]      = bewusst nicht implementiert oder nur geplant
+  [OFFLINE]    = Code fertig, Hosting/Domain blockiert Live-Betrieb
+
+================================================================================
+1. SYSTEMÜBERBLICK
+================================================================================
+
+1.1 Dual-Stack-Architektur
+--------------------------
+  Produktiv-Surface (Kunden):
+    • index.html      — Single-Page-App (~11.000+ Zeilen)
+    • style.css       — Responsive Layout, Avatar-Stage, Mobile-First
+    • i18n-locales.js — 6 Sprachen (de, en, th, pl, ru, zh)
+    • server.js       — Express-API + statische Auslieferung
+
+  Native-Shell (Vorbereitung):
+    • lib/ (Flutter)  — Domain-Bibliothek + Minimal-MVP (Shopee-Suche)
+    • android/, ios/  — Store-Wrapper, Label „Pauli Best Price Thailand“
+
+  Externe Dienste:
+    • ElevenLabs      — Live-TTS (/api/tts)
+    • OpenAI          — Whisper STT, Vision (Clip-Scan), Pauli-Chat
+    • Involve Asia    — Affiliate-Deeplinks (Lazada, Shopee, Big C)
+    • Render.com      — geplantes Hosting (render.yaml)
+
+1.2 Datenfluss (vereinfacht)
+----------------------------
+  Browser-Klick → osg_*-Parameter → lokales Lead-Journal (localStorage)
+                → optional POST /api/lead → data/leads.jsonl
+  Marketplace   → POST /api/affiliate/deeplink → invol.co-Link → Shop
+  Pauli-Sprache → Mikrofon → /api/stt/wake oder Web Speech API
+                → /api/pauli-chat → /api/tts → Lip-Sync-Hooks
+
+1.3 Live-Status (Betrieb)
+-------------------------
+  [OFFLINE] https://omnisolutionsglobal.com        — DNS nicht aufgelöst
+  [OFFLINE] https://pauli-best-price-api.onrender.com — Render „no-server“
+  [FERTIG]  GitHub-Repository synchron (main)
+  [FERTIG]  Lokaler Betrieb: npm start → http://localhost:PORT
+
+================================================================================
+2. VERKAUFSLOGIK & PROVISIONS-TRACKING
+================================================================================
+
+2.1 Affiliate- und Lead-Tracking (osg_*)
+----------------------------------------
+Status: [FERTIG] Web | [GERÜST] Flutter
+
+Kernparameter:
+  osg_src      — Publisher-Token (paoli_best_price)
+  osg_cid      — stabile Kunden-ID (localStorage, Präfix osgc_)
+  osg_lid      — eindeutige Lead-ID pro Klick (osgl_<timestamp>_<hex>)
+  osg_partner  — Partner-Slug (z. B. lazada_th, kasikorn, seven_eleven_excl)
+  osg_ch       — Kanal (marketplace, bank, dealer, seven_voucher_activate, …)
+  osg_ts       — Klick-Zeitstempel
+  osg_intent   — Absicht (purchase, consult, provision_protect, …)
+  osg_ref      — Referral-Code in Share-URL (BPR + CID-Slug)
+  osg_vip      — VIP-Deep-Link-Parameter
+
+Wichtige Client-Funktionen (index.html):
+  osgAffiliateTrackedUrl()        — URL mit osg_* anreichern
+  osgRecordPartnerOutbound()      — Klick protokollieren
+  osgAppendLeadJournal()          — Hash-verkettetes lokales Journal
+  osgMirrorLeadToServer()         — POST /api/lead (sendBeacon + Outbox)
+  osgAttachAffiliateLinkCaptureOnce() — Delegation auf .osg-affiliate-link
+
+Server:
+  POST /api/lead → data/leads.jsonl (nur Append, kein Export-API)
+
+Datenschutz-Modell:
+  Primärgerät lokal (localStorage, Cap ~380 Einträge)
+  Server-Spiegel nur whitelist-sanierte Felder (kein Freitext aus HV-Formularen)
+
+2.2 Involve Asia (Marktplatz-Deeplinks)
+---------------------------------------
+Status: [TEILWEISE] — Code fertig, Credentials/Offer-IDs fehlen live
+
+Dateien:
+  services/involve-asia.js
+  server.js → POST /api/affiliate/deeplink
+  scripts/involve-list-offers.mjs
+
+Logik:
+  Nur Partner lazada_th, shopee_th, bigc_th mit channel === „marketplace“
+  aff_sub2 = osg_cid, aff_sub3 = osg_lid
+  Bei Fehler: Nutzer-Alert (affiliateDeeplinkFail), kein stiller Direktlink
+
+Env-Variablen (.env.example):
+  INVOLVE_ASIA_API_KEY, INVOLVE_ASIA_API_SECRET
+  INVOLVE_ASIA_OFFER_LAZADA_TH, INVOLVE_ASIA_OFFER_SHOPEE_TH, INVOLVE_ASIA_OFFER_BIGC_TH
+
+Lücke:
+  Affiliate-Deck Big C nutzt Slug „bigc“ + Kanal „retail“ → kein Involve-Pfad
+  Nur explizite bigc_th + marketplace triggert Deeplink-API
+
+Flutter: lib/providers/affiliates/involve_asia/ — [GERÜST] API-Client liefert []
+
+2.3 Referral-System (6 Freunde → Lifetime)
+------------------------------------------
+Status: [FERTIG]
+
+Client:
+  osgOwnReferralCode(), osgReferralShareUrl(?osg_ref=)
+  osgConsumeReferralParamOnce() → POST /api/referral/claim
+  osgPollReferralStatusDeferred() — alle 135 s
+  osgPremiumAccessUnlocked() — Trial | Lifetime | VIP | Demo-Unlock
+
+Server:
+  data/referral_edges.jsonl, data/referral_parent_meta.json
+  GET /api/install-fingerprint — gehashte Install-Anker
+  6 eindeutige Child-Geräte in 168h-Trial → Lifetime-Flag
+
+2.4 VIP / Pauli-Freunde
+-----------------------
+Status: [FERTIG] Server + Client | VIP-Dateien nur lokal (nicht in Git)
+
+  data/vip_codes.json (56 Codes, Ordner VIP Zugang/ gitignored)
+  POST /api/vip/redeem, /ping, /event
+  GET /api/vip/stats — Rankings, Owner-Dashboards Slots 55/56
+  Interne VIP-Provision: commissionPerPurchaseThb (0 / 0,5 / 1 THB je Slot)
+
+2.5 Checkout & Vergleichstabelle
+--------------------------------
+Status: [TEILWEISE] — Demo-Preise, echte Käufe nur via Outbound-Links
+
+  OSG_COMPARE_ROWS — illustrative Beispielpreise (kein Live-Scraping in Tabelle)
+  Abholmodus: marketplace vs. seven_pickup
+  Pauli-001 Gutschein: 15 THB, Mindestkorb 45 THB, 120 Min, Live-Tracking-Gate
+  commerce-constants.js — [GERÜST] geladen, nicht in UI/i18n verdrahtet
+
+2.6 Provisions-Tracking & Admin
+-------------------------------
+Status: [TEILWEISE]
+
+  [FERTIG]   Nutzer-sichtbare Referenz: commissionRefHtml (i18n, 6 Sprachen)
+  [FERTIG]   Admin-Dashboard (Dreifach-Tipp Marke): liest nur lokales Journal
+             osgAdminExpectedThbForCategory() — manuelle Mofa-% / Fix-THB
+  [FERTIG]   VIP purchase-Events → commissionThb in vip_events.jsonl
+  [FEHLT]    Involve/AccessTrade Conversion-Postbacks
+  [FEHLT]    Serverseitige Abrechnung mit Netzwerk-Partnern
+  [FEHLT]    leads.jsonl → Umsatz-Reconciliation-Pipeline
+
+2.7 Weitere Verkaufs-/Lead-Quellen
+----------------------------------
+  [FERTIG] HV-Fahrzeug-Formular → high_value_dealer_signal
+  [FERTIG] Autoservice-Buchung → /api/autoservice/book
+  [FERTIG] Seven-Eleven Voucher-Lifecycle (Aktivierung, QR, Ablauf)
+  [FERTIG] Partner-Benefit-Zertifikat vor Immobilien/Auto-Outbound
+  [TEILWEISE] Preissuche /api/prices/search — Shopee live, Rest Search-Links
+  [FERTIG] Clip-Scan Foto → /api/clip/identify → Preissuche
+
+================================================================================
+3. EMPATHIE-AVATAR (PAULI)
+================================================================================
+
+Hinweis: Kein Modul namens „EmpathyAvatar“ — Umsetzung als Pauli-Begleiter
+auf der Münz-/Avatar-Stage (#coin-stage) mit emotionalem LLM-Prompt.
+
+3.1 Avatar-Oberfläche
+---------------------
+Status: [FERTIG] als flacher 2D-Avatar (Three.js/WebGL entfernt)
+
+  #coin-stage — PNG Vorderseite (Frontseite02.png), CSS-Positionierung
+  Drag, Tap-to-Talk, Sprechblase (#osg-avatar-bubble), Live-Untertitel
+  Tween.js für Verbeugung/Rückkehr nach Interaktion
+
+3.2 Live-Sprachkonversation
+---------------------------
+Status: [FERTIG] (benötigt OPENAI_API_KEY + ELEVENLABS_API_KEY)
+
+  Wake: „Hallo Pauli“ (mehrsprachig, PAULI_WAKE_RE)
+  startPauliLiveConversation() — STT → /api/pauli-chat → TTS
+  osgPauliLiveMaybeAck() — kurze Bestätigungen (pauliLiveAckPool)
+  Hybrid-STT: Web Speech API → Fallback MediaRecorder + /api/stt/wake
+
+Server-Persönlichkeit (/api/pauli-chat, server.js):
+  „warm, sharp male companion avatar“
+  „honestly, emotionally measured“
+  Aktives Zuhören, Bedarfsanalyse, ethischer Beratungsverkauf
+
+3.3 Pauli TTS-Pipeline
+----------------------
+Status: [FERTIG] mit Fallback-Kette
+
+  1. playPauliVoice() → playElevenLabs() → POST /api/tts (whisper-Flag)
+  2. Fallback: public/sounds/pauli-avatar-voice.m4a (offline ElevenLabs-Sample)
+  3. Fallback: speakPauliUtterance() — Web Speech API
+
+  window.PauliVoice — speakBookingConfirm, speakAgeGateBlock, testDay/testNight
+
+  [GERÜST] Lokale MP3-Manifeste (public/sounds/pauli/) — playPauliLocalVoiceFile()
+           existiert, wird von playPauliVoice() nicht aufgerufen
+
+3.4 Lip-Sync & Gesten
+---------------------
+Status: [GERÜST]
+
+  osgLipSyncBegin/Stop/Tick — AnalyserNode angebunden
+  osgAvatarGestureStart — Typen: idle, greet, help, confirm, acknowledge
+  Lücke: osgLipSyncTick() nicht in animate()-Loop; keine sichtbare Mundbewegung
+  scripts/patch-flat-coin.mjs — geplante Ergänzung (nicht angewendet)
+
+3.5 Avatar-Tour
+---------------
+Status: [FERTIG]
+
+  osgAvatarTour() — Intro + 6 Schritte (Vergleich, Smartphones, Internet, …)
+  osgAvatarTourBoot() — Auto-Start wenn osg.tour.seen fehlt
+  Sprachbefehl: voiceCmdStartTour (6 Sprachen)
+  osgAvatarSpeakLine() — Sprechblase + Geste + playPauliVoice()
+
+3.6 Text-Chat-UI
+----------------
+Status: [GERÜST] — i18n-Keys vorhanden, kein HTML-Panel, nur Sprach-Chat
+
+3.7 Flutter Avatar
+------------------
+Status: [GERÜST] — lib/voice/voice_engine.dart nur LoggingVoiceEngine
+
+================================================================================
+4. NACHT-FLÜSTER-MODUS (WHISPER MODE)
+================================================================================
+
+Status: [FERTIG] Web — zeitgesteuert, keine separaten Nacht-MP3s
+
+4.1 Tages-/Nacht-Uhr (Geräte-Lokalzeit)
+---------------------------------------
+  isPauliDayPhase():
+    Tag:   07:00:00 – 21:00:59
+    Nacht: 21:01:00 – 06:59:59
+
+4.2 Nacht-Verhalten
+-------------------
+  Client TTS (speakPauliUtterance): volume 0,22 | rate 0,71 | pitch 0,7
+  Web-Audio-Gain (playPauliAudioBuffer): 0,28 statt 1,0
+  Server ElevenLabs: stability 0,72, style 0,15, use_speaker_boost false
+  Benachrichtigungen: nachts kein Münz-Klang (playCoinDropAudio übersprungen)
+  Dev-Button: #pauli-test-night
+
+4.3 Flutter
+-----------
+  [GERÜST] whisper_mode_settings.dart — volume 0,18, rate 0,46 (nicht an UI)
+
+4.4 Hinweis
+-----------
+  OpenAI-Modell „whisper-1“ auf /api/stt/wake = Speech-to-Text, nicht Flüstermodus
+
+================================================================================
+5. ETHISCHE REGELN & INHALTSFILTER
+================================================================================
+
+5.1 Politik & Religion — [FERTIG]
+---------------------------------
+Dreifach abgesichert (Client + Server + i18n):
+
+  Client (index.html):
+    osgPauliDetectPoliticsReligionTopic() — mehrsprachige Regex
+    Bei Treffer: osgPauliWisdomDeflectReply() — kein LLM-Aufruf
+
+  Server (server.js, /api/pauli-chat):
+    „STRICT BLOCK — politics & religion“
+    Warme Ablenkung, Pivot zu positiven Themen (Autos, Stil, Wünsche)
+
+  i18n (alle 6 Sprachen):
+    pauliWisdomPoliticsReligionDeflect
+
+5.2 Rauchen / Tabak — [FEHLT]
+-----------------------------
+  Keine Blockliste, kein Deflect-Text, kein Server-Prompt
+  Gesucht in: index.html, i18n-locales.js, server.js, legal-pages.js, lib/
+  Empfehlung: analog zu Politik/Religion ergänzen (osgPauliDetectSmokingTopic)
+
+5.3 Weitere ethische / rechtliche Leitplanken — [TEILWEISE]
+-----------------------------------------------------------
+  [FERTIG]   Keine Rechts-/Steuer-/Anlageberatung (i18n + legal-pages.js)
+  [FERTIG]   Vermittler-Rolle: „Wegweiser, keine Berater“ (legal-pages.js)
+  [FERTIG]   Alters-Gate mit PauliVoice.speakAgeGateBlock
+  [FERTIG]   Scam-Blocklist (Flutter) — nur Marktplatz-Anbieter, nicht Chat
+             lib/providers/scam_blocklist.dart, review_nlp_analyzer.dart
+  [GERÜST]   Rechtstexte: [DBD_REGISTRATION_NUMBER], [REGISTERED_OFFICE_ADDRESS_TH]
+             noch Platzhalter in legal-pages.js
+
+5.4 Datenschutz / Secrets
+-------------------------
+  .env, osg-runtime-config.js, VIP Zugang/, data/* — gitignored
+  05_Dokumente_und_Rechtliches/API_Keys_Secrets/ — gitignored
+
+================================================================================
+6. MODUL-STATUS — VOLLSTÄNDIGE LISTE
+================================================================================
+
+6.1 Web-Frontend (index.html + style.css)
+-----------------------------------------
+| Modul                              | Status      | Dateien / Hinweise |
+|------------------------------------|-------------|-------------------|
+| Responsive Layout Mobile-First     | FERTIG      | style.css, ≤480px |
+| 6-Sprachen UI (applyLang)          | FERTIG      | i18n-locales.js |
+| Avatar-Stage (flach 2D)            | FERTIG      | #coin-stage |
+| Affiliate-Link-Deck                | FERTIG      | osgRenderAffiliateDeck |
+| Vergleichstabelle (Demo)           | TEILWEISE   | statische Preise |
+| 7-Eleven Abholung / Pauli-001      | FERTIG      | Voucher-QR, Tracking-Gate |
+| VIP-Einlösung & Live-Widget        | FERTIG      | ?osg_vip= |
+| Referral-Share                     | FERTIG      | ?osg_ref= |
+| Kontakt / Support-Tickets          | FERTIG      | PBPT-#####, Modal |
+| Autoservice-Sektion                | FERTIG      | #osg-autoservice-section |
+| Clip-Scan / Barcode                | TEILWEISE   | braucht OPENAI_API_KEY |
+| Sprachbefehle (15+ Commands)       | FERTIG      | OSG_VOICE_COMMAND_REGISTRY |
+| A11y Voice-Confirm                 | FERTIG      | osgVoiceConfirm |
+| Admin-Dashboard (lokal)            | FERTIG      | Dreifach-Tipp Marke |
+| Text-Chat-Panel                    | GERÜST      | nur i18n-Keys |
+| Lip-Sync sichtbar                  | GERÜST      | Analyser ohne Tick |
+| Avatar-Gesten sichtbar             | GERÜST      | State ohne CSS-Anwendung |
+| commerce-constants → UI            | GERÜST      | nicht verdrahtet |
+
+6.2 Server (server.js + services/)
+----------------------------------
+| Endpunkt / Modul                   | Status      |
+|------------------------------------|-------------|
+| GET /api/health                    | FERTIG      |
+| POST /api/lead                     | FERTIG      |
+| POST /api/support/ticket           | FERTIG      |
+| POST /api/affiliate/deeplink       | TEILWEISE   | Keys fehlen |
+| POST /api/referral/*               | FERTIG      |
+| POST/GET /api/vip/*                | FERTIG      |
+| POST /api/autoservice/book         | FERTIG      |
+| GET /api/prices/search             | TEILWEISE   | Shopee live |
+| POST /api/clip/identify            | TEILWEISE   | OpenAI nötig |
+| POST /api/pauli-chat               | TEILWEISE   | OpenAI nötig |
+| POST /api/tts                      | TEILWEISE   | ElevenLabs/OpenAI |
+| POST /api/stt/wake                 | TEILWEISE   | OpenAI nötig |
+| Kauf-Verifizierung / MySQL         | FEHLT       | schema-minimal-verification.mysql.sql |
+| SMTP Auto-Antwort Support          | FEHLT       | nur mailto + In-App |
+
+6.3 Flutter (lib/)
+------------------
+| Modul                              | Status      |
+|------------------------------------|-------------|
+| main.dart (Shopee-Suche)           | FERTIG MVP  |
+| Terms-Gate / Consent               | FERTIG      |
+| i18n 6 Sprachen                    | FERTIG      |
+| MarketplaceEngine + 13 Kategorien  | GERÜST      |
+| TransactionEngine / FeePolicy      | GERÜST      | Logik fertig, kein UI |
+| VoiceEngine / WhisperMode          | GERÜST      |
+| Involve Asia / Access Trade        | GERÜST      |
+| Logistics / 7-Eleven Tracking      | GERÜST      |
+| Coupon-Scraper                     | GERÜST      |
+| Barcode/Image Scanner              | GERÜST      |
+| Push Notifications                 | GERÜST      |
+| NLP Trust / Scam Blocklist         | GERÜST      | Logik da, kein UI |
+
+6.4 Infrastruktur & Ops
+-----------------------
+| Modul                              | Status      |
+|------------------------------------|-------------|
+| render.yaml                        | FERTIG      |
+| deploy-omni-solutions/             | FERTIG Docs |
+| scripts/verify-go-live.sh          | FERTIG      |
+| GitHub Repo                        | FERTIG      |
+| Cloudflare DNS                     | OFFLINE     |
+| Render Service live                | OFFLINE     |
+| data/ Runtime-Persistenz           | FERTIG Design | gitignored |
+
+6.5 Neue Ordnerstruktur (Ablage)
+--------------------------------
+| Ordner                             | Status      |
+|------------------------------------|-------------|
+| 01_Design_und_Branding             | GERÜST      | .gitkeep |
+| 02_Quellcode/Core_Logik            | GERÜST      | Code noch im Root |
+| 02_Quellcode/Frontend_Responsive/* | GERÜST      | Mobile_Hoch/Quer, Desktop, TV leer |
+| 03_Datenbank_und_Preise            | GERÜST      | |
+| 04_Marketing_und_Texte             | GERÜST      | |
+| 05_Dokumente_und_Rechtliches/*     | GERÜST      | API_Keys gitignored |
+
+6.6 Migration-Matrix (Planung — noch nichts physisch verschoben)
+----------------------------------------------------------------
+Stand Ergänzung: 16. Juni 2026
+
+Hinweis: Diese Tabelle ist ausschließlich Planungsgrundlage. Alle Pfade bleiben
+bis zur expliziten Migrationsphase unverändert im Repo-Root bzw. an ihrem
+aktuellen Ort. „Root (bewusst unverändert)“ = auch nach Migration voraussichtlich
+am Projektroot (Tooling, Package-Manager, Flutter-SDK-Layout).
+
+Legende Verschiebe-Priorität:
+  1 = erste Welle — klare Modul-Zugehörigkeit, Architektur entlastet den Root
+  2 = zweite Welle — Frontend-/Asset-Aufspaltung oder Build-Anpassung nötig
+  3 = später/optional oder dauerhaft im Root belassen
+
+Spalte Abhängigkeiten: Pfade/Dateien, die nach Verschiebung angepasst oder
+mitverschoben werden müssen, damit die Komponente weiter funktioniert.
+„Keine“ = keine weiteren Repo-Pfade nötig (Dokumentation, Vorlagen, leere Ablage).
+
+Produktiv-Web (Kunden-Surface)
+| Datei-Name      | Geplantes Zielmodul                            | Priorität | Abhängigkeiten |
+|-----------------|------------------------------------------------|-----------|----------------|
+| index.html      | 02_Quellcode/Frontend_Responsive/Mobile_Hoch | 2         | style.css, commerce-constants.js, legal-pages.js, i18n-locales.js, osg-runtime-config.js (optional), public/ (Bilder/Sounds), server.js (API /api/*, statische Auslieferung) |
+| style.css       | 01_Design_und_Branding                         | 2         | index.html (<link rel="stylesheet">) |
+| i18n-locales.js | 04_Marketing_und_Texte                         | 2         | index.html (<script src>), commerce-constants.js (Platzhalter {SHIP_S}, {SHIP_M}, {SHIP_L}, {PICKUP_MARGIN}, {VOUCHER}, {MIN_STORE}) |
+| public/         | 01_Design_und_Branding                         | 2         | server.js (express.static public/), index.html (Pfade /Frontseite02.png, /hinterseite.png, /sounds/*) |
+
+Backend & Core-Logik
+| Datei-Name            | Geplantes Zielmodul        | Priorität | Abhängigkeiten |
+|-----------------------|----------------------------|-----------|----------------|
+| server.js             | 02_Quellcode/Core_Logik    | 1         | package.json, node_modules/, .env, services/involve-asia.js, services/support-tickets.js, data/, index.html, public/, certs/localhost-key.pem + certs/localhost.pem (optional, lokales HTTPS) |
+| services/             | 02_Quellcode/Core_Logik    | 1         | server.js (import), .env (INVOLVE_ASIA_*, OSG_SUPPORT_*) |
+| commerce-constants.js | 03_Datenbank_und_Preise    | 1         | index.html (<script src>, setzt window.OSG_COMMERCE) |
+| scripts/              | 02_Quellcode/Core_Logik    | 2         | package.json (npm-Skripte), node_modules/ (je Skript), .env (voice:gen, involve-list-offers), index.html (patch-flat-coin.mjs), data/ (VIP-Skripte), public/ (Sounds/Bilder), VIP Zugang/ (Ausgabe), lib/ + android/ + ios/ + .flutter-sdk/ (build-store-artifacts.sh), pubspec.yaml (Flutter-Build) |
+
+Daten & Store-Konfiguration
+| Datei-Name | Geplantes Zielmodul       | Priorität | Abhängigkeiten |
+|------------|---------------------------|-----------|----------------|
+| data/      | 03_Datenbank_und_Preise   | 1         | server.js (Pfad data/*.json, *.jsonl), scripts/generate-vip-zugang.mjs (data/vip_codes.json) |
+| stores/    | 03_Datenbank_und_Preise   | 1         | scripts/build-store-artifacts.sh (Store-Rollout), stores/credentials.env (lokal, aus credentials.template.env) |
+
+Rechtliches, Secrets & Betriebsdoku
+| Datei-Name                    | Geplantes Zielmodul                           | Priorität | Abhängigkeiten |
+|-------------------------------|-----------------------------------------------|-----------|----------------|
+| legal-pages.js                | 05_Dokumente_und_Rechtliches                  | 1         | index.html (<script src>, liest window.__OSG_LEGAL_MODULES__) |
+| .env.example                  | 05_Dokumente_und_Rechtliches/API_Keys_Secrets | 1         | Keine (Vorlage; Laufzeit-Kopie .env für server.js und Skripte) |
+| osg-runtime-config.example.js | 05_Dokumente_und_Rechtliches/API_Keys_Secrets | 2         | Keine (Vorlage; Kopie osg-runtime-config.js für index.html) |
+| osg-runtime-config.js         | 05_Dokumente_und_Rechtliches/API_Keys_Secrets | 2         | index.html (<script src>, setzt window.OSG_API_BASE) |
+| deploy-omni-solutions/        | 05_Dokumente_und_Rechtliches                  | 2         | Keine (reine Deploy-/Ops-Dokumentation) |
+| GO-LIVE-CHECKLIST.md          | 05_Dokumente_und_Rechtliches                  | 3         | Keine |
+| Architektur_Dokumentation.txt | 05_Dokumente_und_Rechtliches                  | 3         | Keine |
+
+Marketing & Zugangsmaterial
+| Datei-Name  | Geplantes Zielmodul    | Priorität | Abhängigkeiten |
+|-------------|------------------------|-----------|----------------|
+| VIP Zugang/ | 04_Marketing_und_Texte | 3         | Keine (Marketing-Ausgabe; erzeugt durch scripts/generate-vip-zugang.mjs aus data/vip_codes.json + public/) |
+| app-icons/  | 01_Design_und_Branding | 2         | Keine (Build-Artefakt aus scripts/build-app-icons.mjs; optional für android/, ios/) |
+
+Flutter / Native (Dual-Stack)
+| Datei-Name            | Geplantes Zielmodul     | Priorität | Abhängigkeiten |
+|-----------------------|-------------------------|-----------|----------------|
+| lib/                  | 02_Quellcode/Core_Logik | 3         | pubspec.yaml, pubspec.lock, analysis_options.yaml |
+| test/                 | 02_Quellcode/Core_Logik | 3         | lib/, pubspec.yaml, Flutter SDK (.flutter-sdk/ oder PATH) |
+| android/              | Root (bewusst unverändert) | 3      | pubspec.yaml, lib/ |
+| ios/                  | Root (bewusst unverändert) | 3      | pubspec.yaml, lib/ |
+| macos/                | Root (bewusst unverändert) | 3      | pubspec.yaml, lib/ |
+| pubspec.yaml          | Root (bewusst unverändert) | 3      | lib/ |
+| pubspec.lock          | Root (bewusst unverändert) | 3      | pubspec.yaml |
+| analysis_options.yaml | Root (bewusst unverändert) | 3      | Keine |
+| .metadata             | Root (bewusst unverändert) | 3      | pubspec.yaml |
+| pauli_best_price.iml  | Root (bewusst unverändert) | 3      | Keine (IDE-Metadaten) |
+
+Tooling, Build & Repo-Metadaten (Root-fix)
+| Datei-Name         | Geplantes Zielmodul        | Priorität | Abhängigkeiten |
+|--------------------|----------------------------|-----------|----------------|
+| package.json       | Root (bewusst unverändert) | 3         | server.js (start), scripts/* (npm-Skripte), node_modules/ |
+| package-lock.json  | Root (bewusst unverändert) | 3         | package.json |
+| render.yaml        | Root (bewusst unverändert) | 3         | package.json, server.js |
+| README.md          | Root (bewusst unverändert) | 3         | Keine |
+| .gitignore         | Root (bewusst unverändert) | 3         | Keine |
+| .htmlvalidate.json | Root (bewusst unverändert) | 3         | index.html (npm run check:html) |
+| node_modules/      | Root (bewusst unverändert) | 3         | package.json, package-lock.json |
+| build/             | Root (bewusst unverändert) | 3         | pubspec.yaml, lib/, android/, ios/ (Flutter-Build-Artefakte) |
+
+Geplante Zielordner (bereits angelegt, kein Verschiebe-Quellpfad)
+| Datei-Name                    | Geplantes Zielmodul          | Priorität | Abhängigkeiten |
+|-------------------------------|------------------------------|-----------|----------------|
+| 01_Design_und_Branding/       | 01_Design_und_Branding       | —         | Keine |
+| 02_Quellcode/                 | 02_Quellcode                 | —         | Keine |
+| 03_Datenbank_und_Preise/      | 03_Datenbank_und_Preise      | —         | Keine |
+| 04_Marketing_und_Texte/       | 04_Marketing_und_Texte       | —         | Keine |
+| 05_Dokumente_und_Rechtliches/ | 05_Dokumente_und_Rechtliches | —         | Keine |
+
+Responsive-Varianten (noch leer — Ziel bei SPA-Aufspaltung)
+| Geplante Ableitung            | Zielmodul                                    | Priorität | Abhängigkeiten |
+|-------------------------------|----------------------------------------------|-----------|----------------|
+| Desktop-Breakpoint-Bundle     | 02_Quellcode/Frontend_Responsive/Desktop_Web | 3         | index.html, style.css, i18n-locales.js, commerce-constants.js, legal-pages.js, public/, server.js |
+| Querformat-Mobile             | 02_Quellcode/Frontend_Responsive/Mobile_Quer | 3         | index.html, style.css, i18n-locales.js, commerce-constants.js, legal-pages.js, public/, server.js |
+| TV / Grossbild                | 02_Quellcode/Frontend_Responsive/TV_App      | 3         | index.html, style.css, i18n-locales.js, commerce-constants.js, legal-pages.js, public/, server.js |
+
+Offene Planungsfragen (vor Welle 1 klären):
+  • index.html: Monolith zuerst modularisieren oder als Ganzes verschieben?
+  • lib/: Flutter-Konvention vs. 02_Quellcode/Core_Logik — Symlink oder Root belassen
+  • data/: Runtime-Persistenz auf Render — Pfad in server.js und .gitignore synchron
+  • server.js DATA_DIR: noch PROJECT_ROOT/data — vor physischem Umzug angleichen
+
+6.7 Migrations-Vorbereitung — zentrale Pfad-Logik (PROJECT_ROOT)
+------------------------------------------------------------------
+Stand: 16. Juni 2026 | Welle 1 abgeschlossen (data/services/server verschoben).
+
+server.js (nun: `02_Quellcode/Core_Logik/server.js`):
+  • PROJECT_ROOT = process.cwd()
+  • DATA_DIR = path.join(process.cwd(), "03_Datenbank_und_Preise", "data")
+  • PUBLIC_DIR, CERTS_DIR abgeleitet von PROJECT_ROOT
+  • Alle data/*.json(l)-Pfade nutzen DATA_DIR
+  • express.static(PUBLIC_DIR) und express.static(PROJECT_ROOT)
+  • Lokales HTTPS: CERTS_DIR/certs/*.pem
+  • GET /commerce-constants.js → sendFile aus
+    path.join(process.cwd(), "03_Datenbank_und_Preise", "commerce-constants.js")
+  • Static-Guard erweitert: blockiert auch `/03_Datenbank_und_Preise/data*` und `/02_Quellcode/Core_Logik*`
+
+services/support-tickets.js:
+  • DATA_DIR = path.join(process.cwd(), "03_Datenbank_und_Preise", "data")
+  • __dirname-Relativierung entfernt
+
+VIP-Skripte (scripts/generate-vip-zugang.mjs, generate-vip-qr-only.mjs,
+scripts/generate-vip-visuals.mjs):
+  • dataDir = path.join(process.cwd(), "03_Datenbank_und_Preise", "data")
+  • vip_codes.json und mkdirSync nutzen denselben Zielpfad
+
+Abgeschlossene Welle 1 (ohne Datenverlust):
+  • data/ → 03_Datenbank_und_Preise/data/ verschoben (inkl. .gitkeep)
+  • server.js + services/ → 02_Quellcode/Core_Logik/ verschoben
+  • commerce-constants.js → 03_Datenbank_und_Preise/ verschoben
+  • Root-Ordner data/ gelöscht
+  • .gitignore so angepasst, dass `03_Datenbank_und_Preise/data/*` ignoriert wird, aber `.gitkeep` erhalten bleibt
+
+Voraussetzung Betrieb:
+  npm start / Skripte / Render aus Repo-Root starten (process.cwd() = Projektroot).
+
+6.8 Welle 2 Vorbereitung — Frontend-Sektionierung aus index.html
+----------------------------------------------------------------
+Stand: 16. Juni 2026 | Analyse-only, keine Auslagerung durchgeführt.
+
+Quelle: aktuelle Root-`index.html` (Monolith mit großem Inline-JS-Block ab den
+Script-Referenzen im unteren Dokumentbereich).
+
+| Bereich | Aktueller Ort in index.html | Beschreibung / Scope | Vorschlag für Modul-Name |
+|---|---|---|---|
+| Header/Logo-Bereich | `<header class="page-header">` innerhalb `<main class="page">` | Brand-Titel, Company-Line, Header-Avatar (`#brand-avatar`), Thai-Label, Avatar-Hint | `header-module.html` |
+| Haupt-Content-Container | `<main class="page">` mit Intro, B2B, Privacy, Membership, Map, Compare, Deals, Checkout/Booking, Premium-Lock | Zentrale Nutzerführung inkl. CTA-/Shop-/Voucher-/Lead-Bereiche; enthält viele UI-Sektionen mit eigener Interaktionslogik | `main-content-module.html` |
+| Overlays/Modals (UI-Shell) | Vor und nach `<main>`: Onboarding, Partner-Zertifikat, Age-Gate, Legal-Overlay, Support-Modal, Admin-Dash | Dialog-/Overlay-Layer, die unabhängig vom Content-Lauf gerendert und per JS ein-/ausgeblendet werden | `overlay-shell-module.html` |
+| Footer/Legal-Navigation | `<footer class="site-footer">` + Legal-Doc-Navigation | Footer-Branding, Copyright, Legal-Tabs, Kontakt-CTA | `footer-legal-module.html` |
+| Voice/Coin Stage | `#coin-stage`, `#pauli-live-caption`, `#pauli-voice-wake-btn`, Debug-Panel | Avatar-/Voice-Einstieg inkl. Wake-UI, Caption und Debug-Hooks | `voice-stage-module.html` |
+| Style-Referenzen | `<link rel="stylesheet" href="style.css">` + Google Fonts Preconnect/Stylesheet im `<head>` | Globale Styles und Font-Layer; derzeit statisch im Head verdrahtet | `styles-loader.js` (später dynamisch) |
+| Skript-Referenzen (statisch) | `<script src="osg-runtime-config.js">` im Head; unten `commerce-constants.js`, `legal-pages.js`, `i18n-locales.js` | Bootstrap-/Config- und Domain-Skripte, aktuell statisch und Reihenfolge-abhängig | `runtime-bootstrap.js` + `feature-script-loader.js` |
+| Importmap + Module-Entry | `<script type="importmap">` + `<script type="module">` (unten) | ESM-Startpunkt (u. a. Tween/CDN), derzeit im Dokumentfuß gekoppelt | `app-entry.module.js` |
+| Inline-JS Monolith (Hauptlogik) | `<script>` direkt nach den Script-Referenzen (mehrere tausend Zeilen) | State/Tracking (`osg_*`), Affiliate, Referral, VIP, i18n-DOM-Wiring, Map, Support, Admin, Voice, Coin/Animation, API-Calls | `app-core.module.js` (Orchestrator) |
+| Inline-JS: Marketplace/Compare-Konstanten | Früh im Inline-Script (`OSG_COMPARE_ROWS`, Voucher/Settlement-Konstanten etc.) | Domänenkonstanten und Vergleichsdaten; aktuell mit Runtime-Logik vermischt | `marketplace-config.module.js` |
+| Inline-JS: Event-Handling | Viele `addEventListener`-/Delegation-Blöcke im Inline-Script | UI-Events für Buttons, Dialoge, Checkout, Tracking, Admin | `ui-events.module.js` |
+| Inline-JS: API-Client-Calls | `fetch`/`osgApiFetch` gegen `/api/*` (lead, deeplink, support, tts/stt/chat, vip/referral etc.) | Netzwerkschicht mit Error-/Retry-/Fallback-Logik | `api-client.module.js` |
+
+Hinweis für Welle 2:
+  • Erst Modulgrenzen im Dokument fixieren, dann schrittweise extrahieren.
+  • Reihenfolge bei Script-Ladung beibehalten, bis `runtime-bootstrap.js` und
+    `app-entry.module.js` als neue stabile Startkette stehen.
+
+6.9 Live-Push Vorbereitung (Deploy-Config + Check-Tooling)
+-----------------------------------------------------------
+Stand: 16. Juni 2026
+
+Deploy-Konfiguration aktualisiert:
+  • `render.yaml` startCommand auf neuen Serverpfad gesetzt:
+    `node 02_Quellcode/Core_Logik/server.js`
+  • Datenpfad für Welle 1 ist im Laufzeitcode aktiv:
+    `03_Datenbank_und_Preise/data/` (siehe server.js + support-tickets + VIP-Skripte)
+  • `render.yaml` envVars: Pflichtvariablen für Render-Deploy definiert
+    (`NODE_ENV`, `PORT`, `OSG_CORS_ORIGINS`, `OSG_API_ALLOWED_ORIGINS`,
+    `OSG_INSTALL_FP_SALT` via generateValue) — werden beim Deploy automatisch
+    in die Render-Umgebung übernommen (keine lokale `.env` auf Render nötig)
+
+Pflicht-Template im Root:
+  • `.env.template` — Platzhalter für alle deploy-check-Pflichtvariablen
+  • Lokal: `cp .env.template .env` und Werte eintragen
+  • Render: Secrets im Dashboard ergänzen (OPENAI, ELEVENLABS, INVOLVE_ASIA);
+    Pflichtvariablen kommen aus `render.yaml`
+
+Neues Prüfskript im Root:
+  • `deploy-check.sh` (ausführbar)
+  • Prüft:
+    1) Existenz von `02_Quellcode/Core_Logik/server.js`
+    2) Schreibbarkeit von `03_Datenbank_und_Preise/data/`
+    3) `.env` auf erforderliche Variablen:
+       `NODE_ENV`, `PORT`, `OSG_INSTALL_FP_SALT`, `OSG_CORS_ORIGINS`, `OSG_API_ALLOWED_ORIGINS`
+    4) Warnhinweise für empfohlene Variablen:
+       `OPENAI_API_KEY`, `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID`,
+       `INVOLVE_ASIA_API_KEY`, `INVOLVE_ASIA_API_SECRET`
+
+Live-Push Ablauf (final):
+  1. `./deploy-check.sh` lokal — Pflichtvariablen in `.env` prüfen/ergänzen
+  2. Render Dashboard: fehlende Secrets setzen (sync: false Keys aus render.yaml)
+  3. `git push` auf `main` — Render startet via `autoDeploy: true` automatisch
+  4. Nach Deploy: `/api/health`, Deeplink, Support-Ticket, Voice/TTS-Fallback,
+     Schreibzugriff auf `03_Datenbank_und_Preise/data/` verifizieren
+
+Hinweis: Live-Push erfolgt über `git push`, sobald die Environment Variables
+auf Render vollständig konfiguriert sind (Pflicht aus render.yaml + Secrets
+im Dashboard). Kein manueller Render-Trigger nötig bei aktivem AutoDeploy.
+
+================================================================================
+7. INTERNATIONALISIERUNG (6 SPRACHEN)
+================================================================================
+
+Sprachen: de | en | th | pl | ru | zh (html lang zh-CN)
+
+Web:  window.OSG_LOCALES in i18n-locales.js (~4.400 Zeilen)
+      Alle nutzersichtigen Texte, aria-labels, Voice-Phrasen, Support, Tour
+
+Flutter: lib/i18n/translations/translations_*.dart
+
+Pflicht bei Änderungen: alle 6 Zweige parallel pflegen (Projekt-Regel)
+
+================================================================================
+8. SICHERHEIT & RATE-LIMITS
+================================================================================
+
+  express-rate-limit auf TTS, STT, Clip, Chat, Preise, Deeplink, Support
+  OSG_AI_DAILY_MAX — Tagesbudget kostenpflichtige AI-Routen
+  CORS / OSG_API_ALLOWED_ORIGINS — Produktions-Domains
+  Admin: window.__OSG_ADMIN_SECRET__ via osg-admin-secret.prod.js (nicht in Git)
+  .env nicht über HTTP auslieferbar (express.static dotfiles: deny)
+
+================================================================================
+9. BEKANNTE LÜCKEN & PRIORITÄTEN
+================================================================================
+
+Kritisch (Kunden sehen nichts):
+  1. Render deployen + Secrets setzen
+  2. Cloudflare DNS (@, www, api → Render)
+  3. data/vip_codes.json auf Server legen
+
+Hoch (Features eingeschränkt):
+  4. INVOLVE_ASIA_* Keys → Shop-Tracking
+  5. OPENAI_API_KEY auf Server → Wake, Chat, Clip-Scan
+  6. ELEVENLABS stabil → Live-TTS (Fallback .m4a vorhanden)
+  7. legal-pages.js Platzhalter ersetzen
+
+Mittel (Qualität):
+  8. Rauch-Filter implementieren (ethische Regel fehlt)
+  9. Lip-Sync + Gesten fertigstellen (patch-flat-coin.mjs)
+  10. commerce-constants.js in UI/i18n verdrahten
+  11. Big-C-Deck auf bigc_th + marketplace umstellen
+
+Niedrig / später:
+  12. Flutter lib/ an UI anbinden
+  13. Affiliate Conversion-Postbacks
+  14. SMTP Support-Auto-Antwort
+  15. TV_App / Mobile_Quer Layout-Varianten
+
+================================================================================
+10. WICHTIGE DATEIPFADE (SCHNELLREFERENZ)
+================================================================================
+
+  index.html              — Gesamt-App, Tracking, Avatar, Voice
+  server.js               — API, TTS, Chat, Referral, VIP
+  i18n-locales.js         — Alle UI-Texte 6 Sprachen
+  services/involve-asia.js
+  services/support-tickets.js
+  commerce-constants.js
+  legal-pages.js
+  osg-runtime-config.example.js
+  render.yaml
+  public/Frontseite02.png, public/hinterseite.jpg
+  public/sounds/pauli-avatar-voice.m4a
+  GO-LIVE-CHECKLIST.md
+  deploy-omni-solutions/URGENT-HTTPS-FIX.txt
+  scripts/verify-go-live.sh
+
+================================================================================
+ENDE DER ARCHITEKTUR-DOKUMENTATION
+================================================================================
