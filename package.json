@@ -3,10 +3,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node server.js",
-    "gencerts": "mkdir -p certs && openssl req -x509 -nodes -days 825 -newkey rsa:2048 -keyout certs/localhost-key.pem -out certs/localhost.pem -subj /CN=localhost",
+    "start": "node 02_Quellcode/Core_Logik/server.js",
+    "voice:gen": "node scripts/generate-pauli-voice-mp3.mjs",
     "check:html": "html-validate index.html",
     "vip:gen": "node scripts/generate-vip-zugang.mjs",
+    "email:probe": "node scripts/email-connectivity-probe.mjs",
+    "render:sync-involve": "node scripts/render-sync-involve-env.mjs",
+    "tresor:snapshot": "node ../OSG-Master-Tresor/scripts/osg-master-tresor-archive.mjs snapshot pauli",
+    "tresor:status": "node ../OSG-Master-Tresor/scripts/osg-master-tresor-archive.mjs status",
     "icons:app": "node scripts/build-app-icons.mjs",
     "build:stores": "bash scripts/build-store-artifacts.sh"
   },
@@ -19,7 +23,8 @@
   "dependencies": {
     "dotenv": "^16.4.5",
     "express": "^4.21.2",
-    "express-rate-limit": "^7.5.1"
+    "express-rate-limit": "^7.5.1",
+    "nodemailer": "^6.10.1"
   },
   "engines": {
     "node": ">=20"

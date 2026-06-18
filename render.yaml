@@ -8,28 +8,30 @@ services:
     plan: starter
     rootDir: .
     buildCommand: npm ci --omit=dev
-    startCommand: node server.js
+    startCommand: node 02_Quellcode/Core_Logik/server.js
     healthCheckPath: /api/health
     autoDeploy: true
     envVars:
       - key: NODE_VERSION
         value: "20"
+      # --- Pflichtvariablen (siehe .env.template / deploy-check.sh) ---
       - key: NODE_ENV
         value: production
       - key: PORT
         value: "3000"
-      - key: DISABLE_HTTPS
-        value: "1"
-      - key: OSG_PUBLIC_ORIGIN
-        value: https://omnisolutionsglobal.com
-      - key: OSG_API_PUBLIC_ORIGIN
-        value: https://api.omnisolutionsglobal.com
       - key: OSG_CORS_ORIGINS
         value: https://omnisolutionsglobal.com,https://www.omnisolutionsglobal.com
       - key: OSG_API_ALLOWED_ORIGINS
         value: https://omnisolutionsglobal.com,https://www.omnisolutionsglobal.com
       - key: OSG_INSTALL_FP_SALT
         generateValue: true
+      # --- Betrieb / Hosting ---
+      - key: DISABLE_HTTPS
+        value: "1"
+      - key: OSG_PUBLIC_ORIGIN
+        value: https://omnisolutionsglobal.com
+      - key: OSG_API_PUBLIC_ORIGIN
+        value: https://api.omnisolutionsglobal.com
       # --- Im Render-Dashboard eintragen (nicht im Repo) ---
       - key: ELEVENLABS_API_KEY
         sync: false
@@ -55,5 +57,34 @@ services:
         value: support@omnisolutionsglobal.com
       - key: OSG_SUPPORT_TICKET_START
         value: "10001"
+      - key: OSG_INFO_EMAIL
+        value: info@omnisolutionsglobal.com
+      # SMTP/IMAP — im Dashboard setzen (sync: false)
+      - key: OSG_SMTP_HOST
+        sync: false
+      - key: OSG_SMTP_PORT
+        value: "587"
+      - key: OSG_SMTP_USER
+        sync: false
+      - key: OSG_SMTP_PASS
+        sync: false
+      - key: OSG_SMTP_FROM
+        sync: false
+      - key: OSG_IMAP_HOST
+        sync: false
+      - key: OSG_IMAP_PORT
+        value: "993"
+      - key: OSG_RL_ECHO_PROTOCOL_MAX
+        value: "120"
+      - key: INVOLVE_ASIA_AFFILIATE_ID
+        value: "1085689"
+      - key: OSG_AFFILIATE_PUBLISHER
+        value: Omni Solutions Global
+      - key: INVOLVE_ASIA_API_KEY
+        sync: false
+      - key: INVOLVE_ASIA_API_SECRET
+        sync: false
+      - key: INVOLVE_ASIA_OFFER_LOTUS_TH
+        value: "4760"
       - key: OSG_RL_SUPPORT_TICKET_MAX
         value: "24"

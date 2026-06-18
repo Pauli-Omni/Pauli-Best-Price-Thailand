@@ -1,9 +1,7 @@
 import fs from "fs";
 import path from "path";
-import { fileURLToPath } from "url";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const DATA_DIR = path.join(__dirname, "..", "data");
+const DATA_DIR = path.join(process.cwd(), "03_Datenbank_und_Preise", "data");
 const SEQ_FILE = path.join(DATA_DIR, "support-ticket-seq.json");
 const TICKETS_FILE = path.join(DATA_DIR, "support-tickets.jsonl");
 

@@ -5,24 +5,41 @@ import rateLimit from "express-rate-limit";
 import fs from "fs";
 import https from "https";
 import path from "path";
-import { fileURLToPath } from "url";
 import {
   generateInvolveDeeplink,
+  getAffiliateRuntimeStatus,
   involveAsiaStatus,
+  validateAffiliateApi,
+  verifyAffiliateRequestHeaders,
 } from "./services/involve-asia.js";
+import { OSG_AFFILIATE_ID } from "./services/osg-affiliate-config.js";
 import {
   createSupportTicket,
   OSG_SUPPORT_APP_DISPLAY,
   OSG_SUPPORT_EMAIL,
 } from "./services/support-tickets.js";
+import {
+  getEmailSystemStatus,
+  isOwnerOpsSlot,
+  OSG_APP_EMAIL_REGISTRY,
+  runEmailConnectivityProbe,
+  sendEchoProtocol,
+  setEmailCritical,
+  verifyAppEmailRegistry,
+} from "./services/osg-email-connectivity.js";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+/** Projekt-Root (npm start / Render starten aus Repo-Root). */
+const PROJECT_ROOT = process.cwd();
+const DATA_DIR = path.join(process.cwd(), "03_Datenbank_und_Preise", "data");
+const PUBLIC_DIR = path.join(PROJECT_ROOT, "public");
+const CERTS_DIR = path.join(PROJECT_ROOT, "certs");
+
 const app = express();
 app.set("trust proxy", 1);
 const PORT = Number(process.env.PORT) || 3000;
 const HTTPS_PORT = Number(process.env.HTTPS_PORT) || 3443;
 
-const LEADS_FILE = path.join(__dirname, "data", "leads.jsonl");
+const LEADS_FILE = path.join(DATA_DIR, "leads.jsonl");
 
 /** Strip unknown keys and omit free-text hints from server-side lead files (privacy). */
 function appendLeadLine(obj) {
@@ -224,6 +241,11 @@ const rlSupportTicket = osgRateLimit({
   max: 24,
   envMax: "OSG_RL_SUPPORT_TICKET_MAX",
 });
+const rlEchoProtocol = osgRateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 120,
+  envMax: "OSG_RL_ECHO_PROTOCOL_MAX",
+});
 
 /** Involve Asia account limit: 20 deeplink calls/min — shared global guard */
 const osgInvolveDeeplinkBudget = { windowStart: 0, count: 0 };
@@ -350,7 +372,44 @@ app.get("/api/health", (_req, res) => {
     ok: true,
     app: OSG_SUPPORT_APP_DISPLAY,
     involveAsia: involveAsiaStatus(),
+    affiliateId: OSG_AFFILIATE_ID,
+    affiliate: getAffiliateRuntimeStatus(),
+    supportEmail: OSG_SUPPORT_EMAIL,
+    emailSystem: getEmailSystemStatus(),
+    appEmailRegistry: verifyAppEmailRegistry(),
   });
+});
+
+function osgAffiliateSignatureGate(req, res, next) {
+  const sig = verifyAffiliateRequestHeaders(req.headers);
+  if (!sig.ok) {
+    return res.status(403).type("json").json({
+      error: "affiliate_signature_invalid",
+      reason: sig.reason,
+    });
+  }
+  req.osgAffiliateAppId = sig.appId;
+  return next();
+}
+
+app.get("/api/affiliate/check", async (req, res) => {
+  const appId = String(
+    req.query.appId || req.get("X-OSG-App-Id") || "pauli_best_price_thailand"
+  )
+    .trim()
+    .slice(0, 96);
+  try {
+    const payload = await validateAffiliateApi(appId);
+    return res.type("json").json({ ok: true, ...payload });
+  } catch (e) {
+    console.error("[affiliate/check]", e);
+    return res.status(500).type("json").json({
+      ok: false,
+      label: "Affiliate-API: INACTIVE",
+      active: false,
+      error: "affiliate_check_failed",
+    });
+  }
 });
 
 app.use("/api", osgApiOriginAllowlist);
@@ -513,7 +572,57 @@ app.post("/api/support/ticket", rlSupportTicket, (req, res) => {
   }
 });
 
-app.post("/api/affiliate/deeplink", rlAffiliateDeeplink, async (req, res) => {
+app.post("/api/ops/echo-protocol", rlEchoProtocol, async (req, res) => {
+  const b = req.body;
+  if (!b || typeof b !== "object") {
+    return res.status(400).type("json").json({ error: "invalid_body" });
+  }
+  try {
+    const result = await sendEchoProtocol({
+      eventType: b.eventType,
+      appId: b.appId,
+      locale: b.locale || b.lang,
+      customerId: b.customerId || b.osg_cid,
+      meta: b.meta && typeof b.meta === "object" ? b.meta : {},
+    });
+    return res.type("json").json({
+      ok: true,
+      ...result,
+      emailSystem: getEmailSystemStatus(),
+    });
+  } catch (e) {
+    const code = e && e.code;
+    if (code === "invalid_echo_event") {
+      return res.status(400).type("json").json({ error: "invalid_echo_event" });
+    }
+    console.error("[ops/echo-protocol]", e);
+    return res.status(500).type("json").json({ error: "echo_protocol_failed" });
+  }
+});
+
+app.get("/api/ops/email-probe", rlVipStats, async (req, res) => {
+  try {
+    const code = String(req.query.code || "").trim().slice(0, 64);
+    const profile = vipProfileForCode(code);
+    if (!profile || !isOwnerOpsSlot(profile.slot)) {
+      return res.status(403).type("json").json({ ok: false, error: "forbidden" });
+    }
+    const probe = await runEmailConnectivityProbe();
+    return res.type("json").json({
+      ok: true,
+      code,
+      profile: { slot: profile.slot, role: profile.role },
+      probe,
+      emailSystem: getEmailSystemStatus(),
+      appEmailRegistry: OSG_APP_EMAIL_REGISTRY,
+    });
+  } catch (e) {
+    console.error("[ops/email-probe]", e);
+    return res.status(500).type("json").json({ ok: false, error: "email_probe_failed" });
+  }
+});
+
+app.post("/api/affiliate/deeplink", rlAffiliateDeeplink, osgAffiliateSignatureGate, async (req, res) => {
   if (!osgConsumeInvolveDeeplinkBudget(res)) return;
 
   const b = req.body;
@@ -525,6 +634,11 @@ app.post("/api/affiliate/deeplink", rlAffiliateDeeplink, async (req, res) => {
   const url = String(b.url || "").trim().slice(0, 2000);
   const affSub2 = String(b.osgCid || b.osg_cid || "").trim().slice(0, 96);
   const affSub3 = String(b.osgLid || b.osg_lid || "").trim().slice(0, 96);
+  const appId = String(
+    b.appId || req.osgAffiliateAppId || "pauli_best_price_thailand"
+  )
+    .trim()
+    .slice(0, 96);
 
   if (!partner || !url) {
     return res.status(400).type("json").json({ error: "invalid_request" });
@@ -536,6 +650,8 @@ app.post("/api/affiliate/deeplink", rlAffiliateDeeplink, async (req, res) => {
       url,
       affSub2,
       affSub3,
+      appId,
+      channel: String(b.channel || b.osg_ch || "marketplace").trim().slice(0, 48),
     });
     return res.type("json").json({
       ok: true,
@@ -552,14 +668,17 @@ app.post("/api/affiliate/deeplink", rlAffiliateDeeplink, async (req, res) => {
     if (code === "invalid_partner" || code === "invalid_url") {
       return res.status(400).type("json").json({ error: code });
     }
+    if (code === "finance_module_excluded" || code === "retail_api_scope_required") {
+      return res.status(403).type("json").json({ error: code });
+    }
     console.error("[affiliate/deeplink]", e);
     return osgSafeUpstreamError(res);
   }
 });
 
 /** Referrer edges: `{ parentRef, childCid, claimedAt }` append-only audit file. */
-const REFERRAL_FILE = path.join(__dirname, "data", "referral_edges.jsonl");
-const REFERRAL_PARENT_META = path.join(__dirname, "data", "referral_parent_meta.json");
+const REFERRAL_FILE = path.join(DATA_DIR, "referral_edges.jsonl");
+const REFERRAL_PARENT_META = path.join(DATA_DIR, "referral_parent_meta.json");
 
 function referralReadEdges() {
   try {
@@ -781,9 +900,9 @@ app.get("/api/install-fingerprint", rlInstallFp, (req, res) => {
   }
 });
 
-const VIP_CODES_PATH = path.join(__dirname, "data", "vip_codes.json");
-const VIP_EVENTS_FILE = path.join(__dirname, "data", "vip_events.jsonl");
-const VIP_ONLINE_FILE = path.join(__dirname, "data", "vip_online.json");
+const VIP_CODES_PATH = path.join(DATA_DIR, "vip_codes.json");
+const VIP_EVENTS_FILE = path.join(DATA_DIR, "vip_events.jsonl");
+const VIP_ONLINE_FILE = path.join(DATA_DIR, "vip_online.json");
 let vipCodesCache = null;
 let vipProfilesCache = null;
 
@@ -838,10 +957,10 @@ function vipBuildProfiles(codes) {
       base.inviteFreeCount = 1;
     } else if (slot >= 31 && slot <= 40) {
       base.role = "influencer";
-      base.commissionPerPurchaseThb = 0.5;
+      base.commissionPerPurchaseThb = 1;
     } else if (slot >= 41 && slot <= 50) {
       base.role = "vip_influencer";
-      base.commissionPerPurchaseThb = 1;
+      base.commissionPerPurchaseThb = 5;
     } else if (slot >= 51 && slot <= 54) {
       base.role = "family_special";
       base.inviteFreeCount = 3;
@@ -870,6 +989,37 @@ function vipProfileForCode(code) {
   const c = String(code || "").trim();
   if (!c) return null;
   return loadVipProfiles()[c] || null;
+}
+
+/** Geschenk-THB beim VIP-Scan: 59 THB je Einladungs-/Zugangseinheit (Slots 1–30, Familie, Wii/Pauli). */
+function vipGiftFromProfile(profile) {
+  if (!profile || typeof profile !== "object") return null;
+  const cascade = Number(profile.inviteCascadePerFriend || 0);
+  const free = Number(profile.inviteFreeCount || 0);
+  const units = cascade > 0 ? cascade : free;
+  if (units <= 0) return null;
+  const giftThb = units * 59;
+  const slot = Number(profile.slot || 0);
+  const out = {
+    giftThb,
+    giftUnits: units,
+    slot,
+    role: String(profile.role || "").trim(),
+    giftSenderLabel: String(profile.label || "").trim(),
+  };
+  if (slot === 55) {
+    out.giftSenderDisplay = "Wii";
+    out.giftSenderAlt = "Chatchadapha";
+  } else if (slot === 56) {
+    out.giftSenderDisplay = "Pauli";
+  } else if (slot >= 51 && slot <= 54) {
+    const lbl = out.giftSenderLabel;
+    const generic = `VIP-${String(slot).padStart(2, "0")}`;
+    if (lbl && lbl.toUpperCase() !== generic) {
+      out.giftSenderDisplay = lbl;
+    }
+  }
+  return out;
 }
 
 function vipReadEvents() {
@@ -1078,7 +1228,12 @@ app.post("/api/vip/redeem", rlVipRedeem, (req, res) => {
     }
     const profile = vipProfileForCode(code);
     if (profile) {
-      return res.status(200).type("json").json({ ok: true, profile });
+      const gift = vipGiftFromProfile(profile);
+      return res.status(200).type("json").json({
+        ok: true,
+        profile,
+        gift: gift || null,
+      });
     }
     return res.status(403).type("json").json({ ok: false, error: "invalid_code" });
   } catch (e) {
@@ -1201,6 +1356,7 @@ app.get("/api/vip/stats", rlVipStats, (req, res) => {
         onlineNow: online.onlineNow,
         downloads: stats.downloads,
         purchases: stats.purchases,
+        emailSystem: getEmailSystemStatus(),
       };
     }
     if (profile.slot === 56) {
@@ -1220,7 +1376,12 @@ app.get("/api/vip/stats", rlVipStats, (req, res) => {
           revenueThb: Number(stats.revenueThb.toFixed(2)),
           serviceUses: stats.serviceUses,
         },
+        emailSystem: getEmailSystemStatus(),
       };
+    }
+    if (isOwnerOpsSlot(profile.slot)) {
+      payload.emailSystem = getEmailSystemStatus();
+      payload.appEmailRegistry = verifyAppEmailRegistry();
     }
     res.type("json").json(payload);
   } catch (e) {
@@ -1236,7 +1397,7 @@ const rlAutoservice = osgRateLimit({
   envMax: "OSG_RL_AUTOSERVICE_MAX",
 });
 
-const AUTOSERVICE_FILE = path.join(__dirname, "data", "autoservice_bookings.jsonl");
+const AUTOSERVICE_FILE = path.join(DATA_DIR, "autoservice_bookings.jsonl");
 
 app.post("/api/autoservice/book", rlAutoservice, (req, res) => {
   try {
@@ -1472,9 +1633,28 @@ app.post("/api/pauli-chat", rlChat, async (req, res) => {
       .filter((m) => m.content.trim());
 
     const system = [
-      "You are Pauli, the friendly male navigator avatar for a Thailand-focused shopping and partner-link app (PAULI BEST PRICE / Omni Solutions Global).",
-      "You give short, practical, conversational replies — not legal, tax, investment, insurance, or real-estate advice.",
-      "You may explain routes, savings ideas, and where to tap next in the app. Never invent prices or binding partner terms.",
+      "You are Pauli, a warm, sharp male companion avatar for PAULI BEST PRICE Thailand (Omni Solutions Global® Co. Ltd.).",
+      "Personality: honest, emotionally measured — mirror of Dr. Paul-J. Rockus. Not a yes-man: you may disagree respectfully when the user is rude or clearly wrong (e.g. 'Nein, das sehe ich ganz anders'). Stay professional, never cruel.",
+      "Active listening: open with brief natural acknowledgments (Mhm, Ah okay) when the user shared something personal; vary wording. Never open with 'Verstehe' if it sounds like you failed to understand.",
+      "DETECTIVE MODE (strict): NEVER say you are sorry, cannot help, or do not understand — banned phrases include 'Tut mir leid', 'Entschuldigung', 'Ich kann nicht', 'Verstehe ich nicht', 'I don't understand', 'Sorry', 'I can't'.",
+      "If unclear: ask a sharp hypothesis question ('Meinst du X oder Y?') — never shrug.",
+      "If ~80% sure what they need: propose action with safety check ('Ich lege das mal so an, okay?') — wait for confirmation tone.",
+      "If you were wrong: admit openly WITHOUT apology ('Da bin ich falsch abgebogen, lass uns korrigieren.') — no 'sorry'.",
+      "RECLAMATION COMPLIANCE (strict): You are NEVER a lawyer, attorney, or legal representative. You are ONLY a communication assistant and guide (Wegweiser) for complaints — never legal advice.",
+      "Complaint drafts referencing laws (OCPB, Civil Code/Zivilgesetzbuch, consumer protection): firm, factual, polite tone — no insults, no threats; state facts and statutory deadlines only.",
+      "If merchant warranty is shorter than typical statutory reference (client may compare): gently note 'seller says X but Y is often usual — we put that in the message' without claiming to be a lawyer.",
+      "Emphasize support: you help users assert rights with the merchant efficiently — you do not leave them alone in the process.",
+      "For such drafts: tell the user to send the text directly in the merchant's Lazada or Shopee in-app chat (not private messengers) to follow platform policies.",
+      "Every legally relevant complaint draft: clarify it is NOT legal advice, only a communication template; user must verify against proof of purchase — client may append localized disclaimer if omitted.",
+      "DRAFT OWNERSHIP (strict): Pauli NEVER sends messages to merchants. Generate drafts only; user must explicitly confirm (button or voice) before pasting text themselves in Lazada/Shopee chat.",
+      "AI TRANSPARENCY: Pauli Avatar is an AI assistant and may err. For legal/finance/reclamation topics, remind users to verify drafts against proof of purchase — client may append localized AI hint.",
+      "Small talk: home, work, stress, dreams, worries, purchases — listen first; one gentle follow-up when helpful.",
+      "Background need analysis: infer future plans (moving, car, phone, insurance, credit, renovation) from what they say.",
+      "Sales psychology (ethical): consultative selling — Socratic questions, gentle reversal / 'Nein-Strategie' framing. On objections, explore alternatives instead of defending; help the user want the better fit themselves.",
+      "When a need emerges, guide unobtrusibly to app areas: autoservice, smartphones, internet/tariffs, property, finance, insurance partners — never pushy, never invent prices or binding terms.",
+      "Spoken style: 2–5 short sentences. No legal, tax, investment, insurance, or real-estate advice.",
+      "STRICT BLOCK — politics & religion: Never discuss, debate, or take sides on politics or religion under any provocation.",
+      "If the user raises politics or religion: do not cold-refuse. Warmly deflect like a wise friend — history shows these two topics stirred enough trouble and wars; you'd rather stay friends than argue at the table; pivot to life's positives (great cars, style, good taste, what makes them happy) and ask what is next on their wish list. Then gently steer toward app guidance if a need fits.",
       `Reply primarily in the user's UI language (BCP-like code: ${lang}).`,
     ].join(" ");
 
@@ -1533,12 +1713,34 @@ async function resolveVoiceId(apiKey) {
   return resolvedVoiceId;
 }
 
+async function osgOpenAiTtsMp3(text, whisper) {
+  const key = process.env.OPENAI_API_KEY || process.env.PAULI_OPENAI_API_KEY;
+  if (!key) throw new Error("openai_tts_unavailable");
+  const voice = String(process.env.OPENAI_TTS_VOICE || "onyx").slice(0, 32);
+  const model = String(process.env.OPENAI_TTS_MODEL || "tts-1").slice(0, 32);
+  const r = await fetch("https://api.openai.com/v1/audio/speech", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${key}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      model,
+      input: text,
+      voice,
+      response_format: "mp3",
+      speed: whisper ? 0.92 : 1.0,
+    }),
+  });
+  if (!r.ok) {
+    await r.text().catch(() => "");
+    throw new Error("openai_tts_upstream");
+  }
+  return Buffer.from(await r.arrayBuffer());
+}
+
 app.post("/api/tts", rlTts, async (req, res) => {
   try {
-    const apiKey = process.env.ELEVENLABS_API_KEY;
-    if (!apiKey) {
-      return res.status(500).json({ error: "ELEVENLABS_API_KEY missing in .env" });
-    }
     if (!osgConsumeAiBudget(res, 1)) return;
     const text =
       typeof req.body?.text === "string" ? req.body.text.slice(0, 2500) : "";
@@ -1546,11 +1748,23 @@ app.post("/api/tts", rlTts, async (req, res) => {
     if (!text.trim()) {
       return res.status(400).json({ error: "text required" });
     }
+
+    res.setHeader("Content-Type", "audio/mpeg");
+    res.setHeader("Cache-Control", "no-store");
+    res.setHeader("X-Content-Type-Options", "nosniff");
+
+    const apiKey = process.env.ELEVENLABS_API_KEY;
+    if (!apiKey) {
+      const mp3 = await osgOpenAiTtsMp3(text.trim(), whisper);
+      res.send(mp3);
+      return;
+    }
+
     const voiceId = await resolveVoiceId(apiKey);
     if (!voiceId) {
-      return res
-        .status(500)
-        .json({ error: "No voice: set ELEVENLABS_VOICE_ID in .env or add a voice in ElevenLabs" });
+      const mp3 = await osgOpenAiTtsMp3(text.trim(), whisper);
+      res.send(mp3);
+      return;
     }
 
     /* Streaming-Endpoint: ElevenLabs liefert Audio-Chunks sofort aus,
@@ -1578,12 +1792,10 @@ app.post("/api/tts", rlTts, async (req, res) => {
     });
     if (!r.ok) {
       await r.text().catch(() => "");
-      return osgSafeUpstreamError(res, 502);
+      const mp3 = await osgOpenAiTtsMp3(text.trim(), whisper);
+      res.send(mp3);
+      return;
     }
-
-    res.setHeader("Content-Type", "audio/mpeg");
-    res.setHeader("Cache-Control", "no-store");
-    res.setHeader("X-Content-Type-Options", "nosniff");
 
     /* WHATWG ReadableStream → Node Readable → direkt an Client pipen.
        Der Client empfängt die MP3-Bytes sobald ElevenLabs sie produziert. */
@@ -1601,7 +1813,7 @@ app.post("/api/tts", rlTts, async (req, res) => {
 });
 
 /** Block list: verhindert öffentlichen Zugriff auf Secrets, Datendateien,
-    interne Skripte und Server-Code, auch wenn `express.static(__dirname)`
+    interne Skripte und Server-Code, auch wenn `express.static(PROJECT_ROOT)`
     den Projekt-Root statisch ausliefert. */
 const OSG_STATIC_DENY = [
   /^\/?\.env(\..*)?$/i,
@@ -1610,6 +1822,8 @@ const OSG_STATIC_DENY = [
   /^\/?\.htmlvalidate/i,
   /^\/?node_modules(\/|$)/i,
   /^\/?data(\/|$)/i,
+  /^\/?03_Datenbank_und_Preise\/data(\/|$)/i,
+  /^\/?02_Quellcode\/Core_Logik(\/|$)/i,
   /^\/?scripts(\/|$)/i,
   /^\/?certs(\/|$)/i,
   /^\/?deploy-omni-solutions(\/|$)/i,
@@ -1633,11 +1847,16 @@ function osgStaticGuard(req, res, next) {
 }
 
 app.use(osgStaticGuard);
-app.use(express.static(path.join(__dirname, "public")));
-app.use(express.static(__dirname, { dotfiles: "deny", index: ["index.html"] }));
+app.get("/commerce-constants.js", (req, res) => {
+  res.sendFile(
+    path.join(process.cwd(), "03_Datenbank_und_Preise", "commerce-constants.js"),
+  );
+});
+app.use(express.static(PUBLIC_DIR));
+app.use(express.static(PROJECT_ROOT, { dotfiles: "deny", index: ["index.html"] }));
 
-const CERT_KEY_PATH = path.join(__dirname, "certs", "localhost-key.pem");
-const CERT_PATH = path.join(__dirname, "certs", "localhost.pem");
+const CERT_KEY_PATH = path.join(CERTS_DIR, "localhost-key.pem");
+const CERT_PATH = path.join(CERTS_DIR, "localhost.pem");
 
 if (
   !OSG_INSTALL_FP_RAW ||
@@ -1706,4 +1925,29 @@ if (
 
 app.listen(PORT, () => {
   console.log(`PAULI BEST PRICE — http://localhost:${PORT}`);
+  validateAffiliateApi("pauli_best_price_thailand")
+    .then((aff) => {
+      console.log("[affiliate-check]", aff.label, {
+        affiliateId: aff.affiliateId,
+        reason: aff.reason,
+      });
+    })
+    .catch((e) => {
+      console.error("[affiliate-check] startup failed:", e && e.message);
+    });
+  runEmailConnectivityProbe()
+    .then((probe) => {
+      const st = probe.status || getEmailSystemStatus();
+      console.log("[email-probe]", st.label || st.level, {
+        smtpHost: probe.smtp && probe.smtp.host,
+        smtp: probe.smtp && probe.smtp.tcp,
+        imap: probe.imap && probe.imap.tcp,
+        auth: probe.smtp && probe.smtp.auth,
+        echoTest: probe.echoTest,
+      });
+    })
+    .catch((e) => {
+      console.error("[email-probe] startup failed:", e && e.message);
+      setEmailCritical("startup_probe_failed", { message: String(e && e.message) });
+    });
 });
