@@ -15,6 +15,13 @@ const Map<String, String> translationsEn = {
       '• Data protection per Thailand PDPA and EU GDPR.',
   'consent.checkbox': 'I have read and accept the Terms of Service.',
   'consent.accept': 'Accept and start app',
+  'consent.decline': 'Decline',
+  'consent.decline_title': 'Cannot use the app without terms',
+  'consent.decline_lead':
+      'Sorry — without confirming the terms we cannot start Pauli Best Price Thailand. Installation ends now.',
+  'consent.decline_door_open':
+      'No problem: you can download the app again from the App Store or Play Store any time, accept the terms on your next start, and use it normally — we do not lock you out.',
+  'consent.decline_exit': 'Understood',
 
   'search.hint': 'Search products',
   'search.button': 'Search',

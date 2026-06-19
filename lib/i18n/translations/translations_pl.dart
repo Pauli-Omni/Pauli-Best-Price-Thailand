@@ -18,6 +18,13 @@ const Map<String, String> translationsPl = {
       '• Ochrona danych zgodnie z PDPA i RODO.',
   'consent.checkbox': 'Przeczytałem(-am) regulamin i akceptuję go.',
   'consent.accept': 'Zaakceptuj i uruchom',
+  'consent.decline': 'Odrzuć',
+  'consent.decline_title': 'Bez regulaminu niestety nie da się korzystać',
+  'consent.decline_lead':
+      'Szkoda — bez potwierdzenia regulaminu nie możemy uruchomić Pauli Best Price Thailand. Instalacja kończy się teraz.',
+  'consent.decline_door_open':
+      'Spokojnie: możesz w każdej chwili ponownie pobrać aplikację ze sklepu App Store lub Play Store, zaakceptować regulamin przy następnym starcie i normalnie korzystać — niczego Ci nie blokujemy.',
+  'consent.decline_exit': 'Rozumiem',
 
   'search.hint': 'Wyszukaj produkty',
   'search.button': 'Szukaj',

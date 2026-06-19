@@ -17,6 +17,13 @@ const Map<String, String> translationsZh = {
       '• 遵循泰国 PDPA 与 GDPR 的数据保护规范。',
   'consent.checkbox': '我已阅读并接受服务条款。',
   'consent.accept': '接受并启动',
+  'consent.decline': '拒绝',
+  'consent.decline_title': '未接受条款则无法使用',
+  'consent.decline_lead':
+      '很遗憾——若未确认条款，我们无法启动 Pauli Best Price Thailand。安装现在结束。',
+  'consent.decline_door_open':
+      '没关系：您可随时从 App Store 或 Play Store 重新下载，下次启动时接受条款即可正常使用——我们不会封锁您。',
+  'consent.decline_exit': '知道了',
 
   'search.hint': '搜索商品',
   'search.button': '搜索',

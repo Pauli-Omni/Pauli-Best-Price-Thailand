@@ -15,6 +15,13 @@ const Map<String, String> translationsTh = {
       '• คุ้มครองข้อมูลตาม PDPA และ GDPR',
   'consent.checkbox': 'ฉันได้อ่านและยอมรับข้อกำหนดการใช้งาน',
   'consent.accept': 'ยอมรับและเริ่มใช้งาน',
+  'consent.decline': 'ปฏิเสธ',
+  'consent.decline_title': 'ไม่มีข้อกำหนด — ใช้งานไม่ได้',
+  'consent.decline_lead':
+      'เสียดายครับ — หากไม่ยืนยันข้อกำหนด เราไม่สามารถเปิด Pauli Best Price Thailand ได้ การติดตั้งจะสิ้นสุดตอนนี้',
+  'consent.decline_door_open':
+      'ไม่เป็นไร: คุณดาวน์โหลดจาก App Store หรือ Play Store ใหม่ได้ทุกเมื่อ ยอมรับข้อกำหนดครั้งถัดไป แล้วใช้งานได้ตามปกติ — เราไม่ได้ล็อกคุณไว้',
+  'consent.decline_exit': 'เข้าใจแล้ว',
 
   'search.hint': 'ค้นหาสินค้า',
   'search.button': 'ค้นหา',

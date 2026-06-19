@@ -74,6 +74,69 @@
       </div>
     </div>
 
+    <div
+      class="osg-terms-gate-overlay"
+      id="osg-terms-gate-overlay"
+      hidden
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="osg-terms-gate-heading"
+    >
+      <div class="osg-terms-gate-backdrop" aria-hidden="true"></div>
+      <div class="osg-terms-gate-dialog">
+        <h2 id="osg-terms-gate-heading" class="osg-terms-gate-heading"></h2>
+        <p id="osg-terms-gate-lead" class="osg-terms-gate-lead"></p>
+        <label class="osg-terms-gate-check-label" for="osg-terms-gate-checkbox">
+          <input type="checkbox" id="osg-terms-gate-checkbox" />
+          <span id="osg-terms-gate-checkbox-label"></span>
+        </label>
+        <div class="osg-terms-gate-actions">
+          <button type="button" class="booking-btn-secondary" id="osg-terms-gate-view-btn"></button>
+          <button type="button" class="booking-btn-secondary" id="osg-terms-gate-decline-btn"></button>
+          <button type="button" class="booking-btn" id="osg-terms-gate-confirm-btn" disabled></button>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="osg-terms-gate-overlay osg-terms-decline-overlay"
+      id="osg-terms-decline-overlay"
+      hidden
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="osg-terms-decline-heading"
+    >
+      <div class="osg-terms-gate-backdrop" aria-hidden="true"></div>
+      <div class="osg-terms-gate-dialog">
+        <h2 id="osg-terms-decline-heading" class="osg-terms-gate-heading"></h2>
+        <p id="osg-terms-decline-lead" class="osg-terms-gate-lead"></p>
+        <p id="osg-terms-decline-door" class="pickup-mode-hint"></p>
+        <div class="osg-terms-gate-actions">
+          <button type="button" class="booking-btn" id="osg-terms-decline-exit-btn"></button>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="osg-terms-gate-overlay osg-first-boot-location-overlay"
+      id="osg-first-boot-location-overlay"
+      hidden
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="osg-first-boot-location-heading"
+    >
+      <div class="osg-terms-gate-backdrop" aria-hidden="true"></div>
+      <div class="osg-terms-gate-dialog">
+        <h2 id="osg-first-boot-location-heading" class="osg-terms-gate-heading"></h2>
+        <p id="osg-first-boot-location-lead" class="osg-terms-gate-lead"></p>
+        <p id="osg-first-boot-privacy-note" class="pickup-mode-hint"></p>
+        <div class="osg-terms-gate-actions">
+          <button type="button" class="booking-btn" id="osg-first-boot-location-allow"></button>
+          <button type="button" class="booking-btn-secondary" id="osg-first-boot-location-decline"></button>
+        </div>
+      </div>
+    </div>
+
     <div class="osg-draft-confirm-overlay" id="osg-draft-confirm-overlay" hidden>
       <div
         role="dialog"
@@ -237,6 +300,18 @@
       </p>
 
       <p class="lead" id="i18n-lead"></p>
+
+      <section
+        class="osg-trust-pledge-panel"
+        id="osg-trust-pledge-panel"
+        aria-labelledby="osg-trust-pledge-heading"
+        hidden
+      >
+        <h2 id="osg-trust-pledge-heading" class="osg-trust-pledge-heading"></h2>
+        <p id="osg-trust-pledge-anonym" class="osg-trust-pledge-block osg-trust-pledge-block--primary"></p>
+        <p id="osg-trust-pledge-independence" class="osg-trust-pledge-block"></p>
+        <p id="osg-trust-pledge-ads" class="osg-trust-pledge-block osg-trust-pledge-block--ads"></p>
+      </section>
 
       <section aria-labelledby="intro-heading">
         <h2 id="intro-heading">Willkommen</h2>
@@ -1281,6 +1356,7 @@
     <script src="assets/scripts/cross_sell_logic.js"></script>
     <script src="assets/scripts/avatar_mishap_logic.js"></script>
     <script src="assets/scripts/i18n_lang_guard.js"></script>
+    <script src="assets/scripts/startup_boot_logic.js"></script>
     <script src="assets/scripts/cultural_trend_pools.js"></script>
     <script src="assets/scripts/cultural_trends_logic.js"></script>
     <script src="assets/scripts/detective_logic.js"></script>
@@ -8907,6 +8983,20 @@
                       ? "zh-CN"
                       : "de";
           document.getElementById("i18n-lead").innerHTML = pack.lead;
+          var trustH = document.getElementById("osg-trust-pledge-heading");
+          if (trustH) trustH.textContent = pack.trustPledgeHeading || "";
+          var trustA = document.getElementById("osg-trust-pledge-anonym");
+          if (trustA) trustA.innerHTML = pack.trustPledgeAnonymHtml || "";
+          var trustI = document.getElementById("osg-trust-pledge-independence");
+          if (trustI) trustI.innerHTML = pack.trustPledgeIndependenceHtml || "";
+          var trustAd = document.getElementById("osg-trust-pledge-ads");
+          if (trustAd) trustAd.innerHTML = pack.trustPledgeAdsHtml || "";
+          try {
+            if (window.OSG_STARTUP_BOOT) {
+              window.OSG_STARTUP_BOOT.recordTrustPledgeLaunchOncePerSession();
+              window.OSG_STARTUP_BOOT.syncTrustPledgePanelVisibility();
+            }
+          } catch (_) {}
           applyBrandHeader(pack);
           document.getElementById("intro-heading").textContent = pack.introTitle;
           document.getElementById("i18n-intro").innerHTML = pack.intro;
@@ -8998,12 +9088,28 @@
             osgVipMaybeResumeGiftOverlay(pack);
           } catch (_) {}
           try {
-            requestAnimationFrame(function () {
-              osgMaybeShowPersonalOnboarding();
-            });
-          } catch (_) {
-            osgMaybeShowPersonalOnboarding();
-          }
+            if (window.OSG_STARTUP_BOOT) {
+              window.OSG_STARTUP_BOOT.hydrateTermsGate(pack);
+              window.OSG_STARTUP_BOOT.hydrateLocationGate(pack);
+              void window.OSG_STARTUP_BOOT.runFirstLaunchGates(pack, {
+                onRequestGeo: function (p) {
+                  osgTryActivateGeolocation(p || pack);
+                },
+              }).then(function () {
+                if (window.OSG_STARTUP_BOOT) {
+                  window.OSG_STARTUP_BOOT.recordTrustPledgeLaunchOncePerSession();
+                  window.OSG_STARTUP_BOOT.syncTrustPledgePanelVisibility();
+                }
+                if (typeof osgScheduleAvatarCompanionBoot === "function") {
+                  osgScheduleAvatarCompanionBoot(
+                    window.OSG_STARTUP_BOOT.sessionGreetDone() ? 120 : 520
+                  );
+                }
+              });
+            } else if (typeof osgScheduleAvatarCompanionBoot === "function") {
+              osgScheduleAvatarCompanionBoot(1100);
+            }
+          } catch (_) {}
           try {
             localStorage.setItem("osg-lang", lang);
           } catch (e) {}
@@ -9079,7 +9185,9 @@
           overlayPromise.then(function () {
             applyLang(bootLang);
             osgConsumeSevenVoucherQrOnce();
-            osgScheduleAvatarCompanionBoot(1100);
+            if (!window.OSG_STARTUP_BOOT) {
+              osgScheduleAvatarCompanionBoot(1100);
+            }
           });
         }
         osgBootAppLang();
@@ -12787,75 +12895,59 @@
             if (window.OSG_AVATAR_LOCALE) {
               await window.OSG_AVATAR_LOCALE.loadAvatarPacks({});
             }
-            const packFn = window.osgAvatarCompanionPack;
-            const introFn = window.osgAvatarCompanionIntroLine;
-            const pack = packFn
-              ? packFn()
-              : window.__OSG_CURRENT_PACK_CACHE ||
-                (typeof T !== "undefined" ? T.de : {});
-            if (!window.__OSG_AVATAR_COMPANION_INTRO_DONE__) {
-              const intro = introFn ? introFn(pack) : "";
-              if (intro) {
-                const introBubble = String(
-                  pack.avatarCompanionIntroBubble || intro
-                ).trim();
-                try {
-                  if (
-                    typeof window.pauliLiveCaptionShow === "function" &&
-                    introBubble
-                  ) {
-                    window.pauliLiveCaptionShow(introBubble);
+            const pack =
+              (typeof osgAvatarCompanionPack === "function"
+                ? osgAvatarCompanionPack()
+                : null) ||
+              window.__OSG_CURRENT_PACK_CACHE ||
+              (typeof T !== "undefined" ? T.de : {});
+
+            const SB = window.OSG_STARTUP_BOOT;
+            if (SB && typeof SB.runSessionGreeting === "function") {
+              await SB.runSessionGreeting(pack, {
+                gesture: function (type) {
+                  if (typeof osgAvatarGestureStart === "function") {
+                    osgAvatarGestureStart(type || "greet", 2400);
                   }
-                } catch (_) {}
-                await osgAvatarSpeakLocalized("avatarCompanionIntroTts", {
-                  gesture: "greet",
-                  speechKey: "avatarCompanionIntroTts",
-                  pointDuration: Math.min(
-                    14000,
-                    Math.max(5200, intro.length * 72)
-                  ),
-                  pointTarget: container,
-                  skipTravel: true,
-                });
-              }
-              window.__OSG_AVATAR_COMPANION_INTRO_DONE__ = true;
-              if (
-                !osgResolveCustomerDisplayName() &&
-                !osgPersonalOnboardState()
-              ) {
-                window.__OSG_AVATAR_PENDING_NAME_ASK__ = true;
-                var follow = String(
-                  pack.avatarNameAskFollowTts || ""
-                ).trim();
-                if (follow) {
-                  var followBubble = String(
-                    pack.avatarNameAskFollowBubble || follow
-                  ).trim();
-                  try {
-                    if (
-                      typeof window.pauliLiveCaptionShow === "function" &&
-                      followBubble
-                    ) {
-                      window.pauliLiveCaptionShow(followBubble);
-                    }
-                  } catch (_) {}
-                  await osgAvatarSpeakLine(follow, {
-                    gesture: "help",
-                    speechKey: "avatarNameAskFollowTts",
-                    pointDuration: Math.min(
-                      9000,
-                      Math.max(3200, follow.length * 72)
-                    ),
+                },
+                speakLine: function (line, opts) {
+                  return osgAvatarSpeakLine(line, Object.assign({}, opts || {}, {
                     pointTarget: container,
-                  });
-                }
-                setTimeout(function () {
-                  try {
-                    osgShowPersonalOnboarding();
-                  } catch (_) {}
-                }, 480);
-              }
+                    pointDuration: Math.min(
+                      14000,
+                      Math.max(4800, String(line || "").length * 72)
+                    ),
+                  }));
+                },
+                onNameAsk: function () {
+                  setTimeout(function () {
+                    try {
+                      osgShowPersonalOnboarding();
+                    } catch (_) {}
+                  }, 420);
+                },
+              });
             }
+
+            if (SB && typeof SB.runTrustPledgePresentation === "function") {
+              await SB.runTrustPledgePresentation(pack, {
+                gesture: function (type) {
+                  if (typeof osgAvatarGestureStart === "function") {
+                    osgAvatarGestureStart(type || "help", 2200);
+                  }
+                },
+                speakLine: function (line, opts) {
+                  return osgAvatarSpeakLine(line, Object.assign({}, opts || {}, {
+                    pointTarget: container,
+                    pointDuration: Math.min(
+                      16000,
+                      Math.max(5200, String(line || "").length * 78)
+                    ),
+                  }));
+                },
+              });
+            }
+
             if (
               window.osgAvatarController &&
               typeof window.osgAvatarController.speakLangSwitchProactive ===
@@ -12979,11 +13071,11 @@
               } catch (_) {}
             }
 
-            if (
-              !window.__OSG_AVATAR_COMPANION_INTRO_DONE__ &&
-              typeof window.osgScheduleAvatarCompanionBoot === "function"
-            ) {
-              window.osgScheduleAvatarCompanionBoot(160);
+            if (typeof window.osgScheduleAvatarCompanionBoot === "function") {
+              var sb = window.OSG_STARTUP_BOOT;
+              if (!sb || !sb.sessionGreetDone()) {
+                window.osgScheduleAvatarCompanionBoot(160);
+              }
             }
 
             if (!osgEventTargetsCoinStage(ev)) return;
@@ -15134,7 +15226,10 @@
           window.osgWirePsychologyTriggersOnce();
         }
         if (typeof osgA11yInstallPanel === "function") osgA11yInstallPanel();
-        if (typeof window.osgScheduleAvatarCompanionBoot === "function") {
+        if (
+          typeof window.osgScheduleAvatarCompanionBoot === "function" &&
+          (!window.OSG_STARTUP_BOOT || window.OSG_STARTUP_BOOT.termsAccepted())
+        ) {
           window.osgScheduleAvatarCompanionBoot(2400);
         }
         if (typeof osgAvatarTourBoot === "function") osgAvatarTourBoot();

@@ -3,6 +3,25 @@ window.OSG_LOCALES = {
           de: {
             lead:
               "Preisvergleich und Orientierung für Thailand — unter der Dachmarke Omni Solutions Global®.",
+            trustPledgeHeading: "Datenschutz & Ehrlichkeit — an erster Stelle",
+            trustPledgeAnonymHtml:
+              "<strong>100&nbsp;% sicher & anonym:</strong> Du nutzt unsere App ohne Anmeldung, ohne Registrierung und ohne deine persönlichen Daten oder Telefonnummern an uns oder Dritte zu übermitteln. Wir speichern keine Nutzerdaten. Wir versprechen dir, dass wir dir mit unserer App nicht mit Werbung oder Benachrichtigungen auf die Nerven gehen.",
+            trustPledgeIndependenceHtml:
+              "<strong>Unser Versprechen:</strong> 100&nbsp;% unabhängig, 100&nbsp;% ehrlich gegenüber unseren Kunden. Bei uns kauft sich niemand nach oben. Wir zeigen nicht, wer am meisten zahlt, sondern wer den fairsten Preis hat. Unsere Preise sind echt, unverfälscht und ehrlich.",
+            trustPledgeAdsHtml:
+              "Werbung und gesponserte Links sind auf der Plattform in einem unaufdringlichen Rahmen erlaubt, da Werbeeinnahmen ein normales Geschäftsmodell darstellen. Es gilt jedoch das eiserne Prinzip: Bezahlte Werbung darf niemals die Reihenfolge oder Platzierung im eigentlichen Preisvergleich manipulieren. Die angezeigten Preise bleiben zu jedem Zeitpunkt objektiv, unabhängig und unverfälscht. Werbeplätze werden strikt vom organischen Preisvergleich getrennt.",
+            avatarTrustPledgeAnonymTts:
+              "100 Prozent sicher und anonym: Du nutzt unsere App ohne Anmeldung, ohne Registrierung und ohne persönliche Daten oder Telefonnummern an uns oder Dritte zu schicken. Wir speichern keine Nutzerdaten — und nerven dich nicht mit Werbung oder Push-Benachrichtigungen.",
+            avatarTrustPledgeAnonymBubble:
+              "100 % sicher & anonym — ohne Login, ohne Datensammlung.",
+            avatarTrustPledgeIndependenceTts:
+              "Unser Versprechen: 100 Prozent unabhängig, 100 Prozent ehrlich. Bei uns kauft sich niemand nach oben. Wir zeigen den fairsten Preis — echt, unverfälscht und ehrlich.",
+            avatarTrustPledgeIndependenceBubble:
+              "100 % unabhängig — faire Preise, nicht der höchste Zahler.",
+            avatarTrustPledgeAdsTts:
+              "Werbung ist bei uns erlaubt, aber strikt getrennt vom Preisvergleich. Bezahlte Werbung darf die Reihenfolge nie manipulieren — die Preise bleiben objektiv und unverfälscht.",
+            avatarTrustPledgeAdsBubble:
+              "Werbung ja — aber nie im Preisvergleich.",
             umbrellaBrandLegal: "Omni Solutions Global® Co. Ltd.",
             b2bSectionAria: "Geschäftskunden — Branchenüberblick",
             b2bSectionHeading: "B2B & Projektportfolio",
@@ -206,6 +225,25 @@ window.OSG_LOCALES = {
               "Hi, ich bin Pauli, dein persönlicher Wegweiser. Wie soll ich dich nennen, damit wir direkt auf Augenhöhe starten?",
             avatarCompanionIntroBubble:
               "Pauli — dein Wegweiser. Wie darf ich dich nennen?",
+            avatarStartupSawadeeTts: "สวัสดีครับ",
+            avatarStartupSawadeeBubble: "Sawadee khrap",
+            avatarStartupGreetWithName0:
+              "Ich bin Pauli, dein virtueller Begleiter und Wegweiser durch den Einkauf — schön, dich zu sehen, {NAME}.",
+            avatarStartupGreetWithName1:
+              "{NAME}, willkommen zurück! Ich begleite dich durch die besten Preise in Thailand.",
+            avatarStartupGreetWithName2:
+              "Hallo {NAME}! Pauli hier — dein Wegweiser fürs smarte Shoppen, ganz ohne Anmeldung.",
+            avatarStartupGreetNoName0:
+              "Ich bin Pauli, dein virtueller Begleiter und Wegweiser durch den Einkauf — sofort nutzbar, ohne Login.",
+            avatarStartupGreetNoName1:
+              "Pauli Best Price Thailand — ich zeige dir Wege zum Sparen. Kein Konto nötig, du startest direkt hier.",
+            firstBootLocationGateTitle: "Standort für Lieferadresse",
+            firstBootLocationGateLead:
+              "Beim ersten Start fragen wir einmalig nach Standortfreigabe — für Liefer- und Filialhinweise auf diesem Gerät. Ohne Freigabe kannst du trotzdem shoppen.",
+            firstBootLocationGateAllowBtn: "Standort freigeben",
+            firstBootLocationGateDeclineBtn: "Später entscheiden",
+            firstBootPrivacyLocalNote:
+              "Name, Wohnadress-Merkzettel und Zahlungsarten (z. B. PayPal, Kreditkarte) bleiben nur auf diesem Smartphone. Übertragung nur, wenn du aktiv den Support kontaktierst.",
             avatarNameAskFollowTts:
               "Sag's einfach laut oder tippe ihn unten ein — bleibt nur auf deinem Gerät.",
             avatarNameAskFollowBubble:
@@ -455,7 +493,7 @@ window.OSG_LOCALES = {
             notifyBody: "Dein Preis-Tipp aus Thailand",
             affiliateHeading: "Partner & Lead-Nachweis",
             affiliateIntro:
-              "Klicks zu Bank-, Händler- und Marktplatz-Seiten führen PAULI BEST PRICE THAILAND–Parameter mit (osg_* in der URL) — hier auf dem Gerät transparent protokollierbar.",
+              "Partnerlinks dienen der Orientierung und fair dokumentierten Weiterleitung — der Preisvergleich selbst bleibt unabhängig, werbefrei und nicht käuflich.",
             affiliateDeeplinkFail:
               "Der Involve-Asia-Tracking-Link konnte gerade nicht erzeugt werden. Bitte in Kürze erneut versuchen — ohne invol.co-Link wird der Klick nicht abgerechnet.",
             brandAppTitle: "PAULI BEST PRICE THAILAND",
@@ -500,9 +538,9 @@ window.OSG_LOCALES = {
             supportVoiceUnavailable:
               "Spracheingabe ist in diesem Browser nicht verfügbar.",
             affiliateFundingDisclosure:
-              "Diese App finanziert sich über Vermittlungsprovisionen. Für den Nutzer entstehen keine Zusatzkosten.",
+              "Werbeeinnahmen und Vermittlungsprovisionen finanzieren die App — für dich ohne Zusatzkosten. Gesponserte Bereiche sind strikt vom organischen Preisvergleich getrennt (siehe Versprechen oben).",
             affiliateTransparency:
-              "Zu jedem weitergeleiteten Versuch werden Zeitstempel, Lead-ID und deine lokale Kunden-ID (osg_cid) im Geräte‑Journal geschrieben; optional Server‑Spiegel für spätere Partner‑Abrechnung — ohne Garantie, dass Fremdseiten die Parameter weiterverarbeiten.",
+              "Optional protokollierst du Partnerklicks lokal auf deinem Gerät (osg_*‑Parameter im Geräte‑Journal) — ohne zentrale Nutzerprofile und ohne Übermittlung von Namen oder Telefonnummern an uns.",
             legalGuidanceBannerAria: "Rechtlicher Hinweis — Vermittlerstatus",
             legalGuidanceStatement: "Wir sind die Wegweiser und keine Berater.",
             bindingAdviceDisclaimerHtml:
@@ -611,6 +649,16 @@ window.OSG_LOCALES = {
               "Zustimmung lokal sichern und Oberfläche freischalten",
             termsGateCheckboxAria:
               "Pflichtkontrollkästchen — ohne Ankreuzen keine Freischaltung",
+            termsGateDeclineBtn: "Ablehnen",
+            termsGateDeclineBtnAria: "AGB nicht akzeptieren und Installation beenden",
+            termsGateDeclineTitle: "Ohne AGB leider nicht nutzbar",
+            termsGateDeclineLead:
+              "Schade — ohne deine Bestätigung der AGB können wir Pauli Best Price Thailand leider nicht starten. Die Installation wird jetzt beendet.",
+            termsGateDeclineDoorOpen:
+              "Kein Problem: Du kannst die App jederzeit erneut aus dem App Store oder Play Store laden, die AGB beim nächsten Start akzeptieren und ganz normal loslegen — wir sperren dich nicht aus.",
+            termsGateDeclineExitBtn: "Verstanden",
+            termsGateDeclineExitBtnAria: "Hinweis schließen und App beenden",
+            termsGateDeclineAriaLabel: "Hinweis bei abgelehnten AGB",
             termsLegalPickupAppendHtmlTpl:
               '<h3>Abhol- und Logistikmodell (Demonstration ohne Shop dieser Oberfläche)</h3><p>Für illustratives Filial-/Abholexemplar können Paket-<wbr>Größenstufen mit Orientierungswerten eingesetzt werden: <strong>S = {SHIP_S} THB, M = {SHIP_M} THB, L/XL = {SHIP_L} THB</strong> sowie ein <strong>einziger dokumentierter Infrastruktur-<wbr>/Plattformbeitrag von {PICKUP_MARGIN} THB</strong> zusammen mit Warenbasis im modellierten Endbetrag – einzelne Kombinationen ohne neue Zuschläge gegenüber diesem Modell ergäben keine weiteren automatischen Gebühren in der Demo‑Rechnung über diese Beträge hinaus. Filialbezogene Aktions-/Gutscheinlösungen (z. B. mit dokumentiert zusätzlichem Laden‑Mindereinkauf {MIN_STORE} THB) verringern nicht automatisch die Frachtzeile. Vor Ort entscheiden Partner-<wbr>Checkout und dessen Geschäftsbedingungen.</p><p>Funktion dieser Anwendung: technische Vermittlung/Recherche‑Hilfen; keine selbstständige Ladenabwicklung ohne Partner.</p>',
             mapsHomeToolbarAria:
@@ -745,13 +793,12 @@ window.OSG_LOCALES = {
             personalDiscountProfileBtn: "Rabatt‑Profil bearbeiten",
             personalChangeNameBtn: "Anrede ändern",
 
-            personalOnboardingTitle: "Dein Rabatt‑Profil auf dem Gerät",
+            personalOnboardingTitle: "Dein Vorname auf diesem Gerät",
             personalOnboardingLead:
-              "Du kannst freiwillig einen Anzeigenamen und Mitgliedschaftshilfen kombinieren — alles liegt <strong>lokal bei diesem Gerät</strong>; Push/TTS können den Namen nutzen sobald Berechtigung erteilt ist.",
+              "Pauli fragt dich freundlich nach deinem Vornamen — optional auch Merkhilfen zu Adresse oder Zahlungsarten. Alles bleibt <strong>nur lokal auf diesem Smartphone</strong>, nicht auf unseren Servern.",
             personalOnboardingQuestion:
-              "Welche Mitgliedschafts-/Kartenmerkmale soll die App vor Ort berücksichtigen?",
-            personalOnboardingPreferredNameLabel:
-              "Vorname für die Ansprache (optional)",
+              "Wie ist dein Vorname? (für die persönliche Ansprache)",
+            personalOnboardingPreferredNameLabel: "Vorname",
             personalOnboardingNamePlaceholder: "z. B. Dao oder Paul",
             personalOnboardingMembershipLabel:
               "Mitglieds‑ und Kartendaten (Nummern, Stammdaten‑Merkhilfe)",
@@ -846,6 +893,25 @@ window.OSG_LOCALES = {
           en: {
             lead:
               "Price orientation for Thailand — under the Omni Solutions Global® umbrella brand.",
+            trustPledgeHeading: "Privacy & honesty — first priority",
+            trustPledgeAnonymHtml:
+              "<strong>100% safe & anonymous:</strong> You use our app without sign-in, without registration, and without sending personal data or phone numbers to us or third parties. We do not store user data. We promise not to annoy you with ads or push notifications in our app.",
+            trustPledgeIndependenceHtml:
+              "<strong>Our promise:</strong> 100% independent, 100% honest with our customers. Nobody can buy their way to the top with us. We do not show who pays the most — we show who has the fairest price. Our prices are real, unfiltered, and honest.",
+            trustPledgeAdsHtml:
+              "Advertising and sponsored links are allowed on the platform in an unobtrusive way, as ad revenue is a normal business model. However, the iron rule applies: paid advertising must never manipulate the order or placement in the actual price comparison. Displayed prices remain objective, independent, and unaltered at all times. Ad slots are strictly separated from organic price comparison.",
+            avatarTrustPledgeAnonymTts:
+              "100 percent safe and anonymous: you use our app with no sign-in, no registration, and no sending personal data or phone numbers to us or third parties. We store no user data — and we won't annoy you with ads or push notifications.",
+            avatarTrustPledgeAnonymBubble:
+              "100% safe & anonymous — no login, no data harvesting.",
+            avatarTrustPledgeIndependenceTts:
+              "Our promise: 100 percent independent, 100 percent honest. Nobody buys their way to the top here. We show the fairest price — real, unfiltered, and honest.",
+            avatarTrustPledgeIndependenceBubble:
+              "100% independent — fair prices, not the highest bidder.",
+            avatarTrustPledgeAdsTts:
+              "Ads are allowed here, but strictly separate from price comparison. Paid ads must never change the order — prices stay objective and unaltered.",
+            avatarTrustPledgeAdsBubble:
+              "Ads yes — never inside the price comparison.",
             umbrellaBrandLegal: "Omni Solutions Global® Co. Ltd.",
             b2bSectionAria: "Business clients — industry overview",
             b2bSectionHeading: "B2B & project portfolio",
@@ -1047,6 +1113,25 @@ window.OSG_LOCALES = {
               "Hi, I'm Pauli, your personal guide. What should I call you so we start on equal footing?",
             avatarCompanionIntroBubble:
               "Pauli — your guide. What should I call you?",
+            avatarStartupSawadeeTts: "สวัสดีครับ",
+            avatarStartupSawadeeBubble: "Sawadee khrap",
+            avatarStartupGreetWithName0:
+              "I'm Pauli, your virtual companion and shopping guide — good to see you, {NAME}.",
+            avatarStartupGreetWithName1:
+              "{NAME}, welcome back! I'll guide you to the best prices in Thailand today.",
+            avatarStartupGreetWithName2:
+              "Hi {NAME}! Pauli here — your pathfinder for smart shopping, no sign-in needed.",
+            avatarStartupGreetNoName0:
+              "I'm Pauli, your virtual companion and shopping guide — ready instantly, no login.",
+            avatarStartupGreetNoName1:
+              "Pauli Best Price Thailand — I show you ways to save. No account required.",
+            firstBootLocationGateTitle: "Location for delivery address",
+            firstBootLocationGateLead:
+              "On first launch we ask once for location access — for delivery and store hints on this device only. You can still shop without it.",
+            firstBootLocationGateAllowBtn: "Allow location",
+            firstBootLocationGateDeclineBtn: "Decide later",
+            firstBootPrivacyLocalNote:
+              "Your name, saved home addresses, and payment methods (PayPal, cards, etc.) stay only on this phone. Data is sent only if you actively contact support.",
             avatarNameAskFollowTts:
               "Just say it out loud or type it below — it stays on your device only.",
             avatarNameAskFollowBubble:
@@ -1076,7 +1161,7 @@ window.OSG_LOCALES = {
             notifyBody: "Your Thailand price tip",
             affiliateHeading: "Partners & lead tracking",
             affiliateIntro:
-              "When you tap a bank, scooter brand, or marketplace link from this site, outbound URLs carry osg_* attribution parameters plus a locally stored referral record.",
+              "Partner links help you navigate and document fair hand-offs — the price comparison itself stays independent, ad-free, and not for sale.",
             affiliateDeeplinkFail:
               "We could not create the Involve Asia tracking link right now. Please try again shortly — without an invol.co link the click will not be counted.",
             brandAppTitle: "PAULI BEST PRICE THAILAND",
@@ -1120,9 +1205,9 @@ window.OSG_LOCALES = {
             supportVoiceUnavailable:
               "Speech input is not available in this browser.",
             affiliateFundingDisclosure:
-              "This app is funded via referral commissions. Users do not pay any surcharge for that.",
+              "Ad revenue and referral commissions fund the app — at no extra cost to you. Sponsored areas are strictly separated from organic price comparison (see pledge above).",
             affiliateTransparency:
-              "Each outbound attempt saves timestamp, osg_lid lead id and your stable local osg_customer id in this browser; the server may also append a mirrored copy for invoicing partnerships — conversion can happen later.",
+              "You may optionally log partner clicks locally on your device (osg_* parameters in the device journal) — without central user profiles and without sending names or phone numbers to us.",
             intermediaryScopeDisclaimer:
               "Real estate, finance/credit and insurance: age 20+ only for binding contract steps; Omni Solutions Global® Co. Ltd. is a pure intermediary — not an investment, finance, property or insurance advisor.",
             affiliateSectionBanks: "Bank partners",
@@ -1240,11 +1325,10 @@ window.OSG_LOCALES = {
             personalDiscountProfileBtn: "Edit discount profile",
             personalChangeNameBtn: "Change greeting name",
 
-            personalOnboardingTitle: "Handset-first discount profile",
+            personalOnboardingTitle: "Your first name on this device",
             personalOnboardingLead:
-              "Add membership or card breadcrumbs once (numbers, mnemonic tags). Comparisons assume they apply at Makro, Big C, Lotus's, Tops Daily, Central Food Hall, Gourmet Market, Villa Market, and Foodland when you typed them — <strong>nothing leaves this sandbox until you browse out.</strong>",
-            personalOnboardingQuestion:
-              "Which loyalty signals should downstream price scouts remember for you?",
+              "Pauli asks for your first name — you may also save address or payment notes locally. Everything stays <strong>only on this smartphone</strong>, not on our servers.",
+            personalOnboardingQuestion: "What is your first name?",
             personalOnboardingMembershipLabel:
               "Membership / card breadcrumbs (digits, shorthand)",
             personalOnboardingNameLabel: "Membership breadcrumbs (fallback label)",
@@ -1340,6 +1424,25 @@ window.OSG_LOCALES = {
           th: {
             lead:
               "การเปรียบเทียบราคาและข้อมูลในประเทศไทย — ภายใต้แบรนด์ Omni Solutions Global®",
+            trustPledgeHeading: "ความเป็นส่วนตัวและความซื่อสัตย์ — มาก่อนเป็นอันดับแรก",
+            trustPledgeAnonymHtml:
+              "<strong>ปลอดภัยและไม่ระบุตัวตน 100%:</strong> คุณใช้แอปของเราโดยไม่ต้องล็อกอิน ไม่ต้องลงทะเบียน และไม่ส่งข้อมูลส่วนตัวหรือเบอร์โทรให้เราหรือบุคคลที่สาม เราไม่เก็บข้อมูลผู้ใช้ เราสัญญาว่าจะไม่รบกวนคุณด้วยโฆษณาหรือการแจ้งเตือนในแอป",
+            trustPledgeIndependenceHtml:
+              "<strong>คำมั่นของเรา:</strong> เป็นอิสระ 100% ซื่อสัตย์ 100% ต่อลูกค้า ไม่มีใครซื้ออันดับได้ เราไม่แสดงว่าใครจ่ายมากที่สุด แต่แสดงว่าใครมีราคายุติธรรมที่สุด ราคาของเราจริง ไม่บิดเบือน และซื่อสัตย์",
+            trustPledgeAdsHtml:
+              "โฆษณาและลิงก์สปอนเซอร์ได้รับอนุญาตในกรอบที่ไม่รบกวน เพราะรายได้โฆษณาเป็นโมเดลธุรกิจปกติ แต่มีหลักเหล็ก: โฆษณาที่จ่ายเงินห้ามบิดเบือนลำดับหรือตำแหน่งในการเปรียบเทียบราคาจริง ราคาที่แสดงเป็นกลาง เป็นอิสระ และไม่ถูกปรับแต่งตลอดเวลา พื้นที่โฆษณาแยกจากการเปรียบเทียบราคาอย่างเคร่งครัด",
+            avatarTrustPledgeAnonymTts:
+              "ปลอดภัยและไม่ระบุตัวตน 100 เปอร์เซ็นต์: ใช้แอปโดยไม่ล็อกอิน ไม่ลงทะเบียน และไม่ส่งข้อมูลส่วนตัวหรือเบอร์โทรให้เราหรือบุคคลที่สาม เราไม่เก็บข้อมูลผู้ใช้ — และจะไม่รบกวนด้วยโฆษณาหรือการแจ้งเตือน",
+            avatarTrustPledgeAnonymBubble:
+              "ปลอดภัย 100% — ไม่ล็อกอิน ไม่เก็บข้อมูล",
+            avatarTrustPledgeIndependenceTts:
+              "คำมั่นของเรา: เป็นอิสระ 100 เปอร์เซ็นต์ ซื่อสัตย์ 100 เปอร์เซ็นต์ ไม่มีใครซื้ออันดับได้ เราแสดงราคาที่ยุติธรรมที่สุด — จริง ไม่บิดเบือน และซื่อสัตย์",
+            avatarTrustPledgeIndependenceBubble:
+              "เป็นอิสระ 100% — ราคายุติธรรม ไม่ใช่คนจ่ายมากสุด",
+            avatarTrustPledgeAdsTts:
+              "โฆษณาได้ แต่แยกจากการเปรียบเทียบราคาอย่างเคร่งครัด โฆษณาที่จ่ายเงินห้ามเปลี่ยนลำดับ — ราคายังเป็นกลางและไม่ถูกปรับแต่ง",
+            avatarTrustPledgeAdsBubble:
+              "โฆษณาได้ — แต่ไม่ในการเปรียบเทียบราคา",
             umbrellaBrandLegal: "Omni Solutions Global® Co. Ltd.",
             b2bSectionAria: "ลูกค้าองค์กร — ภาพรวมอุตสาหกรรม",
             b2bSectionHeading: "B2B และผลงานโครงการ",
@@ -1540,6 +1643,25 @@ window.OSG_LOCALES = {
               "สวัสดีครับ ผม Pauli ไกด์ส่วนตัวของคุณ อยากให้ผมเรียกคุณว่าอะไร เพื่อเริ่มแบบเท่าเทียมกัน?",
             avatarCompanionIntroBubble:
               "Pauli — ไกด์ของคุณ เรียกว่าอะไรดี?",
+            avatarStartupSawadeeTts: "สวัสดีครับ",
+            avatarStartupSawadeeBubble: "Sawadee khrap",
+            avatarStartupGreetWithName0:
+              "ผมคือ Pauli ผู้ช่วยเสมือนและไกด์ช้อปปิ้งของคุณ — ยินดีที่ได้เจอ {NAME} ครับ",
+            avatarStartupGreetWithName1:
+              "{NAME} ยินดีต้อนรับกลับ! วันนี้ผมพาไปหาราคาดีที่สุดในไทยครับ",
+            avatarStartupGreetWithName2:
+              "สวัสดี {NAME}! Pauli นำทางช้อปอย่างฉลาด — ไม่ต้องล็อกอินครับ",
+            avatarStartupGreetNoName0:
+              "ผมคือ Pauli ผู้ช่วยเสมือนและไกด์ช้อปปิ้ง — ใช้ได้ทันที ไม่ต้องสมัครครับ",
+            avatarStartupGreetNoName1:
+              "Pauli Best Price Thailand — ผมช่วยคุณประหยัด ไม่ต้องมีบัญชีครับ",
+            firstBootLocationGateTitle: "ตำแหน่งสำหรับที่อยู่จัดส่ง",
+            firstBootLocationGateLead:
+              "ครั้งแรกที่เปิดแอป เราขอสิทธิ์ตำแหน่งครั้งเดียว — เพื่อคำแนะนำจัดส่งและสาขาในเครื่องนี้เท่านั้น ปฏิเสธได้และยังช้อปต่อได้",
+            firstBootLocationGateAllowBtn: "อนุญาตตำแหน่ง",
+            firstBootLocationGateDeclineBtn: "ไว้ทีหลัง",
+            firstBootPrivacyLocalNote:
+              "ชื่อ ที่อยู่ และวิธีชำระ (PayPal บัตร ฯลฯ) เก็บแค่ในมือถือเครื่องนี้ ส่งข้อมูลเมื่อคุณติดต่อซัพพอร์ตเองเท่านั้น",
             avatarNameAskFollowTts:
               "พูดมาเลยหรือพิมพ์ด้านล่าง — เก็บแค่ในเครื่องคุณครับ",
             avatarNameAskFollowBubble:
@@ -1788,7 +1910,7 @@ window.OSG_LOCALES = {
             notifyBody: "เคล็ดราคาจากไทย",
             affiliateHeading: "พาร์ทเนอร์ & ระบุแหล่งที่มา",
             affiliateIntro:
-              "ลิงก์ธนาคาร ผู้ขายมอเตอร์ไซค์/โมฟ่า และมาร์เก็ตเพลส — เราแนบพารามิเตอร์ osg_* และบันทึกลูกค้าภายในเครื่องของคุณอย่างโปร่งใส.",
+              "ลิงก์พาร์ทเนอร์ช่วยนำทางและบันทึกการส่งต่ออย่างยุติธรรม — การเปรียบเทียบราคาเองยังเป็นอิสระ ไม่มีโฆษณาแทรก และไม่ขายอันดับ",
             affiliateDeeplinkFail:
               "สร้างลิงก์ติดตาม Involve Asia ไม่ได้ในขณะนี้ กรุณาลองใหม่ — หากไม่มีลิงก์ invol.co การคลิกจะไม่ถูกนับ",
             brandAppTitle: "PAULI BEST PRICE THAILAND",
@@ -1835,9 +1957,9 @@ window.OSG_LOCALES = {
             bindingAdviceDisclaimerPlain:
               "Pauli Best Price ช่วยเปรียบเทียบและส่งต่อ — ไม่ใช่คำปรึกษา สัญญาเกิดระหว่างคุณกับพาร์ทเนอร์เท่านั้น",
             affiliateFundingDisclosure:
-              "แอปนี้อาจได้ค่านายหน้าจากพันธมิตร — ผู้ใช้ไม่ต้องจ่ายเพิ่มจากส่วนต่างนี้",
+              "รายได้โฆษณาและค่านายหน้าช่วยหนุนแอป — คุณไม่ต้องจ่ายเพิ่ม พื้นที่สปอนเซอร์แยกจากการเปรียบเทียบราคาอย่างเคร่งครัด (ดูคำมั่นด้านบน)",
             affiliateTransparency:
-              "ทุกคลิกออกเก็บเวลา Lead-ID และ osg_cid ในเครื่อง และอาจส่งสำเนาไปเซิร์ฟเวอร์เพื่อสรุปยอดกับพาร์ทเนอร์ภายหลัง",
+              "คุณอาจบันทึกคลิกพาร์ทเนอร์ในเครื่องได้ (พารามิเตอร์ osg_* ในบันทึกเครื่อง) — ไม่มีโปรไฟล์ผู้ใช้กลาง และไม่ส่งชื่อหรือเบอร์โทรให้เรา",
             intermediaryScopeDisclaimer:
               "อสังหา การเงิน/สินเชื่อ และประกันภัย: อายุ 20+ เฉพาะขั้นตอนทำสัญญา; Omni Solutions Global® Co. Ltd. เป็นผู้ประสานเท่านั้น — ไม่ใช่ที่ปรึกษาการลงทุน การเงิน อสังหา หรือประกันภัย",
             affiliateSectionBanks: "พันธมิตรธนาคาร",
@@ -1911,6 +2033,16 @@ window.OSG_LOCALES = {
               "เก็บการยืนยันในเครื่องแล้วปลดล็อกฟังก์ชัน",
             termsGateCheckboxAria:
               "กล่องยืนยันบังคับ—ต้องติ้กถึงจะใช้ต่อได้",
+            termsGateDeclineBtn: "ปฏิเสธ",
+            termsGateDeclineBtnAria: "ไม่ยอมรับข้อกำหนดและออกจากการติดตั้ง",
+            termsGateDeclineTitle: "ไม่มีข้อกำหนด — ใช้งานไม่ได้",
+            termsGateDeclineLead:
+              "เสียดายครับ — หากไม่ยืนยันข้อกำหนด เราไม่สามารถเปิด Pauli Best Price Thailand ได้ การติดตั้งจะสิ้นสุดตอนนี้",
+            termsGateDeclineDoorOpen:
+              "ไม่เป็นไร: คุณดาวน์โหลดจาก App Store หรือ Play Store ใหม่ได้ทุกเมื่อ ยอมรับข้อกำหนดครั้งถัดไป แล้วใช้งานได้ตามปกติ — เราไม่ได้ล็อกคุณไว้",
+            termsGateDeclineExitBtn: "เข้าใจแล้ว",
+            termsGateDeclineExitBtnAria: "ปิดข้อความและออกจากแอป",
+            termsGateDeclineAriaLabel: "ข้อความเมื่อปฏิเสธข้อกำหนด",
             termsLegalPickupAppendHtmlTpl:
               '<h3>แบบจำลองการสาขา/การรับสินค้า (ภาพสำหรับอธิบายเท่านั้น)</h3><p>ตัวเลขแสดงเพื่อช่วยอธิบายสายขนส่งตามขนาดพัสดุเชิงรุ่นอย่างง่าย: <strong>S = {SHIP_S} บาท, M = {SHIP_M} บาท, L/XL = {SHIP_L} บาท</strong> และ <strong>ค่าที่ใช้เพื่อครอบคลุมโครงสร้างระบบเชิงเทคนิค {PICKUP_MARGIN} บาทต่อธุรกรรมเชิงแบบจำลอง</strong> เมื่อรวมสินค้าในแถวตัวอย่าง เครือข่ายฟื้นคูปองอย่าง Pauli‑001 โดยกำหนดสิทธิเฉพาะเมื่อมียอดในร้านเพิ่มเติมไม่ค่อยครบต่ำกว่าเพดานเชิงธุรกรรม {MIN_STORE} บาท — ณ ธุรกรรมนั้นส่วนค่าขนส่งแยกรายการจากวงเลขส่วนลดดังกล่าว ประเด็นสุดท้ายควรอยู่กับประกาศจากแคชเชียร์/แอปซื้อประจำในร้าน</p><p>บทบาทผู้พัฒนาเป็นเพียงการประสานงานเทคนิควิจารณ์ความเข้ากัน เว็บในเพจนี้ไม่มีหน้าที่เป็นพ่อค้าโดยลำพังจากคู่สัญญา</p>',
             mapsHomeToolbarAria:
@@ -2006,16 +2138,16 @@ window.OSG_LOCALES = {
             personalDiscountProfileBtn: "แก้โปรไฟล์ส่วนลด",
             personalChangeNameBtn: "เปลี่ยนคำเรียก",
 
-            personalOnboardingTitle: "โปรไฟล์ส่วนลดบนมือถือ",
+            personalOnboardingTitle: "ชื่อเล่นบนมือถือเครื่องนี้",
             personalOnboardingLead:
-              "บันทึกข้อความเลขหรือรหัสสมาชิก/บัตรสักครั้ง ระบบจะประเมินส่วนลดที่ Makro Big C Lotus's Tops Daily Central Food Hall Gourmet Market Villa Market Foodland เมื่อคุณให้ข้อมูล — <strong>ไม่ส่งออกจากเครื่องด้วยตัวเองจากการกดบันทึก</strong>",
-            personalOnboardingQuestion:
-              "ต้องการให้เครื่องจดจำสิทธิ์ด้านภาคสมาชิกอะไรบ้าง?",
+              "Pauli ถามชื่อของคุณ — บันทึกที่อยู่หรือวิธีชำระได้ตามต้องการ ทุกอย่างอยู่ <strong>เฉพาะบนมือถือนี้</strong> ไม่ส่งไปเซิร์ฟเวอร์ของเรา",
+            personalOnboardingQuestion: "ชื่อของคุณคืออะไร?",
+            personalOnboardingPreferredNameLabel: "ชื่อเล่น",
             personalOnboardingMembershipLabel:
               "เลขสมาชิก/บัตร (หมายเหตุส่วนตัว)",
             personalOnboardingNameLabel: "เลขสมาชิก/บัตร (ซ้ำเพื่อคีย์เก่า)",
             personalOnboardingPrivacyMini:
-              "Omni ไม่รับเลขจากการกดบันทึกเพียงอย่างเดียว — เป้าหมายคือความเหมาะกับผู้ถือโทรศัพท์แทบ์ไม่ต้องสร้างบัญชีกลาง",
+              "ส่งข้อมูลเมื่อคุณติดต่อซัพพอร์ตเองเท่านั้น — การกดบันทึกไม่ได้อัปโหลดไป Omni",
 
             personalOnboardingSave: "บันทึกในเครื่อง",
             personalOnboardingSkip: "ข้าม (โหมดกลาง)",
@@ -2097,6 +2229,25 @@ window.OSG_LOCALES = {
           pl: {
             lead:
               "Porównanie cen i orientacja dla Tajlandii — pod marką Omni Solutions Global®.",
+            trustPledgeHeading: "Prywatność i uczciwość — na pierwszym miejscu",
+            trustPledgeAnonymHtml:
+              "<strong>100% bezpiecznie i anonimowo:</strong> Korzystasz z aplikacji bez logowania, bez rejestracji i bez przekazywania danych osobowych lub numerów telefonu nam ani osobom trzecim. Nie przechowujemy danych użytkowników. Obiecujemy, że nie będziemy irytować cię reklamami ani powiadomieniami w aplikacji.",
+            trustPledgeIndependenceHtml:
+              "<strong>Nasza obietnica:</strong> 100% niezależności, 100% uczciwości wobec klientów. U nas nikt nie kupuje sobie wyższej pozycji. Nie pokazujemy, kto płaci najwięcej — pokazujemy, kto ma najuczciwszą cenę. Nasze ceny są prawdziwe, nienaruszone i uczciwe.",
+            trustPledgeAdsHtml:
+              "Reklamy i linki sponsorowane są dozwolone w nieinwazyjnym zakresie, bo przychody reklamowe to normalny model biznesowy. Obowiązuje jednak żelazna zasada: płatna reklama nigdy nie może manipulować kolejnością ani miejscem w rzeczywistym porównaniu cen. Wyświetlane ceny pozostają w każdej chwili obiektywne, niezależne i nienaruszone. Miejsca reklamowe są ściśle oddzielone od organicznego porównania cen.",
+            avatarTrustPledgeAnonymTts:
+              "100 procent bezpiecznie i anonimowo: korzystasz bez logowania, bez rejestracji i bez przekazywania danych osobowych lub numerów telefonu nam ani osobom trzecim. Nie przechowujemy danych użytkowników — i nie irytujemy reklamami ani powiadomieniami push.",
+            avatarTrustPledgeAnonymBubble:
+              "100% bezpiecznie i anonimowo — bez logowania.",
+            avatarTrustPledgeIndependenceTts:
+              "Nasza obietnica: 100 procent niezależności, 100 procent uczciwości. U nas nikt nie kupuje sobie wyższej pozycji. Pokazujemy najuczciwszą cenę — prawdziwą, nienaruszoną i uczciwą.",
+            avatarTrustPledgeIndependenceBubble:
+              "100% niezależności — uczciwe ceny, nie licytacja.",
+            avatarTrustPledgeAdsTts:
+              "Reklamy są u nas dozwolone, ale ściśle oddzielone od porównania cen. Płatna reklama nigdy nie zmienia kolejności — ceny pozostają obiektywne i nienaruszone.",
+            avatarTrustPledgeAdsBubble:
+              "Reklamy tak — ale nie w porównaniu cen.",
             umbrellaBrandLegal: "Omni Solutions Global® Co. Ltd.",
             b2bSectionAria: "Klienci B2B — przegląd branż",
             b2bSectionHeading: "B2B i portfolio projektów",
@@ -2303,6 +2454,25 @@ window.OSG_LOCALES = {
               "Cześć, jestem Pauli, twój osobisty przewodnik. Jak mam cię nazywać, żebyśmy zaczęli na równi?",
             avatarCompanionIntroBubble:
               "Pauli — twój przewodnik. Jak cię wołać?",
+            avatarStartupSawadeeTts: "สวัสดีครับ",
+            avatarStartupSawadeeBubble: "Sawadee khrap",
+            avatarStartupGreetWithName0:
+              "Jestem Pauli, twój wirtualny towarzysz i przewodnik po zakupach — miło cię widzieć, {NAME}.",
+            avatarStartupGreetWithName1:
+              "{NAME}, witaj ponownie! Poprowadzę cię do najlepszych cen w Tajlandii.",
+            avatarStartupGreetWithName2:
+              "Cześć {NAME}! Pauli przy sterze — mądre zakupy bez logowania.",
+            avatarStartupGreetNoName0:
+              "Jestem Pauli, twój wirtualny towarzysz i przewodnik po zakupach — od razu, bez konta.",
+            avatarStartupGreetNoName1:
+              "Pauli Best Price Thailand — pokazuję drogi do oszczędności. Konto nie jest potrzebne.",
+            firstBootLocationGateTitle: "Lokalizacja dla adresu dostawy",
+            firstBootLocationGateLead:
+              "Przy pierwszym uruchomieniu prosimy raz o dostęp do lokalizacji — tylko dla wskazówek dostawy na tym urządzeniu. Możesz odmówić i nadal korzystać z aplikacji.",
+            firstBootLocationGateAllowBtn: "Zezwól na lokalizację",
+            firstBootLocationGateDeclineBtn: "Później",
+            firstBootPrivacyLocalNote:
+              "Imię, zapisane adresy i metody płatności (PayPal, karty itd.) zostają tylko na tym telefonie. Przesyłamy dane wyłącznie, gdy sam kontaktujesz support.",
             avatarNameAskFollowTts:
               "Powiedz na głos albo wpisz poniżej — zostaje tylko na tym urządzeniu.",
             avatarNameAskFollowBubble:
@@ -2551,7 +2721,7 @@ window.OSG_LOCALES = {
             notifyBody: "Wskazówka cenowa z Tajlandii",
             affiliateHeading: "Partnerzy i śledzenie leadów",
             affiliateIntro:
-              "Kliknięcia do banków, dealerów oraz marketplace’ów dostają nasze osg_* oraz lokalnie zapisywaną kartę wizyty użytkownika.",
+              "Linki partnerów służą orientacji i uczciwemu przekazaniu — samo porównanie cen pozostaje niezależne, bez reklam w rankingu i nie na sprzedaż.",
             affiliateDeeplinkFail:
               "Nie udało się wygenerować linku śledzącego Involve Asia. Spróbuj ponownie — bez linku invol.co klik nie zostanie zaliczony.",
             brandAppTitle: "PAULI BEST PRICE THAILAND",
@@ -2600,8 +2770,10 @@ window.OSG_LOCALES = {
               'Pauli Best Price oferuje porównanie i przekierowanie — bez doradztwa. Umowy tylko między Tobą a partnerami.<span class="legal-guidance-services"><a href="#partner-affiliate-panel">Porównanie nieruchomości</a><a href="#partner-affiliate-panel">Finanse</a><a href="#partner-affiliate-panel">Ubezpieczenia</a></span> Brak odpowiedzialności za fałszywe dane osób trzecich. Wiek 20+ wyłącznie przy umowach nieruchomości, finansów i ubezpieczeń.',
             bindingAdviceDisclaimerPlain:
               "Pauli Best Price oferuje porównanie i przekierowanie — bez doradztwa. Umowy tylko między Tobą a partnerami.",
+            affiliateFundingDisclosure:
+              "Przychody reklamowe i prowizje finansują aplikację — bez dopłat dla ciebie. Obszary sponsorowane są ściśle oddzielone od organicznego porównania cen (patrz obietnica powyżej).",
             affiliateTransparency:
-              "Każdy wysłany próbny lead dostaje znacznik czasu oraz lokalnego osg_cid — zapis przydatny do rozliczenia późniejszej konwersji u partnera.",
+              "Opcjonalnie logujesz kliknięcia partnerów lokalnie na urządzeniu (parametry osg_* w dzienniku) — bez centralnych profili użytkowników i bez przekazywania nam imion lub numerów telefonu.",
             affiliateSectionBanks: "Partnerzy bankowi",
             affiliateSectionMofa: "Motocykle / moped — marki Thailand (orientacja)",
             bookingBtnLabel: "Przycisk rezerwacji: wcześniej zgłoś wizytę u dealera",
@@ -2719,22 +2891,21 @@ window.OSG_LOCALES = {
               "Even late — two-wheel/four-wheel finance scouts and Roojai/Silkspan benchmarks stay conversational on your handset timeline.",
 
             personalDiscountProfileBtn: "Edit discount profile",
-            personalChangeNameBtn: "Change greeting name",
+            personalChangeNameBtn: "Zmień imię",
 
-            personalOnboardingTitle: "Handset-first discount profile",
+            personalOnboardingTitle: "Twoje imię na tym urządzeniu",
             personalOnboardingLead:
-              "Add membership or card breadcrumbs once (numbers, mnemonic tags). Comparisons assume they apply at Makro, Big C, Lotus's, Tops Daily, Central Food Hall, Gourmet Market, Villa Market, and Foodland when you typed them — <strong>nothing leaves this sandbox until you browse out.</strong>",
-            personalOnboardingQuestion:
-              "Which loyalty signals should downstream price scouts remember for you?",
+              "Pauli pyta o imię — opcjonalnie zapisz adres lub płatności lokalnie. Wszystko zostaje <strong>tylko na tym smartfonie</strong>, nie na naszych serwerach.",
+            personalOnboardingQuestion: "Jak masz na imię?",
             personalOnboardingMembershipLabel:
               "Membership / card breadcrumbs (digits, shorthand)",
             personalOnboardingNameLabel: "Membership breadcrumbs (fallback label)",
             personalOnboardingPrivacyMini:
-              "No Omni upload merely from tapping Save — the Schatz model targets whichever customer holds the handset without issuing a hosted identity dossier.",
+              "Przesyłamy dane tylko gdy sam kontaktujesz support — samo Zapisanie nie wysyła nic do Omni.",
 
-            personalOnboardingSave: "Save locally",
-            personalOnboardingSkip: "Skip entry (neutral mode)",
-            personalOnboardingLater: "Decide later",
+            personalOnboardingSave: "Zapisz lokalnie",
+            personalOnboardingSkip: "Pomiń (tryb neutralny)",
+            personalOnboardingLater: "Później",
 
             personalMembershipHeading: "User-specific discount rails (“Schatz”)",
             personalMembershipLead:
@@ -2818,6 +2989,16 @@ window.OSG_LOCALES = {
             termsGateConfirmBtn: "Akceptuję — kontynuuj",
             termsGateConfirmBtnAria: "Zapis zgody lokalnie i odblokowanie witryny",
             termsGateCheckboxAria: "Pole obowiązkowe bez odblokowania",
+            termsGateDeclineBtn: "Odrzuć",
+            termsGateDeclineBtnAria: "Nie akceptuj regulaminu i zakończ instalację",
+            termsGateDeclineTitle: "Bez regulaminu niestety nie da się korzystać",
+            termsGateDeclineLead:
+              "Szkoda — bez potwierdzenia regulaminu nie możemy uruchomić Pauli Best Price Thailand. Instalacja kończy się teraz.",
+            termsGateDeclineDoorOpen:
+              "Spokojnie: możesz w każdej chwili ponownie pobrać aplikację ze sklepu App Store lub Play Store, zaakceptować regulamin przy następnym starcie i normalnie korzystać — niczego Ci nie blokujemy.",
+            termsGateDeclineExitBtn: "Rozumiem",
+            termsGateDeclineExitBtnAria: "Zamknij komunikat i zakończ aplikację",
+            termsGateDeclineAriaLabel: "Komunikat po odrzuceniu regulaminu",
             termsLegalPickupAppendHtmlTpl:
               '<h3>Orientacyjny model odbioru (Seven)</h3><p>Wyłącznie orientacyjnie model może stosować stawki przewozowe <strong>S = {SHIP_S} THB, M = {SHIP_M} THB oraz L/XL = {SHIP_L} THB</strong> oraz ujawnione <strong>{PICKUP_MARGIN} THB</strong> wkładu infrastruktury pokazywane jako część przykładowej sumy przy produkcie wybranym przez użytkownika — kolejnych automatycznych opłat platformy rozliczonych przez ten opis dla zwykłych zestawień zazwyczaj brak ponad te wartości. Kupony sieciowe wymagające osobnych zakupów sklepowych co najmniej <strong>{MIN_STORE} THB</strong> nie automatycznie zmniejszają części przewozowej. Kasa lub aplikacja detalisty ustala definitywnie cenę końcową.</p><p>Ten interfejs pełni rolę technicznego doradcy pośredniczącego, nie przejmuje funkcji kas sklepowych.</p>',
             mapsHomeToolbarAria: "Lokalnie zapisana wskazówka geograficzna pod skróty do Seven",
@@ -2834,6 +3015,25 @@ window.OSG_LOCALES = {
           ru: {
             lead:
               "Ориентация по ценам в Таиланде — под брендом Omni Solutions Global®.",
+            trustPledgeHeading: "Конфиденциальность и честность — на первом месте",
+            trustPledgeAnonymHtml:
+              "<strong>100% безопасно и анонимно:</strong> Вы пользуетесь приложением без входа, без регистрации и без передачи личных данных или телефонов нам или третьим лицам. Мы не храним пользовательские данные. Мы обещаем не надоедать вам рекламой и уведомлениями в приложении.",
+            trustPledgeIndependenceHtml:
+              "<strong>Наше обещание:</strong> 100% независимости, 100% честности перед клиентами. У нас нельзя купить место вверху. Мы не показываем, кто платит больше всех — мы показываем, у кого самая честная цена. Наши цены настоящие, неискажённые и честные.",
+            trustPledgeAdsHtml:
+              "Реклама и спонсорские ссылки допускаются в ненавязчивом формате, так как рекламный доход — нормальная бизнес-модель. Но действует железное правило: платная реклама никогда не должна влиять на порядок или размещение в самом сравнении цен. Показанные цены остаются объективными, независимыми и неизменёнными. Рекламные места строго отделены от органического сравнения цен.",
+            avatarTrustPledgeAnonymTts:
+              "100 процентов безопасно и анонимно: приложение без входа, без регистрации и без передачи личных данных или телефонов нам или третьим лицам. Мы не храним пользовательские данные — и не надоедим рекламой или push-уведомлениями.",
+            avatarTrustPledgeAnonymBubble:
+              "100% безопасно и анонимно — без входа.",
+            avatarTrustPledgeIndependenceTts:
+              "Наше обещание: 100 процентов независимости, 100 процентов честности. У нас нельзя купить место вверху. Мы показываем самую честную цену — настоящую, неискажённую и честную.",
+            avatarTrustPledgeIndependenceBubble:
+              "100% независимости — честные цены, не аукцион.",
+            avatarTrustPledgeAdsTts:
+              "Реклама у нас допустима, но строго отделена от сравнения цен. Платная реклама никогда не меняет порядок — цены остаются объективными и неизменёнными.",
+            avatarTrustPledgeAdsBubble:
+              "Реклама да — но не в сравнении цен.",
             umbrellaBrandLegal: "Omni Solutions Global® Co. Ltd.",
             b2bSectionAria: "Корпоративные клиенты — обзор отраслей",
             b2bSectionHeading: "B2B и портфель проектов",
@@ -3039,6 +3239,25 @@ window.OSG_LOCALES = {
               "Привет! Я Pauli, твой личный проводник. Как мне тебя называть, чтобы мы стартовали на равных?",
             avatarCompanionIntroBubble:
               "Pauli — твой проводник. Как тебя звать?",
+            avatarStartupSawadeeTts: "สวัสดีครับ",
+            avatarStartupSawadeeBubble: "Sawadee khrap",
+            avatarStartupGreetWithName0:
+              "Я Pauli, твой виртуальный спутник и гид по покупкам — рад видеть тебя, {NAME}.",
+            avatarStartupGreetWithName1:
+              "{NAME}, с возвращением! Проведу к лучшим ценам в Таиланде сегодня.",
+            avatarStartupGreetWithName2:
+              "Привет, {NAME}! Pauli на связи — умный шопинг без входа в аккаунт.",
+            avatarStartupGreetNoName0:
+              "Я Pauli, твой виртуальный спутник и гид по покупкам — сразу, без регистрации.",
+            avatarStartupGreetNoName1:
+              "Pauli Best Price Thailand — показываю пути экономии. Аккаунт не нужен.",
+            firstBootLocationGateTitle: "Геолокация для адреса доставки",
+            firstBootLocationGateLead:
+              "При первом запуске один раз запрашиваем доступ к местоположению — только для подсказок доставки на этом устройстве. Можно отказать и продолжить.",
+            firstBootLocationGateAllowBtn: "Разрешить геолокацию",
+            firstBootLocationGateDeclineBtn: "Решить позже",
+            firstBootPrivacyLocalNote:
+              "Имя, сохранённые адреса и способы оплаты (PayPal, карты и т. п.) остаются только на этом телефоне. Передача данных — только если вы сами обращаетесь в поддержку.",
             avatarNameAskFollowTts:
               "Скажи вслух или введи ниже — останется только на этом устройстве.",
             avatarNameAskFollowBubble:
@@ -3287,7 +3506,7 @@ window.OSG_LOCALES = {
             notifyBody: "Совет по ценам из Таиланда",
             affiliateHeading: "Партнёры и отслеживание лидов",
             affiliateIntro:
-              "Переходы на банки, дилеров и маркетплейсы дополняются параметрами osg_* и локальным журналом ваших заходов.",
+              "Партнёрские ссылки помогают сориентироваться и честно передать переход — само сравнение цен остаётся независимым, без рекламы в рейтинге и не продаётся.",
             affiliateDeeplinkFail:
               "Не удалось создать трекинг-ссылку Involve Asia. Повторите попытку — без ссылки invol.co клик не будет учтён.",
             brandAppTitle: "PAULI BEST PRICE THAILAND",
@@ -3336,8 +3555,10 @@ window.OSG_LOCALES = {
               'Pauli Best Price — сравнение и направление, без консультаций. Договоры только между вами и партнёрами.<span class="legal-guidance-services"><a href="#partner-affiliate-panel">Сравнение недвижимости</a><a href="#partner-affiliate-panel">Финансы</a><a href="#partner-affiliate-panel">Страхование</a></span> Нет ответственности за ложные данные третьих лиц. Возраст 20+ только при договорах по недвижимости, финансам и страхованию.',
             bindingAdviceDisclaimerPlain:
               "Pauli Best Price — сравнение и направление, без консультаций. Договоры только между вами и партнёрами.",
+            affiliateFundingDisclosure:
+              "Рекламный доход и комиссии финансируют приложение — без доплат для вас. Спонсорские блоки строго отделены от органического сравнения цен (см. обещание выше).",
             affiliateTransparency:
-              "Каждое направление сохраняет метку времени, lead id и локальный osg_cid; при возможности дублируется на сервере для расчётов с партнёрами — конверсия может произойти позже.",
+              "По желанию вы можете логировать клики по партнёрам локально на устройстве (параметры osg_* в журнале) — без центральных профилей и без передачи нам имён или телефонов.",
             affiliateSectionBanks: "Банки-партнёры",
             affiliateSectionMofa: "Бренды мотоциклов / Мофа для Тайланда",
             bookingBtnLabel: "Кнопка брони: сообщить о визите к дилеру",
@@ -3454,22 +3675,21 @@ window.OSG_LOCALES = {
               "Even late — two-wheel/four-wheel finance scouts and Roojai/Silkspan benchmarks stay conversational on your handset timeline.",
 
             personalDiscountProfileBtn: "Edit discount profile",
-            personalChangeNameBtn: "Change greeting name",
+            personalChangeNameBtn: "Изменить имя",
 
-            personalOnboardingTitle: "Handset-first discount profile",
+            personalOnboardingTitle: "Ваше имя на этом устройстве",
             personalOnboardingLead:
-              "Add membership or card breadcrumbs once (numbers, mnemonic tags). Comparisons assume they apply at Makro, Big C, Lotus's, Tops Daily, Central Food Hall, Gourmet Market, Villa Market, and Foodland when you typed them — <strong>nothing leaves this sandbox until you browse out.</strong>",
-            personalOnboardingQuestion:
-              "Which loyalty signals should downstream price scouts remember for you?",
+              "Pauli спрашивает имя — при желании сохраните адрес или оплату локально. Всё остаётся <strong>только на этом смартфоне</strong>, не на наших серверах.",
+            personalOnboardingQuestion: "Как вас зовут?",
             personalOnboardingMembershipLabel:
               "Membership / card breadcrumbs (digits, shorthand)",
             personalOnboardingNameLabel: "Membership breadcrumbs (fallback label)",
             personalOnboardingPrivacyMini:
-              "No Omni upload merely from tapping Save — the Schatz model targets whichever customer holds the handset without issuing a hosted identity dossier.",
+              "Передача данных — только если вы сами обращаетесь в поддержку.",
 
-            personalOnboardingSave: "Save locally",
-            personalOnboardingSkip: "Skip entry (neutral mode)",
-            personalOnboardingLater: "Decide later",
+            personalOnboardingSave: "Сохранить локально",
+            personalOnboardingSkip: "Пропустить (нейтральный режим)",
+            personalOnboardingLater: "Решить позже",
 
             personalMembershipHeading: "User-specific discount rails (“Schatz”)",
             personalMembershipLead:
@@ -3557,6 +3777,16 @@ window.OSG_LOCALES = {
             termsGateConfirmBtn: "Сохранить согласие и продолжить",
             termsGateConfirmBtnAria: "Фиксируется только локально во внутреннем хранилище",
             termsGateCheckboxAria: "Обязательное поле для разблокировки",
+            termsGateDeclineBtn: "Отклонить",
+            termsGateDeclineBtnAria: "Не принимать условия и завершить установку",
+            termsGateDeclineTitle: "Без условий использовать нельзя",
+            termsGateDeclineLead:
+              "Жаль — без подтверждения условий мы не можем запустить Pauli Best Price Thailand. Установка завершается сейчас.",
+            termsGateDeclineDoorOpen:
+              "Ничего страшного: вы можете в любой момент снова скачать приложение из App Store или Play Store, принять условия при следующем запуске и пользоваться как обычно — мы вас не блокируем.",
+            termsGateDeclineExitBtn: "Понятно",
+            termsGateDeclineExitBtnAria: "Закрыть сообщение и выйти из приложения",
+            termsGateDeclineAriaLabel: "Сообщение при отклонении условий",
             termsLegalPickupAppendHtmlTpl:
               '<h3>Иллюстрация забора заказов (семейство Seven)</h3><p>Только как ориентир: пример может использовать ступени <strong>S = {SHIP_S} THB, M = {SHIP_M} THB и L/XL = {SHIP_L} THB</strong>, а также указанную в модели плату инфраструктуры платформы <strong>{PICKUP_MARGIN} THB</strong> как часть итога вместе с товарным рядом; других программных «скрытых» надбавок сверх этой записи здесь автоматически не добавлено без отдельного оповещения. Ваучеры/бонусы, требующие добавочной покупки в магазине не ниже <strong>{MIN_STORE} THB</strong> того же документа закупки, не уменьшают автоматически строку перевозки. Обязательно сверьтесь на кассе партнёрской торговли.</p><p>Этот интерфейс — только технический координатор; интерфейс сам по себе не является розничным продавцом.</p>',
             mapsHomeToolbarAria: "Регион сохранён только тут же в браузере для поиска Seven",
@@ -3574,6 +3804,25 @@ window.OSG_LOCALES = {
           zh: {
             lead:
               "泰国价格对比与实用指南 — 隶属 Omni Solutions Global®。",
+            trustPledgeHeading: "隐私与诚实 — 放在首位",
+            trustPledgeAnonymHtml:
+              "<strong>100% 安全且匿名：</strong>您无需登录、无需注册即可使用本应用，也不会向我们要向第三方传送个人数据或电话号码。我们不存储用户数据。我们承诺不会在应用中用广告或通知打扰您。",
+            trustPledgeIndependenceHtml:
+              "<strong>我们的承诺：</strong>100% 独立，100% 对客户诚实。在我们这里没有人可以花钱买排名。我们不展示谁付得最多，而展示谁的价格最公平。我们的价格是真实、未篡改且诚实的。",
+            trustPledgeAdsHtml:
+              "广告和赞助链接可在不打扰的范围内出现，因为广告收入是正常的商业模式。但铁律是：付费广告绝不得操纵实际价格比较中的顺序或位置。显示的价格始终客观、独立且未被篡改。广告位与有机价格比较严格分离。",
+            avatarTrustPledgeAnonymTts:
+              "100% 安全且匿名：无需登录、无需注册，也不会向我们要向第三方传送个人数据或电话号码。我们不存储用户数据——也不会用广告或推送打扰您。",
+            avatarTrustPledgeAnonymBubble:
+              "100% 安全匿名——无需登录。",
+            avatarTrustPledgeIndependenceTts:
+              "我们的承诺：100% 独立，100% 诚实。在我们这里没有人可以花钱买排名。我们展示最公平的价格——真实、未篡改且诚实。",
+            avatarTrustPledgeIndependenceBubble:
+              "100% 独立——公平价格，非竞价排名。",
+            avatarTrustPledgeAdsTts:
+              "我们允许广告，但与价格比较严格分离。付费广告绝不得改变顺序——价格始终客观且未被篡改。",
+            avatarTrustPledgeAdsBubble:
+              "可以有广告——但不在价格比较里。",
             umbrellaBrandLegal: "Omni Solutions Global® Co. Ltd.",
             b2bSectionAria: "企业客户 — 行业概览",
             b2bSectionHeading: "B2B 与项目履历",
@@ -3768,6 +4017,25 @@ window.OSG_LOCALES = {
             pauliIntroTts: "我是 Pauli，你的向导，帮你让钱包更鼓！",
             avatarCompanionIntroTts: "嗨，我是 Pauli，你的私人向导。该怎么称呼你，咱们平等地开始？",
             avatarCompanionIntroBubble: "Pauli——你的向导。怎么称呼你？",
+            avatarStartupSawadeeTts: "สวัสดีครับ",
+            avatarStartupSawadeeBubble: "Sawadee khrap",
+            avatarStartupGreetWithName0:
+              "我是 Pauli，你的虚拟购物伙伴和导购——很高兴见到你，{NAME}。",
+            avatarStartupGreetWithName1:
+              "{NAME}，欢迎回来！今天我会带你找到泰国最划算的价格。",
+            avatarStartupGreetWithName2:
+              "你好 {NAME}！Pauli 在此——聪明购物，无需登录。",
+            avatarStartupGreetNoName0:
+              "我是 Pauli，你的虚拟购物伙伴和导购——即刻可用，无需账号。",
+            avatarStartupGreetNoName1:
+              "Pauli Best Price Thailand——帮你省钱，无需注册。",
+            firstBootLocationGateTitle: "配送地址所需的位置",
+            firstBootLocationGateLead:
+              "首次启动会一次性请求位置权限——仅用于本机的配送和门店提示。拒绝后仍可继续购物。",
+            firstBootLocationGateAllowBtn: "允许定位",
+            firstBootLocationGateDeclineBtn: "稍后再说",
+            firstBootPrivacyLocalNote:
+              "姓名、住址备忘和支付方式（PayPal、银行卡等）仅保存在本手机。只有你主动联系客服时才会传输数据。",
             avatarNameAskFollowTts: "说出来或在下面输入——只存在你的设备上。",
             avatarNameAskFollowBubble: "名字本地保存——仅本设备。",
             avatarNameSavedTts: "好，{NAME}！平等起步——走起。",
@@ -4009,7 +4277,7 @@ window.OSG_LOCALES = {
             notifyBody: "来自泰国的价格提示",
             affiliateHeading: "合作伙伴与线索追踪",
             affiliateIntro:
-              "从本站前往银行、经销商或电商时，链接会附带 osg_* 参数，并在本机记录透明留痕。",
+              "合作伙伴链接用于导航和公平跳转记录——价格比较本身保持独立、无广告排名、不可购买。",
             affiliateDeeplinkFail:
               "暂时无法生成 Involve Asia 追踪链接，请稍后再试——没有 invol.co 链接则点击不会被计入。",
             brandAppTitle: "PAULI BEST PRICE THAILAND",
@@ -4054,8 +4322,10 @@ window.OSG_LOCALES = {
               'Pauli Best Price 提供比较与跳转 — 非咨询。合同仅在您与合作伙伴之间签订。<span class="legal-guidance-services"><a href="#partner-affiliate-panel">房产比较</a><a href="#partner-affiliate-panel">金融</a><a href="#partner-affiliate-panel">保险</a></span> 对第三方虚假信息不承担责任。年满20岁仅适用于房产、金融与保险合同步骤。',
             bindingAdviceDisclaimerPlain:
               "Pauli Best Price 提供比较与跳转 — 非咨询。合同仅在您与合作伙伴之间签订。",
+            affiliateFundingDisclosure:
+              "广告收入和佣金资助本应用——您无需额外付费。赞助区域与有机价格比较严格分离（见上方承诺）。",
             affiliateTransparency:
-              "每次点击都会保存时间戳、Lead ID 与本地 osg_cid；服务器可另存副本以便日后与伙伴结算（成交可能发生在银行端后续流程）。",
+              "您可选择在设备本地记录合作伙伴点击（设备日志中的 osg_* 参数）——无中央用户档案，不向我们要传送姓名或电话。",
             affiliateSectionBanks: "银行合作方",
             affiliateSectionMofa: "摩托 / 助力车品牌（泰国示例入口）",
             bookingBtnLabel: "预约登记：提前告知经销商到店",
@@ -4169,22 +4439,21 @@ window.OSG_LOCALES = {
               "Even late — two-wheel/four-wheel finance scouts and Roojai/Silkspan benchmarks stay conversational on your handset timeline.",
 
             personalDiscountProfileBtn: "Edit discount profile",
-            personalChangeNameBtn: "Change greeting name",
+            personalChangeNameBtn: "更改称呼",
 
-            personalOnboardingTitle: "Handset-first discount profile",
+            personalOnboardingTitle: "本机保存的名字",
             personalOnboardingLead:
-              "Add membership or card breadcrumbs once (numbers, mnemonic tags). Comparisons assume they apply at Makro, Big C, Lotus's, Tops Daily, Central Food Hall, Gourmet Market, Villa Market, and Foodland when you typed them — <strong>nothing leaves this sandbox until you browse out.</strong>",
-            personalOnboardingQuestion:
-              "Which loyalty signals should downstream price scouts remember for you?",
+              "Pauli 会询问你的名字——也可本地保存地址或支付方式。一切仅留在 <strong>本手机</strong>，不上传我们的服务器。",
+            personalOnboardingQuestion: "你的名字是？",
             personalOnboardingMembershipLabel:
               "Membership / card breadcrumbs (digits, shorthand)",
             personalOnboardingNameLabel: "Membership breadcrumbs (fallback label)",
             personalOnboardingPrivacyMini:
-              "No Omni upload merely from tapping Save — the Schatz model targets whichever customer holds the handset without issuing a hosted identity dossier.",
+              "只有你主动联系客服时才会传输数据。",
 
-            personalOnboardingSave: "Save locally",
-            personalOnboardingSkip: "Skip entry (neutral mode)",
-            personalOnboardingLater: "Decide later",
+            personalOnboardingSave: "本地保存",
+            personalOnboardingSkip: "跳过（中性模式）",
+            personalOnboardingLater: "稍后再说",
 
             personalMembershipHeading: "User-specific discount rails (“Schatz”)",
             personalMembershipLead:
@@ -4271,6 +4540,16 @@ window.OSG_LOCALES = {
             termsGateConfirmBtn: "保存勾选并继续使用",
             termsGateConfirmBtnAria: "同意后在本机写入确认状态并收起阻挡层",
             termsGateCheckboxAria: "必须勾选才能解锁主界面交互",
+            termsGateDeclineBtn: "拒绝",
+            termsGateDeclineBtnAria: "不接受条款并结束安装",
+            termsGateDeclineTitle: "未接受条款则无法使用",
+            termsGateDeclineLead:
+              "很遗憾——若未确认条款，我们无法启动 Pauli Best Price Thailand。安装现在结束。",
+            termsGateDeclineDoorOpen:
+              "没关系：您可随时从 App Store 或 Play Store 重新下载，下次启动时接受条款即可正常使用——我们不会封锁您。",
+            termsGateDeclineExitBtn: "知道了",
+            termsGateDeclineExitBtnAria: "关闭提示并退出应用",
+            termsGateDeclineAriaLabel: "拒绝条款时的提示",
             termsLegalPickupAppendHtmlTpl:
               '<h3>便利渠道取货示意图（Seven）</h3><p>以下为说明用途：可参考包装档位示意的运费分项 <strong>THB {SHIP_S}</strong>（小）、<strong>THB {SHIP_M}</strong>（中）与 <strong>THB {SHIP_L}</strong>（大号/合并展示的 L‑XL）；与示例商品相加时示意总价可同时包含披露的 <strong>THB {PICKUP_MARGIN}</strong>「平台信息系统设施费」条目 —— 在正常组合下不会在未另行宣告的情况下自动追加其它平台加收。代金券（如要求在同一个 Seven 收据上至少有 <strong>THB {MIN_STORE}</strong> 加价店内消费）不能直接自动折算掉运费分项。请以门店或官方收银应用为准。</p><p>本前端仅承担技术协调与研究辅助；并不因为界面本身而成为独立零售商。</p>',
             mapsHomeToolbarAria: "可选：仅在浏览器本地保存住址/邻近关键词供快捷搜索 Seven",
@@ -4348,6 +4627,25 @@ window.OSG_LOCALES = {
               "Hi, I'm Pauli, your personal guide. What should I call you so we start on equal footing?",
             avatarCompanionIntroBubble:
               "Pauli — your guide. What should I call you?",
+            avatarStartupSawadeeTts: "สวัสดีครับ",
+            avatarStartupSawadeeBubble: "Sawadee khrap",
+            avatarStartupGreetWithName0:
+              "I'm Pauli, your virtual companion and shopping guide — good to see you, {NAME}.",
+            avatarStartupGreetWithName1:
+              "{NAME}, welcome back! I'll guide you to the best prices in Thailand today.",
+            avatarStartupGreetWithName2:
+              "Hi {NAME}! Pauli here — your pathfinder for smart shopping, no sign-in needed.",
+            avatarStartupGreetNoName0:
+              "I'm Pauli, your virtual companion and shopping guide — ready instantly, no login.",
+            avatarStartupGreetNoName1:
+              "Pauli Best Price Thailand — I show you ways to save. No account required.",
+            firstBootLocationGateTitle: "Location for delivery address",
+            firstBootLocationGateLead:
+              "On first launch we ask once for location access — for delivery and store hints on this device only. You can still shop without it.",
+            firstBootLocationGateAllowBtn: "Allow location",
+            firstBootLocationGateDeclineBtn: "Decide later",
+            firstBootPrivacyLocalNote:
+              "Your name, saved home addresses, and payment methods (PayPal, cards, etc.) stay only on this phone. Data is sent only if you actively contact support.",
             avatarNameAskFollowTts:
               "Just say it out loud or type it below — it stays on your device only.",
             avatarNameAskFollowBubble:
@@ -4653,6 +4951,16 @@ window.OSG_LOCALES = {
             termsGateConfirmBtn: "Accept and continue",
             termsGateConfirmBtnAria: "Store consent locally and unlock the UI",
             termsGateCheckboxAria: "Mandatory — confirm notices before unlocking",
+            termsGateDeclineBtn: "Decline",
+            termsGateDeclineBtnAria: "Do not accept terms and end installation",
+            termsGateDeclineTitle: "Cannot use the app without terms",
+            termsGateDeclineLead:
+              "Sorry — without confirming the terms we cannot start Pauli Best Price Thailand. Installation ends now.",
+            termsGateDeclineDoorOpen:
+              "No problem: you can download the app again from the App Store or Play Store any time, accept the terms on your next start, and use it normally — we do not lock you out.",
+            termsGateDeclineExitBtn: "Understood",
+            termsGateDeclineExitBtnAria: "Close message and exit the app",
+            termsGateDeclineAriaLabel: "Message when terms are declined",
             termsLegalPickupAppendHtmlTpl:
               '<h3>Pick-up illustration (Seven corridor)</h3><p>For orientation only, the model may classify parcel sizing into freight components of <strong>THB {SHIP_S}</strong> (S), <strong>THB {SHIP_M}</strong> (M), and <strong>THB {SHIP_L}</strong> representing the illustrative L/XL band. Together with qualifying goods, the payable preview may include a disclosed <strong>THB {PICKUP_MARGIN}</strong> platform infrastructure contribution bundled into the modeled total — no further automatic platform fees are layered on beyond these stated modelling lines in ordinary combinations. Retail coupons (such as voucher flows that require ≥ <strong>THB {MIN_STORE}</strong> of additional qualifying in-store merchandise on the same transaction record) cannot automatically discount the freight line. Acceptance and final amounts remain with the retailer’s checkout stack.</p><p>This site provides technical coordination tooling only — it does not, by UI alone, act as retailer of record.</p>',
             mapsHomeToolbarAria: "Optional locally stored anchor for neighbourhood or home-based Seven search shortcuts",

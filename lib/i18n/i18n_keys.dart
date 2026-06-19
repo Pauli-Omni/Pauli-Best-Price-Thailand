@@ -17,6 +17,11 @@ class I18nKeys {
   static const consentBody = 'consent.body';
   static const consentCheckbox = 'consent.checkbox';
   static const consentAccept = 'consent.accept';
+  static const consentDecline = 'consent.decline';
+  static const consentDeclineTitle = 'consent.decline_title';
+  static const consentDeclineLead = 'consent.decline_lead';
+  static const consentDeclineDoorOpen = 'consent.decline_door_open';
+  static const consentDeclineExit = 'consent.decline_exit';
 
   // Search
   static const searchHint = 'search.hint';

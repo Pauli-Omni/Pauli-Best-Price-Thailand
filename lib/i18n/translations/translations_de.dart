@@ -16,6 +16,13 @@ const Map<String, String> translationsDe = {
       '• Datenschutz nach PDPA Thailand und EU-DSGVO.',
   'consent.checkbox': 'Ich habe die AGB gelesen und stimme zu.',
   'consent.accept': 'AGB akzeptieren und App starten',
+  'consent.decline': 'Ablehnen',
+  'consent.decline_title': 'Ohne AGB leider nicht nutzbar',
+  'consent.decline_lead':
+      'Schade — ohne deine Bestätigung der AGB können wir Pauli Best Price Thailand leider nicht starten. Die Installation wird jetzt beendet.',
+  'consent.decline_door_open':
+      'Kein Problem: Du kannst die App jederzeit erneut aus dem App Store oder Play Store laden, die AGB beim nächsten Start akzeptieren und ganz normal loslegen — wir sperren dich nicht aus.',
+  'consent.decline_exit': 'Verstanden',
 
   'search.hint': 'Produkte suchen',
   'search.button': 'Suchen',

@@ -4169,6 +4169,82 @@ a.osg-affiliate-link.osg-empathy-partner-hint {
   color: rgba(246, 240, 220, 0.9);
 }
 
+.osg-trust-pledge-panel[hidden] {
+  display: none !important;
+}
+
+.osg-trust-pledge-panel--spotlight {
+  outline: 2px solid rgba(212, 175, 55, 0.88);
+  box-shadow:
+    0 0 0 4px rgba(212, 175, 55, 0.18),
+    0 10px 32px rgba(0, 0, 0, 0.35);
+  scroll-margin-top: 5.5rem;
+  scroll-margin-bottom: 2rem;
+}
+
+.osg-trust-pledge-panel {
+  margin: 0 0 1.35rem;
+  padding: 1rem 1.05rem;
+  border-radius: 12px;
+  border: 1px solid rgba(212, 175, 55, 0.55);
+  background: linear-gradient(
+    168deg,
+    rgba(22, 30, 42, 0.97),
+    rgba(12, 16, 22, 0.99)
+  );
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.22);
+}
+
+.osg-trust-pledge-heading {
+  margin: 0 0 0.85rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--primary-gold);
+}
+
+.osg-trust-pledge-block {
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: rgba(246, 240, 220, 0.94);
+}
+
+.osg-trust-pledge-block:last-child {
+  margin-bottom: 0;
+}
+
+.osg-trust-pledge-block strong {
+  color: var(--primary-gold);
+  font-weight: 700;
+}
+
+.osg-trust-pledge-block--primary {
+  font-size: 0.93rem;
+}
+
+@media (max-width: 480px) {
+  .osg-trust-pledge-panel {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0.9rem 0.85rem;
+  }
+
+  .osg-trust-pledge-panel--spotlight {
+    scroll-margin-top: 4.5rem;
+  }
+
+  .osg-trust-pledge-heading {
+    font-size: 1rem;
+  }
+
+  .osg-trust-pledge-block,
+  .osg-trust-pledge-block--primary {
+    font-size: 0.86rem;
+    line-height: 1.48;
+  }
+}
+
 .osg-vip-gift-overlay {
   position: fixed;
   inset: 0;
