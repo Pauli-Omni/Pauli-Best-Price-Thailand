@@ -512,6 +512,9 @@ window.OSG_LOCALES = {
             supportContactBtn: "Kontakt",
             supportContactBtnAria:
               "Kontakt und Support — Problem melden, Frage stellen oder Kontakt bitte",
+            footerDownloadBtn: "App herunterladen",
+            footerDownloadAria:
+              "Download-Hub — Pauli auf Smartphone, Tablet, Mac, Windows oder Linux installieren",
             supportModalTitle: "Kontakt & Support",
             supportModalLead:
               "Beschreiben Sie Ihr Anliegen. Sie erhalten eine Ticket-Nummer; Ihr E-Mail-Programm öffnet sich mit dem richtigen Betreff für Pauli Best Price Thailand.",
@@ -1199,6 +1202,9 @@ window.OSG_LOCALES = {
             supportContactBtn: "Contact",
             supportContactBtnAria:
               "Contact support — report a problem or ask a question",
+            footerDownloadBtn: "Download app",
+            footerDownloadAria:
+              "Download hub — install Pauli on phone, tablet, Mac, Windows, or Linux",
             supportModalTitle: "Contact & support",
             supportModalLead:
               "Describe your issue. You will receive a ticket number; your mail app opens with the correct subject for Pauli Best Price Thailand.",
@@ -1966,6 +1972,9 @@ window.OSG_LOCALES = {
             liveCaptionAria: "คำบรรยายสด — ข้อความที่พอลลี่พูด",
             supportContactBtn: "ติดต่อ",
             supportContactBtnAria: "ติดต่อฝ่ายสนับสนุน — แจ้งปัญหาหรือถามคำถาม",
+            footerDownloadBtn: "ดาวน์โหลดแอป",
+            footerDownloadAria:
+              "ศูนย์ดาวน์โหลด — ติดตั้ง Pauli บนมือถือ แท็บเล็ต Mac Windows หรือ Linux",
             supportModalTitle: "ติดต่อ & สนับสนุน",
             supportModalLead:
               "อธิบายปัญหาของคุณ คุณจะได้หมายเลขตั๋ว และอีเมลจะเปิดพร้อมหัวข้อที่ถูกต้องสำหรับ Pauli Best Price Thailand",
@@ -2797,6 +2806,9 @@ window.OSG_LOCALES = {
             supportContactBtn: "Kontakt",
             supportContactBtnAria:
               "Kontakt z pomocą — zgłoś problem lub zadaj pytanie",
+            footerDownloadBtn: "Pobierz aplikację",
+            footerDownloadAria:
+              "Centrum pobierania — zainstaluj Pauli na telefonie, tablecie, Macu, Windows lub Linux",
             supportModalTitle: "Kontakt i wsparcie",
             supportModalLead:
               "Opisz swój problem. Otrzymasz numer zgłoszenia; program pocztowy otworzy się z właściwym tematem dla Pauli Best Price Thailand.",
@@ -3601,6 +3613,9 @@ window.OSG_LOCALES = {
             supportContactBtn: "Контакт",
             supportContactBtnAria:
               "Связаться с поддержкой — сообщить о проблеме или задать вопрос",
+            footerDownloadBtn: "Скачать приложение",
+            footerDownloadAria:
+              "Центр загрузки — установите Pauli на телефон, планшет, Mac, Windows или Linux",
             supportModalTitle: "Контакт и поддержка",
             supportModalLead:
               "Опишите проблему. Вы получите номер тикета; почта откроется с правильной темой для Pauli Best Price Thailand.",
@@ -4390,6 +4405,9 @@ window.OSG_LOCALES = {
             liveCaptionAria: "实时字幕 — Pauli 正在说的文字",
             supportContactBtn: "联系",
             supportContactBtnAria: "联系支持 — 反馈问题或提问",
+            footerDownloadBtn: "下载应用",
+            footerDownloadAria:
+              "下载中心 — 在手机、平板、Mac、Windows 或 Linux 上安装 Pauli",
             supportModalTitle: "联系与支持",
             supportModalLead:
               "请描述您的问题。系统将生成工单号，并打开邮件客户端，主题为 Pauli Best Price Thailand 的正确格式。",

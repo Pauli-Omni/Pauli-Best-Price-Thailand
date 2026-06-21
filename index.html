@@ -13,6 +13,12 @@
     <title>Pauli Best Price Thailand — price comparison</title>
     <meta name="keywords" content="price comparison,lazada,shopee,7-eleven,bestprice,thailand,pauli" />
     <meta name="theme-color" content="#0d0d0d" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/Frontseite02.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Pauli BestPrice" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <!-- Produktion (getrennte API): osg-runtime-config.js + optional osg-admin-secret.prod.js -->
     <script src="osg-runtime-config.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -992,6 +998,7 @@
         >
           Kontakt
         </button>
+        <a href="/download" class="footer-legal-doc-pill" id="footer-download-link"></a>
       </nav>
     </footer>
 
@@ -4209,6 +4216,11 @@
           if (te) te.textContent = p.legalFooterTermsBtn || "";
           var aff = document.getElementById("footer-legal-affiliate-btn");
           if (aff) aff.textContent = p.legalFooterAffiliateBtn || "Affiliate";
+          var dl = document.getElementById("footer-download-link");
+          if (dl) {
+            dl.textContent = p.footerDownloadBtn || "";
+            dl.setAttribute("aria-label", p.footerDownloadAria || dl.textContent);
+          }
           var nav = document.getElementById("footer-legal-doc-nav");
           if (nav && p.legalDocNavAria) nav.setAttribute("aria-label", p.legalDocNavAria);
 
@@ -15560,6 +15572,13 @@
       }
 
       main();
+    </script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker.register("/sw.js").catch(function () {});
+        });
+      }
     </script>
   </body>
 </html>

@@ -1,0 +1,28 @@
+{
+  "name": "Pauli BestPrice Thailand",
+  "short_name": "Pauli BestPrice",
+  "description": "Price comparison and Pauli avatar — Thailand",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0d0d0d",
+  "theme_color": "#0d0d0d",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/Frontseite02.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/Frontseite02.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["shopping", "finance", "utilities"],
+  "prefer_related_applications": false
+}

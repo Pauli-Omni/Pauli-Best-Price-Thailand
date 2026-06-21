@@ -1883,6 +1883,9 @@ function osgStaticGuard(req, res, next) {
 }
 
 app.use(osgStaticGuard);
+app.get(["/download", "/download/"], (req, res) => {
+  res.sendFile(path.join(PROJECT_ROOT, "download.html"));
+});
 app.get("/commerce-constants.js", (req, res) => {
   res.sendFile(
     path.join(process.cwd(), "03_Datenbank_und_Preise", "commerce-constants.js"),

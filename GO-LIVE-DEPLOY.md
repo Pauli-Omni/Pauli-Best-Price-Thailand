@@ -50,15 +50,34 @@ Render Env:
 - `OSG_SMTP_PORT=587`
 - `OSG_SMTP_USER`, `OSG_SMTP_PASS`, `OSG_SMTP_FROM`
 
-## 6. Store-Artefakte (Aptoide / Sideload)
+## 6. Multi-Platform Download (PWA + Native Sideload)
+
+**Download-Hub (6 Sprachen):** `/download` oder `/download.html`
+
+| Plattform | Methode | URL / Datei |
+|-----------|---------|-------------|
+| **iPhone / iPad** | PWA (ohne App Store) | `/download` → Safari → „Zum Home-Bildschirm“ |
+| **Android** | PWA oder APK | `/downloads/pauli-best-price-universal.apk` + Aptoide |
+| **MacBook (macOS)** | PWA oder `.app` Zip | `/downloads/pauli-best-price-macos.zip` |
+| **Windows** | PWA oder Desktop-Zip | `/downloads/pauli-best-price-windows.zip` |
+| **Linux** | PWA oder `.tar.gz` | `/downloads/pauli-best-price-linux.tar.gz` |
+
+PWA: `manifest.webmanifest` + `sw.js` — installierbar in Chrome, Edge, Safari.
+
+Native Shell: Flutter WebView lädt die Live-Web-App (`PAULI_WEB_URL`, Standard: Render-URL).
 
 ```bash
 npm run build:stores
 ```
 
-Output: `build/store-exports/pauli-best-price-universal.apk` (Aptoide / Android Sideload).
+Output:
 
-iOS/macOS/Windows/Linux: Flutter-IPA bzw. separate Desktop-Wrapper — siehe `scripts/build-store-artifacts.sh`.
+- `build/store-exports/` — alle Plattform-Artefakte
+- `public/downloads/` — Dateien für direkten Web-Download nach Deploy
+
+**Aptoide:** APK aus `public/downloads/` hochladen (siehe `~/Desktop/OSG-Pauli-Release-Paket/Aptoide/`).
+
+**iOS IPA:** Nur mit Apple-Signierung (TestFlight / AltStore); ohne Developer-Account → **PWA empfohlen**.
 
 ## 7. i18n-Trennung
 

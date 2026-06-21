@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0d0d0d" />
+    <title>Pauli BestPrice Thailand — Download</title>
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="stylesheet" href="download.css" />
+    <script src="download-locales.js"></script>
+  </head>
+  <body class="download-page">
+    <main class="download-page__main">
+      <header class="download-page__header">
+        <p class="download-page__brand">Pauli BestPrice Thailand</p>
+        <h1 id="dl-heading"></h1>
+        <p id="dl-lead" class="download-page__lead"></p>
+        <label class="download-page__lang">
+          <span id="dl-lang-label"></span>
+          <select id="dl-lang" aria-label="Language"></select>
+        </label>
+      </header>
+
+      <section class="download-card" aria-labelledby="dl-pwa-heading">
+        <h2 id="dl-pwa-heading"></h2>
+        <p id="dl-pwa-lead"></p>
+        <ul class="download-steps">
+          <li id="dl-pwa-ios"></li>
+          <li id="dl-pwa-android"></li>
+          <li id="dl-pwa-desktop"></li>
+        </ul>
+        <a class="download-btn download-btn--primary" id="dl-pwa-open" href="/"></a>
+      </section>
+
+      <section class="download-card" aria-labelledby="dl-native-heading">
+        <h2 id="dl-native-heading"></h2>
+        <div class="download-grid">
+          <article class="download-tile">
+            <h3 id="dl-android-label"></h3>
+            <p id="dl-android-missing" class="download-missing"></p>
+            <a class="download-btn" id="dl-android-btn" href="#" download hidden></a>
+          </article>
+          <article class="download-tile">
+            <h3 id="dl-ios-label"></h3>
+            <p id="dl-ios-note" class="download-note"></p>
+          </article>
+          <article class="download-tile">
+            <h3 id="dl-mac-label"></h3>
+            <p id="dl-mac-missing" class="download-missing"></p>
+            <a class="download-btn" id="dl-mac-btn" href="#" download hidden></a>
+          </article>
+          <article class="download-tile">
+            <h3 id="dl-win-label"></h3>
+            <p id="dl-win-missing" class="download-missing"></p>
+            <a class="download-btn" id="dl-win-btn" href="#" download hidden></a>
+          </article>
+          <article class="download-tile">
+            <h3 id="dl-linux-label"></h3>
+            <p id="dl-linux-missing" class="download-missing"></p>
+            <a class="download-btn" id="dl-linux-btn" href="#" download hidden></a>
+          </article>
+        </div>
+      </section>
+
+      <section class="download-card download-card--muted" aria-labelledby="dl-stores-heading">
+        <h2 id="dl-stores-heading"></h2>
+        <p id="dl-aptoide"></p>
+        <p>
+          <a href="https://www.aptoide.com" target="_blank" rel="noopener noreferrer"
+            >aptoide.com</a
+          >
+        </p>
+      </section>
+    </main>
+    <script src="assets/scripts/download_page.js"></script>
+  </body>
+</html>
