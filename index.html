@@ -29,6 +29,11 @@
     />
     <link rel="stylesheet" href="style.css" />
     <!-- Production: serve minified/bundled assets; keep API keys only server-side. Client JS cannot be “sealed” against inspection — device anchors + rate limits complement abuse handling. -->
+    <script
+      type="text/javascript"
+      src="https://xhr.invl.co/magic/1085689/auto.js"
+    ></script>
+    <script src="assets/scripts/involve-asia-magic-bridge.js" defer></script>
   </head>
   <body>
     <div class="personal-onboarding-overlay" id="personal-onboarding-overlay" hidden>
@@ -7574,6 +7579,30 @@
                       proceedWithTracked(tr);
                     })
                     .catch(function () {
+                      var magicHref =
+                        typeof window.osgInvolveMagicFallbackHref === "function"
+                          ? window.osgInvolveMagicFallbackHref(a)
+                          : "";
+                      if (!magicHref) {
+                        var hNow = (a.getAttribute("href") || "").trim();
+                        if (/invl\.co|involve\.asia/i.test(hNow)) {
+                          magicHref = hNow;
+                        }
+                      }
+                      if (magicHref) {
+                        var trMagic = osgRecordPartnerOutbound(
+                          partner,
+                          channel,
+                          raw,
+                          lint,
+                          { marketplaceSubId: OSG_MARKETPLACE_SUB_ID },
+                          magicHref,
+                          cid,
+                          lid
+                        );
+                        proceedWithTracked(trMagic);
+                        return;
+                      }
                       try {
                         alert(
                           pkWall.affiliateDeeplinkFail ||

@@ -9,6 +9,7 @@ import "dotenv/config";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import sharp from "sharp";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -24,6 +25,8 @@ const FRONT = path.join(ROOT, "Frontseite02.png");
 const BACK = path.join(ROOT, "hinterseite.png");
 const POLL_MS = 8000;
 const MAX_POLLS = 180;
+const VIDEO_SIZE = process.env.OPENAI_SORA_SIZE || "720x1280";
+const [TARGET_W, TARGET_H] = VIDEO_SIZE.split("x").map((n) => Number(n) || 0);
 
 const SLOTS = [
   { key: "wai_greeting", file: "01-wai-greeting", seconds: "8" },
@@ -52,20 +55,39 @@ function readManifestPrompts() {
   return out;
 }
 
-async function createVideoJob(apiKey, prompt, seconds, refPath) {
-  const form = new FormData();
-  form.append("model", process.env.OPENAI_SORA_MODEL || "sora-2");
-  form.append("prompt", prompt);
-  form.append("size", process.env.OPENAI_SORA_SIZE || "720x720");
-  form.append("seconds", seconds);
-  if (refPath && fs.existsSync(refPath)) {
-    const blob = new Blob([fs.readFileSync(refPath)], { type: "image/png" });
-    form.append("input_reference", blob, path.basename(refPath));
+async function prepareReferenceDataUrl(refPath) {
+  if (!refPath || !fs.existsSync(refPath)) return null;
+  const w = TARGET_W > 0 ? TARGET_W : 720;
+  const h = TARGET_H > 0 ? TARGET_H : 1280;
+  const buf = await sharp(refPath)
+    .resize(w, h, {
+      fit: "contain",
+      background: { r: 0, g: 0, b: 0, alpha: 0 },
+    })
+    .png()
+    .toBuffer();
+  return `data:image/png;base64,${buf.toString("base64")}`;
+}
+
+async function createVideoJob(apiKey, prompt, seconds, refDataUrl) {
+  const body = {
+    model: process.env.OPENAI_SORA_MODEL || "sora-2",
+    prompt,
+    size: VIDEO_SIZE,
+    seconds: String(seconds),
+  };
+  if (refDataUrl) {
+    body.input_reference = { image_url: refDataUrl };
   }
+
   const res = await fetch("https://api.openai.com/v1/videos", {
     method: "POST",
-    headers: { Authorization: "Bearer " + apiKey },
-    body: form,
+    headers: {
+      Authorization: "Bearer " + apiKey,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
   });
   if (!res.ok) {
     const detail = await res.text();
@@ -76,17 +98,31 @@ async function createVideoJob(apiKey, prompt, seconds, refPath) {
 
 async function pollVideo(apiKey, videoId) {
   for (let i = 0; i < MAX_POLLS; i += 1) {
-    const res = await fetch(
-      `https://api.openai.com/v1/videos/${encodeURIComponent(videoId)}`,
-      { headers: { Authorization: "Bearer " + apiKey } },
-    );
+    let res = null;
+    for (let attempt = 0; attempt < 5; attempt += 1) {
+      res = await fetch(
+        `https://api.openai.com/v1/videos/${encodeURIComponent(videoId)}`,
+        { headers: { Authorization: "Bearer " + apiKey } },
+      );
+      if (res.status !== 503 && res.status !== 502) break;
+      console.log(`  poll 503 — retry ${attempt + 1}/5`);
+      await sleep(5000);
+    }
+    if (!res || !res.ok) {
+      const detail = res ? await res.text() : "no response";
+      throw new Error(
+        `sora_poll_failed:${res ? res.status : 0}:${detail.slice(0, 300)}`,
+      );
+    }
     const data = await res.json();
     const st = data.status || data.state;
     if (st === "completed" || st === "succeeded") return data;
     if (st === "failed" || st === "error") {
       throw new Error(`sora_failed:${JSON.stringify(data).slice(0, 300)}`);
     }
-    console.log(`  poll ${i + 1}/${MAX_POLLS} — ${st || "pending"}`);
+    const progress =
+      data.progress != null ? ` (${data.progress}%)` : "";
+    console.log(`  poll ${i + 1}/${MAX_POLLS} — ${st || "pending"}${progress}`);
     await sleep(POLL_MS);
   }
   throw new Error("sora_timeout");
@@ -110,13 +146,30 @@ async function main() {
   }
   if (!fs.existsSync(FRONT)) {
     console.error("Front coin image missing:", FRONT);
+    console.error("Tipp: cp public/Frontseite02.png . && cp public/hinterseite.png .");
     process.exit(1);
   }
   fs.mkdirSync(OUT, { recursive: true });
   fs.mkdirSync(FLUTTER_OUT, { recursive: true });
   const prompts = readManifestPrompts();
+  const frontRef = await prepareReferenceDataUrl(FRONT);
+  const backRef = fs.existsSync(BACK)
+    ? await prepareReferenceDataUrl(BACK)
+    : frontRef;
+
+  console.log("Sora size:", VIDEO_SIZE);
+  console.log("Output:", OUT);
 
   for (const slot of SLOTS) {
+    const mp4 = path.join(OUT, `${slot.file}.mp4`);
+    if (fs.existsSync(mp4) && fs.statSync(mp4).size > 50000) {
+      console.log("\n==>", slot.key, "— skip (exists)");
+      try {
+        fs.copyFileSync(mp4, path.join(FLUTTER_OUT, `${slot.file}.mp4`));
+      } catch (_) {}
+      continue;
+    }
+
     const prompt = prompts[slot.key];
     if (!prompt) {
       console.warn("Skip — prompt missing:", slot.key);
@@ -124,15 +177,14 @@ async function main() {
     }
     console.log("\n==>", slot.key);
     const ref =
-      slot.key === "locked_carousel" && fs.existsSync(BACK) ? BACK : FRONT;
+      slot.key === "locked_carousel" && backRef ? backRef : frontRef;
     const job = await createVideoJob(apiKey, prompt, slot.seconds, ref);
     const id = job.id || job.video?.id;
     if (!id) throw new Error("no_video_id");
     console.log("  job:", id);
     await pollVideo(apiKey, id);
-    const mp4 = path.join(OUT, `${slot.file}.mp4`);
     await downloadVideo(apiKey, id, mp4);
-    console.log("  saved:", mp4);
+    console.log("  saved:", mp4, `(${(fs.statSync(mp4).size / 1024 / 1024).toFixed(2)} MB)`);
     try {
       fs.copyFileSync(mp4, path.join(FLUTTER_OUT, `${slot.file}.mp4`));
     } catch (_) {}

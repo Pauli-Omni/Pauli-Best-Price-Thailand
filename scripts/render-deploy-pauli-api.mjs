@@ -195,14 +195,14 @@ async function ensureService(ownerId) {
     if (/unfetchable|invalid or unfetchable/i.test(msg)) {
       console.error("\nRender kann das GitHub-Repo noch nicht lesen.");
       console.error("Ursache: Pauli-Best-Price-Thailand ist nicht an Render angebunden.");
-      console.error("\nEinmalig im Browser:");
-      console.error("1) GitHub → Settings → Applications → Render → Configure");
+      console.error("\nEinmalig im Browser (ca. 2 Minuten):");
+      console.error("1) https://github.com/settings/installations → Render → Configure");
       console.error("   Repository „Pauli-Best-Price-Thailand“ freigeben.");
-      console.error("2) Render → Blueprints → New Blueprint Instance");
-      console.error(`   Repo: ${REPO} (Branch ${BRANCH}, render.yaml)`);
-      console.error("   Oder dieses Skript erneut ausführen:");
-      console.error("   node scripts/render-deploy-pauli-api.mjs");
-      console.error("\nAlternativ: Render Dashboard → New Web Service → Repo auswählen.");
+      console.error("2) https://dashboard.render.com/blueprint/new");
+      console.error(`   Repo: ${REPO} · Branch ${BRANCH} · Blueprint: render.yaml`);
+      console.error("3) Secrets eintragen (sync:false): OPENAI, ELEVENLABS, INVOLVE_ASIA_*");
+      console.error("4) Erneut: npm run render:deploy-api");
+      console.error("5) Prüfen: npm run render:go-live-check");
       process.exit(2);
     }
     throw err;
