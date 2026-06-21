@@ -27,6 +27,11 @@ import {
   setEmailCritical,
   verifyAppEmailRegistry,
 } from "./services/osg-email-connectivity.js";
+import {
+  avatarStatusPayload,
+  registerSocialExempt,
+  validateReferralClaim,
+} from "./avatar-monetization-server.js";
 
 /** Projekt-Root (npm start / Render starten aus Repo-Root). */
 const PROJECT_ROOT = process.cwd();
@@ -897,6 +902,37 @@ app.get("/api/install-fingerprint", rlInstallFp, (req, res) => {
   } catch (e) {
     console.error("[install-fingerprint]", e);
     res.status(500).json({ error: "install_fingerprint_failed" });
+  }
+});
+
+app.post("/api/avatar/status", rlRefStatus, (req, res) => {
+  try {
+    const payload = avatarStatusPayload(DATA_DIR, req.body || {});
+    res.type("json").json(payload);
+  } catch (e) {
+    console.error("[avatar-status]", e);
+    res.status(500).json({ error: "avatar_status_failed" });
+  }
+});
+
+app.post("/api/avatar/referral/claim", rlRefClaim, (req, res) => {
+  try {
+    const out = validateReferralClaim(DATA_DIR, req.body || {});
+    res.type("json").json(out);
+  } catch (e) {
+    console.error("[avatar-referral-claim]", e);
+    res.status(500).json({ error: "avatar_referral_claim_failed" });
+  }
+});
+
+app.post("/api/avatar/social-verify", rlRefReg, (req, res) => {
+  try {
+    const out = registerSocialExempt(DATA_DIR, req.body || {});
+    if (!out.ok) return res.status(400).json(out);
+    res.type("json").json(out);
+  } catch (e) {
+    console.error("[avatar-social-verify]", e);
+    res.status(500).json({ error: "avatar_social_verify_failed" });
   }
 });
 
@@ -1850,6 +1886,15 @@ app.use(osgStaticGuard);
 app.get("/commerce-constants.js", (req, res) => {
   res.sendFile(
     path.join(process.cwd(), "03_Datenbank_und_Preise", "commerce-constants.js"),
+  );
+});
+app.get("/avatar-monetization-constants.js", (req, res) => {
+  res.sendFile(
+    path.join(
+      process.cwd(),
+      "03_Datenbank_und_Preise",
+      "avatar-monetization-constants.js",
+    ),
   );
 });
 app.use(express.static(PUBLIC_DIR));

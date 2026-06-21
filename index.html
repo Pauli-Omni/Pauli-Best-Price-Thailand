@@ -1110,6 +1110,17 @@
       </div>
     </div>
     <div
+      id="osg-avatar-lock-banner"
+      class="osg-avatar-lock-banner"
+      role="status"
+      aria-live="polite"
+      hidden
+    >
+      <p class="osg-avatar-lock-banner__msg"></p>
+      <p class="osg-avatar-lock-banner__price"></p>
+      <p class="osg-avatar-lock-banner__referral"></p>
+    </div>
+    <div
       id="pauli-live-caption"
       class="pauli-live-caption"
       role="status"
@@ -1347,6 +1358,8 @@
     </div>
 
     <script src="commerce-constants.js"></script>
+    <script src="avatar-monetization-constants.js"></script>
+    <script src="assets/scripts/pauli_avatar_monetization.js"></script>
     <script src="legal-pages.js"></script>
     <script src="i18n-locales.js"></script>
     <script src="assets/scripts/pauli_persona.js"></script>
@@ -1462,6 +1475,8 @@
         /** Dedupe failed VIP deep-link attempts (same code) for 24h — reduces API noise */
         var OSG_LS_VIP_URL_FAIL = "osg-vip-url-fail-v1";
         var OSG_LS_REF_CLAIM_SENT = "osg-referral-claim-sent-v1";
+        var OSG_LS_AVATAR_PENDING_PARENT = "osg-avatar-pending-parent-v1";
+        var OSG_LS_AVATAR_REF_CLAIM_SENT = "osg-avatar-referral-claim-sent-v1";
         /** Weighted anon interest buckets for push copy (keywords) */
         var OSG_LS_INTEREST_WEIGHTS = "osg-interest-weights-v1";
         /** After marketplace purchase outbound — mute product-ish pushes */
@@ -2128,6 +2143,233 @@
             osgTrialIsActiveNow()
           );
         }
+
+        function osgAvatarMonetizationApi() {
+          return window.OSG_PauliAvatarMonetization || null;
+        }
+
+        function osgAvatarAccessStatus(opts) {
+          var api = osgAvatarMonetizationApi();
+          if (!api || typeof api.resolveAvatarAccess !== "function") {
+            return { avatarActive: true, statusCode: "MODULE_MISSING" };
+          }
+          return api.resolveAvatarAccess(opts || {});
+        }
+
+        /** Pauli-Avatar: 90-Tage-Test, Erweiterung, Referrals oder soziale Befreiung. */
+        function osgAvatarAccessUnlocked(opts) {
+          return !!osgAvatarAccessStatus(opts).avatarActive;
+        }
+
+        function osgAvatarFormatPriceThb(n) {
+          var v = Number(n);
+          if (!Number.isFinite(v)) v = 99.9;
+          return v.toFixed(2);
+        }
+
+        function osgAvatarResolveMessage(pack, status) {
+          pack = pack || {};
+          status = status || {};
+          if (status.messageKey && pack[status.messageKey]) {
+            var tpl = String(pack[status.messageKey]);
+            if (status.daysRemaining != null) {
+              return tpl.replace(/\{DAYS\}/g, String(status.daysRemaining));
+            }
+            return tpl;
+          }
+          if (status.infoTextKey && pack[status.infoTextKey]) {
+            return String(pack[status.infoTextKey]);
+          }
+          return "";
+        }
+
+        function osgRefreshAvatarLockUi(pack) {
+          pack =
+            pack ||
+            window.__OSG_CURRENT_PACK_CACHE ||
+            (typeof T !== "undefined" ? T.de : {});
+          var status = osgAvatarAccessStatus();
+          var active = !!status.avatarActive;
+          var coin = document.getElementById("coin-stage");
+          var banner = document.getElementById("osg-avatar-lock-banner");
+          var wake = document.getElementById("pauli-voice-wake-btn");
+          if (coin) {
+            coin.classList.toggle("osg-avatar-locked", !active);
+            coin.setAttribute("aria-disabled", active ? "false" : "true");
+          }
+          if (wake) wake.hidden = !active;
+          if (!banner) return;
+          if (active) {
+            banner.setAttribute("hidden", "");
+            var api = osgAvatarMonetizationApi();
+            if (api && typeof api.bindDeviceOnce === "function") {
+              var dev = api.DeviceFingerprinter.getLocalDeviceId();
+              if (dev) api.bindDeviceOnce(dev);
+            }
+            return;
+          }
+          banner.removeAttribute("hidden");
+          var msg = banner.querySelector(".osg-avatar-lock-banner__msg");
+          var price = banner.querySelector(".osg-avatar-lock-banner__price");
+          var refEl = banner.querySelector(".osg-avatar-lock-banner__referral");
+          if (msg) msg.textContent = osgAvatarResolveMessage(pack, status);
+          if (price && pack.avatarExtensionPriceTpl) {
+            price.textContent = String(pack.avatarExtensionPriceTpl).replace(
+              /\{PRICE\}/g,
+              osgAvatarFormatPriceThb(status.upgradeCostThb)
+            );
+          } else if (price) {
+            price.textContent = "";
+          }
+          if (refEl && pack.avatarReferralProgressTpl) {
+            refEl.textContent = String(pack.avatarReferralProgressTpl)
+              .replace(/\{COUNT\}/g, String(status.qualifiedReferrals || 0))
+              .replace(
+                /\{TARGET\}/g,
+                String(status.referralTarget || 3)
+              );
+          } else if (refEl) {
+            refEl.textContent = "";
+          }
+          if (pack.avatarLockAriaLabel) {
+            banner.setAttribute("aria-label", pack.avatarLockAriaLabel);
+          }
+        }
+
+        function osgSyncAvatarStatusFromServer() {
+          var api = osgAvatarMonetizationApi();
+          if (!api || !navigator.onLine) return Promise.resolve(null);
+          var userRef =
+            typeof osgEnsureCustomerId === "function"
+              ? osgEnsureCustomerId()
+              : "";
+          var bundle =
+            typeof osgLoadInstallBundle === "function"
+              ? osgLoadInstallBundle() || {}
+              : {};
+          var reg = String(
+            bundle.installedAtISO || bundle.firstOpenISO || ""
+          ).slice(0, 10);
+          var deviceId = api.DeviceFingerprinter.getLocalDeviceId();
+          var extensionPaid = false;
+          try {
+            extensionPaid =
+              localStorage.getItem("osg-avatar-extension-paid-v1") === "1";
+          } catch (_) {}
+          return osgApiFetch("/api/avatar/status", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              userRef: userRef,
+              registrationDate: reg,
+              deviceId: deviceId,
+              extensionPaid: extensionPaid,
+            }),
+          })
+            .then(function (r) {
+              return r.ok ? r.json() : null;
+            })
+            .then(function (j) {
+              if (!j) return null;
+              if (
+                j.qualifiedReferrals != null &&
+                typeof api.setQualifiedReferralCount === "function"
+              ) {
+                api.setQualifiedReferralCount(j.qualifiedReferrals);
+              }
+              if (
+                j.statusCode === "SOCIAL_EXEMPTION_GRANTED" &&
+                typeof api.setSocialExempt === "function"
+              ) {
+                api.setSocialExempt(true, "disability_card", "server-sync");
+              }
+              if (deviceId && typeof api.bindDeviceOnce === "function") {
+                api.bindDeviceOnce(deviceId);
+              }
+              osgRefreshAvatarLockUi();
+              return j;
+            })
+            .catch(function () {
+              return null;
+            });
+        }
+
+        function osgCaptureAvatarReferralParent(refCode) {
+          refCode = String(refCode || "").trim().slice(0, 96);
+          if (!refCode || refCode === osgOwnReferralCode()) return;
+          try {
+            localStorage.setItem(OSG_LS_AVATAR_PENDING_PARENT, refCode);
+          } catch (_) {}
+        }
+
+        function osgAvatarClaimReferralPurchaseOnce() {
+          var api = osgAvatarMonetizationApi();
+          if (!api || !navigator.onLine) return;
+          var parentRef = "";
+          try {
+            parentRef = String(
+              localStorage.getItem(OSG_LS_AVATAR_PENDING_PARENT) || ""
+            ).trim();
+          } catch (_) {}
+          if (!parentRef) {
+            try {
+              var u = new URL(window.location.href);
+              parentRef = (u.searchParams.get("osg_ref") || "").trim();
+            } catch (_) {}
+          }
+          if (!parentRef || parentRef === osgOwnReferralCode()) return;
+          var cid =
+            typeof osgEnsureCustomerId === "function"
+              ? osgEnsureCustomerId()
+              : "";
+          var bundle =
+            typeof osgLoadInstallBundle === "function"
+              ? osgLoadInstallBundle() || {}
+              : {};
+          var childDevice = String(
+            bundle.deviceHardwareId || bundle.deviceAnchorHex || ""
+          ).slice(0, 96);
+          var parentDevice = "";
+          try {
+            parentDevice = String(
+              localStorage.getItem("osg-avatar-device-bound-v1") || ""
+            ).slice(0, 96);
+          } catch (_) {}
+          var sentinel = cid + "|" + parentRef + "|purchase";
+          try {
+            if (localStorage.getItem(OSG_LS_AVATAR_REF_CLAIM_SENT) === sentinel)
+              return;
+          } catch (_) {}
+          osgApiFetch("/api/avatar/referral/claim", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              parentRef: parentRef,
+              childRef: cid,
+              childCid: cid,
+              childDeviceAnchor: childDevice,
+              parentDeviceAnchor: parentDevice,
+              purchaseVerified: true,
+            }),
+          })
+            .then(function (r) {
+              return r.ok ? r.json() : null;
+            })
+            .then(function (j) {
+              if (!j || !j.referralValid) return;
+              try {
+                localStorage.setItem(OSG_LS_AVATAR_REF_CLAIM_SENT, sentinel);
+              } catch (_) {}
+              osgRefreshAvatarLockUi();
+            })
+            .catch(function () {});
+        }
+
+        window.osgAvatarAccessUnlocked = osgAvatarAccessUnlocked;
+        window.osgAvatarAccessStatus = osgAvatarAccessStatus;
+        window.osgRefreshAvatarLockUi = osgRefreshAvatarLockUi;
+        window.osgSyncAvatarStatusFromServer = osgSyncAvatarStatusFromServer;
+        window.osgAvatarClaimReferralPurchaseOnce = osgAvatarClaimReferralPurchaseOnce;
 
         function osgLifetimeUnlocked() {
           try {
@@ -2924,6 +3166,7 @@
             var u = new URL(window.location.href);
             var ref = (u.searchParams.get("osg_ref") || "").trim();
             if (!ref || ref === osgOwnReferralCode()) return;
+            osgCaptureAvatarReferralParent(ref);
             var cid = osgEnsureCustomerId();
             try {
               osgEnsureInstallDeviceAnchor();
@@ -7125,6 +7368,9 @@
                   if (channel === "marketplace" && lint === "purchase") {
                     osgMutePurchasedProductInterests();
                     osgSetPurchasedSilence();
+                    if (typeof osgAvatarClaimReferralPurchaseOnce === "function") {
+                      osgAvatarClaimReferralPurchaseOnce();
+                    }
                   }
 
                   function openTrackedFromAnchor() {
@@ -9084,6 +9330,10 @@
           osgWireArchitectureLayerOnce();
           osgRefreshArchitectSummaries();
           osgRefreshPremiumLockUi(pack);
+          osgRefreshAvatarLockUi(pack);
+          try {
+            void osgSyncAvatarStatusFromServer();
+          } catch (_) {}
           try {
             osgVipMaybeResumeGiftOverlay(pack);
           } catch (_) {}
@@ -9185,6 +9435,9 @@
           overlayPromise.then(function () {
             applyLang(bootLang);
             osgConsumeSevenVoucherQrOnce();
+            try {
+              void osgSyncAvatarStatusFromServer();
+            } catch (_) {}
             if (!window.OSG_STARTUP_BOOT) {
               osgScheduleAvatarCompanionBoot(1100);
             }
@@ -10326,6 +10579,11 @@
         var fired = false;
         try {
           if (
+            typeof osgAvatarAccessUnlocked === "function" &&
+            !osgAvatarAccessUnlocked()
+          )
+            return;
+          if (
             typeof osgPurchasedSilenceActive === "function" &&
             osgPurchasedSilenceActive()
           )
@@ -11057,6 +11315,27 @@
 
         function osgCoinActivateFromGesture() {
           if (avatarDrag && avatarDrag.moved) return;
+          if (
+            typeof osgAvatarAccessUnlocked === "function" &&
+            !osgAvatarAccessUnlocked()
+          ) {
+            osgRefreshAvatarLockUi();
+            var pk =
+              window.__OSG_CURRENT_PACK_CACHE ||
+              (typeof T !== "undefined" ? T.de : {});
+            var st = osgAvatarAccessStatus();
+            var line = osgAvatarResolveMessage(pk, st);
+            if (line) {
+              void playPauliVoice(line, {
+                allowAvatarLocked: true,
+                langCode:
+                  typeof packLangFromDocument === "function"
+                    ? packLangFromDocument()
+                    : "de",
+              });
+            }
+            return;
+          }
           unlockAudioSystemFromCoinGesture();
           autoWaiDone = true;
           void startPauliLiveConversation({ fromCoin: true });
@@ -12892,6 +13171,13 @@
           }
           window.__OSG_AVATAR_COMPANION_BOOT_RUNNING__ = true;
           try {
+            osgRefreshAvatarLockUi();
+            if (
+              typeof osgAvatarAccessUnlocked === "function" &&
+              !osgAvatarAccessUnlocked()
+            ) {
+              return;
+            }
             if (window.OSG_AVATAR_LOCALE) {
               await window.OSG_AVATAR_LOCALE.loadAvatarPacks({});
             }
@@ -13337,6 +13623,13 @@
         /** Live-TTS über /api/tts (ElevenLabs oder OpenAI-Fallback). Keine Vorlagen-MP3s. */
         async function playPauliVoice(text, opts) {
           opts = opts || {};
+          if (
+            !opts.allowAvatarLocked &&
+            typeof osgAvatarAccessUnlocked === "function" &&
+            !osgAvatarAccessUnlocked()
+          ) {
+            return;
+          }
           const spoken = String(text || "").trim();
           if (!spoken) return;
           if (typeof window.pauliLiveCaptionShow === "function") {
@@ -14193,6 +14486,13 @@
 
         async function startPauliLiveConversation(opts) {
           opts = opts || {};
+          if (
+            typeof osgAvatarAccessUnlocked === "function" &&
+            !osgAvatarAccessUnlocked()
+          ) {
+            osgRefreshAvatarLockUi();
+            return;
+          }
           if (busy || osgPauliLiveActive) return;
           osgPauliLiveActive = true;
           if (!opts.continueSession) osgPauliLiveHistory = [];

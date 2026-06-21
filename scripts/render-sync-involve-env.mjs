@@ -66,36 +66,17 @@ async function listServices() {
 }
 
 async function upsertEnv(serviceId, key, value) {
-  const listRes = await fetch(
-    `https://api.render.com/v1/services/${serviceId}/env-vars?limit=100`,
-    { headers },
-  );
-  if (!listRes.ok) throw new Error(`env list HTTP ${listRes.status}`);
-  const rows = await listRes.json();
-  const cur = rows.find((r) => r?.envVar?.key === key)?.envVar;
-  if (cur?.value === value) {
-    console.log(`  unchanged ${key}`);
+  const v = String(value || "").trim();
+  if (!v) {
+    console.log(`  skip ${key} (leer in .env)`);
     return;
   }
-  if (cur?.id) {
-    const putRes = await fetch(
-      `https://api.render.com/v1/services/${serviceId}/env-vars/${cur.id}`,
-      { method: "PUT", headers, body: JSON.stringify({ value }) },
-    );
-    if (!putRes.ok) throw new Error(`put ${key} HTTP ${putRes.status}`);
-    console.log(`  updated ${key}`);
-    return;
-  }
-  const postRes = await fetch(
-    `https://api.render.com/v1/services/${serviceId}/env-vars`,
-    {
-      method: "POST",
-      headers,
-      body: JSON.stringify({ envVar: { key, value } }),
-    },
+  const putRes = await fetch(
+    `https://api.render.com/v1/services/${serviceId}/env-vars/${encodeURIComponent(key)}`,
+    { method: "PUT", headers, body: JSON.stringify({ value: v }) },
   );
-  if (!postRes.ok) throw new Error(`post ${key} HTTP ${postRes.status}`);
-  console.log(`  created ${key}`);
+  if (!putRes.ok) throw new Error(`put ${key} HTTP ${putRes.status}`);
+  console.log(`  set ${key} (len=${v.length})`);
 }
 
 const services = await listServices();

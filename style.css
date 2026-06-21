@@ -2162,6 +2162,47 @@ body.osg-clip-scan-open {
   cursor: wait;
 }
 
+#coin-stage.osg-avatar-locked {
+  filter: grayscale(0.82) brightness(0.9);
+  opacity: 0.82;
+  cursor: not-allowed;
+}
+
+.osg-avatar-lock-banner {
+  position: fixed;
+  z-index: 902;
+  right: var(--coin-stage-position-right);
+  left: auto;
+  top: calc(var(--coin-stage-position-top) + var(--coin-size) + 10px);
+  max-width: min(92vw, 18.5rem);
+  padding: 0.55rem 0.7rem;
+  border-radius: 0.65rem;
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  background: rgba(12, 4, 28, 0.94);
+  color: rgba(255, 244, 220, 0.96);
+  font-size: 0.72rem;
+  line-height: 1.35;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.42);
+  pointer-events: none;
+}
+
+.osg-avatar-lock-banner__msg {
+  margin: 0 0 0.35rem;
+}
+
+.osg-avatar-lock-banner__price,
+.osg-avatar-lock-banner__referral {
+  margin: 0;
+  opacity: 0.92;
+}
+
+@media (max-width: 480px) {
+  .osg-avatar-lock-banner {
+    max-width: min(94vw, 16.5rem);
+    font-size: 0.68rem;
+  }
+}
+
 .pauli-voice-wake-btn {
   position: fixed;
   z-index: 901;

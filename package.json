@@ -9,6 +9,7 @@
     "vip:gen": "node scripts/generate-vip-zugang.mjs",
     "email:probe": "node scripts/email-connectivity-probe.mjs",
     "render:sync-involve": "node scripts/render-sync-involve-env.mjs",
+    "render:deploy-api": "node scripts/render-deploy-pauli-api.mjs",
     "tresor:snapshot": "node ../OSG-Master-Tresor/scripts/osg-master-tresor-archive.mjs snapshot pauli",
     "tresor:status": "node ../OSG-Master-Tresor/scripts/osg-master-tresor-archive.mjs status",
     "icons:app": "node scripts/build-app-icons.mjs",

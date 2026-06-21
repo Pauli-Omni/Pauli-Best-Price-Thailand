@@ -594,6 +594,25 @@ window.OSG_LOCALES = {
             premiumWallDemoUnlockBtn: "Demo: Vollzugriff simulieren",
             premiumLockedAlert:
               "Nach Ende der Testphase: Lifetime, VIP-Code oder Einladungslink erforderlich.",
+            avatarTrialExpiredMessage:
+              "Ich bin eine begrenzte Funktion für 90 Tagen. Danach kann ich als Erweiterung gebucht werden.",
+            avatarTrialDaysRemainingTpl: "Testphase aktiv — noch {DAYS} Tage.",
+            avatarExtensionPriceTpl: "Erweiterung: {PRICE} THB",
+            avatarSocialExemptMessage:
+              "Dauerhafte Freischaltung für soziales Engagement / Barrierefreiheit.",
+            avatarReferralProgressTpl:
+              "Empfehlungen mit Händlerkauf: {COUNT} von {TARGET}",
+            avatarReferralSuccess: "Empfehlung mit aktivem Kauf gewertet.",
+            avatarReferralMissingIds: "Empfehlung unvollständig — IDs fehlen.",
+            avatarReferralSelfBlocked: "Eigene Empfehlung ist ungültig.",
+            avatarReferralCircularBlocked:
+              "Gegenseitiges Werben erkannt — ungültig.",
+            avatarReferralSameDeviceBlocked:
+              "Gleiches Gerät ohne Kauf — Empfehlung ungültig.",
+            avatarReferralNoPurchase: "Kein Händlerkauf nachgewiesen.",
+            avatarLockAriaLabel: "Pauli Avatar — Testphase abgelaufen",
+            avatarLockLead:
+              "Freischaltung: Erweiterung buchen, drei Käufer werben oder soziale Befreiung nachweisen.",
             affiliateBuyTracking: "Kaufen (Tracking)",
             affiliateConsultTracking: "Beratung (Tracking)",
             affiliateAriaBuy: "Übertragung zum Shop mit PAULI BEST PRICE THAILAND Tracking",
@@ -1227,6 +1246,25 @@ window.OSG_LOCALES = {
               "Real estate — partner benefit certificate lane",
             affiliateLinkRealty: "Property listings Thailand (orientation)",
             affiliateBuyTracking: "Buy (tracking)",
+            avatarTrialExpiredMessage:
+              "I'm a limited feature for 90 days. After that I can be booked as an extension.",
+            avatarTrialDaysRemainingTpl: "Trial active — {DAYS} days left.",
+            avatarExtensionPriceTpl: "Extension: {PRICE} THB",
+            avatarSocialExemptMessage:
+              "Permanent unlock for social engagement / accessibility.",
+            avatarReferralProgressTpl:
+              "Referrals with merchant purchase: {COUNT} of {TARGET}",
+            avatarReferralSuccess: "Referral counted with verified purchase.",
+            avatarReferralMissingIds: "Referral incomplete — missing IDs.",
+            avatarReferralSelfBlocked: "Self-referral is not valid.",
+            avatarReferralCircularBlocked:
+              "Mutual referral detected — not valid.",
+            avatarReferralSameDeviceBlocked:
+              "Same device without purchase — referral invalid.",
+            avatarReferralNoPurchase: "No merchant purchase verified.",
+            avatarLockAriaLabel: "Pauli avatar — trial expired",
+            avatarLockLead:
+              "Unlock via extension, three buyer referrals, or verified social exemption.",
             affiliateConsultTracking: "Consultation (tracking)",
             affiliateAriaBuy: "Continue to storefront with PAULI BEST PRICE THAILAND tracking",
             affiliateAriaConsult:
@@ -1979,6 +2017,25 @@ window.OSG_LOCALES = {
               "อสังหาริมทรัพย์ / Real Estate (ใบรับรองสิทธิพันธมิตร)",
             affiliateLinkRealty: "ประกาศที่อยู่อาศัยไทย — ภาพรวมรายการ",
             affiliateBuyTracking: "ซื้อ (ติดตาม)",
+            avatarTrialExpiredMessage:
+              "ผมเป็นฟีเจอร์จำกัด 90 วัน หลังจากนั้นสามารถจองเป็นส่วนขยายได้",
+            avatarTrialDaysRemainingTpl: "ทดลองใช้ — เหลือ {DAYS} วัน",
+            avatarExtensionPriceTpl: "ส่วนขยาย: {PRICE} บาท",
+            avatarSocialExemptMessage:
+              "ปลดล็อกถาวรสำหรับสังคม / การเข้าถึง",
+            avatarReferralProgressTpl:
+              "การแนะนำพร้อมการซื้อจากร้านค้า: {COUNT} จาก {TARGET}",
+            avatarReferralSuccess: "นับการแนะนำเมื่อมีการซื้อที่ยืนยันแล้ว",
+            avatarReferralMissingIds: "การแนะนำไม่ครบ — ไม่มี ID",
+            avatarReferralSelfBlocked: "ไม่สามารถแนะนำตัวเองได้",
+            avatarReferralCircularBlocked:
+              "ตรวจพบการแนะนำซ้ำซ้อน — ไม่ถูกต้อง",
+            avatarReferralSameDeviceBlocked:
+              "อุปกรณ์เดียวกันโดยไม่มีการซื้อ — ไม่ถูกต้อง",
+            avatarReferralNoPurchase: "ยังไม่พบการซื้อจากร้านค้า",
+            avatarLockAriaLabel: "อวตาร Pauli — หมดช่วงทดลอง",
+            avatarLockLead:
+              "ปลดล็อก: จองส่วนขยาย แนะนำผู้ซื้อ 3 คน หรือยืนยันสิทธิสังคม",
             affiliateConsultTracking: "ปรึกษา (ติดตาม)",
             affiliateAriaBuy: "เข้าร้านพร้อมแท็กติดตาม PAULI BEST PRICE THAILAND",
             affiliateAriaConsult:
@@ -2791,6 +2848,25 @@ window.OSG_LOCALES = {
               "Nieruchomości / Real Estate — certyfikat korzyści partnerskich",
             affiliateLinkRealty: "Ogłoszenia mieszkań Tajlandia (orientacja)",
             affiliateBuyTracking: "Kup (tracking)",
+            avatarTrialExpiredMessage:
+              "Jestem funkcją ograniczoną do 90 dni. Potem można mnie wykupić jako rozszerzenie.",
+            avatarTrialDaysRemainingTpl: "Okres próbny — pozostało {DAYS} dni.",
+            avatarExtensionPriceTpl: "Rozszerzenie: {PRICE} THB",
+            avatarSocialExemptMessage:
+              "Stałe odblokowanie dla zaangażowania społecznego / dostępności.",
+            avatarReferralProgressTpl:
+              "Polecenia z zakupem u handlowca: {COUNT} z {TARGET}",
+            avatarReferralSuccess: "Polecenie zaliczone po potwierdzonym zakupie.",
+            avatarReferralMissingIds: "Polecenie niekompletne — brak ID.",
+            avatarReferralSelfBlocked: "Polecenie własne jest nieważne.",
+            avatarReferralCircularBlocked:
+              "Wykryto wzajemne polecenia — nieważne.",
+            avatarReferralSameDeviceBlocked:
+              "To samo urządzenie bez zakupu — polecenie nieważne.",
+            avatarReferralNoPurchase: "Brak potwierdzonego zakupu u handlowca.",
+            avatarLockAriaLabel: "Avatar Pauli — koniec okresu próbnego",
+            avatarLockLead:
+              "Odblokowanie: rozszerzenie, trzech kupujących poleconych lub zwolnienie społeczne.",
             affiliateConsultTracking: "Porada (tracking)",
             affiliateAriaBuy:
               "Wejdź po linku zakupów z kodowaniem PAULI BEST PRICE THAILAND",
@@ -3576,6 +3652,25 @@ window.OSG_LOCALES = {
               "Недвижимость / Real Estate — сертификат преимущества партнёра",
             affiliateLinkRealty: "Подбор объявлений Таиланд (ориентация)",
             affiliateBuyTracking: "Купить (трекинг)",
+            avatarTrialExpiredMessage:
+              "Я ограниченная функция на 90 дней. После этого меня можно оформить как расширение.",
+            avatarTrialDaysRemainingTpl: "Пробный период — осталось {DAYS} дн.",
+            avatarExtensionPriceTpl: "Расширение: {PRICE} THB",
+            avatarSocialExemptMessage:
+              "Постоянная разблокировка для социальной поддержки / доступности.",
+            avatarReferralProgressTpl:
+              "Рефералы с покупкой у продавца: {COUNT} из {TARGET}",
+            avatarReferralSuccess: "Реферал засчитан после подтверждённой покупки.",
+            avatarReferralMissingIds: "Реферал неполный — нет ID.",
+            avatarReferralSelfBlocked: "Самореферал недействителен.",
+            avatarReferralCircularBlocked:
+              "Обнаружен взаимный реферал — недействителен.",
+            avatarReferralSameDeviceBlocked:
+              "То же устройство без покупки — реферал недействителен.",
+            avatarReferralNoPurchase: "Покупка у продавца не подтверждена.",
+            avatarLockAriaLabel: "Аватар Pauli — пробный период истёк",
+            avatarLockLead:
+              "Разблокировка: расширение, три покупателя по рефералу или социальное освобождение.",
             affiliateConsultTracking: "Консультация (трекинг)",
             affiliateAriaBuy:
               "Перейти с отслеживанием PAULI BEST PRICE THAILAND",
@@ -4343,6 +4438,24 @@ window.OSG_LOCALES = {
               "房地产 / Real Estate — 合作伙伴专享权益证书",
             affiliateLinkRealty: "房源浏览定向（泰国）",
             affiliateBuyTracking: "购买（带追踪）",
+            avatarTrialExpiredMessage:
+              "我是限用 90 天的功能。之后可作为扩展功能预订。",
+            avatarTrialDaysRemainingTpl: "试用中 — 剩余 {DAYS} 天",
+            avatarExtensionPriceTpl: "扩展：{PRICE} THB",
+            avatarSocialExemptMessage:
+              "社会参与/无障碍永久解锁。",
+            avatarReferralProgressTpl:
+              "经商户购买的推荐：{COUNT}/{TARGET}",
+            avatarReferralSuccess: "已确认购买，推荐计入。",
+            avatarReferralMissingIds: "推荐不完整 — 缺少 ID。",
+            avatarReferralSelfBlocked: "不能推荐自己。",
+            avatarReferralCircularBlocked: "检测到互相推荐 — 无效。",
+            avatarReferralSameDeviceBlocked:
+              "同一设备且无购买 — 推荐无效。",
+            avatarReferralNoPurchase: "未验证商户购买。",
+            avatarLockAriaLabel: "Pauli 头像 — 试用已结束",
+            avatarLockLead:
+              "解锁：购买扩展、推荐 3 位买家或提交社会豁免证明。",
             affiliateConsultTracking: "咨询（带追踪）",
             affiliateAriaBuy: "携带 PAULI BEST PRICE THAILAND 追踪参数跳转购买",
             affiliateAriaConsult:
