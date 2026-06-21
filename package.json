@@ -13,7 +13,9 @@
     "tresor:snapshot": "node ../OSG-Master-Tresor/scripts/osg-master-tresor-archive.mjs snapshot pauli",
     "tresor:status": "node ../OSG-Master-Tresor/scripts/osg-master-tresor-archive.mjs status",
     "icons:app": "node scripts/build-app-icons.mjs",
-    "build:stores": "bash scripts/build-store-artifacts.sh"
+    "build:stores": "bash scripts/build-store-artifacts.sh",
+    "avatar:loops": "node scripts/generate-avatar-loops.mjs",
+    "avatar:verify": "node scripts/verify-avatar-assets.mjs"
   },
   "devDependencies": {
     "html-validate": "^9.0.0",

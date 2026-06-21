@@ -1117,15 +1117,28 @@
       </div>
     </div>
     <div
-      id="osg-avatar-lock-banner"
-      class="osg-avatar-lock-banner"
-      role="status"
-      aria-live="polite"
+      id="osg-avatar-pay-modal"
+      class="osg-avatar-pay-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="osg-avatar-pay-modal-title"
       hidden
     >
-      <p class="osg-avatar-lock-banner__msg"></p>
-      <p class="osg-avatar-lock-banner__price"></p>
-      <p class="osg-avatar-lock-banner__referral"></p>
+      <div class="osg-avatar-pay-modal__backdrop" tabindex="-1"></div>
+      <div class="osg-avatar-pay-modal__panel">
+        <button
+          type="button"
+          id="osg-avatar-pay-modal-close"
+          class="osg-avatar-pay-modal__close"
+          aria-label=""
+        >
+          ×
+        </button>
+        <h2 id="osg-avatar-pay-modal-title" class="osg-avatar-pay-modal__title"></h2>
+        <p class="osg-avatar-lock-banner__msg"></p>
+        <p class="osg-avatar-lock-banner__price"></p>
+        <p class="osg-avatar-lock-banner__referral"></p>
+      </div>
     </div>
     <div
       id="pauli-live-caption"
@@ -1366,7 +1379,9 @@
 
     <script src="commerce-constants.js"></script>
     <script src="avatar-monetization-constants.js"></script>
+    <script src="avatar-animation-manifest.js"></script>
     <script src="assets/scripts/pauli_avatar_monetization.js"></script>
+    <script src="assets/scripts/pauli_avatar_animations.js"></script>
     <script src="legal-pages.js"></script>
     <script src="i18n-locales.js"></script>
     <script src="assets/scripts/pauli_persona.js"></script>
@@ -2171,7 +2186,12 @@
 
         function osgAvatarFormatPriceThb(n) {
           var v = Number(n);
-          if (!Number.isFinite(v)) v = 99.9;
+          if (!Number.isFinite(v)) {
+            var c =
+              window.OSG_AVATAR_MONETIZATION &&
+              window.OSG_AVATAR_MONETIZATION.AVATAR_EXTENSION_PRICE_THB;
+            v = Number(c) || 49.9;
+          }
           return v.toFixed(2);
         }
 
@@ -2191,7 +2211,8 @@
           return "";
         }
 
-        function osgRefreshAvatarLockUi(pack) {
+        function osgRefreshAvatarLockUi(pack, opts) {
+          opts = opts || {};
           pack =
             pack ||
             window.__OSG_CURRENT_PACK_CACHE ||
@@ -2199,16 +2220,24 @@
           var status = osgAvatarAccessStatus();
           var active = !!status.avatarActive;
           var coin = document.getElementById("coin-stage");
-          var banner = document.getElementById("osg-avatar-lock-banner");
+          var modal = document.getElementById("osg-avatar-pay-modal");
           var wake = document.getElementById("pauli-voice-wake-btn");
           if (coin) {
             coin.classList.toggle("osg-avatar-locked", !active);
             coin.setAttribute("aria-disabled", active ? "false" : "true");
           }
           if (wake) wake.hidden = !active;
-          if (!banner) return;
+          if (
+            window.OSG_PauliAvatarAnimations &&
+            typeof window.OSG_PauliAvatarAnimations.refreshLockState ===
+              "function"
+          ) {
+            window.OSG_PauliAvatarAnimations.refreshLockState(!active);
+          }
+          if (!modal) return;
           if (active) {
-            banner.setAttribute("hidden", "");
+            modal.setAttribute("hidden", "");
+            window.__OSG_AVATAR_PAY_MODAL_OPEN__ = false;
             var api = osgAvatarMonetizationApi();
             if (api && typeof api.bindDeviceOnce === "function") {
               var dev = api.DeviceFingerprinter.getLocalDeviceId();
@@ -2216,10 +2245,17 @@
             }
             return;
           }
-          banner.removeAttribute("hidden");
-          var msg = banner.querySelector(".osg-avatar-lock-banner__msg");
-          var price = banner.querySelector(".osg-avatar-lock-banner__price");
-          var refEl = banner.querySelector(".osg-avatar-lock-banner__referral");
+          var titleEl = document.getElementById("osg-avatar-pay-modal-title");
+          var closeBtn = document.getElementById("osg-avatar-pay-modal-close");
+          var msg = modal.querySelector(".osg-avatar-lock-banner__msg");
+          var price = modal.querySelector(".osg-avatar-lock-banner__price");
+          var refEl = modal.querySelector(".osg-avatar-lock-banner__referral");
+          if (titleEl && pack.avatarPayModalTitle) {
+            titleEl.textContent = pack.avatarPayModalTitle;
+          }
+          if (closeBtn && pack.avatarPayModalCloseLabel) {
+            closeBtn.setAttribute("aria-label", pack.avatarPayModalCloseLabel);
+          }
           if (msg) msg.textContent = osgAvatarResolveMessage(pack, status);
           if (price && pack.avatarExtensionPriceTpl) {
             price.textContent = String(pack.avatarExtensionPriceTpl).replace(
@@ -2240,9 +2276,14 @@
             refEl.textContent = "";
           }
           if (pack.avatarLockAriaLabel) {
-            banner.setAttribute("aria-label", pack.avatarLockAriaLabel);
+            modal.setAttribute("aria-label", pack.avatarLockAriaLabel);
           }
         }
+
+        function osgPopulateAvatarPayModal() {
+          osgRefreshAvatarLockUi();
+        }
+        window.osgPopulateAvatarPayModal = osgPopulateAvatarPayModal;
 
         function osgSyncAvatarStatusFromServer() {
           var api = osgAvatarMonetizationApi();
@@ -7384,6 +7425,13 @@
                     if (typeof osgAvatarClaimReferralPurchaseOnce === "function") {
                       osgAvatarClaimReferralPurchaseOnce();
                     }
+                    if (typeof osgAvatarCelebratePurchase === "function") {
+                      osgAvatarCelebratePurchase(
+                        typeof window.osgEstimateAffiliatePurchaseThb === "function"
+                          ? window.osgEstimateAffiliatePurchaseThb(a)
+                          : 0
+                      );
+                    }
                   }
 
                   function openTrackedFromAnchor() {
@@ -10440,6 +10488,12 @@
 
       /** Web Speech API: keine großen Sprachdateien — eingebaute Handy-Stimmen nach Locale / Systemsprache. */
       function speakPauliUtterance(text, whisper, langCode) {
+        if (
+          typeof osgAvatarAccessUnlocked === "function" &&
+          !osgAvatarAccessUnlocked()
+        ) {
+          return Promise.resolve();
+        }
         return new Promise((resolve) => {
           const bcp =
             typeof osgResolveSpeechTag === "function"
@@ -10479,6 +10533,10 @@
             if (v) u.voice = v;
           };
           const spoken = String(text || "").trim();
+          const estMs = Math.min(
+            14000,
+            Math.max(800, spoken.length * 75)
+          );
           pickVoice();
           speechSynthesis.addEventListener("voiceschanged", pickVoice, {
             once: true,
@@ -10487,14 +10545,50 @@
             if (spoken && typeof window.pauliLiveCaptionShow === "function") {
               window.pauliLiveCaptionShow(spoken);
             }
+            if (
+              window.OSGLipSync &&
+              typeof window.OSGLipSync.begin === "function"
+            ) {
+              window.OSGLipSync.begin({ durationMs: estMs });
+            } else if (
+              window.OSG_PauliAvatarAnimations &&
+              typeof window.OSG_PauliAvatarAnimations.onSpeakStart ===
+                "function"
+            ) {
+              window.OSG_PauliAvatarAnimations.onSpeakStart();
+            }
           };
           u.onend = function () {
+            if (
+              window.OSGLipSync &&
+              typeof window.OSGLipSync.stop === "function"
+            ) {
+              window.OSGLipSync.stop();
+            } else if (
+              window.OSG_PauliAvatarAnimations &&
+              typeof window.OSG_PauliAvatarAnimations.onSpeakStop ===
+                "function"
+            ) {
+              window.OSG_PauliAvatarAnimations.onSpeakStop();
+            }
             if (typeof window.pauliLiveCaptionClear === "function") {
               window.pauliLiveCaptionClear();
             }
             resolve();
           };
           u.onerror = function () {
+            if (
+              window.OSGLipSync &&
+              typeof window.OSGLipSync.stop === "function"
+            ) {
+              window.OSGLipSync.stop();
+            } else if (
+              window.OSG_PauliAvatarAnimations &&
+              typeof window.OSG_PauliAvatarAnimations.onSpeakStop ===
+                "function"
+            ) {
+              window.OSG_PauliAvatarAnimations.onSpeakStop();
+            }
             if (typeof window.pauliLiveCaptionClear === "function") {
               window.pauliLiveCaptionClear();
             }
@@ -11287,12 +11381,96 @@
         osgProcessCoinImage(document.getElementById("brand-avatar"));
         osgProcessCoinImage(avatarImg);
 
+        if (
+          window.OSG_PauliAvatarAnimations &&
+          typeof window.OSG_PauliAvatarAnimations.init === "function"
+        ) {
+          window.OSG_PauliAvatarAnimations.init({
+            stage: container,
+            img: avatarImg,
+            populatePayModal: osgPopulateAvatarPayModal,
+          });
+          if (
+            typeof osgAvatarAccessUnlocked === "function" &&
+            !osgAvatarAccessUnlocked()
+          ) {
+            window.OSG_PauliAvatarAnimations.setState("locked_carousel");
+          }
+          if (
+            typeof window.OSG_PauliAvatarAnimations.onAppMount === "function"
+          ) {
+            window.OSG_PauliAvatarAnimations.onAppMount();
+          }
+        }
+
+        function osgAvatarCelebratePurchase(amountThb) {
+          if (
+            typeof osgAvatarAccessUnlocked === "function" &&
+            !osgAvatarAccessUnlocked()
+          ) {
+            return;
+          }
+          var pack =
+            window.__OSG_CURRENT_PACK_CACHE ||
+            (typeof T !== "undefined" ? T.de : {});
+          var n = Number(amountThb);
+          var min =
+            (window.OSG_AVATAR_ANIMATION_MANIFEST &&
+              window.OSG_AVATAR_ANIMATION_MANIFEST.PREMIUM_PURCHASE_MIN_THB) ||
+            500;
+          var quoteKey =
+            Number.isFinite(n) && n >= min
+              ? "avatarPurchasePremiumTts"
+              : "avatarPurchaseStandardTts";
+          var quote = pack[quoteKey] || "";
+          if (
+            window.OSG_PauliAvatarAnimations &&
+            typeof window.OSG_PauliAvatarAnimations.onCheckoutSuccess ===
+              "function"
+          ) {
+            window.OSG_PauliAvatarAnimations.onCheckoutSuccess(
+              amountThb,
+              function () {
+                if (quote && typeof playPauliVoice === "function") {
+                  void playPauliVoice(quote, { skipBridge: true });
+                }
+              }
+            );
+          } else if (
+            window.OSG_PauliAvatarAnimations &&
+            typeof window.OSG_PauliAvatarAnimations.onPurchase === "function"
+          ) {
+            window.OSG_PauliAvatarAnimations.onPurchase(amountThb);
+          }
+        }
+        window.osgAvatarCelebratePurchase = osgAvatarCelebratePurchase;
+        window.osgAvatarOnCheckoutSuccess = osgAvatarCelebratePurchase;
+
+        function osgEstimateAffiliatePurchaseThb(anchor) {
+          var row = anchor && anchor.closest ? anchor.closest("tr") : null;
+          if (!row) return 0;
+          var cells = row.querySelectorAll("td");
+          for (var ci = 1; ci < cells.length; ci += 1) {
+            var txt = String(cells[ci].textContent || "").replace(/[^\d.]/g, "");
+            var n = Number(txt);
+            if (Number.isFinite(n) && n > 0) return n;
+          }
+          return 0;
+        }
+        window.osgEstimateAffiliatePurchaseThb = osgEstimateAffiliatePurchaseThb;
+
         function osgApplyAvatarTransform(_extra) {
           if (avatarImg) avatarImg.style.transform = "none";
         }
 
         function installPauliMainAvatarDrag(el) {
           el.addEventListener("pointerdown", (e) => {
+            if (
+              typeof osgAvatarAccessUnlocked === "function" &&
+              !osgAvatarAccessUnlocked()
+            ) {
+              return;
+            }
             if (e.button !== 0 || busy) return;
             const rect = el.getBoundingClientRect();
             avatarDrag = {
@@ -11340,24 +11518,11 @@
         function osgCoinActivateFromGesture() {
           if (avatarDrag && avatarDrag.moved) return;
           if (
-            typeof osgAvatarAccessUnlocked === "function" &&
-            !osgAvatarAccessUnlocked()
+            window.OSG_PauliAvatarAnimations &&
+            typeof window.OSG_PauliAvatarAnimations.handleCoinClick ===
+              "function" &&
+            window.OSG_PauliAvatarAnimations.handleCoinClick()
           ) {
-            osgRefreshAvatarLockUi();
-            var pk =
-              window.__OSG_CURRENT_PACK_CACHE ||
-              (typeof T !== "undefined" ? T.de : {});
-            var st = osgAvatarAccessStatus();
-            var line = osgAvatarResolveMessage(pk, st);
-            if (line) {
-              void playPauliVoice(line, {
-                allowAvatarLocked: true,
-                langCode:
-                  typeof packLangFromDocument === "function"
-                    ? packLangFromDocument()
-                    : "de",
-              });
-            }
             return;
           }
           unlockAudioSystemFromCoinGesture();
@@ -11397,6 +11562,12 @@
           }
           waiActive = true;
           waiStart = performance.now();
+          if (
+            window.OSG_PauliAvatarAnimations &&
+            typeof window.OSG_PauliAvatarAnimations.onWaiStart === "function"
+          ) {
+            window.OSG_PauliAvatarAnimations.onWaiStart();
+          }
         }
 
         function osgTweenAvatarReturn() {
@@ -11407,6 +11578,12 @@
           avatarBow.scale = 1;
           waiActive = false;
           osgApplyAvatarTransform("");
+          if (
+            window.OSG_PauliAvatarAnimations &&
+            typeof window.OSG_PauliAvatarAnimations.onWaiStop === "function"
+          ) {
+            window.OSG_PauliAvatarAnimations.onWaiStop();
+          }
         }
 
         /* ── LIP-SYNC + GESTURE ENGINE (Etappe 3) ───────────────────────
@@ -11654,12 +11831,24 @@
           lipSyncAnalyser = opts.analyser || null;
           lipSyncMouthLevel = 0;
           lipSyncMeshes = [avatarImg];
+          if (
+            window.OSG_PauliAvatarAnimations &&
+            typeof window.OSG_PauliAvatarAnimations.onSpeakStart === "function"
+          ) {
+            window.OSG_PauliAvatarAnimations.onSpeakStart();
+          }
         }
 
         function osgLipSyncStop() {
           lipSyncActive = false;
           lipSyncAnalyser = null;
           lipSyncMouthLevel = 0;
+          if (
+            window.OSG_PauliAvatarAnimations &&
+            typeof window.OSG_PauliAvatarAnimations.onSpeakStop === "function"
+          ) {
+            window.OSG_PauliAvatarAnimations.onSpeakStop();
+          }
         }
 
         function osgLipSyncStart(durationMs) {
@@ -13200,6 +13389,12 @@
               typeof osgAvatarAccessUnlocked === "function" &&
               !osgAvatarAccessUnlocked()
             ) {
+              if (
+                window.OSG_PauliAvatarAnimations &&
+                typeof window.OSG_PauliAvatarAnimations.setState === "function"
+              ) {
+                window.OSG_PauliAvatarAnimations.setState("locked_carousel");
+              }
               return;
             }
             if (window.OSG_AVATAR_LOCALE) {
@@ -13665,7 +13860,11 @@
           }
           const spoken = String(text || "").trim();
           if (!spoken) return;
-          if (typeof window.pauliLiveCaptionShow === "function") {
+          if (
+            typeof osgAvatarAccessUnlocked === "function" &&
+            osgAvatarAccessUnlocked() &&
+            typeof window.pauliLiveCaptionShow === "function"
+          ) {
             window.pauliLiveCaptionShow(spoken);
           }
           const I = window.__OSG_I18N;

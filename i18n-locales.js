@@ -616,6 +616,12 @@ window.OSG_LOCALES = {
             avatarLockAriaLabel: "Pauli Avatar — Testphase abgelaufen",
             avatarLockLead:
               "Freischaltung: Erweiterung buchen, drei Käufer werben oder soziale Befreiung nachweisen.",
+            avatarPayModalTitle: "Pauli Avatar freischalten",
+            avatarPayModalCloseLabel: "Bezahl-Dialog schließen",
+            avatarPurchaseStandardTts:
+              "Starke Wahl — ich freue mich mit dir über diesen Kauf!",
+            avatarPurchasePremiumTts:
+              "Großartig! Das ist ein Premium-Kauf — richtig feiernswert!",
             affiliateBuyTracking: "Kaufen (Tracking)",
             affiliateConsultTracking: "Beratung (Tracking)",
             affiliateAriaBuy: "Übertragung zum Shop mit PAULI BEST PRICE THAILAND Tracking",
@@ -1271,6 +1277,12 @@ window.OSG_LOCALES = {
             avatarLockAriaLabel: "Pauli avatar — trial expired",
             avatarLockLead:
               "Unlock via extension, three buyer referrals, or verified social exemption.",
+            avatarPayModalTitle: "Unlock Pauli avatar",
+            avatarPayModalCloseLabel: "Close payment dialog",
+            avatarPurchaseStandardTts:
+              "Great pick — I'm happy about this purchase with you!",
+            avatarPurchasePremiumTts:
+              "Amazing! That's a premium purchase — truly worth celebrating!",
             affiliateConsultTracking: "Consultation (tracking)",
             affiliateAriaBuy: "Continue to storefront with PAULI BEST PRICE THAILAND tracking",
             affiliateAriaConsult:
@@ -2045,6 +2057,12 @@ window.OSG_LOCALES = {
             avatarLockAriaLabel: "อวตาร Pauli — หมดช่วงทดลอง",
             avatarLockLead:
               "ปลดล็อก: จองส่วนขยาย แนะนำผู้ซื้อ 3 คน หรือยืนยันสิทธิสังคม",
+            avatarPayModalTitle: "ปลดล็อกอวตาร Pauli",
+            avatarPayModalCloseLabel: "ปิดหน้าต่างชำระเงิน",
+            avatarPurchaseStandardTts:
+              "เลือกได้ดีมาก — ดิฉันดีใจกับการซื้อครั้งนี้ของคุณ!",
+            avatarPurchasePremiumTts:
+              "ยอดเยี่ยม! นี่คือการซื้อระดับพรีเมียม — ควรฉลองจริงๆ!",
             affiliateConsultTracking: "ปรึกษา (ติดตาม)",
             affiliateAriaBuy: "เข้าร้านพร้อมแท็กติดตาม PAULI BEST PRICE THAILAND",
             affiliateAriaConsult:
@@ -2879,6 +2897,12 @@ window.OSG_LOCALES = {
             avatarLockAriaLabel: "Avatar Pauli — koniec okresu próbnego",
             avatarLockLead:
               "Odblokowanie: rozszerzenie, trzech kupujących poleconych lub zwolnienie społeczne.",
+            avatarPayModalTitle: "Odblokuj awatar Pauli",
+            avatarPayModalCloseLabel: "Zamknij okno płatności",
+            avatarPurchaseStandardTts:
+              "Dobry wybór — cieszę się tym zakupem razem z Tobą!",
+            avatarPurchasePremiumTts:
+              "Świetnie! To zakup premium — naprawdę wart świętowania!",
             affiliateConsultTracking: "Porada (tracking)",
             affiliateAriaBuy:
               "Wejdź po linku zakupów z kodowaniem PAULI BEST PRICE THAILAND",
@@ -3686,6 +3710,12 @@ window.OSG_LOCALES = {
             avatarLockAriaLabel: "Аватар Pauli — пробный период истёк",
             avatarLockLead:
               "Разблокировка: расширение, три покупателя по рефералу или социальное освобождение.",
+            avatarPayModalTitle: "Разблокировать аватар Pauli",
+            avatarPayModalCloseLabel: "Закрыть окно оплаты",
+            avatarPurchaseStandardTts:
+              "Отличный выбор — я рада этой покупке вместе с вами!",
+            avatarPurchasePremiumTts:
+              "Потрясающе! Это премиум-покупка — её стоит отметить!",
             affiliateConsultTracking: "Консультация (трекинг)",
             affiliateAriaBuy:
               "Перейти с отслеживанием PAULI BEST PRICE THAILAND",
@@ -4474,6 +4504,11 @@ window.OSG_LOCALES = {
             avatarLockAriaLabel: "Pauli 头像 — 试用已结束",
             avatarLockLead:
               "解锁：购买扩展、推荐 3 位买家或提交社会豁免证明。",
+            avatarPayModalTitle: "解锁 Pauli 头像",
+            avatarPayModalCloseLabel: "关闭付款对话框",
+            avatarPurchaseStandardTts: "选得好——我为这次购买感到高兴！",
+            avatarPurchasePremiumTts:
+              "太棒了！这是高级购买——值得好好庆祝！",
             affiliateConsultTracking: "咨询（带追踪）",
             affiliateAriaBuy: "携带 PAULI BEST PRICE THAILAND 追踪参数跳转购买",
             affiliateAriaConsult:

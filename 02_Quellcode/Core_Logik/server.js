@@ -1900,6 +1900,15 @@ app.get("/avatar-monetization-constants.js", (req, res) => {
     ),
   );
 });
+app.get("/avatar-animation-manifest.js", (req, res) => {
+  res.sendFile(
+    path.join(
+      process.cwd(),
+      "03_Datenbank_und_Preise",
+      "avatar-animation-manifest.js",
+    ),
+  );
+});
 app.use(express.static(PUBLIC_DIR));
 app.use(express.static(PROJECT_ROOT, { dotfiles: "deny", index: ["index.html"] }));
 

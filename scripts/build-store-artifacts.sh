@@ -12,6 +12,20 @@ export FLUTTER_SUPPRESS_ANALYTICS=true
 
 mkdir -p "$OUT" "$DL"
 
+echo "==> Avatar asset gate (5 loops required for store builds)"
+node "$ROOT/scripts/verify-avatar-assets.mjs"
+
+sync_avatar_assets() {
+  local src="$ROOT/public/assets/avatar"
+  local dst="$ROOT/assets/avatar"
+  mkdir -p "$dst"
+  if compgen -G "$src/*.mp4" >/dev/null; then
+    cp -f "$src"/*.mp4 "$dst"/ 2>/dev/null || true
+    echo "    synced avatar MP4 → assets/avatar/"
+  fi
+}
+sync_avatar_assets
+
 echo "==> Pauli Best Price — multi-platform store / sideload exports"
 echo "    WebView URL: $PAULI_WEB_URL"
 echo "    Package:     com.omnisolutions.pauli_best_price"

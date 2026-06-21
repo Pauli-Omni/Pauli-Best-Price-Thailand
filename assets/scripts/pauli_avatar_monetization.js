@@ -12,7 +12,7 @@
   function constants() {
     return global.OSG_AVATAR_MONETIZATION || {
       AVATAR_TRIAL_DAYS: 90,
-      AVATAR_EXTENSION_PRICE_THB: 99.9,
+      AVATAR_EXTENSION_PRICE_THB: 49.9,
       AVATAR_REFERRAL_TARGET: 3,
       AVATAR_MERCHANT_NETWORK_SIZE: 40,
       SOCIAL_TYPES: ["disability_card", "welfare_card", "red_cross_id"],
