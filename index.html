@@ -1368,6 +1368,7 @@
     <script src="assets/scripts/inclusion_logic.js"></script>
     <script src="assets/scripts/cross_sell_logic.js"></script>
     <script src="assets/scripts/avatar_mishap_logic.js"></script>
+    <script src="assets/scripts/world_language_engine.js"></script>
     <script src="assets/scripts/i18n_lang_guard.js"></script>
     <script src="assets/scripts/startup_boot_logic.js"></script>
     <script src="assets/scripts/cultural_trend_pools.js"></script>
@@ -9091,10 +9092,27 @@
         }
 
         function normalizeLang(code) {
+          var wl = window.OSG_WORLD_LANG;
+          if (wl && typeof wl.normalizeUiLang === "function") {
+            return wl.normalizeUiLang(code);
+          }
           var c = (code || "en").toLowerCase().split("-")[0];
           if (T[c]) return c;
           return "en";
         }
+
+        function osgResolveSpeechTag(code) {
+          var GUARD = window.OSG_I18N_LANG_GUARD;
+          if (GUARD && typeof GUARD.resolveSpeechTag === "function") {
+            return GUARD.resolveSpeechTag(code);
+          }
+          var wl = window.OSG_WORLD_LANG;
+          if (wl && typeof wl.resolveSpeechTag === "function") {
+            return wl.resolveSpeechTag(code);
+          }
+          return "en-US";
+        }
+        window.osgResolveSpeechTag = osgResolveSpeechTag;
 
         function osgAssignCoinImageSrc(img, primary, fallback) {
           if (!img) return;
@@ -10411,16 +10429,10 @@
       /** Web Speech API: keine großen Sprachdateien — eingebaute Handy-Stimmen nach Locale / Systemsprache. */
       function speakPauliUtterance(text, whisper, langCode) {
         return new Promise((resolve) => {
-          const bcp = (
-            {
-              de: "de-DE",
-              en: "en-US",
-              th: "th-TH",
-              pl: "pl-PL",
-              ru: "ru-RU",
-              zh: "zh-CN",
-            }[langCode] || "en-US"
-          );
+          const bcp =
+            typeof osgResolveSpeechTag === "function"
+              ? osgResolveSpeechTag(langCode)
+              : "en-US";
           const u = new SpeechSynthesisUtterance(text);
           u.lang = bcp;
           if (whisper) {
@@ -10435,7 +10447,7 @@
           const pickVoice = () => {
             const voices = speechSynthesis.getVoices();
             if (!voices.length) return;
-            const lc = langCode.toLowerCase();
+            const lc = String(langCode || "en").toLowerCase().split("-")[0];
             const want = bcp.toLowerCase().replace("_", "-");
             let v =
               voices.find(
@@ -13600,6 +13612,15 @@
             body: JSON.stringify({
               text: typeof text === "string" ? text : "",
               whisper,
+              lang:
+                (opts && opts.langCode) ||
+                (typeof osgResolveSpeechTag === "function"
+                  ? osgResolveSpeechTag(
+                      typeof packLangFromDocument === "function"
+                        ? packLangFromDocument()
+                        : "en"
+                    )
+                  : "en-US"),
             }),
           });
           if (res.status === 429) {
@@ -13639,7 +13660,10 @@
           const langCode =
             opts.langCode || (I ? I.systemLangCode() : "de");
           try {
-            await playElevenLabs(spoken, { whisper: !!opts.whisper });
+            await playElevenLabs(spoken, {
+              whisper: !!opts.whisper,
+              langCode: langCode,
+            });
           } catch (e) {
             if (String(e && e.message) === "rate_limited") throw e;
             await speakPauliUtterance(spoken, !!opts.whisper, langCode);

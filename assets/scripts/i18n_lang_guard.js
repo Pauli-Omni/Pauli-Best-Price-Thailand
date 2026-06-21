@@ -6,16 +6,37 @@
   "use strict";
 
   var LANGS = ["de", "en", "th", "pl", "ru", "zh"];
-  var THAI_RE = /[\u0E00-\u0E7F]/;
-  var LATIN_RE = /[A-Za-zÄÖÜäöüß]/;
+
+  function worldLang() {
+    return global.OSG_WORLD_LANG || null;
+  }
 
   function normalizeLang(code) {
+    var wl = worldLang();
+    if (wl && typeof wl.normalizeUiLang === "function") {
+      return wl.normalizeUiLang(code);
+    }
     var c = String(code || "en")
       .toLowerCase()
       .split("-")[0];
     if (c === "zh") return "zh";
     return LANGS.indexOf(c) >= 0 ? c : "en";
   }
+
+  function resolveSpeechTag(code) {
+    var wl = worldLang();
+    if (wl && typeof wl.resolveSpeechTag === "function") {
+      return wl.resolveSpeechTag(code);
+    }
+    return normalizeLang(code) === "th"
+      ? "th-TH"
+      : normalizeLang(code) === "de"
+        ? "de-DE"
+        : "en-US";
+  }
+
+  var THAI_RE = /[\u0E00-\u0E7F]/;
+  var LATIN_RE = /[A-Za-zÄÖÜäöüß]/;
 
   function resolveUiLang() {
     try {
@@ -133,6 +154,20 @@
     try {
       if (typeof T !== "undefined" && T[lang]) return T[lang];
     } catch (_) {}
+    var wl = worldLang();
+    if (wl && typeof wl.uiPackFallbackChain === "function") {
+      var chain = wl.uiPackFallbackChain(lang);
+      for (var i = 0; i < chain.length; i += 1) {
+        try {
+          if (global.__OSG_I18N && global.__OSG_I18N.T && global.__OSG_I18N.T[chain[i]]) {
+            return global.__OSG_I18N.T[chain[i]];
+          }
+        } catch (_) {}
+        try {
+          if (typeof T !== "undefined" && T[chain[i]]) return T[chain[i]];
+        } catch (_) {}
+      }
+    }
     return null;
   }
 
@@ -168,6 +203,7 @@
   global.OSG_I18N_LANG_GUARD = {
     LANGS: LANGS,
     normalizeLang: normalizeLang,
+    resolveSpeechTag: resolveSpeechTag,
     resolveUiLang: resolveUiLang,
     isMonolingualLine: isMonolingualLine,
     stripThaiLatinMix: stripThaiLatinMix,

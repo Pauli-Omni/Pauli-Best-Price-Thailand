@@ -217,10 +217,19 @@ async function ensureService(ownerId) {
   return service;
 }
 
-async function main() {
+async function resolveOwnerId() {
+  const services = await listServices();
+  for (const s of services) {
+    const oid = s.ownerId || s.owner?.id;
+    if (oid) return oid;
+  }
   const owners = await api("GET", "/owners?limit=20");
   const owner = (Array.isArray(owners) ? owners[0] : null)?.owner || owners[0];
-  const ownerId = owner?.id || owner?.ownerId;
+  return owner?.id || owner?.ownerId || "";
+}
+
+async function main() {
+  const ownerId = await resolveOwnerId();
   if (!ownerId) throw new Error("Kein Render-Workspace gefunden.");
 
   const service = await ensureService(ownerId);
@@ -232,6 +241,20 @@ async function main() {
   }
   for (const key of SECRET_KEYS) {
     await putEnv(service.id, key, localEnv[key]);
+  }
+
+  if (
+    String(localEnv.INVOLVE_ASIA_API_KEY || "").trim() === "general" ||
+    !String(localEnv.INVOLVE_ASIA_API_SECRET || "").trim()
+  ) {
+    console.warn(
+      "[warn] INVOLVE_ASIA credentials look invalid locally — set real key/secret in Render Dashboard.",
+    );
+  }
+  if (!String(localEnv.OSG_SMTP_HOST || "").trim()) {
+    console.warn(
+      "[warn] OSG_SMTP_* missing locally — set mail.privateemail.com credentials on Render for support mail.",
+    );
   }
 
   if (!localEnv.OSG_INSTALL_FP_SALT) {
