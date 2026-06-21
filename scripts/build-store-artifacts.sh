@@ -64,10 +64,10 @@ build_android() {
   fi
   export ANDROID_HOME="${ANDROID_HOME:-$HOME/Library/Android/sdk}"
   echo "==> flutter build appbundle"
-  "$FLUTTER" build appbundle --release "${DART_DEFINE[@]}"
+  "$FLUTTER" build appbundle --release "${DART_DEFINE[@]}" || return 1
   cp -f build/app/outputs/bundle/release/app-release.aab "$OUT/pauli-best-price-google-play.aab"
   echo "==> flutter build apk (Aptoide / sideload)"
-  "$FLUTTER" build apk --release "${DART_DEFINE[@]}"
+  "$FLUTTER" build apk --release "${DART_DEFINE[@]}" || return 1
   cp -f build/app/outputs/flutter-apk/app-release.apk "$OUT/pauli-best-price-universal.apk"
   echo "OK Android"
 }
