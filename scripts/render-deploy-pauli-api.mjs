@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Ensure Render web service "pauli-best-price-api" exists for Pauli-Best-Price-Thailand,
+ * Ensure Render web service "pauli-best-price-api" exists for pauli-bestpreis-Thailand,
  * sync env from local .env + render.yaml defaults, trigger deploy.
  *
  * Requires RENDER_API_KEY in OmniSolutionsGlobal WEBSEITE/scripts/render.local.env
@@ -20,7 +20,7 @@ const renderEnvPath = path.resolve(
 const pauliEnvPath = path.join(ROOT, ".env");
 
 const SERVICE_NAME = "pauli-best-price-api";
-const REPO = "https://github.com/Pauli-Omni/Pauli-Best-Price-Thailand";
+const REPO = "https://github.com/Pauli-Omni/pauli-bestpreis-Thailand";
 const BRANCH = "main";
 
 const STATIC_ENV = {
@@ -194,10 +194,10 @@ async function ensureService(ownerId) {
     const msg = String(err?.message || err);
     if (/unfetchable|invalid or unfetchable/i.test(msg)) {
       console.error("\nRender kann das GitHub-Repo noch nicht lesen.");
-      console.error("Ursache: Pauli-Best-Price-Thailand ist nicht an Render angebunden.");
+      console.error("Ursache: pauli-bestpreis-Thailand ist nicht an Render angebunden.");
       console.error("\nEinmalig im Browser (ca. 2 Minuten):");
       console.error("1) https://github.com/settings/installations → Render → Configure");
-      console.error("   Repository „Pauli-Best-Price-Thailand“ freigeben.");
+      console.error("   Repository „pauli-bestpreis-Thailand“ freigeben.");
       console.error("2) https://dashboard.render.com/blueprint/new");
       console.error(`   Repo: ${REPO} · Branch ${BRANCH} · Blueprint: render.yaml`);
       console.error("3) Secrets eintragen (sync:false): OPENAI, ELEVENLABS, INVOLVE_ASIA_*");

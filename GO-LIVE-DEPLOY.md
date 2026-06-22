@@ -12,8 +12,8 @@ git push origin main
 
 ### Einmalig im Browser
 
-1. GitHub → **Settings → Applications → Render** → Repository **Pauli-Best-Price-Thailand** freigeben.
-2. Render → **Blueprints → New Blueprint Instance** → Repo `Pauli-Omni/Pauli-Best-Price-Thailand`, Branch `main`, `render.yaml`.
+1. GitHub → **Settings → Applications → Render** → Repository **pauli-bestpreis-Thailand** freigeben.
+2. Render → **Blueprints → New Blueprint Instance** → Repo `Pauli-Omni/pauli-bestpreis-Thailand`, Branch `main`, `render.yaml`.
 
 ### Oder per Skript (nach GitHub-Freigabe)
 
