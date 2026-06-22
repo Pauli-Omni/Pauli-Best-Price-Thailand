@@ -92,18 +92,7 @@ for (let i = 0; i < 48; i++) {
     console.log("Service live:", hit.serviceDetails?.url || hit.id);
     process.exit(0);
   }
-  const created = await tryCreate();
-  if (created.ok) {
-    const s = created.data?.service || created.data;
-    console.log("Service erstellt:", s?.serviceDetails?.url || s?.id);
-    process.exit(0);
-  }
-  const msg = JSON.stringify(created.data);
-  if (!/unfetchable/i.test(msg)) {
-    console.error("Create failed:", created.status, msg.slice(0, 300));
-    process.exit(1);
-  }
-  if (i % 4 === 0) console.log(`… noch unfetchable (${Math.round(((i + 1) * 15) / 60)} min)`);
+  if (i % 4 === 0) console.log(`… warte auf Blueprint (${Math.round(((i + 1) * 15) / 60)} min)`);
 }
 
 console.error("Timeout — GitHub Render App installieren und Blueprint apply.");
