@@ -3,7 +3,7 @@ PAULI BEST PRICE THAILAND — ARCHITEKTUR-DOKUMENTATION
 ================================================================================
 Omni Solutions Global Co., Ltd.
 Stand: 7. Juni 2026
-Repository: https://github.com/Pauli-Omni/pauli-bestpreis-Thailand
+Repository: https://github.com/Pauli-Omni/Pauli-Best-Price-Thailand
 App-ID (Support/Tickets): pauli_best_price_thailand
 
 Legende Status:
