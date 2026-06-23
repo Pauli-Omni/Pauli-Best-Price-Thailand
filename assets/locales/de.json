@@ -1,7 +1,6 @@
 {
   "brandAppTitleLine1": "Pauli Best Price",
   "brandAppTitleLine2": "Thailand",
-
   "coinDoctorGreetTts": "Hallo! Hier ist Pauli von Pauli Best Price Thailand — womit kann ich dir heute helfen?",
   "coinDoctorGreetBubble": "Hallo! Hier ist Pauli — dein Wegweiser für echte Ersparnis.",
   "pauliIntroTts": "Ich bin Pauli, dein Lebensqualitäts-Makler in Pauli Best Price Thailand — damit dein Geldbeutel dicker wird und du die Schnäppchen schneller findest als die Schlange am 7‑Eleven!",
@@ -24,11 +23,9 @@
   "pauliSpruch0": "Ich bin dein Wegweiser, kein Berater! Ich sorge dafür, dass du kräftig sparst — und dein Geldbeutel zufrieden bleibt.",
   "pauliSpruch1": "Denk daran: Pauli ist dein Kompass zum besten Preis in Pauli Best Price Thailand. Nichts aufschwatzen — nur den Weg zu gesparten Bat zeigen!",
   "pauliSpruch2": "First Class direkt zum besten Deal. Ich berate nicht wie eine Bank — ich zeige dir, wo du mehr Geld bei dir behältst.",
-
   "welcome_greeting": "Na, du Glückspilz! Hast du einen VIP-Code ergattert? Glückwunsch! Hab das wirklich zu schätzen, das ist ein wunderschönes Geschenk, mit dem du ein Leben lang Geld sparen wirst.",
   "vipCultureGreetTts": "Na, du Glückspilz! Hast du einen VIP-Code ergattert? Glückwunsch! Hab das wirklich zu schätzen, das ist ein wunderschönes Geschenk, mit dem du ein Leben lang Geld sparen wirst.",
   "vipCultureGreetBubble": "Glückwunsch — VIP von Pauli Best Price Thailand!",
-
   "personalGreetMorningWithName": "Guten Morgen, {NAME}! Hier ist dein Best Price für heute in Pauli Best Price Thailand.",
   "personalGreetMorningNoName": "Guten Morgen! Hier ist dein Best Price für heute in Pauli Best Price Thailand.",
   "personalGreetMorningWithMembership": "Guten Morgen! Mit deinem lokalen Rabatt‑Profil arbeitet Best Price an <em>deinen</em> Vorteilen bei Makro, Big C, Lotus, Tops, Central, Gourmet, Villa und Foodland.",
@@ -41,7 +38,6 @@
   "personalGreetNightWithName": "Hey {NAME}! Auch spät bleibt Best Price privat bei dir.",
   "personalGreetNightNoName": "Auch später begleitet dich Best Price — ohne zentrale Namens- oder Mitglieds-Hosting-Pflicht bei uns.",
   "personalGreetNightWithMembership": "Auch spät: Mobil- und Bankoptionen scoutest du lokal — Fahrzeug- und Versicherungsvergleiche in deinem Tempo, privat.",
-
   "vipGiftOverlayAria": "VIP-Willkommensgeschenk von Pauli Best Price Thailand",
   "vipGiftHeading": "Besonderes Geschenk",
   "vipGiftWelcomeLead": "Du hast einen exklusiven Zugang über die QR-Münze von Pauli Best Price Thailand erhalten",
@@ -52,10 +48,8 @@
   "vipGiftBodyFromTpl": "{SENDER} hat dir gerade {AMOUNT} THB geschenkt!",
   "vipGiftContinueBtn": "Geschenk annehmen und Vollzugriff starten",
   "vipGiftContinueBtnAria": "Geschenk annehmen und Vollzugriff in Pauli Best Price Thailand starten",
-
   "liveTrackingFirstExplainTts": "Hi, ich bin Pauli. Damit dein Paket sicher bei deinem 7-Eleven ankommt, brauche ich kurz deine Erlaubnis für das Tracking. Ohne das kann ich dir die Lieferung nicht garantieren und du zahlst bei Shopee oder Lazada wieder die hohen Versandkosten. Also, klick auf 'Aktivieren' und spar dir das Geld!",
   "liveTrackingFirstExplainBubble": "Pauli: Tracking für sichere 7-Eleven-Lieferung — bitte aktivieren.",
-
   "avatarFinanceDisclaimerTts": "Du musst wissen: Ich bin kein Berater, ich bin nur dein Wegweiser, wie du dein Geld sparen kannst.",
   "avatarFinanceDisclaimerBubble": "Nur Wegweiser — kein Finanzberater.",
   "avatarFinanceGuideCreditTts": "Schau mal, als dein Wegweiser sehe ich hier eine Möglichkeit, wie du deine Zinsen senken kannst. Ob du das nutzt, entscheidest du natürlich ganz allein.",
@@ -63,9 +57,11 @@
   "avatarFinanceGuideFinanceTts": "Schau mal, als dein Wegweiser sehe ich hier eine Chance, wie du bei Finanzprodukten besser sparen kannst. Die Entscheidung triffst du natürlich selbst.",
   "psychGiftBundleDeTts": "Pralinen, eine schöne Blumenüberraschung und später ein gutes Essen. Wenn wir das stimmig machen, lässt sie dich heute nicht mit kalten Füßen schlafen — versprochen!",
   "psychGiftBundleDeBubble": "Pralinen-Paket — locker unter Freunden.",
-
   "fun.crabInstinct": "Mein Krabben-Instinkt sagt mir: Das wird heute verdammt günstig!",
-  "fun.greatCatch":   "Ein absolut genialer Fang, Pauli! Da sparen wir ordentlich!",
-  "fun.smellsCheap":  "Da riecht irgendwas verdammt billig... und ich LIEBE es!",
-  "fun.savingHappy":  "Geld sparen macht mich einfach glücklich. Zeit für ein Tänzchen!"
+  "fun.greatCatch": "Ein absolut genialer Fang, Pauli! Da sparen wir ordentlich!",
+  "fun.smellsCheap": "Da riecht irgendwas verdammt billig... und ich LIEBE es!",
+  "fun.savingHappy": "Geld sparen macht mich einfach glücklich. Zeit für ein Tänzchen!",
+  "interrupt.resumeTriggers": "entschuldigung,weiter,mach weiter,bitte weiter,was wolltest du sagen,was hast du gesagt,erkläre weiter,bitte erkläre weiter,erzähl weiter,weiter bitte,wo warst du",
+  "interrupt.resumePrefix": "Klar! Also, wo war ich stehengeblieben... genau —",
+  "interrupt.llmContextHint": "[System: Pauli wurde unterbrochen, als er sagte: \"{TEXT}\". Pauli kennt diesen Satz und kann ihn bei Bedarf natürlich aufgreifen — nur vollständig wiederholen, wenn der Nutzer es verlangt.]"
 }

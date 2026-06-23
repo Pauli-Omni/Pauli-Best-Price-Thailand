@@ -14891,6 +14891,18 @@
         async function osgPauliChatFetch(userText, lang) {
           const line = String(userText || "").trim();
           if (!line) return "";
+
+          // ── Fall A: inject interrupt context so LLM keeps the conversational thread ──
+          if (typeof window.osgBuildInterruptContextHint === 'function') {
+            const hint = window.osgBuildInterruptContextHint(lang);
+            if (hint) {
+              osgPauliLiveHistory.push({ role: 'system', content: hint });
+              if (typeof window.osgConsumeInterruptContext === 'function') {
+                window.osgConsumeInterruptContext();
+              }
+            }
+          }
+
           osgPauliLiveHistory.push({ role: "user", content: line });
           if (osgPauliLiveHistory.length > 14) {
             osgPauliLiveHistory = osgPauliLiveHistory.slice(-14);
@@ -15080,6 +15092,12 @@
 
           async function processUserText(rawText) {
             if (!osgPauliLiveActive) return;
+
+            // ── Interrupt: stop any active TTS the moment user speaks ──────────
+            if (typeof window.osgPauliInterrupt === 'function') {
+              await window.osgPauliInterrupt('user_spoke');
+            }
+
             const pack = osgVcCurrentPack();
             const lang = osgVcCurrentLangCode();
             turns += 1;
@@ -15089,6 +15107,23 @@
             }
 
             let userText = osgPauliStripWakePhrase(rawText);
+
+            // ── Fall B: user wants Pauli to continue the interrupted sentence ──
+            if (
+              userText &&
+              typeof window.osgDetectInterruptIntent === 'function' &&
+              window.osgDetectInterruptIntent(userText, lang) === 'resume'
+            ) {
+              const resumeText =
+                typeof window.osgBuildResumeText === 'function'
+                  ? window.osgBuildResumeText(pack)
+                  : '';
+              if (resumeText) {
+                await osgPauliLiveSpeakReply(resumeText, pack, lang, isNight);
+                await listenOnce();
+                return;
+              }
+            }
 
             if (userText) {
               var draftOwn = window.OSG_DRAFT_OWNERSHIP;
@@ -16125,6 +16160,7 @@
       main();
     </script>
     <script src="assets/scripts/osg_tts_guard.js"></script>
+    <script src="assets/scripts/osg_tts_interrupt.js"></script>
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", function () {

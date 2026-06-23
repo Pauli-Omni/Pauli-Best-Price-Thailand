@@ -2,7 +2,6 @@
   "brandAppTitle": "PAULI BEST PRICE THAILAND",
   "brandAppTitleLine1": "Pauli Best Price",
   "brandAppTitleLine2": "Thailand",
-
   "coinDoctorGreetTts": "Sawatdee khrap! Tu Pauli z Pauli Best Price Thailand — powiedz, w czym mogę ci dziś pomóc?",
   "coinDoctorGreetBubble": "Sawatdee khrap! Tu Pauli z Pauli Best Price Thailand — powiedz, w czym mogę ci dziś pomóc?",
   "pauliIntroTts": "Jestem Pauli, twój przewodnik w Pauli Best Price Thailand — dbam o to, żeby twój portfel był grubszy, a promocje cieńsze niż kolejka w 7‑Eleven!",
@@ -23,12 +22,10 @@
   "pauliSpruch0": "Jestem twoim przewodnikiem po cenach, nie nachalnym doradcą! Chodzi o to, żebyś sprytnie oszczędzał — i żeby portfel był zadowolony jak po udanym polowaniu na Lazadzie.",
   "pauliSpruch1": "Pamiętaj: Pauli to twój kompas do najlepszej ceny w Pauli Best Price Thailand. Nie wciskam ci niczego — tylko pokazuję drogę do zaoszczędzonych batów!",
   "pauliSpruch2": "Pierwsza klasa prosto do najlepszej oferty. Nie doradzam jak bank — wskazuję ci, gdzie zostawić więcej gotówki u siebie.",
-
   "welcome_greeting": "Oho, jaki szczęściarz z ciebie. Podarowany kod VIP. Gratulacje. Szanuj to sobie. To jest piękny prezent, dzięki któremu będziesz oszczędzać przez całe życie.",
   "welcome_greeting_pl": "Oho, jaki szczęściarz z ciebie. Podarowany kod VIP. Gratulacje. Szanuj to sobie. To jest piękny prezent, dzięki któremu będziesz oszczędzać przez całe życie.",
   "vipCultureGreetTts": "Oho, jaki szczęściarz z ciebie. Podarowany kod VIP. Gratulacje. Szanuj to sobie. To jest piękny prezent, dzięki któremu będziesz oszczędzać przez całe życie.",
   "vipCultureGreetBubble": "Gratulacje — VIP od Pauli Best Price Thailand. Oszczędzaj całe życie!",
-
   "personalGreetMorningWithName": "Dzień dobry, {NAME}! Oto twój Best Price na dziś w Pauli Best Price Thailand.",
   "personalGreetMorningNoName": "Dzień dobry! Oto twój Best Price na dziś w Pauli Best Price Thailand.",
   "personalGreetMorningWithMembership": "Dzień dobry! Z lokalnym profilem rabatowym Best Price dopracowuje <em>twoje</em> korzyści w Makro, Big C, Lotus, Tops, Central, Gourmet, Villa i Foodland.",
@@ -41,7 +38,6 @@
   "personalGreetNightWithName": "Hej {NAME}! Nawet późno Best Price zostaje z tobą prywatnie.",
   "personalGreetNightNoName": "Nawet późno Best Price towarzyszy ci bez centralnego hostingu imion i członkostw u nas.",
   "personalGreetNightWithMembership": "Nawet późno: mobilne i bankowe opcje możesz scoutować lokalnie — porównania auta i ubezpieczeń w twoim tempie, prywatnie.",
-
   "vipGiftHeading": "Prezent VIP",
   "vipGiftWelcomeLead": "Otrzymujesz ekskluzywny dostęp przez monetę QR Pauli Best Price Thailand",
   "vipGiftBrandLine": "Pauli Best Price Thailand",
@@ -54,18 +50,18 @@
   "vipGiftContinueBtn": "Odbierz prezent i zacznij pełny dostęp",
   "vipGiftOverlayAria": "Prezent VIP od Pauli Best Price Thailand przy pierwszym uruchomieniu",
   "vipGiftContinueBtnAria": "Odbierz prezent i uruchom pełny dostęp w Pauli Best Price Thailand",
-
   "liveTrackingFirstExplainTts": "Cześć, jestem Pauli. Żeby twoja paczka bezpiecznie dotarła do Twojego 7-Eleven, potrzebuję krótkiej zgody na śledzenie. Bez tego nie zagwarantuję dostawy i znów zapłacisz wysokie koszty wysyłki na Shopee albo Lazada. Więc kliknij „Aktywuj” i oszczędź te pieniądze!",
   "liveTrackingFirstExplainBubble": "Pauli: śledzenie dla bezpiecznej dostawy do 7-Eleven — proszę aktywuj.",
-
   "avatarFinanceDisclaimerTts": "Wiesz: nie jestem doradcą — jestem tylko twoim przewodnikiem, jak oszczędzać pieniądze.",
   "avatarFinanceDisclaimerBubble": "Tylko przewodnik — nie doradca finansowy.",
   "avatarFinanceGuideCreditTts": "Słuchaj, jako twój przewodnik widzę tu szansę na niższe odsetki. Czy z tego skorzystasz, decydujesz sam.",
   "avatarFinanceGuideInsuranceTts": "Jako przewodnik widzę drogę, żeby mądrzej oszczędzać na ubezpieczeniach. To twoja decyzja.",
   "avatarFinanceGuideFinanceTts": "Jako przewodnik widzę tu sposób na oszczędność przy produktach finansowych. Ty decydujesz.",
-
   "fun.crabInstinct": "Mój krabowy instynkt mówi: dziś będzie niesamowicie tanio!",
-  "fun.greatCatch":   "Absolutnie genialny połów, Pauli! Oszczędzamy porządnie!",
-  "fun.smellsCheap":  "Coś tutaj śmierdzi niesamowitą okazją... i to UWIELBIAM!",
-  "fun.savingHappy":  "Oszczędzanie pieniędzy po prostu mnie uszczęśliwia. Czas na taniec!"
+  "fun.greatCatch": "Absolutnie genialny połów, Pauli! Oszczędzamy porządnie!",
+  "fun.smellsCheap": "Coś tutaj śmierdzi niesamowitą okazją... i to UWIELBIAM!",
+  "fun.savingHappy": "Oszczędzanie pieniędzy po prostu mnie uszczęśliwia. Czas na taniec!",
+  "interrupt.resumeTriggers": "przepraszam,kontynuuj,mów dalej,gdzie byłeś,co mówiłeś,proszę kontynuuj,dalej",
+  "interrupt.resumePrefix": "Oczywiście! Gdzie byłem... ach tak —",
+  "interrupt.llmContextHint": "[System: Pauli był w połowie zdania, gdy użytkownik przerwał. Pauli mówił: \"{TEXT}\". Pamiętaj o tym dla naturalnej ciągłości rozmowy.]"
 }

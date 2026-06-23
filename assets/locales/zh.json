@@ -1,7 +1,6 @@
 {
   "brandAppTitleLine1": "Pauli Best Price",
   "brandAppTitleLine2": "Thailand",
-
   "coinDoctorGreetTts": "萨瓦迪卡！我是 Pauli Best Price Thailand 的向导——今天想帮你省点什么？",
   "coinDoctorGreetBubble": "萨瓦迪卡！我是 Pauli Best Price Thailand 的向导——今天想帮你省点什么？",
   "pauliIntroTts": "我是 Pauli，你在 Pauli Best Price Thailand 的省钱向导——让钱包更鼓，好价抢得比 7‑Eleven 排队还快！",
@@ -22,11 +21,9 @@
   "pauliSpruch0": "我是你的价格向导，不是推销顾问！我只帮你实实在在省钱，让钱包笑呵呵。",
   "pauliSpruch1": "记住：Pauli 是你在 Pauli Best Price Thailand 的省钱指南针。不硬推销，只带你走向更划算的泰铢！",
   "pauliSpruch2": "头等舱直达最划算的交易。我不像银行那样说教——我只告诉你钱该留在自己口袋里。",
-
   "welcome_greeting": "哇，你真是个幸运儿！拿到VIP码了？恭喜！一定要好好珍惜，这是一份能让你终身省钱的美好礼物。",
   "vipCultureGreetTts": "哇，你真是个幸运儿！拿到VIP码了？恭喜！一定要好好珍惜，这是一份能让你终身省钱的美好礼物。",
   "vipCultureGreetBubble": "恭喜 — Pauli Best Price Thailand VIP！",
-
   "personalGreetMorningWithName": "早上好，{NAME}！这是你在 Pauli Best Price Thailand 的今日好价。",
   "personalGreetMorningNoName": "早上好！这是你在 Pauli Best Price Thailand 的今日好价。",
   "personalGreetMorningWithMembership": "早上好！本地折扣档案让 Best Price 继续优化你在 Makro、Big C、Lotus、Tops、Central、Gourmet、Villa 和 Foodland 的<em>专属</em>优惠。",
@@ -39,7 +36,6 @@
   "personalGreetNightWithName": "嘿 {NAME}！再晚 Best Price 也陪你私密省钱。",
   "personalGreetNightNoName": "再晚 Best Price 也优先留在你的设备上——我们不上传姓名或会员信息。",
   "personalGreetNightWithMembership": "再晚也行：在本地浏览手机和银行选项——车险比较按你的节奏，私密进行。",
-
   "vipGiftOverlayAria": "Pauli Best Price Thailand VIP 欢迎礼",
   "vipGiftHeading": "特别礼物",
   "vipGiftWelcomeLead": "你通过 Pauli Best Price Thailand 的 QR 纪念币获得了专属访问权",
@@ -50,18 +46,18 @@
   "vipGiftBodyFromTpl": "{SENDER} 刚刚送给你 {AMOUNT} THB！",
   "vipGiftContinueBtn": "领取礼物并开启完整访问",
   "vipGiftContinueBtnAria": "在 Pauli Best Price Thailand 领取礼物并开启完整访问",
-
   "liveTrackingFirstExplainTts": "嗨，我是 Pauli。为了让你的包裹安全送到你的 7-Eleven，我需要你短暂授权物流追踪。没有它我无法保证送达，你在 Shopee 或 Lazada 又要付高额运费。所以点一下「启用」，把钱省下来！",
   "liveTrackingFirstExplainBubble": "Pauli：启用追踪，安全送达 7-Eleven——请点启用。",
-
   "avatarFinanceDisclaimerTts": "你要知道：我不是顾问，只是帮你省钱的向导。",
   "avatarFinanceDisclaimerBubble": "仅为向导——非理财顾问。",
   "avatarFinanceGuideCreditTts": "作为你的向导，我看到这里或许能降低利息。用不用，完全由你决定。",
   "avatarFinanceGuideInsuranceTts": "作为向导，我看到更聪明省保费的路子。参不参与，你自己说了算。",
   "avatarFinanceGuideFinanceTts": "作为向导，我看到这里有机会在金融产品上省钱。决定权在你手里。",
-
   "fun.crabInstinct": "我的螃蟹直觉告诉我：今天价格会便宜得出奇！",
-  "fun.greatCatch":   "绝了，Pauli！这次真是大丰收，省了不少钱！",
-  "fun.smellsCheap":  "这里有股便宜的味道……我超爱这种感觉！",
-  "fun.savingHappy":  "省钱让我太开心了。来跳个舞吧！"
+  "fun.greatCatch": "绝了，Pauli！这次真是大丰收，省了不少钱！",
+  "fun.smellsCheap": "这里有股便宜的味道……我超爱这种感觉！",
+  "fun.savingHappy": "省钱让我太开心了。来跳个舞吧！",
+  "interrupt.resumeTriggers": "对不起,继续,继续说,你在说什么,你说到哪了,请继续,说下去",
+  "interrupt.resumePrefix": "当然！那么，我说到哪里了... 对了 —",
+  "interrupt.llmContextHint": "[系统：用户打断时，Pauli 正在说话。Pauli 正在说：“{TEXT}”。请记住这一点，保持对话的自然连贯性。]"
 }

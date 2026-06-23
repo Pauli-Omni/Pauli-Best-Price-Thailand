@@ -1,7 +1,6 @@
 {
   "brandAppTitleLine1": "Pauli Best Price",
   "brandAppTitleLine2": "Thailand",
-
   "coinDoctorGreetTts": "สวัสดีครับ! ผมพอลลี่จากโปรลี่เบสต์ไพรซ์ไทยแลนด์ — วันนี้ให้ผมช่วยอะไรดีครับ?",
   "coinDoctorGreetBubble": "สวัสดีครับ! พอลลี่ — ไกด์ใจดีแบบสนุกสนาน",
   "pauliIntroTts": "ผมคือพอลลี่ นายหน้าคุณภาพชีวิตของคุณ — ช่วยให้กระเป๋าเงินหนาขึ้น หาโปรดีก่อนใคร แบบสบายๆ สนุกๆ นะครับ!",
@@ -26,11 +25,9 @@
   "pauliSpruch0": "ผมเป็นไกด์นำทางของคุณ ไม่ใช่ที่ปรึกษาขายของ! ผมช่วยให้คุณประหยัดเงินจริง ๆ — กระเป๋าเงินมีความสุข",
   "pauliSpruch1": "จำไว้ — Pauli คือเข็มทิศสู่ราคาดีที่สุดใน Pauli Best Price Thailand ไม่ยัดเยียด — แค่ชี้ทางประหยัดบาท!",
   "pauliSpruch2": "เฟิร์สคลาสตรงสู่ดีลที่ดีที่สุด ผมไม่แนะนำแบบธนาคาร — ผมชี้ให้คุณเก็บเงินไว้กับตัวเองมากขึ้น",
-
   "welcome_greeting": "โชคดีจังเลยนะเรา! ได้รหัส VIP มาแล้วเหรอ? ยินดีด้วยนะ! เก็บรักษาไว้ให้ดีล่ะ นี่คือของขวัญสุดพิเศษที่จะช่วยให้คุณประหยัดเงินได้ตลอดชีวิตเลยนะ",
   "vipCultureGreetTts": "โชคดีจังเลยนะเรา! ได้รหัส VIP มาแล้วเหรอ? ยินดีด้วยนะ! เก็บรักษาไว้ให้ดีล่ะ นี่คือของขวัญสุดพิเศษที่จะช่วยให้คุณประหยัดเงินได้ตลอดชีวิตเลยนะ",
   "vipCultureGreetBubble": "ยินดีด้วย — VIP จาก Pauli Best Price Thailand!",
-
   "personalGreetMorningWithName": "สวัสดีตอนเช้า {NAME}! นี่คือ Best Price ของคุณวันนี้ใน Pauli Best Price Thailand",
   "personalGreetMorningNoName": "สวัสดีตอนเช้า! นี่คือ Best Price ของคุณวันนี้ใน Pauli Best Price Thailand",
   "personalGreetMorningWithMembership": "สวัสดีตอนเช้า! โปรไฟล์ส่วนลดท้องถิ่นช่วย Best Price ปรับ<em>สิทธิ์</em>ของคุณที่ Makro Big C Lotus Tops Central Gourmet Villa Foodland",
@@ -43,7 +40,6 @@
   "personalGreetNightWithName": "ไง {NAME}! ดึกแค่ไหน Best Price ยังเป็นส่วนตัวกับคุณ",
   "personalGreetNightNoName": "ดึกแค่ไหน Best Price ยังอยู่บนมือถือคุณก่อน — ไม่โฮสต์ชื่อหรือสมาชิกกลาง",
   "personalGreetNightWithMembership": "ดึกแค่ไหน: สำรวจมือถือและธนาคารในเครื่อง — เปรียบเทียบรถและประกันตามจังหวะคุณ เป็นส่วนตัว",
-
   "vipGiftOverlayAria": "ของขวัญต้อนรับพิเศษจาก Pauli Best Price Thailand",
   "vipGiftHeading": "ของขวัญพิเศษ",
   "vipGiftWelcomeLead": "คุณได้รับสิทธิพิเศษจากเหรียญ QR ของ Pauli Best Price Thailand",
@@ -54,18 +50,18 @@
   "vipGiftBodyFromTpl": "{SENDER} มอบของขวัญ {AMOUNT} บาทให้คุณแล้ว!",
   "vipGiftContinueBtn": "รับของขวัญและเริ่มใช้งาน",
   "vipGiftContinueBtnAria": "รับของขวัญและเริ่มใช้งานเต็มรูปแบบใน Pauli Best Price Thailand",
-
   "liveTrackingFirstExplainTts": "สวัสดีครับ ผม Pauli ครับ เพื่อให้พัสดุของคุณถึง 7-Eleven อย่างปลอดภัย ผมต้องขออนุญาตติดตามพัสดุสักครู่ครับ ถ้าไม่เปิด ผมรับประกันการส่งไม่ได้ และคุณจะเสียค่าส่งแพง ๆ ที่ Shopee หรือ Lazada อีก งั้นกด 'เปิดใช้งาน' แล้วเก็บเงินไว้กับตัวเองเลยครับ!",
   "liveTrackingFirstExplainBubble": "Pauli: เปิดติดตามเพื่อรับที่ 7-Eleven อย่างปลอดภัย — กรุณากดเปิดใช้งาน",
-
   "avatarFinanceDisclaimerTts": "ขอบอกไว้ก่อนนะครับ: ผมไม่ใช่ที่ปรึกษา ผมเป็นแค่ไกด์ช่วยคุณประหยัดเงินเท่านั้นครับ",
   "avatarFinanceDisclaimerBubble": "เป็นไกด์เท่านั้น — ไม่ใช่ที่ปรึกษาการเงิน",
   "avatarFinanceGuideCreditTts": "ในฐานะไกด์ของคุณ ผมเห็นทางที่อาจช่วยลดดอกเบี้ยได้นะ จะใช้หรือไม่เป็นสิทธิ์ของคุณเลยครับ",
   "avatarFinanceGuideInsuranceTts": "ในฐานะไกด์ ผมเห็นทางประหยัดเรื่องประกันได้ฉลาดขึ้น จะทำต่อหรือไม่ขึ้นกับคุณครับ",
   "avatarFinanceGuideFinanceTts": "ในฐานะไกด์ ผมเห็นโอกาสประหยัดกับผลิตภัณฑ์ทางการเงินตรงนี้ ตัดสินใจเองได้เต็มที่ครับ",
-
   "fun.crabInstinct": "สัญชาตญาณปูของผมบอกว่า: วันนี้ราคานี้ถูกมากเลยครับ!",
-  "fun.greatCatch":   "จับได้เยี่ยมมากเลยครับ พอลลี่! ประหยัดได้เยอะเลย!",
-  "fun.smellsCheap":  "ได้กลิ่นว่าถูกมากเลย... และผมรักมันสุดๆ ครับ!",
-  "fun.savingHappy":  "ประหยัดเงินทำให้ผมมีความสุขมากครับ มาเต้นกันเลย!"
+  "fun.greatCatch": "จับได้เยี่ยมมากเลยครับ พอลลี่! ประหยัดได้เยอะเลย!",
+  "fun.smellsCheap": "ได้กลิ่นว่าถูกมากเลย... และผมรักมันสุดๆ ครับ!",
+  "fun.savingHappy": "ประหยัดเงินทำให้ผมมีความสุขมากครับ มาเต้นกันเลย!",
+  "interrupt.resumeTriggers": "ขอโทษ,พูดต่อ,ต่อเลย,พูดต่อนะ,เล่าต่อ,ว่าอะไรอีก,พูดต่อได้เลย,กำลังพูดอะไรอยู่",
+  "interrupt.resumePrefix": "ได้เลยครับ! ผมกำลังพูดถึง —",
+  "interrupt.llmContextHint": "[ระบบ: พอลลีถูกขัดจังหะขณะที่พูดว่า: \"{TEXT}\". พอลลีรู้จักประโยคนี้และสามารถอ้างอิงได้อย่างเป็นธรรมชาติตามความเหมาะสม]"
 }

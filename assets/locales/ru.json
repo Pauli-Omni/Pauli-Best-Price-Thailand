@@ -1,7 +1,6 @@
 {
   "brandAppTitleLine1": "Pauli Best Price",
   "brandAppTitleLine2": "Thailand",
-
   "coinDoctorGreetTts": "Саватди, крап! Я Pauli из Pauli Best Price Thailand — чем помочь сэкономить сегодня?",
   "coinDoctorGreetBubble": "Саватди, крап! Я Pauli из Pauli Best Price Thailand — чем помочь сэкономить сегодня?",
   "pauliIntroTts": "Я Pauli, твой гид в Pauli Best Price Thailand — сделаю кошелёк толще, а очередь в 7‑Eleven оставлю позади!",
@@ -22,11 +21,9 @@
   "pauliSpruch0": "Я твой проводник по ценам, а не навязчивый консультант! Помогаю реально экономить — чтобы кошелёк был доволен.",
   "pauliSpruch1": "Запомни: Pauli — твой компас к лучшей цене в Pauli Best Price Thailand. Без впаривания — только путь к сэкономленным батам!",
   "pauliSpruch2": "Первый класс прямо к лучшей сделке. Я не банк-советник — я показываю, где оставить больше денег у себя.",
-
   "welcome_greeting": "Ого, ну ты и везунчик! Получил VIP-код? Поздравляю! Цени это — это прекрасный подарок, благодаря которому ты будешь экономить всю свою жизнь.",
   "vipCultureGreetTts": "Ого, ну ты и везунчик! Получил VIP-код? Поздравляю! Цени это — это прекрасный подарок, благодаря которому ты будешь экономить всю свою жизнь.",
   "vipCultureGreetBubble": "Поздравляю — VIP от Pauli Best Price Thailand!",
-
   "personalGreetMorningWithName": "Доброе утро, {NAME}! Вот твой Best Price на сегодня в Pauli Best Price Thailand.",
   "personalGreetMorningNoName": "Доброе утро! Вот твой Best Price на сегодня в Pauli Best Price Thailand.",
   "personalGreetMorningWithMembership": "Доброе утро! С локальным профилем скидок Best Price настраивает <em>твои</em> привилегии в Makro, Big C, Lotus, Tops, Central, Gourmet, Villa и Foodland.",
@@ -39,7 +36,6 @@
   "personalGreetNightWithName": "Привет, {NAME}! Даже поздно Best Price остаётся с тобой приватно.",
   "personalGreetNightNoName": "Даже поздно Best Price на устройстве — без центрального хранения имён и членств у нас.",
   "personalGreetNightWithMembership": "Даже поздно: мобильные и банковские опции ищешь локально — сравнение авто и страховок в твоём темпе, приватно.",
-
   "vipGiftOverlayAria": "VIP-приветственный подарок от Pauli Best Price Thailand",
   "vipGiftHeading": "Особый подарок",
   "vipGiftWelcomeLead": "Ты получил эксклюзивный доступ через QR-монету Pauli Best Price Thailand",
@@ -50,18 +46,18 @@
   "vipGiftBodyFromTpl": "{SENDER} только что подарил тебе {AMOUNT} THB!",
   "vipGiftContinueBtn": "Принять подарок и открыть полный доступ",
   "vipGiftContinueBtnAria": "Принять подарок и открыть полный доступ в Pauli Best Price Thailand",
-
   "liveTrackingFirstExplainTts": "Привет, я Pauli. Чтобы твоя посылка благополучно дошла до твоего 7-Eleven, мне нужно твоё краткое разрешение на отслеживание. Без этого я не могу гарантировать доставку, и ты снова заплатишь высокую доставку на Shopee или Lazada. Так что жми «Включить» и сэкономь эти деньги!",
   "liveTrackingFirstExplainBubble": "Pauli: отслеживание для безопасной доставки в 7-Eleven — пожалуйста, включи.",
-
   "avatarFinanceDisclaimerTts": "Знай: я не советник — я только твой проводник, как экономить деньги.",
   "avatarFinanceDisclaimerBubble": "Только проводник — не финансовый советник.",
   "avatarFinanceGuideCreditTts": "Смотри, как твой проводник я вижу способ снизить проценты. Пользоваться им или нет — решаешь только ты.",
   "avatarFinanceGuideInsuranceTts": "Как проводник, я вижу путь умнее сэкономить на страховке. Участвовать или нет — твоё дело.",
   "avatarFinanceGuideFinanceTts": "Как проводник я вижу здесь шанс сэкономить на финансовых продуктах. Решение за тобой.",
-
   "fun.crabInstinct": "Мой крабий инстинкт говорит: сегодня будет чертовски дёшево!",
-  "fun.greatCatch":   "Абсолютно гениальный улов, Паули! Экономим по-крупному!",
-  "fun.smellsCheap":  "Тут чем-то чертовски дёшево пахнет... и я это ОБОЖАЮ!",
-  "fun.savingHappy":  "Экономить деньги — это просто счастье. Время потанцевать!"
+  "fun.greatCatch": "Абсолютно гениальный улов, Паули! Экономим по-крупному!",
+  "fun.smellsCheap": "Тут чем-то чертовски дёшево пахнет... и я это ОБОЖАЮ!",
+  "fun.savingHappy": "Экономить деньги — это просто счастье. Время потанцевать!",
+  "interrupt.resumeTriggers": "извини,продолжай,давай,где ты был,что ты говорил,пожалуйста продолжай,говори дальше",
+  "interrupt.resumePrefix": "Конечно! Итак, на чём я остановился... ах да —",
+  "interrupt.llmContextHint": "[Система: Паули был на середине предложения, когда пользователь прервал. Паули говорил: \"{TEXT}\". Учитывайте это для естественного продолжения разговора.]"
 }

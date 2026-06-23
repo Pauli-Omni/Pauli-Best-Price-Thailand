@@ -1,7 +1,6 @@
 {
   "brandAppTitleLine1": "Pauli Best Price",
   "brandAppTitleLine2": "Thailand",
-
   "coinDoctorGreetTts": "Hello! This is Pauli from Pauli Best Price Thailand — what can I help you with today?",
   "coinDoctorGreetBubble": "Hello! Pauli — your guide to real savings.",
   "pauliIntroTts": "I'm Pauli, your guide at Pauli Best Price Thailand — here to fatten your wallet and beat the queue at 7‑Eleven to the best deals!",
@@ -22,11 +21,9 @@
   "pauliSpruch0": "I'm your price guide, not a pushy advisor! I make sure you save real money — and your wallet stays happy.",
   "pauliSpruch1": "Remember: Pauli is your compass to the best price in Pauli Best Price Thailand. No hard sell — just the path to saved baht!",
   "pauliSpruch2": "First-class straight to the best deal. I don't advise like a bank — I show you where to keep more cash in your pocket.",
-
   "welcome_greeting": "Well, look at you — lucky one! Snagged a VIP code? Congrats! Treasure it — this is a beautiful gift that'll save you money for life.",
   "vipCultureGreetTts": "Well, look at you — lucky one! Snagged a VIP code? Congrats! Treasure it — this is a beautiful gift that'll save you money for life.",
   "vipCultureGreetBubble": "Congrats — VIP from Pauli Best Price Thailand!",
-
   "personalGreetMorningWithName": "Good morning, {NAME}! Here's your Best Price for today in Pauli Best Price Thailand.",
   "personalGreetMorningNoName": "Good morning! Here's your Best Price for today in Pauli Best Price Thailand.",
   "personalGreetMorningWithMembership": "Good morning! With your local discount profile, Best Price keeps tuning <em>your</em> perks at Makro, Big C, Lotus, Tops, Central, Gourmet, Villa, and Foodland.",
@@ -39,7 +36,6 @@
   "personalGreetNightWithName": "Hey {NAME}! Even late, Best Price stays private with you.",
   "personalGreetNightNoName": "Even later, Best Price stays on-device first — no central name or membership hosting on our side.",
   "personalGreetNightWithMembership": "Even late: scout mobile and bank options locally — car and insurance comparisons at your pace, privately.",
-
   "vipGiftOverlayAria": "VIP welcome gift from Pauli Best Price Thailand",
   "vipGiftHeading": "Special gift",
   "vipGiftWelcomeLead": "You unlocked exclusive access through the QR coin of Pauli Best Price Thailand",
@@ -50,13 +46,14 @@
   "vipGiftBodyFromTpl": "{SENDER} just gifted you {AMOUNT} THB!",
   "vipGiftContinueBtn": "Accept gift and start full access",
   "vipGiftContinueBtnAria": "Accept gift and start full access in Pauli Best Price Thailand",
-
   "liveTrackingFirstExplainTts": "Hi, I'm Pauli. For your parcel to arrive safely at your 7-Eleven, I need your permission for tracking — just briefly. Without it I can't guarantee delivery and you'll pay high shipping again on Shopee or Lazada. So hit 'Activate' and keep that money in your pocket!",
   "liveTrackingFirstExplainBubble": "Pauli: tracking for safe 7-Eleven delivery — please activate.",
-
   "avatarFinanceDisclaimerTts": "Just so you know: I'm not an advisor — I'm only your guide to saving money.",
   "avatarFinanceDisclaimerBubble": "Guide only — not a financial advisor.",
   "avatarFinanceGuideCreditTts": "Look, as your guide I see a way you might lower your interest costs. Whether you use it is entirely your call.",
   "avatarFinanceGuideInsuranceTts": "As your guide, I see a path where you could save smarter on insurance. Joining in is completely up to you.",
-  "avatarFinanceGuideFinanceTts": "As your guide, I spot a chance to save on financial products here. You decide on your own, of course."
+  "avatarFinanceGuideFinanceTts": "As your guide, I spot a chance to save on financial products here. You decide on your own, of course.",
+  "interrupt.resumeTriggers": "آسف,كمّل,واصل,تكمّل,أين كنت,ماذا كنت تقول,تفضّل,من فضلك كمّل",
+  "interrupt.resumePrefix": "بالتأكيد! حسناً، أين كنت... آه نعم —",
+  "interrupt.llmContextHint": "[نظام: كان بولي في منتصف جملته عندما قاطعه المستخدم. كان يقول: \"{TEXT}\". ضع ذلك في الاعتبار لاستمرارية الحوار الطبيعية.]"
 }
