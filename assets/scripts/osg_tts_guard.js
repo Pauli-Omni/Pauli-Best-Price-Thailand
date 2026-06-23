@@ -1,93 +1,63 @@
-/**
- * OSG TTS-Guard — Serialisiert alle playPauliVoice-Aufrufe.
- *
- * Ohne diesen Guard können mehrere Stellen (Avatar-Boot, Tour, Psychologie-Trigger,
- * Konversations-Antwort) gleichzeitig playPauliVoice aufrufen, was zu simultanen
- * Sprach-Überlappungen führt.
- *
- * Strategie: window.playPauliVoice wird durch eine Queue-Variante ersetzt.
- * Neue Aufrufe warten, bis der aktuelle Aufruf vollständig beendet ist.
- * Max. Queue-Tiefe: 3 (ältester Eintrag wird verworfen, um Endlosaufstau zu vermeiden).
- */
-(function (global) {
-  "use strict";
+// osg_tts_guard.js - Globaler Mutex und Queue für playPauliVoice
+(function() {
+    let isSpeaking = false;
+    let ttsQueue = [];
+    const MAX_QUEUE_SIZE = 3;
+    const originalPlayPauliVoice = window.playPauliVoice;
 
-  var MAX_QUEUE = 3;
-  var _queue = [];
-  var _running = false;
-  var _original = null;
+    // Hilfsfunktion: Verarbeitet den nächsten Eintrag in der Warteschlange
+    async function processQueue() {
+        if (isSpeaking || ttsQueue.length === 0) return;
 
-  function drainQueue() {
-    if (_running || !_queue.length) return;
-    var task = _queue.shift();
-    _running = true;
-    Promise.resolve()
-      .then(function () {
-        return _original.call(null, task.text, task.opts);
-      })
-      .then(function (result) {
-        task.resolve(result);
-      })
-      .catch(function (err) {
-        task.reject(err);
-      })
-      .finally(function () {
-        _running = false;
-        drainQueue();
-      });
-  }
+        isSpeaking = true;
+        const nextCall = ttsQueue.shift();
 
-  function queuedPlayPauliVoice(text, opts) {
-    // Sofort starten wenn idle
-    if (!_running && !_queue.length) {
-      _running = true;
-      return Promise.resolve()
-        .then(function () {
-          return _original.call(null, text, opts);
-        })
-        .finally(function () {
-          _running = false;
-          drainQueue();
-        });
+        try {
+            // Führt das originale playPauliVoice aus und wartet, bis es fertig ist
+            if (typeof originalPlayPauliVoice === 'function') {
+                await originalPlayPauliVoice(nextCall.text, nextCall.options);
+            } else {
+                console.warn("Originales playPauliVoice nicht gefunden!");
+            }
+        } catch (error) {
+            console.error("Fehler beim Abspielen der Pauli-Stimme:", error);
+        } finally {
+            isSpeaking = false;
+            // Direkt den nächsten Eintrag anpacken
+            processQueue();
+        }
     }
 
-    // Warteschlange voll: ältesten Eintrag verwerfen
-    if (_queue.length >= MAX_QUEUE) {
-      var dropped = _queue.shift();
-      dropped.resolve(); // still lösen, nicht hängen lassen
-    }
+    // Patch für die originale playPauliVoice Funktion
+    window.playPauliVoice = function(text, options = {}) {
+        // Wenn voll: Ältesten Eintrag rauswerfen (kein Aufstau)
+        if (ttsQueue.length >= MAX_QUEUE_SIZE) {
+            ttsQueue.shift();
+            console.log("TTS-Queue voll! Älterer Eintrag verworfen.");
+        }
 
-    return new Promise(function (resolve, reject) {
-      _queue.push({ text: text, opts: opts, resolve: resolve, reject: reject });
-    });
-  }
+        // Neuen Text in die Queue schieben
+        ttsQueue.push({ text, options });
 
-  function patchWhenReady() {
-    if (typeof global.playPauliVoice !== "function") {
-      // Noch nicht geladen — kurz warten und nochmal versuchen
-      setTimeout(patchWhenReady, 120);
-      return;
-    }
-    if (global.playPauliVoice._osgGuarded) return; // Schon gepatcht
-    _original = global.playPauliVoice;
-    queuedPlayPauliVoice._osgGuarded = true;
-    global.playPauliVoice = queuedPlayPauliVoice;
-
-    // Hilfsfunktionen für externe Abfrage
-    global.osgIsPauliSpeaking = function () { return _running; };
-    global.osgPauliTtsQueueLength = function () { return _queue.length; };
-    global.osgPauliTtsClearQueue = function () {
-      _queue.forEach(function (t) { t.resolve(); });
-      _queue = [];
+        // Queue-Verarbeitung anstoßen
+        processQueue();
     };
-  }
 
-  // Patch nach vollständigem DOM-/Script-Load
-  if (global.document && global.document.readyState === "complete") {
-    setTimeout(patchWhenReady, 50);
-  } else {
-    global.addEventListener("load", function () {
-      setTimeout(patchWhenReady, 50);
-    });
-  }
-})(typeof window !== "undefined" ? window : globalThis);
+    // --- Globale Hilfsfunktionen ---
+
+    // Prüfen, ob Pauli gerade spricht
+    window.osgIsPauliSpeaking = function() {
+        return isSpeaking;
+    };
+
+    // Länge der Warteschlange abfragen
+    window.osgPauliTtsQueueLength = function() {
+        return ttsQueue.length;
+    };
+
+    // Warteschlange sofort leeren (z.B. wenn der Nutzer dazwischenquatscht)
+    window.osgPauliTtsClearQueue = function() {
+        ttsQueue = [];
+        console.log("Pauli TTS-Queue wurde geleert.");
+    };
+})();
