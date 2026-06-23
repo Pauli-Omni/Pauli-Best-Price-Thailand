@@ -18,10 +18,16 @@ class PauliWebShellApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xFF0D0D0D),
         useMaterial3: true,
       ),
-      // Splash zuerst, dann WebView — kein Home-Import in splash_screen.dart nötig
+      // Splash zuerst, dann WebView via onFinish-Callback
       initialRoute: '/',
       routes: {
-        '/':    (_) => const PauliSplashScreen(),
+        '/': (ctx) => SplashAnimationScreen(
+              onFinish: () {
+                if (ctx.mounted) {
+                  Navigator.of(ctx).pushReplacementNamed('/app');
+                }
+              },
+            ),
         '/app': (_) => const PauliWebViewScreen(),
       },
     );

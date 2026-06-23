@@ -1,107 +1,101 @@
-import 'dart:math';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-/// Zeigt beim App-Start eine 360°-Coin-Spin-Animation (≈1.2 s),
-/// danach Fade-Out → Navigator wechselt zur Haupt-App ('/app').
-class PauliSplashScreen extends StatefulWidget {
-  const PauliSplashScreen({super.key});
+class SplashAnimationScreen extends StatefulWidget {
+  final VoidCallback onFinish;
+
+  const SplashAnimationScreen({super.key, required this.onFinish});
 
   @override
-  State<PauliSplashScreen> createState() => _PauliSplashScreenState();
+  State<SplashAnimationScreen> createState() => _SplashAnimationScreenState();
 }
 
-class _PauliSplashScreenState extends State<PauliSplashScreen>
+class _SplashAnimationScreenState extends State<SplashAnimationScreen>
     with SingleTickerProviderStateMixin {
-  late final AnimationController _ctrl;
-
-  /// Coin dreht sich von 0 → 2π (volle 360°) in den ersten 80 % der Zeit.
-  late final Animation<double> _spin;
-
-  /// Splash blendet sich in den letzten 20 % aus.
-  late final Animation<double> _fade;
+  late AnimationController _controller;
+  late Animation<double> _rotationAnimation;
+  late Animation<double> _opacityAnimation;
 
   @override
   void initState() {
     super.initState();
 
-    _ctrl = AnimationController(
-      vsync: this,
-      // 1.2 s Spin + 0.3 s Fade = 1.5 s gesamt
+    // Gesamtdauer exakt 1.5 Sekunden
+    _controller = AnimationController(
       duration: const Duration(milliseconds: 1500),
+      vsync: this,
     );
 
-    _spin = Tween<double>(begin: 0.0, end: 2 * pi).animate(
+    // Phase 1: 0.0 bis 1.2 Sekunden → 360° Drehung mit easeInOutCubic
+    _rotationAnimation = Tween<double>(begin: 0.0, end: 2 * math.pi).animate(
       CurvedAnimation(
-        parent: _ctrl,
-        // EaseInOutCubic: startet weich, dreht sich knackig durch die Mitte
-        curve: const Interval(0.0, 0.80, curve: Curves.easeInOutCubic),
+        parent: _controller,
+        curve: const Interval(0.0, 0.8, curve: Curves.easeInOutCubic),
       ),
     );
 
-    _fade = Tween<double>(begin: 1.0, end: 0.0).animate(
+    // Phase 2: 1.2 bis 1.5 Sekunden → weiches Ausblenden (1.0 → 0.0)
+    _opacityAnimation = Tween<double>(begin: 1.0, end: 0.0).animate(
       CurvedAnimation(
-        parent: _ctrl,
-        curve: const Interval(0.80, 1.0, curve: Curves.easeIn),
+        parent: _controller,
+        curve: const Interval(0.8, 1.0, curve: Curves.linear),
       ),
     );
 
-    _ctrl.forward().whenComplete(() {
-      if (mounted) {
-        Navigator.of(context).pushReplacementNamed('/app');
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        widget.onFinish();
       }
     });
+
+    _controller.forward();
   }
 
   @override
   void dispose() {
-    _ctrl.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final coinSize = MediaQuery.of(context).size.width * 0.60;
-
     return Scaffold(
-      backgroundColor: const Color(0xFF0D0D0D),
-      body: AnimatedBuilder(
-        animation: _ctrl,
-        builder: (context, _) {
-          final angle = _spin.value;
-          // Zeige Vorderseite wenn cos(angle) ≥ 0, sonst Rückseite
-          final showFront = cos(angle) >= 0;
+      backgroundColor: Colors.black,
+      body: Center(
+        child: AnimatedBuilder(
+          animation: _controller,
+          builder: (ctx, child) {
+            final angle = _rotationAnimation.value;
+            final isFront =
+                angle < math.pi / 2 || angle > 3 * math.pi / 2;
 
-          return Opacity(
-            opacity: _fade.value,
-            child: Center(
+            return Opacity(
+              opacity: _opacityAnimation.value,
               child: Transform(
-                alignment: Alignment.center,
                 transform: Matrix4.identity()
-                  ..setEntry(3, 2, 0.0008) // Perspektive
+                  ..setEntry(3, 2, 0.002)
                   ..rotateY(angle),
-                child: showFront
+                alignment: Alignment.center,
+                child: isFront
                     ? Image.asset(
-                        'Frontseite02.png',
-                        width: coinSize,
-                        height: coinSize,
-                        fit: BoxFit.contain,
+                        'assets/images/Frontseite02.png',
+                        width: 180,
+                        height: 180,
                       )
-                    // Rückseite: gegen-rotieren damit sie nicht gespiegelt erscheint
                     : Transform(
                         alignment: Alignment.center,
-                        transform: Matrix4.identity()..rotateY(pi),
+                        transform: Matrix4.identity()..rotateY(math.pi),
                         child: Image.asset(
-                          'hinterseite.png',
-                          width: coinSize,
-                          height: coinSize,
-                          fit: BoxFit.contain,
+                          'assets/images/hinterseite.png',
+                          width: 180,
+                          height: 180,
                         ),
                       ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
