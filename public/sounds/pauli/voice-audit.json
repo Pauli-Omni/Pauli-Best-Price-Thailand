@@ -1,0 +1,802 @@
+{
+  "generatedAt": "2026-06-23T05:14:19.430Z",
+  "mode": "local-template-segments",
+  "templateMd5": "0aef10196bfebf2da53cef0b291f7267",
+  "templatePath": "public/sounds/pauli-avatar-voice.mp3",
+  "dryRun": false,
+  "items": [
+    {
+      "speechKey": "pauliSawadee",
+      "file": "public/sounds/pauli/th/pauliSawadee.mp3",
+      "source": "voice-script",
+      "status": "template_segment",
+      "via": "welcome_short",
+      "segmentMs": "0-4000",
+      "bytes": 47435
+    },
+    {
+      "speechKey": "pauliIntro",
+      "file": "public/sounds/pauli/th/pauliIntro.mp3",
+      "source": "voice-script",
+      "status": "template_copy",
+      "via": "user-template-full",
+      "bytes": 1282652
+    },
+    {
+      "speechKey": "pauliSpruch0",
+      "file": "public/sounds/pauli/th/pauliSpruch0.mp3",
+      "source": "voice-script",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "pauliSpruch1",
+      "file": "public/sounds/pauli/th/pauliSpruch1.mp3",
+      "source": "voice-script",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "pauliSpruch2",
+      "file": "public/sounds/pauli/th/pauliSpruch2.mp3",
+      "source": "voice-script",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "coinDoctorGreetTts",
+      "file": "public/sounds/pauli/th/coinDoctorGreetTts.mp3",
+      "source": "voice-script",
+      "status": "template_segment",
+      "via": "welcome_short",
+      "segmentMs": "0-4000",
+      "bytes": 47435
+    },
+    {
+      "speechKey": "avatarTourIntro",
+      "file": "public/sounds/pauli/th/avatarTourIntro.mp3",
+      "source": "voice-script",
+      "status": "template_segment",
+      "via": "welcome_short",
+      "segmentMs": "0-4000",
+      "bytes": 47435
+    },
+    {
+      "speechKey": "avatarTourStep1",
+      "file": "public/sounds/pauli/th/avatarTourStep1.mp3",
+      "source": "voice-script",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "avatarTourStep2",
+      "file": "public/sounds/pauli/th/avatarTourStep2.mp3",
+      "source": "voice-script",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "avatarTourStep3",
+      "file": "public/sounds/pauli/th/avatarTourStep3.mp3",
+      "source": "voice-script",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "avatarTourStep4",
+      "file": "public/sounds/pauli/th/avatarTourStep4.mp3",
+      "source": "voice-script",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "avatarTourStep5",
+      "file": "public/sounds/pauli/th/avatarTourStep5.mp3",
+      "source": "voice-script",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "avatarTourStep6",
+      "file": "public/sounds/pauli/th/avatarTourStep6.mp3",
+      "source": "voice-script",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "avatarTourDone",
+      "file": "public/sounds/pauli/th/avatarTourDone.mp3",
+      "source": "voice-script",
+      "status": "template_segment",
+      "via": "welcome_short",
+      "segmentMs": "0-4000",
+      "bytes": 47435
+    },
+    {
+      "speechKey": "bookingSpeakTts",
+      "file": "public/sounds/pauli/th/bookingSpeakTts.mp3",
+      "source": "voice-script",
+      "status": "template_segment",
+      "via": "search_action",
+      "segmentMs": "4000-8000",
+      "bytes": 51729
+    },
+    {
+      "speechKey": "partnerHandoffSpeakTts",
+      "file": "public/sounds/pauli/th/partnerHandoffSpeakTts.mp3",
+      "source": "voice-script",
+      "status": "template_segment",
+      "via": "search_action",
+      "segmentMs": "4000-8000",
+      "bytes": 51729
+    },
+    {
+      "speechKey": "ageGateAvatarSpeakLine",
+      "file": "public/sounds/pauli/th/ageGateAvatarSpeakLine.mp3",
+      "source": "voice-script",
+      "status": "template_segment",
+      "via": "welcome_short",
+      "segmentMs": "0-4000",
+      "bytes": 47435
+    },
+    {
+      "speechKey": "certificateAvatarTtsNoName",
+      "file": "public/sounds/pauli/th/certificateAvatarTtsNoName.mp3",
+      "source": "voice-script",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "certificateAvatarTtsWithName",
+      "file": "public/sounds/pauli/th/certificateAvatarTtsWithName.mp3",
+      "source": "voice-script",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "sevenVoucherRequireTrackingTtsNoName",
+      "file": "public/sounds/pauli/th/sevenVoucherRequireTrackingTtsNoName.mp3",
+      "source": "voice-script",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "sevenVoucherRequireTrackingTtsWithName",
+      "file": "public/sounds/pauli/th/sevenVoucherRequireTrackingTtsWithName.mp3",
+      "source": "voice-script",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "sevenVoucherPickupRewardTtsNoName",
+      "file": "public/sounds/pauli/th/sevenVoucherPickupRewardTtsNoName.mp3",
+      "source": "voice-script",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "sevenVoucherPickupRewardTtsWithName",
+      "file": "public/sounds/pauli/th/sevenVoucherPickupRewardTtsWithName.mp3",
+      "source": "voice-script",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "sevenVoucherActivatedTtsNoName",
+      "file": "public/sounds/pauli/th/sevenVoucherActivatedTtsNoName.mp3",
+      "source": "voice-script",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "sevenVoucherActivatedTtsWithName",
+      "file": "public/sounds/pauli/th/sevenVoucherActivatedTtsWithName.mp3",
+      "source": "voice-script",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "sevenVoucherQrOpenBriefingNoName",
+      "file": "public/sounds/pauli/th/sevenVoucherQrOpenBriefingNoName.mp3",
+      "source": "voice-script",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "sevenVoucherQrOpenBriefingWithName",
+      "file": "public/sounds/pauli/th/sevenVoucherQrOpenBriefingWithName.mp3",
+      "source": "voice-script",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "accessibility_activated",
+      "file": "public/sounds/pauli/th/accessibility_activated.mp3",
+      "source": "voice-script",
+      "status": "template_segment",
+      "via": "welcome_short",
+      "segmentMs": "0-4000",
+      "bytes": 47435
+    },
+    {
+      "speechKey": "search_processing",
+      "file": "public/sounds/pauli/th/search_processing.mp3",
+      "source": "voice-script",
+      "status": "template_segment",
+      "via": "search_action",
+      "segmentMs": "4000-8000",
+      "bytes": 51729
+    },
+    {
+      "speechKey": "fun_crab_instinct",
+      "file": "public/sounds/pauli/th/fun_crab_instinct.mp3",
+      "source": "voice-script",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "avatarFinanceDisclaimerTts",
+      "file": "public/sounds/pauli/th/avatarFinanceDisclaimerTts.mp3",
+      "source": "i18n-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "avatarFinanceGuideCreditTts",
+      "file": "public/sounds/pauli/th/avatarFinanceGuideCreditTts.mp3",
+      "source": "i18n-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "avatarFinanceGuideInsuranceTts",
+      "file": "public/sounds/pauli/th/avatarFinanceGuideInsuranceTts.mp3",
+      "source": "i18n-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "avatarFinanceGuideFinanceTts",
+      "file": "public/sounds/pauli/th/avatarFinanceGuideFinanceTts.mp3",
+      "source": "i18n-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychCreditViewTts",
+      "file": "public/sounds/pauli/th/psychCreditViewTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychCreditHesitateTts",
+      "file": "public/sounds/pauli/th/psychCreditHesitateTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychCreditClickTts",
+      "file": "public/sounds/pauli/th/psychCreditClickTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychInsuranceViewTts",
+      "file": "public/sounds/pauli/th/psychInsuranceViewTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychInsuranceHesitateTts",
+      "file": "public/sounds/pauli/th/psychInsuranceHesitateTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychInsuranceClickTts",
+      "file": "public/sounds/pauli/th/psychInsuranceClickTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychRealEstateClickTts",
+      "file": "public/sounds/pauli/th/psychRealEstateClickTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychAutomotiveClickTts",
+      "file": "public/sounds/pauli/th/psychAutomotiveClickTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychNoPressureTts",
+      "file": "public/sounds/pauli/th/psychNoPressureTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychEmpathyGrief1Tts",
+      "file": "public/sounds/pauli/th/psychEmpathyGrief1Tts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychEmpathyGrief2Tts",
+      "file": "public/sounds/pauli/th/psychEmpathyGrief2Tts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychEmpathyHousing1Tts",
+      "file": "public/sounds/pauli/th/psychEmpathyHousing1Tts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychEmpathyHousing2Tts",
+      "file": "public/sounds/pauli/th/psychEmpathyHousing2Tts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychEmpathyHousing3Tts",
+      "file": "public/sounds/pauli/th/psychEmpathyHousing3Tts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychEmpathySad1Tts",
+      "file": "public/sounds/pauli/th/psychEmpathySad1Tts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychEmpathySad2Tts",
+      "file": "public/sounds/pauli/th/psychEmpathySad2Tts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychEmpathyNew1Tts",
+      "file": "public/sounds/pauli/th/psychEmpathyNew1Tts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychEmpathyNew2Tts",
+      "file": "public/sounds/pauli/th/psychEmpathyNew2Tts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychEmpathyNew3Tts",
+      "file": "public/sounds/pauli/th/psychEmpathyNew3Tts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychEmpathyImprove1Tts",
+      "file": "public/sounds/pauli/th/psychEmpathyImprove1Tts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychEmpathyImprove2Tts",
+      "file": "public/sounds/pauli/th/psychEmpathyImprove2Tts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychEmpathyImprove3Tts",
+      "file": "public/sounds/pauli/th/psychEmpathyImprove3Tts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychRelBridgeQuestionTts",
+      "file": "public/sounds/pauli/th/psychRelBridgeQuestionTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychRelBridgeRecommendTts",
+      "file": "public/sounds/pauli/th/psychRelBridgeRecommendTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychRelBridgeWarmthTts",
+      "file": "public/sounds/pauli/th/psychRelBridgeWarmthTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychRelBridgeAnchorTts",
+      "file": "public/sounds/pauli/th/psychRelBridgeAnchorTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychVerliebt1Tts",
+      "file": "public/sounds/pauli/th/psychVerliebt1Tts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychVerliebt2aTts",
+      "file": "public/sounds/pauli/th/psychVerliebt2aTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychVerliebt2bTts",
+      "file": "public/sounds/pauli/th/psychVerliebt2bTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychVerliebt3Tts",
+      "file": "public/sounds/pauli/th/psychVerliebt3Tts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychVerliebtFriendlyTts",
+      "file": "public/sounds/pauli/th/psychVerliebtFriendlyTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychInclusionClickTts",
+      "file": "public/sounds/pauli/th/psychInclusionClickTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychInclusionReadTts",
+      "file": "public/sounds/pauli/th/psychInclusionReadTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychGiftBundleTts",
+      "file": "public/sounds/pauli/th/psychGiftBundleTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychGiftBundleThTts",
+      "file": "public/sounds/pauli/th/psychGiftBundleThTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychGiftBundleDeTts",
+      "file": "public/sounds/pauli/th/psychGiftBundleDeTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychCrossToolsTts",
+      "file": "public/sounds/pauli/th/psychCrossToolsTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychCrossCarpetTts",
+      "file": "public/sounds/pauli/th/psychCrossCarpetTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychCrossMopedTts",
+      "file": "public/sounds/pauli/th/psychCrossMopedTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychCrossAuthTts",
+      "file": "public/sounds/pauli/th/psychCrossAuthTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "avatarNameAskFollowTts",
+      "file": "public/sounds/pauli/th/avatarNameAskFollowTts.mp3",
+      "source": "i18n-de",
+      "status": "template_segment",
+      "via": "welcome_short",
+      "segmentMs": "0-4000",
+      "bytes": 47435
+    },
+    {
+      "speechKey": "avatarNameSavedTts",
+      "file": "public/sounds/pauli/th/avatarNameSavedTts.mp3",
+      "source": "i18n-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychHeroScanTts",
+      "file": "public/sounds/pauli/th/psychHeroScanTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "search_action",
+      "segmentMs": "4000-8000",
+      "bytes": 51729
+    },
+    {
+      "speechKey": "psychHeroCouponTts",
+      "file": "public/sounds/pauli/th/psychHeroCouponTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "search_action",
+      "segmentMs": "4000-8000",
+      "bytes": 51729
+    },
+    {
+      "speechKey": "psychPurchaseUrgencyTts",
+      "file": "public/sounds/pauli/th/psychPurchaseUrgencyTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychMishapStumbleTts",
+      "file": "public/sounds/pauli/th/psychMishapStumbleTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychMishapSnagTts",
+      "file": "public/sounds/pauli/th/psychMishapSnagTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychMishapTripTts",
+      "file": "public/sounds/pauli/th/psychMishapTripTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychLangSwitchOfferTts",
+      "file": "public/sounds/pauli/th/psychLangSwitchOfferTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychLangSwitchConfirmedTts",
+      "file": "public/sounds/pauli/th/psychLangSwitchConfirmedTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychLangSwitchDeclinedTts",
+      "file": "public/sounds/pauli/th/psychLangSwitchDeclinedTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychLangSwitchProactiveTts",
+      "file": "public/sounds/pauli/th/psychLangSwitchProactiveTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "psychLangSwitchAlreadyTts",
+      "file": "public/sounds/pauli/th/psychLangSwitchAlreadyTts.mp3",
+      "source": "psychology-de",
+      "status": "template_segment",
+      "via": "save_money",
+      "segmentMs": "8000-14000",
+      "bytes": 75368
+    },
+    {
+      "speechKey": "search_intro_long",
+      "file": "public/sounds/pauli/th/search_intro_long.mp3",
+      "source": "missing-text",
+      "status": "template_copy",
+      "via": "user-template-full",
+      "bytes": 1282652
+    }
+  ],
+  "deleted": [],
+  "skipped": [],
+  "errors": []
+}

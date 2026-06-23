@@ -731,7 +731,7 @@
       </section>
 
       <!-- Avatar guide overlay -->
-      <div class="osg-avatar-guide-bubble" id="osg-avatar-bubble" aria-live="polite"></div>
+      <div class="osg-avatar-guide-bubble" id="osg-avatar-bubble" aria-hidden="true"></div>
       <svg class="osg-avatar-guide-arrow" id="osg-avatar-arrow" viewBox="0 0 32 32" aria-hidden="true">
         <path d="M4 16 L22 6 L18 14 L28 14 L28 18 L18 18 L22 26 Z" fill="#d4af37"/>
       </svg>
@@ -1148,16 +1148,13 @@
     <div
       id="pauli-live-caption"
       class="pauli-live-caption"
-      role="status"
-      aria-live="assertive"
-      aria-atomic="true"
+      aria-hidden="true"
       hidden
     ></div>
     <button
       type="button"
       class="pauli-voice-wake-btn"
       id="pauli-voice-wake-btn"
-      aria-live="polite"
     >
       Hallo / Hey Pauli
     </button>
@@ -1397,6 +1394,10 @@
     <script src="assets/scripts/avatar_mishap_logic.js"></script>
     <script src="assets/scripts/world_language_engine.js"></script>
     <script src="assets/scripts/i18n_lang_guard.js"></script>
+    <script src="assets/scripts/osg_i18n_background_warmup.js"></script>
+    <script src="assets/scripts/pauli_audio_gate.js"></script>
+    <script src="assets/scripts/osg_intent_classifier.js"></script>
+    <script src="assets/scripts/osg_audio_segment_service.js"></script>
     <script src="assets/scripts/startup_boot_logic.js"></script>
     <script src="assets/scripts/cultural_trend_pools.js"></script>
     <script src="assets/scripts/cultural_trends_logic.js"></script>
@@ -1811,9 +1812,35 @@
           return "";
         }
 
-        /** Geschenk-Overlay: Texte aus assets/locales/{lang}.json (UI-Sprache des Nutzers). */
+        /** 18 Locales — th, en, de zuerst; Overlay aus assets/locales/{lang}.json */
         function osgLocaleJsonLangs() {
-          return ["de", "en", "th", "pl", "zh", "ru"];
+          var wl = window.OSG_WORLD_LANG;
+          if (wl && wl.CORE_UI_LANGS && wl.CORE_UI_LANGS.length) {
+            return wl.CORE_UI_LANGS.slice();
+          }
+          return [
+            "th", "en", "de", "pl", "ru", "zh",
+            "fr", "es", "it", "pt", "nl",
+            "ar", "ja", "ko", "vi", "tr", "hi", "id",
+          ];
+        }
+
+        function osgShallowCloneLocalePack(src) {
+          var out = {};
+          if (!src) return out;
+          Object.keys(src).forEach(function (k) {
+            out[k] = src[k];
+          });
+          return out;
+        }
+
+        function osgEnsureLocalePack(lang) {
+          lang = normalizeLang(lang);
+          if (T[lang]) return true;
+          var seed = T.th || T.en || T.de;
+          if (!seed) return false;
+          T[lang] = osgShallowCloneLocalePack(seed);
+          return true;
         }
 
         function osgVipCultureGreetPack() {
@@ -1868,6 +1895,12 @@
         }
 
         function osgScheduleAvatarCompanionBoot(delayMs) {
+          if (
+            typeof window.osgPauliAudioAllowed === "function" &&
+            !window.osgPauliAudioAllowed()
+          ) {
+            return;
+          }
           var d = typeof delayMs === "number" ? delayMs : 380;
           try {
             if (window.__OSG_AVATAR_COMPANION_BOOT_TIMER__) {
@@ -9144,7 +9177,7 @@
           lang = normalizeLang(lang);
           if (!osgLocaleHasJsonOverlay(lang)) return Promise.resolve(false);
           if (osgLocaleOverlayCache[lang]) return Promise.resolve(true);
-          if (!T[lang]) return Promise.resolve(false);
+          osgEnsureLocalePack(lang);
           return fetch("assets/locales/" + lang + ".json", { cache: "no-store" })
             .then(function (r) {
               if (!r.ok) throw new Error("locale_overlay_missing");
@@ -9253,8 +9286,14 @@
                   if (r < 42 && g < 42 && b < 42) d[i + 3] = 0;
                   else if (sum < 96) d[i + 3] = Math.min(d[i + 3], Math.max(0, (sum - 70) * 4));
                 } else if (mode === "light") {
-                  if (r > 238 && g > 238 && b > 238) d[i + 3] = 0;
-                  else if (sum > 705) d[i + 3] = Math.min(d[i + 3], Math.max(0, (780 - sum) * 5));
+                  if (r > 225 && g > 225 && b > 225) d[i + 3] = 0;
+                  else if (r > 200 && g > 190 && b > 215 && r - g < 28)
+                    d[i + 3] = 0;
+                  else if (sum > 665)
+                    d[i + 3] = Math.min(
+                      d[i + 3],
+                      Math.max(0, (755 - sum) * 4)
+                    );
                 }
               }
             }
@@ -9304,6 +9343,7 @@
           if (!line) return;
           el.textContent = line;
           el.hidden = false;
+          el.setAttribute("aria-hidden", "true");
           el.classList.add("is-visible");
         }
 
@@ -10404,6 +10444,12 @@
 
       /** Tags: coin-drop.mp3 (leichtes File), sonst Synth-Fallback. Nacht: wird nicht aufgerufen. */
       function playCoinDropAudio() {
+        if (
+          typeof osgPauliAudioAllowed === "function" &&
+          !osgPauliAudioAllowed()
+        ) {
+          return Promise.resolve();
+        }
         return new Promise((resolve) => {
           let idx = 0;
           function fallbackSynth() {
@@ -10515,123 +10561,51 @@
         });
       }
 
-      /** Web Speech API: keine großen Sprachdateien — eingebaute Handy-Stimmen nach Locale / Systemsprache. */
-      function speakPauliUtterance(text, whisper, langCode) {
+      /** Pauli-Stimme: lokale MP3 zuerst — kein Web-Speech-Systemfallback. */
+      async function speakPauliUtterance(text, whisper, langCode, extraOpts) {
         if (
-          typeof osgAvatarAccessUnlocked === "function" &&
-          !osgAvatarAccessUnlocked()
+          typeof osgPauliAudioAllowed === "function" &&
+          !osgPauliAudioAllowed()
         ) {
-          return Promise.resolve();
+          return;
         }
-        return new Promise((resolve) => {
-          const bcp =
-            typeof osgResolveSpeechTag === "function"
-              ? osgResolveSpeechTag(langCode)
-              : "en-US";
-          const u = new SpeechSynthesisUtterance(text);
-          u.lang = bcp;
-          if (whisper) {
-            u.volume = 0.22;
-            u.rate = 0.71;
-            u.pitch = 0.7;
-          } else {
-            u.volume = 1;
-            u.rate = 1;
-            u.pitch = 1;
+        const spoken = String(text || "").trim();
+        if (!spoken) return;
+        const code =
+          langCode ||
+          (typeof packLangFromDocument === "function"
+            ? packLangFromDocument()
+            : "en");
+        const extra = extraOpts || {};
+        let speechKey = String(extra.speechKey || "").trim();
+        if (
+          !speechKey &&
+          typeof osgPauliResolveSpeechKeyFromText === "function"
+        ) {
+          speechKey = osgPauliResolveSpeechKeyFromText(spoken, code);
+        }
+        try {
+          if (typeof window.playPauliVoice === "function") {
+            await window.playPauliVoice(spoken, {
+              whisper: !!whisper,
+              langCode: code,
+              skipCaptionClear: true,
+              speechKey: speechKey,
+              allowCloudTts: !!extra.allowCloudTts,
+            });
+            return;
           }
-          const pickVoice = () => {
-            const voices = speechSynthesis.getVoices();
-            if (!voices.length) return;
-            const lc = String(langCode || "en").toLowerCase().split("-")[0];
-            const want = bcp.toLowerCase().replace("_", "-");
-            let v =
-              voices.find(
-                (x) => (x.lang || "").replace("_", "-").toLowerCase() === want
-              ) ||
-              voices.find((x) =>
-                (x.lang || "").replace("_", "-").toLowerCase().startsWith(lc + "-")
-              ) ||
-              voices.find((x) =>
-                (x.lang || "").toLowerCase().startsWith(lc)
-              ) ||
-              (lc === "zh"
-                ? voices.find((x) =>
-                    (x.lang || "").toLowerCase().startsWith("zh")
-                  )
-                : null);
-            if (v) u.voice = v;
-          };
-          const spoken = String(text || "").trim();
-          const estMs = Math.min(
-            14000,
-            Math.max(800, spoken.length * 75)
-          );
-          pickVoice();
-          speechSynthesis.addEventListener("voiceschanged", pickVoice, {
-            once: true,
-          });
-          u.onstart = function () {
-            if (spoken && typeof window.pauliLiveCaptionShow === "function") {
-              window.pauliLiveCaptionShow(spoken);
-            }
-            if (
-              window.OSGLipSync &&
-              typeof window.OSGLipSync.begin === "function"
-            ) {
-              window.OSGLipSync.begin({ durationMs: estMs });
-            } else if (
-              window.OSG_PauliAvatarAnimations &&
-              typeof window.OSG_PauliAvatarAnimations.onSpeakStart ===
-                "function"
-            ) {
-              window.OSG_PauliAvatarAnimations.onSpeakStart();
-            }
-          };
-          u.onend = function () {
-            if (
-              window.OSGLipSync &&
-              typeof window.OSGLipSync.stop === "function"
-            ) {
-              window.OSGLipSync.stop();
-            } else if (
-              window.OSG_PauliAvatarAnimations &&
-              typeof window.OSG_PauliAvatarAnimations.onSpeakStop ===
-                "function"
-            ) {
-              window.OSG_PauliAvatarAnimations.onSpeakStop();
-            }
-            if (typeof window.pauliLiveCaptionClear === "function") {
-              window.pauliLiveCaptionClear();
-            }
-            resolve();
-          };
-          u.onerror = function () {
-            if (
-              window.OSGLipSync &&
-              typeof window.OSGLipSync.stop === "function"
-            ) {
-              window.OSGLipSync.stop();
-            } else if (
-              window.OSG_PauliAvatarAnimations &&
-              typeof window.OSG_PauliAvatarAnimations.onSpeakStop ===
-                "function"
-            ) {
-              window.OSG_PauliAvatarAnimations.onSpeakStop();
-            }
-            if (typeof window.pauliLiveCaptionClear === "function") {
-              window.pauliLiveCaptionClear();
-            }
-            resolve();
-          };
-          try {
-            speechSynthesis.cancel();
-          } catch (_) {}
-          speechSynthesis.speak(u);
-        });
+        } catch (_) {}
       }
 
       /** Bei jeder Benachrichtigung: Zeit prüfen → Tag vs. Nacht → Sound + Voice-Profil. */
       async function playPauliNotificationVoice() {
+        if (
+          typeof osgPauliAudioAllowed === "function" &&
+          !osgPauliAudioAllowed()
+        ) {
+          return;
+        }
         const I = window.__OSG_I18N;
         if (!I) return;
         const code = I.systemLangCode();
@@ -10866,13 +10840,12 @@
           if (!line) return;
           const whisper = !!opts.whisper;
           try {
-            await playPauliVoice(line, {
+            await window.playPauliVoice(line, {
               whisper,
               langCode: code,
+              speechKey: opts.speechKey || "",
             });
-          } catch (_) {
-            await speakPauliUtterance(line, whisper, code);
-          }
+          } catch (_) {}
         }
 
         async function speakPauliPlain(text, whisper) {
@@ -11289,7 +11262,8 @@
         coinDbgRender();
 
         let avatarDrag = null;
-        const DRAG_CLICK_PX = 8;
+        let osgCoinDragSuppressClickUntil = 0;
+        const DRAG_CLICK_PX = 10;
 
         function osgEventTargetsStaticStand(ev) {
           const t = ev && ev.target;
@@ -11423,7 +11397,7 @@
             typeof osgAvatarAccessUnlocked === "function" &&
             !osgAvatarAccessUnlocked()
           ) {
-            window.OSG_PauliAvatarAnimations.setState("locked_carousel");
+            window.OSG_PauliAvatarAnimations.setState("idle");
           }
           if (
             typeof window.OSG_PauliAvatarAnimations.onAppMount === "function"
@@ -11492,16 +11466,92 @@
           if (avatarImg) avatarImg.style.transform = "none";
         }
 
-        function installPauliMainAvatarDrag(el) {
-          el.addEventListener("pointerdown", (e) => {
+        const OSG_COIN_STAGE_POS_KEY = "osg-coin-stage-pos-v1";
+
+        function osgCoinStageViewportPad() {
+          const root = getComputedStyle(document.documentElement);
+          const read = function (name) {
+            const v = parseFloat(root.getPropertyValue(name));
+            return Number.isFinite(v) ? v : 0;
+          };
+          return {
+            top: Math.max(6, read("--safe-top") + 6),
+            right: Math.max(6, read("--safe-right") + 6),
+            bottom: Math.max(6, read("--safe-bottom") + 6),
+            left: Math.max(6, read("--safe-left") + 6),
+          };
+        }
+
+        function osgClampCoinStageCoords(left, top, el) {
+          const pad = osgCoinStageViewportPad();
+          const w =
+            el.offsetWidth || parseFloat(getComputedStyle(el).width) || 132;
+          const h = el.offsetHeight || w;
+          return {
+            left: Math.max(
+              pad.left,
+              Math.min(left, window.innerWidth - w - pad.right)
+            ),
+            top: Math.max(
+              pad.top,
+              Math.min(top, window.innerHeight - h - pad.bottom)
+            ),
+          };
+        }
+
+        function osgSetCoinStagePosition(el, left, top, opts) {
+          opts = opts || {};
+          const clamped = osgClampCoinStageCoords(left, top, el);
+          el.classList.add("is-user-positioned");
+          el.style.setProperty(
+            "left",
+            Math.round(clamped.left) + "px",
+            "important"
+          );
+          el.style.setProperty(
+            "top",
+            Math.round(clamped.top) + "px",
+            "important"
+          );
+          el.style.setProperty("right", "auto", "important");
+          el.style.setProperty("bottom", "auto", "important");
+          if (opts.persist) osgSaveCoinStagePosition(el);
+        }
+
+        function osgRestoreCoinStagePosition(el) {
+          if (!el) return;
+          try {
+            const raw = localStorage.getItem(OSG_COIN_STAGE_POS_KEY);
+            if (!raw) return;
+            const pos = JSON.parse(raw);
             if (
-              typeof osgAvatarAccessUnlocked === "function" &&
-              !osgAvatarAccessUnlocked()
+              !pos ||
+              typeof pos.left !== "number" ||
+              typeof pos.top !== "number"
             ) {
               return;
             }
-            if (e.button !== 0 || busy) return;
+            osgSetCoinStagePosition(el, pos.left, pos.top);
+          } catch (_) {}
+        }
+
+        function osgSaveCoinStagePosition(el) {
+          if (!el) return;
+          try {
             const rect = el.getBoundingClientRect();
+            localStorage.setItem(
+              OSG_COIN_STAGE_POS_KEY,
+              JSON.stringify({ left: rect.left, top: rect.top })
+            );
+          } catch (_) {}
+        }
+
+        function installPauliMainAvatarDrag(el) {
+          osgRestoreCoinStagePosition(el);
+          el.addEventListener("pointerdown", function (e) {
+            if (e.button !== 0) return;
+            const rect = el.getBoundingClientRect();
+            osgSetCoinStagePosition(el, rect.left, rect.top);
             avatarDrag = {
               id: e.pointerId,
               sx: e.clientX,
@@ -11511,25 +11561,29 @@
               moved: false,
             };
             el.classList.add("is-dragging-session");
-            el.style.left = rect.left + "px";
-            el.style.top = rect.top + "px";
-            el.style.right = "auto";
-            el.style.bottom = "auto";
             try {
               el.setPointerCapture(e.pointerId);
             } catch (_) {}
           });
-          el.addEventListener("pointermove", (e) => {
+          el.addEventListener("pointermove", function (e) {
             if (!avatarDrag || avatarDrag.id !== e.pointerId) return;
             const dx = e.clientX - avatarDrag.sx;
             const dy = e.clientY - avatarDrag.sy;
             if (Math.hypot(dx, dy) > DRAG_CLICK_PX) avatarDrag.moved = true;
-            el.style.left = avatarDrag.ox + dx + "px";
-            el.style.top = avatarDrag.oy + dy + "px";
+            const next = osgClampCoinStageCoords(
+              avatarDrag.ox + dx,
+              avatarDrag.oy + dy,
+              el
+            );
+            osgSetCoinStagePosition(el, next.left, next.top);
           });
           function endDrag(e) {
             if (!avatarDrag || avatarDrag.id !== e.pointerId) return;
             el.classList.remove("is-dragging-session");
+            if (avatarDrag.moved) {
+              osgSaveCoinStagePosition(el);
+              osgCoinDragSuppressClickUntil = Date.now() + 450;
+            }
             osgAvatarStopTravelTween();
             avatarTraveledAway = false;
             avatarHomePos = null;
@@ -11540,11 +11594,17 @@
           }
           el.addEventListener("pointerup", endDrag);
           el.addEventListener("pointercancel", endDrag);
+          window.addEventListener("resize", function () {
+            if (!el.classList.contains("is-user-positioned")) return;
+            const rect = el.getBoundingClientRect();
+            osgSetCoinStagePosition(el, rect.left, rect.top);
+          });
         }
 
         installPauliMainAvatarDrag(container);
 
         function osgCoinActivateFromGesture() {
+          if (Date.now() < osgCoinDragSuppressClickUntil) return;
           if (avatarDrag && avatarDrag.moved) return;
           if (
             window.OSG_PauliAvatarAnimations &&
@@ -11585,18 +11645,7 @@
         });
 
         function beginWai() {
-          if (avatarReturnTween) {
-            avatarReturnTween.stop();
-            avatarReturnTween = null;
-          }
-          waiActive = true;
-          waiStart = performance.now();
-          if (
-            window.OSG_PauliAvatarAnimations &&
-            typeof window.OSG_PauliAvatarAnimations.onWaiStart === "function"
-          ) {
-            window.OSG_PauliAvatarAnimations.onWaiStart();
-          }
+          /* Optik ruhig — kein Wai-Sprung, kein Transform */
         }
 
         function osgTweenAvatarReturn() {
@@ -11699,16 +11748,13 @@
           osgAvatarStopTravelTween();
           const stageRect = container.getBoundingClientRect();
           const pos = { left: stageRect.left, top: stageRect.top };
-          container.style.right = "auto";
-          container.style.left = Math.round(pos.left) + "px";
-          container.style.top = Math.round(pos.top) + "px";
+          osgSetCoinStagePosition(container, pos.left, pos.top);
           return new Promise((resolve) => {
             avatarTravelTween = new Tween(pos)
               .to({ left: destLeft, top: destTop }, durationMs)
               .easing(Easing.Quadratic.Out)
               .onUpdate(() => {
-                container.style.left = Math.round(pos.left) + "px";
-                container.style.top = Math.round(pos.top) + "px";
+                osgSetCoinStagePosition(container, pos.left, pos.top);
               })
               .onComplete(() => {
                 avatarTravelTween = null;
@@ -11783,10 +11829,10 @@
           const home = avatarHomePos || osgAvatarCaptureHomePosition();
           const M = window.OSG_AVATAR_MISHAP_LOGIC;
           if (M && M.prefersReducedMotion && M.prefersReducedMotion()) {
-            container.style.removeProperty("left");
-            container.style.removeProperty("top");
-            container.style.right = "";
+            osgSetCoinStagePosition(container, home.left, home.top);
+            container.classList.remove("is-avatar-running");
             avatarTraveledAway = false;
+            avatarHomePos = null;
             return;
           }
           container.classList.add("is-avatar-running");
@@ -11796,11 +11842,9 @@
             opts.durationMs || 520
           );
           container.classList.remove("is-avatar-running");
+          osgSetCoinStagePosition(container, home.left, home.top);
           avatarTraveledAway = false;
           avatarHomePos = null;
-          container.style.removeProperty("left");
-          container.style.removeProperty("top");
-          container.style.right = "";
         }
 
         window.osgAvatarTravelToPoint = osgAvatarTravelToPoint;
@@ -11898,7 +11942,6 @@
           avatarGestureType = type || "acknowledge";
           avatarGestureStart = performance.now();
           avatarGestureDuration = durationMs || 2200;
-          if (type === "greet") beginWai();
         }
 
         function osgAvatarGestureStop() {
@@ -11925,6 +11968,12 @@
 
         async function osgAvatarSpeakLine(text, opts) {
           opts = opts || {};
+          if (
+            typeof osgPauliAudioAllowed === "function" &&
+            !osgPauliAudioAllowed()
+          ) {
+            return;
+          }
           const LS = window.OSG_LANG_SWITCH_LOGIC;
           const parts =
             LS && typeof LS.splitSequentialBlocks === "function"
@@ -11979,17 +12028,13 @@
           }
           osgAvatarGestureStart(gesture, Math.max(2200, pointDuration - 500));
           ttsLoading = true;
-          const estMs = Math.min(12000, Math.max(1800, line.length * 68));
           try {
             await playPauliVoice(line, {
               whisper,
               langCode,
+              speechKey: opts.speechKey || "",
             });
           } catch (e) {
-            osgLipSyncBegin({ durationMs: estMs });
-            try {
-              await speakPauliUtterance(line, whisper, langCode);
-            } catch (_) {}
             osgLipSyncStop();
           } finally {
             ttsLoading = false;
@@ -12705,6 +12750,7 @@
 
           playMishapSequence: async function (type, opts) {
             opts = opts || {};
+            if (window.innerWidth <= 768) return false;
             var stage = document.getElementById("coin-stage");
             var host =
               typeof osgAvatarVisualHost === "function"
@@ -12746,12 +12792,18 @@
             }
 
             var duration = M.durationFor(type);
+            var mishapSpeechKey =
+              mod && mod.speechKey ? String(mod.speechKey).trim() : "";
             if (line) {
-              void playPauliVoice(line, { whisper: true, langCode: langCode }).catch(
-                function () {
-                  return speakPauliUtterance(line, true, langCode);
-                }
-              );
+              void playPauliVoice(line, {
+                whisper: true,
+                langCode: langCode,
+                speechKey: mishapSpeechKey,
+              }).catch(function () {
+                return speakPauliUtterance(line, true, langCode, {
+                  speechKey: mishapSpeechKey,
+                });
+              });
             }
 
             await new Promise(function (r) {
@@ -13422,7 +13474,7 @@
                 window.OSG_PauliAvatarAnimations &&
                 typeof window.OSG_PauliAvatarAnimations.setState === "function"
               ) {
-                window.OSG_PauliAvatarAnimations.setState("locked_carousel");
+                window.OSG_PauliAvatarAnimations.setState("idle");
               }
               return;
             }
@@ -13645,29 +13697,151 @@
           "./public/sounds/pauli/",
         ];
         const OSG_PAULI_LOCAL_VOICE_EXTS = [".m4a", ".mp3", ".wav"];
+        /** i18n speechKey → Dateiname in public/sounds/pauli/th/ (voice-script-de.json) */
+        const OSG_PAULI_SPEECH_KEY_ALIASES = {
+          pauliSawadeeTts: "pauliSawadee",
+          avatarStartupSawadeeTts: "pauliSawadee",
+          pauliIntroTts: "pauliIntro",
+          avatarStartupGreetLine: "pauliIntro",
+          avatarCompanionIntroLine: "pauliIntro",
+          accessibility_activated: "accessibility_activated",
+          search_processing: "search_processing",
+          fun_crab_instinct: "fun_crab_instinct",
+          intentAccessibilityTts: "accessibility_activated",
+          intentReadPriceTts: "search_processing",
+          intentFunCrabTts: "fun_crab_instinct",
+        };
+
+        function osgPauliResolveSpeechFileKeys(speechKey) {
+          const key = String(speechKey || "").trim();
+          if (!key) return [];
+          const out = [key];
+          const alias = OSG_PAULI_SPEECH_KEY_ALIASES[key];
+          if (alias && out.indexOf(alias) < 0) out.push(alias);
+          if (/Tts$/i.test(key)) {
+            const base = key.replace(/Tts$/i, "");
+            if (base && out.indexOf(base) < 0) out.push(base);
+          }
+          return out;
+        }
+
+        function osgPauliNormVoiceLine(s) {
+          return String(s || "")
+            .replace(/\{NAME\}/gi, "")
+            .replace(/\{KW\}/gi, "")
+            .replace(/\s+/g, " ")
+            .trim()
+            .toLowerCase();
+        }
+
+        function osgPauliResolveSpeechKeyFromText(text, langCode) {
+          const spokenNorm = osgPauliNormVoiceLine(text);
+          if (!spokenNorm || spokenNorm.length < 6) return "";
+          const langs = [];
+          const pushLang = function (lc) {
+            const code =
+              window.__OSG_I18N && window.__OSG_I18N.normalizeLang
+                ? window.__OSG_I18N.normalizeLang(lc)
+                : String(lc || "").toLowerCase();
+            if (code && langs.indexOf(code) < 0) langs.push(code);
+          };
+          pushLang(langCode);
+          pushLang("th");
+          pushLang("en");
+          pushLang("de");
+          let bestKey = "";
+          let bestLen = 0;
+          for (let li = 0; li < langs.length; li += 1) {
+            const lc = langs[li];
+            const pack =
+              (typeof T !== "undefined" && T[lc]) ||
+              (window.__OSG_I18N &&
+                window.__OSG_I18N.T &&
+                window.__OSG_I18N.T[lc]);
+            if (!pack) continue;
+            const keys = Object.keys(pack);
+            for (let ki = 0; ki < keys.length; ki += 1) {
+              const i18nKey = keys[ki];
+              if (
+                !/(Tts|Speak|Intro|Greet|Sawadee|Spruch|Line|Voice|Briefing)$/i.test(
+                  i18nKey
+                )
+              ) {
+                continue;
+              }
+              const lineNorm = osgPauliNormVoiceLine(pack[i18nKey]);
+              if (!lineNorm || lineNorm.length < 6) continue;
+              const head = Math.min(48, spokenNorm.length, lineNorm.length);
+              const spokenHead = spokenNorm.slice(0, head);
+              const lineHead = lineNorm.slice(0, head);
+              if (
+                spokenNorm.indexOf(lineHead) >= 0 ||
+                lineNorm.indexOf(spokenHead) >= 0
+              ) {
+                if (lineNorm.length > bestLen) {
+                  bestLen = lineNorm.length;
+                  bestKey = i18nKey;
+                }
+              }
+            }
+          }
+          return bestKey;
+        }
+
+        const osgPauliBundledVoiceCache = { buffers: null };
+
+        async function osgPauliPreloadBundledVoice() {
+          if (osgPauliBundledVoiceCache.buffers) return;
+          const bufs = [];
+          for (let i = 0; i < OSG_PAULI_BUNDLED_VOICE_URLS.length; i += 1) {
+            const url = OSG_PAULI_BUNDLED_VOICE_URLS[i];
+            try {
+              const res = await fetch(url, { credentials: "same-origin" });
+              if (!res.ok) continue;
+              const arrayBuf = await res.arrayBuffer();
+              if (!arrayBuf || arrayBuf.byteLength < 128) continue;
+              const ext = url.slice(url.lastIndexOf(".")).toLowerCase();
+              const mimeType =
+                ext === ".m4a"
+                  ? "audio/mp4"
+                  : ext === ".wav"
+                  ? "audio/wav"
+                  : "audio/mpeg";
+              bufs.push({ url: url, buf: arrayBuf, mimeType: mimeType });
+              if (bufs.length >= 2) break;
+            } catch (_) {}
+          }
+          if (bufs.length) osgPauliBundledVoiceCache.buffers = bufs;
+        }
         const OSG_PAULI_BUNDLED_VOICE_URLS = [
+          "/sounds/pauli/th/pauliIntro.mp3",
+          "/sounds/pauli/th/pauliIntro.m4a",
           "/sounds/pauli/th/pauliSawadee.m4a",
           "/sounds/pauli/th/pauliSawadee.mp3",
-          "/sounds/pauli/th/pauliIntro.m4a",
-          "/sounds/pauli/th/pauliIntro.mp3",
+          "/sounds/pauli-avatar-voice.mp3",
           "/sounds/pauli-avatar-voice.m4a",
+          "./sounds/pauli-avatar-voice.mp3",
           "./sounds/pauli-avatar-voice.m4a",
+          "/public/sounds/pauli-avatar-voice.mp3",
           "/public/sounds/pauli-avatar-voice.m4a",
+          "./public/sounds/pauli-avatar-voice.mp3",
           "./public/sounds/pauli-avatar-voice.m4a",
         ];
 
         function osgPauliLocalVoiceUrlCandidates(speechKey, langCode, whisper) {
-          const key = String(speechKey || "").trim();
-          if (!key) return [];
+          const fileKeys = osgPauliResolveSpeechFileKeys(speechKey);
+          if (!fileKeys.length) return [];
           const lang = String(langCode || "th").toLowerCase();
           const langs = lang === "th" ? ["th"] : [lang, "th"];
-          const keyNames = whisper ? [key + "-whisper", key] : [key];
           const urls = [];
-          langs.forEach(function (lc) {
-            keyNames.forEach(function (kn) {
-              OSG_PAULI_LOCAL_VOICE_EXTS.forEach(function (ext) {
-                OSG_PAULI_LOCAL_VOICE_ROOTS.forEach(function (root) {
-                  urls.push(root + lc + "/" + kn + ext);
+          fileKeys.forEach(function (key) {
+            const keyNames = whisper ? [key + "-whisper", key] : [key];
+            langs.forEach(function (lc) {
+              keyNames.forEach(function (kn) {
+                OSG_PAULI_LOCAL_VOICE_EXTS.forEach(function (ext) {
+                  OSG_PAULI_LOCAL_VOICE_ROOTS.forEach(function (root) {
+                    urls.push(root + lc + "/" + kn + ext);
+                  });
                 });
               });
             });
@@ -13700,6 +13874,7 @@
               await playPauliAudioBuffer(arrayBuf, {
                 whisper: !!opts.whisper,
                 mimeType,
+                fullVolume: true,
               });
               return true;
             } catch (e) {
@@ -13711,11 +13886,18 @@
         }
 
         async function playPauliAudioBuffer(arrayBuf, opts) {
+          if (
+            typeof osgPauliAudioAllowed === "function" &&
+            !osgPauliAudioAllowed()
+          ) {
+            return;
+          }
           const whisper = !!(opts && opts.whisper);
           const mimeType =
             (opts && opts.mimeType) || "audio/mpeg";
           const Ctx = window.AudioContext || window.webkitAudioContext;
-          const gainVal = whisper ? 0.28 : 1.0;
+          const gainVal =
+            opts && opts.fullVolume ? 1.0 : whisper ? 0.28 : 1.0;
 
           function playWithAnalyser(ctx, audioBuffer, extraNode) {
             return new Promise((resolve) => {
@@ -13820,6 +14002,25 @@
         }
 
         async function playPauliBundledFallbackVoice(opts) {
+          const whisper = !!(opts && opts.whisper);
+          const fullVolume = !!(opts && opts.fullVolume);
+          const cached = osgPauliBundledVoiceCache.buffers;
+          if (cached && cached.length) {
+            let lastErr = null;
+            for (let ci = 0; ci < cached.length; ci += 1) {
+              try {
+                await playPauliAudioBuffer(cached[ci].buf.slice(0), {
+                  whisper: whisper,
+                  mimeType: cached[ci].mimeType || "audio/mpeg",
+                  fullVolume: fullVolume,
+                });
+                return;
+              } catch (e) {
+                lastErr = e;
+              }
+            }
+            if (lastErr) throw lastErr;
+          }
           let lastErr = null;
           for (let i = 0; i < OSG_PAULI_BUNDLED_VOICE_URLS.length; i += 1) {
             const url = OSG_PAULI_BUNDLED_VOICE_URLS[i];
@@ -13828,9 +14029,17 @@
               if (!res.ok) continue;
               const arrayBuf = await res.arrayBuffer();
               if (!arrayBuf || arrayBuf.byteLength < 128) continue;
+              const ext = url.slice(url.lastIndexOf(".")).toLowerCase();
+              const mimeType =
+                ext === ".m4a"
+                  ? "audio/mp4"
+                  : ext === ".wav"
+                  ? "audio/wav"
+                  : "audio/mpeg";
               await playPauliAudioBuffer(arrayBuf, {
-                whisper: !!(opts && opts.whisper),
-                mimeType: "audio/mp4",
+                whisper: whisper,
+                mimeType: mimeType,
+                fullVolume: fullVolume,
               });
               return;
             } catch (e) {
@@ -13842,21 +14051,22 @@
 
         async function playElevenLabs(text, opts) {
           const whisper = !!(opts && opts.whisper);
+          const langCode =
+            (opts && opts.langCode) ||
+            (typeof packLangFromDocument === "function"
+              ? packLangFromDocument()
+              : "en");
+          const speechTag =
+            typeof osgResolveSpeechTag === "function"
+              ? osgResolveSpeechTag(langCode)
+              : "en-US";
           const res = await osgApiFetch("/api/tts", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               text: typeof text === "string" ? text : "",
               whisper,
-              lang:
-                (opts && opts.langCode) ||
-                (typeof osgResolveSpeechTag === "function"
-                  ? osgResolveSpeechTag(
-                      typeof packLangFromDocument === "function"
-                        ? packLangFromDocument()
-                        : "en"
-                    )
-                  : "en-US"),
+              lang: speechTag,
             }),
           });
           if (res.status === 429) {
@@ -13877,36 +14087,83 @@
           });
         }
 
-        /** Live-TTS über /api/tts (ElevenLabs oder OpenAI-Fallback). Keine Vorlagen-MP3s. */
+        /** Lokale Pauli-Aufnahme zuerst, Bundled-Fallback, Cloud-TTS nur mit allowCloudTts. */
         async function playPauliVoice(text, opts) {
           opts = opts || {};
           if (
-            !opts.allowAvatarLocked &&
-            typeof osgAvatarAccessUnlocked === "function" &&
-            !osgAvatarAccessUnlocked()
+            typeof osgPauliAudioAllowed === "function" &&
+            !osgPauliAudioAllowed()
           ) {
             return;
           }
           const spoken = String(text || "").trim();
           if (!spoken) return;
-          if (
-            typeof osgAvatarAccessUnlocked === "function" &&
-            osgAvatarAccessUnlocked() &&
-            typeof window.pauliLiveCaptionShow === "function"
-          ) {
+          if (typeof window.pauliLiveCaptionShow === "function") {
             window.pauliLiveCaptionShow(spoken);
           }
           const I = window.__OSG_I18N;
           const langCode =
             opts.langCode || (I ? I.systemLangCode() : "de");
+          const localFirst = window.OSG_PAULI_LOCAL_VOICE_FIRST !== false;
+          let speechKey = String(opts.speechKey || "").trim();
+          if (!speechKey) {
+            speechKey = osgPauliResolveSpeechKeyFromText(spoken, langCode);
+          }
+
+          async function tryLocalVoice(key) {
+            if (!key) return false;
+            try {
+              return await playPauliLocalVoiceFile({
+                speechKey: key,
+                langCode: langCode,
+                whisper: !!opts.whisper,
+              });
+            } catch (_) {
+              return false;
+            }
+          }
+
           try {
-            await playElevenLabs(spoken, {
-              whisper: !!opts.whisper,
-              langCode: langCode,
-            });
-          } catch (e) {
-            if (String(e && e.message) === "rate_limited") throw e;
-            await speakPauliUtterance(spoken, !!opts.whisper, langCode);
+            const SEG = window.OSG_AUDIO_SEGMENT;
+            if (SEG && typeof SEG.playSegment === "function") {
+              const segOk = await SEG.playSegment({
+                segmentKey: String(opts.segmentKey || "").trim(),
+                speechKey: speechKey,
+                intent: String(opts.intent || "").trim(),
+              });
+              if (segOk) return;
+            }
+
+            if (await tryLocalVoice(speechKey)) return;
+
+            if (!opts.skipBundled && speechKey) {
+              try {
+                await playPauliBundledFallbackVoice({
+                  whisper: !!opts.whisper,
+                  fullVolume: true,
+                });
+                return;
+              } catch (_) {}
+            }
+
+            if (!localFirst || (opts.allowCloudTts && !window.OSG_PAULI_DISABLE_CLOUD_TTS)) {
+              try {
+                await playElevenLabs(spoken, {
+                  whisper: !!opts.whisper,
+                  langCode: langCode,
+                });
+                return;
+              } catch (e) {
+                if (String(e && e.message) === "rate_limited") throw e;
+              }
+            }
+
+            if (!opts.skipBundled) {
+              await playPauliBundledFallbackVoice({
+                whisper: !!opts.whisper,
+                fullVolume: true,
+              });
+            }
           } finally {
             if (
               !opts.skipCaptionClear &&
@@ -13916,6 +14173,10 @@
             }
           }
         }
+
+        window.playPauliVoice = playPauliVoice;
+        window.osgPauliResolveSpeechKeyFromText = osgPauliResolveSpeechKeyFromText;
+        window.osgPauliPreloadBundledVoice = osgPauliPreloadBundledVoice;
 
         let osgAudioGestureUnlocked = false;
 
@@ -13965,19 +14226,6 @@
                 .catch(() => {});
           } catch (_) {}
 
-          try {
-            const ss = window.speechSynthesis;
-            if (ss) {
-              ss.getVoices();
-              function osgWarmVoices() {
-                ss.removeEventListener("voiceschanged", osgWarmVoices);
-                try {
-                  ss.getVoices();
-                } catch (_) {}
-              }
-              ss.addEventListener("voiceschanged", osgWarmVoices, false);
-            }
-          } catch (_) {}
         }
 
         /* ── PAULI SPRÜCHE-POOL — 30 Trend-Phrasen/Region, 30-Tage-Rotation ── */
@@ -14603,6 +14851,41 @@
           return AT.appendIfNeeded(reply, lang, String(userText || ""));
         }
 
+        function osgPauliApplyIntentSideEffects(intentHit) {
+          if (!intentHit || intentHit.intent !== "ACCESSIBILITY") return;
+          try {
+            if (window.osgA11y && typeof window.osgA11y.setEnabled === "function") {
+              window.osgA11y.setEnabled(true);
+            }
+            if (
+              window.osgA11y &&
+              typeof window.osgA11y.setContrast === "function" &&
+              window.osgA11y.getContrast &&
+              window.osgA11y.getContrast() !== "high"
+            ) {
+              window.osgA11y.setContrast("high");
+            }
+          } catch (_) {}
+        }
+
+        function osgPauliResolveIntentReply(intentHit, pack) {
+          if (!intentHit || intentHit.allowOpenAI) return "";
+          const key = String(intentHit.packKey || "").trim();
+          if (!key || !pack) return "";
+          return String(pack[key] || "").trim();
+        }
+
+        async function osgPauliHandleIntentHit(intentHit, pack, lang, isNight) {
+          const line = osgPauliResolveIntentReply(intentHit, pack);
+          if (!line) return false;
+          osgPauliApplyIntentSideEffects(intentHit);
+          await osgPauliLiveSpeakReply(line, pack, lang, isNight, {
+            speechKey: intentHit.speechKey || "",
+            segmentKey: intentHit.segmentKey || "",
+          });
+          return true;
+        }
+
         async function osgPauliChatFetch(userText, lang) {
           const line = String(userText || "").trim();
           if (!line) return "";
@@ -14624,6 +14907,22 @@
           }
           if (!res.ok) return "";
           const data = await res.json();
+          if (data && data.local && data.packKey) {
+            const pack =
+              window.__OSG_CURRENT_PACK_CACHE ||
+              (typeof T !== "undefined" ? T[lang] || T.de : {});
+            osgPauliApplyIntentSideEffects(data);
+            window.__OSG_LAST_INTENT_SPEECH_KEY__ = data.speechKey || "";
+            window.__OSG_LAST_INTENT_SEGMENT_KEY__ = data.segmentKey || "";
+            const localLine = osgPauliResolveIntentReply(data, pack);
+            if (localLine) {
+              osgPauliLiveHistory.push({ role: "assistant", content: localLine });
+              return localLine;
+            }
+            return "";
+          }
+          window.__OSG_LAST_INTENT_SPEECH_KEY__ = "";
+          window.__OSG_LAST_INTENT_SEGMENT_KEY__ = "";
           let reply = String((data && data.reply) || "").trim();
           if (reply) {
             osgPauliLiveHistory.push({ role: "assistant", content: reply });
@@ -14631,7 +14930,8 @@
           return reply;
         }
 
-        async function osgPauliLiveSpeakReply(reply, pack, lang, isNight) {
+        async function osgPauliLiveSpeakReply(reply, pack, lang, isNight, extra) {
+          extra = extra || {};
           if (!reply) reply = pack.pauliChatError || "";
           const LS = window.OSG_LANG_SWITCH_LOGIC;
           const parts =
@@ -14649,22 +14949,20 @@
               );
             }
             ttsLoading = true;
-            beginWai();
-            osgLipSyncStart(
-              Math.min(12000, Math.max(2500, chunk.length * 72))
-            );
             try {
-              await playPauliVoice(chunk, { whisper: isNight, langCode: lang });
+              await playPauliVoice(chunk, {
+                whisper: isNight,
+                langCode: lang,
+                speechKey: extra.speechKey || "",
+                segmentKey: extra.segmentKey || "",
+                intent: extra.intent || "",
+              });
             } catch (e) {
               if (String(e && e.message) === "rate_limited") throw e;
-              try {
-                await speakPauliUtterance(chunk, isNight, lang);
-              } catch (_) {}
             } finally {
               ttsLoading = false;
               osgLipSyncStop();
               waiActive = false;
-              osgTweenAvatarReturn();
             }
             if (pi < parts.length - 1) {
               await new Promise(function (r) {
@@ -14750,13 +15048,6 @@
 
         async function startPauliLiveConversation(opts) {
           opts = opts || {};
-          if (
-            typeof osgAvatarAccessUnlocked === "function" &&
-            !osgAvatarAccessUnlocked()
-          ) {
-            osgRefreshAvatarLockUi();
-            return;
-          }
           if (busy || osgPauliLiveActive) return;
           osgPauliLiveActive = true;
           if (!opts.continueSession) osgPauliLiveHistory = [];
@@ -14778,7 +15069,8 @@
                   trend.text,
                   osgVcCurrentPack(),
                   osgVcCurrentLangCode(),
-                  isNight
+                  isNight,
+                  { speechKey: trend.speechKey || "" }
                 );
               }
             } catch (_) {}
@@ -15115,6 +15407,24 @@
               } else if (osgPauliDetectPoliticsReligionTopic(userText)) {
                 reply = osgPauliWisdomDeflectReply(pack);
               } else {
+                var intentHit =
+                  window.OSG_INTENT_CLASSIFIER &&
+                  typeof window.OSG_INTENT_CLASSIFIER.classify === "function"
+                    ? window.OSG_INTENT_CLASSIFIER.classify(userText, lang)
+                    : null;
+                if (
+                  intentHit &&
+                  !intentHit.allowOpenAI &&
+                  (await osgPauliHandleIntentHit(
+                    intentHit,
+                    pack,
+                    lang,
+                    isNight
+                  ))
+                ) {
+                  await listenOnce();
+                  return;
+                }
                 var detLine = osgDetectiveLiveTurn(userText, lang);
                 if (detLine) {
                   reply = detLine;
@@ -15168,7 +15478,10 @@
               return;
             }
 
-            await osgPauliLiveSpeakReply(reply, pack, lang, isNight);
+            await osgPauliLiveSpeakReply(reply, pack, lang, isNight, {
+              speechKey: window.__OSG_LAST_INTENT_SPEECH_KEY__ || "",
+              segmentKey: window.__OSG_LAST_INTENT_SEGMENT_KEY__ || "",
+            });
             if (!osgPauliLiveActive) return;
             await listenOnce();
           }
@@ -15731,13 +16044,13 @@
 
           document.addEventListener("visibilitychange", function () {
             if (document.visibilityState === "hidden") osgWakeStopAll();
-            else wakeRestartTimer = setTimeout(osgWakeStart, 700);
+            else wakeRestartTimer = setTimeout(osgWakeMaybeStart, 700);
           });
 
           function osgWakeArmAfterGesture() {
             document.removeEventListener("pointerdown", osgWakeArmAfterGesture);
             document.removeEventListener("keydown", osgWakeArmAfterGesture);
-            setTimeout(osgWakeStart, 500);
+            setTimeout(osgWakeMaybeStart, 500);
           }
           document.addEventListener("pointerdown", osgWakeArmAfterGesture, {
             once: true,
@@ -15747,8 +16060,24 @@
             once: true,
           });
 
-          setTimeout(osgWakeStart, 600);
+          setTimeout(osgWakeMaybeStart, 600);
         }
+
+        function osgWakeMaybeStart() {
+          if (
+            typeof osgPauliAudioAllowed === "function" &&
+            !osgPauliAudioAllowed()
+          ) {
+            return;
+          }
+          osgWakeStart();
+        }
+
+        document.addEventListener("osg-terms-audio-unlocked", function () {
+          unlockAudioSystemFromCoinGesture();
+          void osgPauliPreloadBundledVoice();
+          setTimeout(osgWakeMaybeStart, 320);
+        });
 
         container.addEventListener("click", (e) => {
           if (osgEventTargetsStaticStand(e)) return;
@@ -15771,14 +16100,6 @@
           if (coinDebugOn && now >= coinDbgTickAt) {
             coinDbgTickAt = now + 700;
             coinDbgRender();
-          }
-
-          if (waiActive && busy) {
-            const u = Math.min(1, (now - waiStart) / WAI_MS);
-            if (u >= 1) {
-              waiActive = false;
-              if (!avatarReturnTween) osgTweenAvatarReturn();
-            }
           }
         }
         animate();

@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node 02_Quellcode/Core_Logik/server.js",
     "voice:gen": "node scripts/generate-pauli-voice-mp3.mjs",
+    "voice:rebuild": "node scripts/pauli-voice-rebuild-all.mjs",
     "check:html": "html-validate index.html",
     "vip:gen": "node scripts/generate-vip-zugang.mjs",
     "email:probe": "node scripts/email-connectivity-probe.mjs",
@@ -21,6 +22,7 @@
     "avatar:verify": "node scripts/verify-avatar-assets.mjs"
   },
   "devDependencies": {
+    "ffmpeg-static": "^5.2.0",
     "html-validate": "^9.0.0",
     "puppeteer": "^24.42.0",
     "qrcode": "^1.5.4",

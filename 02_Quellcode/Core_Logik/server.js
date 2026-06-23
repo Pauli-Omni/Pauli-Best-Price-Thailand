@@ -27,6 +27,7 @@ import {
   setEmailCritical,
   verifyAppEmailRegistry,
 } from "./services/osg-email-connectivity.js";
+import intentClassifier from "./services/IntentClassifierService.js";
 import {
   avatarStatusPayload,
   registerSocialExempt,
@@ -1657,7 +1658,6 @@ app.post("/api/pauli-chat", rlChat, async (req, res) => {
     if (!key) {
       return res.status(503).type("json").json({ error: "chat_unavailable" });
     }
-    if (!osgConsumeAiBudget(res, 1)) return;
     const lang = String(req.body?.lang || "de").slice(0, 12);
     const rawMsgs = Array.isArray(req.body?.messages) ? req.body.messages : [];
     const sanitized = rawMsgs
@@ -1667,6 +1667,24 @@ app.post("/api/pauli-chat", rlChat, async (req, res) => {
         content: String(m && m.content != null ? m.content : "").slice(0, 2400),
       }))
       .filter((m) => m.content.trim());
+
+    const lastUser = [...sanitized].reverse().find((m) => m.role === "user");
+    if (lastUser) {
+      const intentHit = intentClassifier.classify(lastUser.content, lang);
+      if (intentHit && !intentHit.allowOpenAI) {
+        return res.type("json").json({
+          reply: "",
+          intent: intentHit.intent,
+          allowOpenAI: false,
+          speechKey: intentHit.speechKey,
+          packKey: intentHit.packKey,
+          segmentKey: intentHit.segmentKey,
+          local: true,
+        });
+      }
+    }
+
+    if (!osgConsumeAiBudget(res, 1)) return;
 
     const system = [
       "You are Pauli, a warm, sharp male companion avatar for PAULI BEST PRICE Thailand (Omni Solutions Global® Co. Ltd.).",
@@ -1781,6 +1799,13 @@ app.post("/api/tts", rlTts, async (req, res) => {
     const text =
       typeof req.body?.text === "string" ? req.body.text.slice(0, 2500) : "";
     const whisper = req.body?.whisper === true;
+    const langRaw =
+      typeof req.body?.lang === "string" ? req.body.lang.trim() : "";
+    const langCode = langRaw
+      .replace(/_/g, "-")
+      .split("-")[0]
+      .toLowerCase()
+      .slice(0, 2);
     if (!text.trim()) {
       return res.status(400).json({ error: "text required" });
     }
@@ -1823,6 +1848,9 @@ app.post("/api/tts", rlTts, async (req, res) => {
       body: JSON.stringify({
         text,
         model_id: "eleven_multilingual_v2",
+        ...(langCode && /^[a-z]{2}$/.test(langCode)
+          ? { language_code: langCode }
+          : {}),
         voice_settings: voiceSettings,
       }),
     });

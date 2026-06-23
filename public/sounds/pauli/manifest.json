@@ -1,5 +1,5 @@
 {
-  "info": "Lokale Pauli-Stimme — Aufnahmen im Akzent von pauliIntro.mp3. ElevenLabs wird nicht benötigt.",
+  "info": "Lokale Pauli-Stimme — alle MP3s aus pauli-avatar-voice.mp3 (Vorlage). Segmente 0–14 s für Kurzzeilen; Intro/Master = volle Aufnahme.",
   "folder": "public/sounds/pauli/th/",
   "script": "voice-script-de.json",
   "formats": ["m4a", "mp3", "wav"],
@@ -90,5 +90,9 @@
     "psychLangSwitchDeclinedTts",
     "psychLangSwitchProactiveTts",
     "psychLangSwitchAlreadyTts",
+    "accessibility_activated",
+    "search_processing",
+    "fun_crab_instinct",
+    "search_intro_long"
   ]
 }
