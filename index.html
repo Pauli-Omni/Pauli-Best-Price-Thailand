@@ -11435,9 +11435,9 @@
           ) {
             window.OSG_PauliAvatarAnimations.onCheckoutSuccess(
               amountThb,
-              function () {
+              async function () {
                 if (quote && typeof playPauliVoice === "function") {
-                  void playPauliVoice(quote, { skipBridge: true });
+                  await playPauliVoice(quote, { skipBridge: true });
                 }
               }
             );
@@ -12797,7 +12797,7 @@
             var mishapSpeechKey =
               mod && mod.speechKey ? String(mod.speechKey).trim() : "";
             if (line) {
-              void playPauliVoice(line, {
+              await playPauliVoice(line, {
                 whisper: true,
                 langCode: langCode,
                 speechKey: mishapSpeechKey,
