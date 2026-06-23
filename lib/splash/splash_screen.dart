@@ -1,5 +1,4 @@
 import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 
 class SplashAnimationScreen extends StatefulWidget {
@@ -11,8 +10,7 @@ class SplashAnimationScreen extends StatefulWidget {
   State<SplashAnimationScreen> createState() => _SplashAnimationScreenState();
 }
 
-class _SplashAnimationScreenState extends State<SplashAnimationScreen>
-    with SingleTickerProviderStateMixin {
+class _SplashAnimationScreenState extends State<SplashAnimationScreen> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _rotationAnimation;
   late Animation<double> _opacityAnimation;
@@ -27,7 +25,7 @@ class _SplashAnimationScreenState extends State<SplashAnimationScreen>
       vsync: this,
     );
 
-    // Phase 1: 0.0 bis 1.2 Sekunden → 360° Drehung mit easeInOutCubic
+    // Phase 1: 0.0 bis 1.2 Sekunden -> 360 Grad Drehung (2 * Pi) mit easeInOutCubic
     _rotationAnimation = Tween<double>(begin: 0.0, end: 2 * math.pi).animate(
       CurvedAnimation(
         parent: _controller,
@@ -35,7 +33,7 @@ class _SplashAnimationScreenState extends State<SplashAnimationScreen>
       ),
     );
 
-    // Phase 2: 1.2 bis 1.5 Sekunden → weiches Ausblenden (1.0 → 0.0)
+    // Phase 2: 1.2 bis 1.5 Sekunden -> Weiches Ausblenden (von 1.0 auf 0.0)
     _opacityAnimation = Tween<double>(begin: 1.0, end: 0.0).animate(
       CurvedAnimation(
         parent: _controller,
@@ -43,6 +41,7 @@ class _SplashAnimationScreenState extends State<SplashAnimationScreen>
       ),
     );
 
+    // Aktion nach Ablauf der 1.5 Sekunden -> WebView aufrufen
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         widget.onFinish();
@@ -59,38 +58,32 @@ class _SplashAnimationScreenState extends State<SplashAnimationScreen>
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext WidgetContext) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.black, // Oder deine Wunschhintergrundfarbe
       body: Center(
         child: AnimatedBuilder(
           animation: _controller,
-          builder: (ctx, child) {
+          builder: (context, child) {
+            // Berechnen, welche Seite der Münze sichtbar ist (Front oder Rückseite)
             final angle = _rotationAnimation.value;
-            final isFront =
-                angle < math.pi / 2 || angle > 3 * math.pi / 2;
+            final isFront = angle < math.pi / 2 || angle > 3 * math.pi / 2;
 
             return Opacity(
               opacity: _opacityAnimation.value,
               child: Transform(
+                // Matrix4 mit Perspektive für den echten 3D-Effekt
                 transform: Matrix4.identity()
-                  ..setEntry(3, 2, 0.002)
+                  ..setEntry(3, 2, 0.002) 
                   ..rotateY(angle),
                 alignment: Alignment.center,
                 child: isFront
-                    ? Image.asset(
-                        'assets/images/Frontseite02.png',
-                        width: 180,
-                        height: 180,
-                      )
+                    ? Image.asset('assets/images/Frontseite02.png', width: 180, height: 180)
                     : Transform(
+                        // Rückseite spiegeln, damit sie nicht spiegelverkehrt angezeigt wird
                         alignment: Alignment.center,
                         transform: Matrix4.identity()..rotateY(math.pi),
-                        child: Image.asset(
-                          'assets/images/hinterseite.png',
-                          width: 180,
-                          height: 180,
-                        ),
+                        child: Image.asset('assets/images/hinterseite.png', width: 180, height: 180),
                       ),
               ),
             );
