@@ -1501,49 +1501,152 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* ══════════════════════════════════════════════════════════════════
+   DESKTOP-LAYOUT (≥769px)
+   Kernprinzip: Die Seite nutzt den gesamten Raum LINKS der fixierten
+   Münze — kein schmales Mobilfenster auf dem PC-Bildschirm mehr.
+   Auf breiten Monitoren (≥1100px / ≥1400px) skalieren Abstände und
+   Schriftgrößen weiter nach oben.
+   ══════════════════════════════════════════════════════════════════ */
+
 @media (min-width: 769px) {
   :root {
-    --page-content-max: min(56rem, calc(100vw - var(--coin-slot-gutter-desktop) - 5rem));
     --coin-size: 320px;
     --coin-size-desktop: 320px;
-    --coin-slot-gutter-desktop: calc(var(--coin-size) + 2rem);
     --coin-stage-margin-right: clamp(1.25rem, 3vw, 2.5rem);
+    /* Gutter = Münzbreite + rechter Abstand → Seiteninhalt endet links davon */
+    --coin-slot-gutter-desktop: calc(var(--coin-size) + 2.5rem);
     --coin-bubble-align-top: clamp(4.5rem, 10vh, 6.5rem);
+    /* Seitenbreite = voller Viewport minus Münz-Gutter */
+    --page-content-max: calc(100vw - var(--coin-slot-gutter-desktop));
   }
 
+  /* Seite links ausgerichtet — nutzt den kompletten Raum links der Münze */
   .page {
-    max-width: var(--page-content-max);
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: calc(var(--page-pad-inline) + max(0px, var(--safe-left)));
-    padding-right: calc(
-      var(--coin-slot-gutter-desktop) + 1.25rem + max(0px, var(--safe-right))
-    );
+    max-width: min(1200px, var(--page-content-max));
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: clamp(1.5rem, 4.5vw, 6rem);
+    padding-right: clamp(1.25rem, 2vw, 2.5rem);
     padding-bottom: clamp(4.5rem, 9vh, 6.5rem);
-  }
-
-  #coin-stage,
-  #coin-stage.pauli-main-avatar {
-    right: var(--coin-stage-position-right) !important;
-    top: var(--coin-stage-position-top) !important;
   }
 
   .page-header {
     max-width: 100%;
   }
 
+  /* ── Schriftgrößen & Abstände Desktop ── */
   .brand-app-title {
-    font-size: clamp(2.5rem, 3.2vw, 3.35rem);
+    font-size: clamp(2.5rem, 3.2vw, 3.5rem);
+  }
+
+  .page .lead {
+    font-size: 1.15rem;
+    line-height: 1.65;
+    margin-bottom: 1.85rem;
+  }
+
+  .page section {
+    margin-bottom: 2.5rem;
+  }
+
+  .page section h2 {
+    font-size: 1.35rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .page p {
+    line-height: 1.65;
+  }
+
+  .compare-panel {
+    padding: 1.5rem 1.75rem 1.75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .compare-table {
+    font-size: 1rem;
+  }
+
+  .compare-table th,
+  .compare-table td {
+    padding: 0.65rem 0.85rem;
+  }
+
+  /* Münze in der Desktop-Position fixieren */
+  #coin-stage,
+  #coin-stage.pauli-main-avatar {
+    right: var(--coin-stage-position-right) !important;
+    top: var(--coin-stage-position-top) !important;
   }
 }
 
+/* ── Großes Desktop (≥1100px): mehr Luft + größere Typografie ── */
+@media (min-width: 1100px) {
+  :root {
+    --coin-size: 330px;
+    --coin-size-desktop: 330px;
+    --coin-stage-margin-right: 2rem;
+    --coin-slot-gutter-desktop: calc(var(--coin-size) + 3rem);
+    --page-content-max: calc(100vw - var(--coin-slot-gutter-desktop));
+  }
+
+  .page {
+    padding-left: clamp(2.5rem, 5.5vw, 9rem);
+    padding-right: clamp(1.5rem, 2vw, 3rem);
+  }
+
+  .page .lead {
+    font-size: 1.2rem;
+  }
+
+  .page section h2 {
+    font-size: 1.5rem;
+  }
+
+  .compare-table {
+    font-size: 1.02rem;
+  }
+}
+
+/* ── Extra-großes Desktop (≥1400px): maximaler Komfort ── */
+@media (min-width: 1400px) {
+  :root {
+    --coin-size: 340px;
+    --coin-size-desktop: 340px;
+    --coin-stage-margin-right: 2.5rem;
+    --coin-slot-gutter-desktop: calc(var(--coin-size) + 3.5rem);
+    --page-content-max: calc(100vw - var(--coin-slot-gutter-desktop));
+  }
+
+  .page {
+    max-width: min(1300px, var(--page-content-max));
+    padding-left: clamp(4rem, 6vw, 11rem);
+  }
+
+  .page .lead {
+    font-size: 1.25rem;
+  }
+
+  .page section h2 {
+    font-size: 1.6rem;
+  }
+
+  .compare-table {
+    font-size: 1.05rem;
+  }
+}
+
+/* Tablet 721–768px: Münze sitzt unten-rechts → volle Seitenbreite wie Mobile */
 @media (min-width: 721px) and (max-width: 768px) {
   .page {
-    max-width: min(32rem, calc(100vw - var(--coin-slot-gutter-desktop) - 2.5rem));
-    margin-left: clamp(1rem, 3vw, 2rem);
-    margin-right: calc(var(--coin-slot-gutter-desktop) + 0.75rem + max(0px, var(--safe-right)));
-    padding-right: var(--page-pad-inline);
-    padding-bottom: clamp(4.5rem, 9vh, 6.5rem);
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: clamp(1.25rem, 3.5vw, 2rem);
+    padding-right: clamp(1.25rem, 3.5vw, 2rem);
+    padding-bottom: clamp(7rem, 18vw, 10rem);
   }
 }
 
@@ -2109,13 +2212,6 @@ body.osg-clip-scan-open {
     line-height: 1.25;
     padding: 0.55rem 0.75rem;
   }
-}
-
-  background: var(--slate-panel);
-  border: 1px solid rgba(212, 175, 55, 0.35);
-  border-radius: 10px;
-  padding: 1rem 1rem 1.25rem;
-  margin-bottom: 2rem;
 }
 
 .affiliate-transparency-note {
