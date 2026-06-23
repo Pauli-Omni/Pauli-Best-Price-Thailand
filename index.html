@@ -14513,6 +14513,41 @@
           (async function () {
             try {
               stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+              // ── Acoustic whisper detection via AnalyserNode RMS ───────────────
+              // Measures average input amplitude during recording.
+              // If user is whispering (RMS < threshold), sets window.osgUserInputIsWhisper.
+              window.osgUserInputIsWhisper = false;
+              let _rmsSum = 0, _rmsSamples = 0;
+              try {
+                const _Ctx = window.AudioContext || window.webkitAudioContext;
+                if (_Ctx) {
+                  const _actx = new _Ctx();
+                  const _src = _actx.createMediaStreamSource(stream);
+                  const _analyser = _actx.createAnalyser();
+                  _analyser.fftSize = 256;
+                  _src.connect(_analyser);
+                  const _buf = new Float32Array(_analyser.fftSize);
+                  const _tick = setInterval(function () {
+                    _analyser.getFloatTimeDomainData(_buf);
+                    let rms = 0;
+                    for (let i = 0; i < _buf.length; i++) rms += _buf[i] * _buf[i];
+                    rms = Math.sqrt(rms / _buf.length);
+                    _rmsSum += rms; _rmsSamples++;
+                  }, 80);
+                  // Cleanup on stream end
+                  stream.getTracks()[0].addEventListener("ended", function () {
+                    clearInterval(_tick);
+                    try { _actx.close(); } catch (_) {}
+                    if (_rmsSamples > 0) {
+                      const avgRms = _rmsSum / _rmsSamples;
+                      window.osgUserInputIsWhisper = avgRms < 0.07;
+                    }
+                  });
+                }
+              } catch (_) { /* whisper detection optional — never block recording */ }
+              // ─────────────────────────────────────────────────────────────────
+
               const mime = MediaRecorder.isTypeSupported("audio/webm")
                 ? "audio/webm"
                 : MediaRecorder.isTypeSupported("audio/mp4")
@@ -14910,7 +14945,11 @@
           const res = await osgApiFetch("/api/pauli-chat", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ lang, messages: osgPauliLiveHistory }),
+            body: JSON.stringify({
+              lang,
+              messages: osgPauliLiveHistory,
+              isNight: !isPauliDayPhase() || !!window.osgUserInputIsWhisper,
+            }),
           });
           const pack =
             window.__OSG_CURRENT_PACK_CACHE ||
@@ -14964,8 +15003,10 @@
             }
             ttsLoading = true;
             try {
+              // isNight OR acoustic whisper detection (user was whispering → Pauli whispers back)
+              const effectiveWhisper = isNight || !!window.osgUserInputIsWhisper;
               await playPauliVoice(chunk, {
-                whisper: isNight,
+                whisper: effectiveWhisper,
                 langCode: lang,
                 speechKey: extra.speechKey || "",
                 segmentKey: extra.segmentKey || "",
