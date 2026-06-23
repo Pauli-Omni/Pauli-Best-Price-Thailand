@@ -4,6 +4,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 import 'avatar/avatar_animation_service.dart';
 import 'config/app_web_url.dart';
+import 'splash/splash_screen.dart';
 
 class PauliWebShellApp extends StatelessWidget {
   const PauliWebShellApp({super.key});
@@ -17,7 +18,12 @@ class PauliWebShellApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xFF0D0D0D),
         useMaterial3: true,
       ),
-      home: const PauliWebViewScreen(),
+      // Splash zuerst, dann WebView — kein Home-Import in splash_screen.dart nötig
+      initialRoute: '/',
+      routes: {
+        '/':    (_) => const PauliSplashScreen(),
+        '/app': (_) => const PauliWebViewScreen(),
+      },
     );
   }
 }

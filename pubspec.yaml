@@ -23,3 +23,5 @@ flutter:
   assets:
     - assets/avatar/
     - assets/audio/
+    - Frontseite02.png
+    - hinterseite.png
