@@ -14483,8 +14483,49 @@
               rec.interimResults = false;
               rec.maxAlternatives = 3;
               rec.continuous = false;
+
+              // ── Acoustic whisper detection: parallel getUserMedia + AnalyserNode ──
+              // Web Speech API gives no direct stream access, so we open a parallel
+              // microphone read just for RMS measurement, then close it immediately.
+              window.osgUserInputIsWhisper = false;
+              let _srRmsSum = 0, _srRmsSamples = 0;
+              let _srWhisperStream = null, _srWhisperTick = null, _srActx = null;
+
+              (async function () {
+                try {
+                  _srWhisperStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+                  const _Ctx = window.AudioContext || window.webkitAudioContext;
+                  if (!_Ctx) return;
+                  _srActx = new _Ctx();
+                  const _src = _srActx.createMediaStreamSource(_srWhisperStream);
+                  const _analyser = _srActx.createAnalyser();
+                  _analyser.fftSize = 256;
+                  _src.connect(_analyser);
+                  const _buf = new Float32Array(_analyser.fftSize);
+                  _srWhisperTick = setInterval(function () {
+                    _analyser.getFloatTimeDomainData(_buf);
+                    let rms = 0;
+                    for (let i = 0; i < _buf.length; i++) rms += _buf[i] * _buf[i];
+                    _srRmsSum += Math.sqrt(rms / _buf.length);
+                    _srRmsSamples++;
+                  }, 80);
+                } catch (_) { /* whisper detection optional — never block speech recognition */ }
+              })();
+
+              function _srCleanupWhisper() {
+                if (_srWhisperTick) { clearInterval(_srWhisperTick); _srWhisperTick = null; }
+                if (_srRmsSamples > 0) {
+                  window.osgUserInputIsWhisper = (_srRmsSum / _srRmsSamples) < 0.07;
+                }
+                try { if (_srWhisperStream) _srWhisperStream.getTracks().forEach(function (t) { t.stop(); }); } catch (_) {}
+                try { if (_srActx) _srActx.close(); } catch (_) {}
+                _srWhisperStream = null; _srActx = null;
+              }
+              // ─────────────────────────────────────────────────────────────────────
+
               rec.onresult = function (ev) {
                 if (stopped) return;
+                _srCleanupWhisper();
                 let best = "";
                 for (let i = 0; i < ev.results.length; i += 1) {
                   for (let j = 0; j < ev.results[i].length; j += 1) {
@@ -14494,11 +14535,12 @@
                 }
                 onText && onText(best);
               };
-              rec.onerror = function () { onError && onError(); };
-              rec.onend = function () { if (!stopped) onError && onError(); };
+              rec.onerror = function () { _srCleanupWhisper(); onError && onError(); };
+              rec.onend = function () { _srCleanupWhisper(); if (!stopped) onError && onError(); };
               rec.start();
               stopper = function () {
                 stopped = true;
+                _srCleanupWhisper();
                 try { rec.stop(); } catch (_) {}
               };
               return stopper;

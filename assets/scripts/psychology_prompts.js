@@ -234,6 +234,143 @@
         bubble: "汽车向导——不施压。",
       },
     },
+
+    // ── Sokratische Module: Immobilien (Real Estate) ──────────────────────────
+    // Trigger: user browses real estate section — Socratic guiding question first
+    real_estate_view: {
+      de: {
+        speechKey: "psychRealEstateViewTts",
+        tts: "Immobilien interessiert dich? Kurze Frage, kein Druck: Was wäre dir wichtiger — kurzer Arbeitsweg oder günstigerer Quadratmeterpreis? Die Antwort entscheidet mehr als du denkst.",
+        bubble: "Immo-Wegweiser — deine Priorität zuerst.",
+      },
+      en: {
+        speechKey: "psychRealEstateViewTts",
+        tts: "Eyeing real estate? Quick question, no pressure: What matters more — shorter commute or lower price per square metre? Your answer changes everything.",
+        bubble: "Property guide — your priority first.",
+      },
+      th: {
+        speechKey: "psychRealEstateViewTts",
+        tts: "สนใจอสังหาฯอยู่เหรอ? ขอถามหน่อยนะ: อะไรสำคัญกว่า — ระยะทางใกล้ หรือ ราคาต่อตารางเมตรถูกกว่า? คำตอบนั้นเปลี่ยนทุกอย่างเลย",
+        bubble: "ไกด์อสังหา — ความสำคัญของคุณก่อน",
+      },
+      pl: {
+        speechKey: "psychRealEstateViewTts",
+        tts: "Nieruchomości cię interesują? Szybkie pytanie, bez presji: Co ważniejsze — krótszy dojazd czy niższa cena za metr? Ta odpowiedź zmienia wszystko.",
+        bubble: "Przewodnik nieruchomości — twój priorytet pierwsze.",
+      },
+      ru: {
+        speechKey: "psychRealEstateViewTts",
+        tts: "Недвижимость интересует? Быстрый вопрос, без давления: Что важнее — близкий путь до работы или цена за метр? Ответ решает всё.",
+        bubble: "Проводник по недвижимости — твой приоритет первым.",
+      },
+      zh: {
+        speechKey: "psychRealEstateViewTts",
+        tts: "在看房产？一个问题，不施压：通勤近一点还是单价低一点，哪个更重要？这个答案决定一切。",
+        bubble: "房产向导——先说你的优先级。",
+      },
+    },
+    // Trigger: user hesitates / scrolls back on real estate
+    real_estate_hesitate: {
+      de: {
+        speechKey: "psychRealEstateHesitateTts",
+        tts: "Noch unschlüssig bei der Immobilie? Verständlich. Stell dir nur eine Frage selbst: Wenn du in drei Jahren noch Miete zahlst — was hat dich das dann wirklich gekostet?",
+        bubble: "Kein Druck — nur ein Rechengedanke.",
+      },
+      en: {
+        speechKey: "psychRealEstateHesitateTts",
+        tts: "Still on the fence about property? That's fine. Just ask yourself: if you're still paying rent three years from now — what has that actually cost you?",
+        bubble: "No pressure — just one thought to consider.",
+      },
+      th: {
+        speechKey: "psychRealEstateHesitateTts",
+        tts: "ยังไม่แน่ใจเรื่องอสังหาฯ? เข้าใจเลย แค่ถามตัวเองข้อเดียว: ถ้าอีกสามปียังเช่าอยู่ — มันทำให้คุณเสียเงินไปจริง ๆ เท่าไหร่?",
+        bubble: "ไม่กดดัน — แค่ลองคิดดู",
+      },
+      pl: {
+        speechKey: "psychRealEstateHesitateTts",
+        tts: "Nadal niezdecydowany z nieruchomością? Rozumiem. Zadaj sobie jedno pytanie: jeśli za trzy lata dalej płacisz czynsz — ile to cię tak naprawdę kosztuje?",
+        bubble: "Bez presji — tylko jedna myśl do rozważenia.",
+      },
+      ru: {
+        speechKey: "psychRealEstateHesitateTts",
+        tts: "Всё ещё в раздумьях по недвижимости? Понятно. Задай себе один вопрос: если через три года ты всё ещё платишь аренду — во сколько тебе это реально обходится?",
+        bubble: "Без давления — только одна мысль.",
+      },
+      zh: {
+        speechKey: "psychRealEstateHesitateTts",
+        tts: "对房产还在犹豫？没关系。只问自己一个问题：如果三年后你还在租房——那实际上花了你多少钱？",
+        bubble: "不施压——只是一个思考点。",
+      },
+    },
+
+    // ── Sokratische Module: Auto (Automotive) ─────────────────────────────────
+    // Trigger: user browses auto/car section
+    automotive_view: {
+      de: {
+        speechKey: "psychAutomotiveViewTts",
+        tts: "Autos schaust du dir an? Kurze Frage, ohne Druck: Fährst du mehr Stadtverkehr oder Autobahn? Deine Antwort entscheidet, wo du gerade wirklich Geld sparst.",
+        bubble: "Auto-Wegweiser — dein Nutzungsprofil zuerst.",
+      },
+      en: {
+        speechKey: "psychAutomotiveViewTts",
+        tts: "Browsing cars? Quick one, no pressure: Do you mostly drive in the city or on the highway? Your answer determines where you're actually saving money right now.",
+        bubble: "Car guide — your usage profile first.",
+      },
+      th: {
+        speechKey: "psychAutomotiveViewTts",
+        tts: "ดูรถอยู่เหรอ? ถามหน่อยนะ ไม่กดดัน: ขับในเมืองมากกว่า หรือ ทางไกล? คำตอบนั้นบอกเลยว่าคุณประหยัดเงินได้ตรงไหน",
+        bubble: "ไกด์รถ — บอกรูปแบบการใช้งานก่อน",
+      },
+      pl: {
+        speechKey: "psychAutomotiveViewTts",
+        tts: "Przeglądasz auta? Szybko, bez presji: Jeździsz głównie po mieście czy po autostradzie? Twoja odpowiedź decyduje, gdzie naprawdę oszczędzasz.",
+        bubble: "Przewodnik aut — twój profil użytkowania pierwszy.",
+      },
+      ru: {
+        speechKey: "psychAutomotiveViewTts",
+        tts: "Смотришь авто? Быстро, без давления: Больше едешь в городе или по трассе? Ответ определяет, где ты реально экономишь.",
+        bubble: "Проводник по авто — сначала твой профиль езды.",
+      },
+      zh: {
+        speechKey: "psychAutomotiveViewTts",
+        tts: "在看车？快问一下，不施压：你主要跑市区还是高速？你的答案决定你现在真正能省钱的地方。",
+        bubble: "汽车向导——先说你的使用习惯。",
+      },
+    },
+    // Trigger: user hesitates / scrolls back on car section
+    automotive_hesitate: {
+      de: {
+        speechKey: "psychAutomotiveHesitateTts",
+        tts: "Noch unschlüssig beim Auto? Cool. Eine Frage nur: Lieber wissen, was wirklich drin steckt — oder mit dem Budget mehr Ausstattung bekommen? Deine Antwort trennt Neu von Gebraucht.",
+        bubble: "Kein Druck — nur die eine Schlüsselfrage.",
+      },
+      en: {
+        speechKey: "psychAutomotiveHesitateTts",
+        tts: "Still undecided on a car? That's fine. One question: would you rather know exactly what's under the hood — or get more features for your budget? That one answer separates new from used.",
+        bubble: "No pressure — just the key question.",
+      },
+      th: {
+        speechKey: "psychAutomotiveHesitateTts",
+        tts: "ยังไม่แน่ใจเรื่องรถ? โอเค ถามข้อเดียว: ชอบรู้ว่าข้างในรถมีอะไร — หรือ อยากได้ฟีเจอร์เพิ่มในราคาเดิม? คำตอบนั้นแยก รถใหม่ กับ รถมือสอง ได้เลย",
+        bubble: "ไม่กดดัน — แค่คำถามสำคัญข้อเดียว",
+      },
+      pl: {
+        speechKey: "psychAutomotiveHesitateTts",
+        tts: "Nadal niezdecydowany z autem? Spoko. Jedno pytanie: wolisz wiedzieć dokładnie co jest w środku — czy dostać więcej wyposażenia za budżet? Ta odpowiedź oddziela nowe od używanego.",
+        bubble: "Bez presji — tylko jedno kluczowe pytanie.",
+      },
+      ru: {
+        speechKey: "psychAutomotiveHesitateTts",
+        tts: "Всё ещё в раздумьях по авто? Нормально. Один вопрос: хочешь знать точно что внутри — или больше комплектации за бюджет? Этот ответ отделяет новое от б/у.",
+        bubble: "Без давления — только один ключевой вопрос.",
+      },
+      zh: {
+        speechKey: "psychAutomotiveHesitateTts",
+        tts: "对车还在犹豫？没关系。就一个问题：你更想知道车里面到底有什么——还是用同样的预算获得更多配置？这个答案直接区分了新车和二手车。",
+        bubble: "不施压——只是一个关键问题。",
+      },
+    },
+
     insurance_hesitate: {
       de: {
         speechKey: "psychInsuranceHesitateTts",
