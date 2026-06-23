@@ -1,11 +1,15 @@
 /**
  * Pauli Best Price — World speech + UI fallback (unbegrenzte Sprach-Tags).
- * Vollständige UI-Packs: de, en, th, pl, ru, zh — Avatar-TTS: jede BCP47-Sprache.
+ * UI + Avatar-TTS: 18 Locales (th → en → de bevorzugt), BCP47 für eleven_multilingual_v2.
  */
 (function (global) {
   "use strict";
 
-  var CORE_UI_LANGS = ["de", "en", "th", "pl", "ru", "zh"];
+  var CORE_UI_LANGS = [
+    "th", "en", "de", "pl", "ru", "zh",
+    "fr", "es", "it", "pt", "nl",
+    "ar", "ja", "ko", "vi", "tr", "hi", "id",
+  ];
 
   var NAME_TO_BCP = {
     de: "de-DE",
@@ -113,8 +117,9 @@
   function uiPackFallbackChain(code) {
     var primary = normalizeUiLang(code);
     var chain = [primary];
-    if (primary !== "en") chain.push("en");
-    if (primary !== "de") chain.push("de");
+    ["en", "de", "th"].forEach(function (fb) {
+      if (chain.indexOf(fb) < 0) chain.push(fb);
+    });
     return chain;
   }
 
@@ -134,12 +139,9 @@
 
   function speechTagForUiLang(uiLang) {
     var map = {
-      de: "de-DE",
-      en: "en-US",
-      th: "th-TH",
-      pl: "pl-PL",
-      ru: "ru-RU",
-      zh: "zh-CN",
+      th: "th-TH", en: "en-US", de: "de-DE", pl: "pl-PL", ru: "ru-RU", zh: "zh-CN",
+      fr: "fr-FR", es: "es-ES", it: "it-IT", pt: "pt-PT", nl: "nl-NL",
+      ar: "ar-SA", ja: "ja-JP", ko: "ko-KR", vi: "vi-VN", tr: "tr-TR", hi: "hi-IN", id: "id-ID",
     };
     return map[normalizeUiLang(uiLang)] || resolveSpeechTag(uiLang);
   }

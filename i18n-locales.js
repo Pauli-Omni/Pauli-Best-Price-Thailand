@@ -219,6 +219,12 @@ window.OSG_LOCALES = {
             coinDoctorGreetBubble:
               "Sawatdee khrap! Ich bin Pauli. Was kann ich heute für dich tun?",
             pauliSawadeeTts: "Sawadee khrap — สวัสดีครับ",
+            intentAccessibilityTts:
+              "Barrierefreiheit ist aktiv — größerer Kontrast und Vorlesen, wenn du willst.",
+            intentReadPriceTts:
+              "Ich suche sofort den besten Preis für dich — sag mir Produkt oder Marke.",
+            intentFunCrabTts:
+              "Mein Krabben-Instinkt sagt: Heute wird's richtig günstig!",
             pauliIntroTts:
               "Ich bin Pauli, dein Wegweiser, der dafür sorgt, dass du deinen Geldbeutel dicker hast!",
             avatarCompanionIntroTts:
@@ -1135,6 +1141,12 @@ window.OSG_LOCALES = {
             coinDoctorGreetBubble:
               "Sawatdee khrap! I'm Pauli. What can I do for you today?",
             pauliSawadeeTts: "Sawadee khrap — สวัสดีครับ",
+            intentAccessibilityTts:
+              "Accessibility is on — higher contrast and read-aloud when you need it.",
+            intentReadPriceTts:
+              "I'll hunt the best price right away — tell me the product or brand.",
+            intentFunCrabTts:
+              "My crab instinct says today is going to be cheap — very cheap!",
             pauliIntroTts:
               "I'm Pauli, your guide who helps make your wallet thicker!",
             avatarCompanionIntroTts:
@@ -1693,6 +1705,12 @@ window.OSG_LOCALES = {
             coinDoctorGreetBubble:
               "สวัสดีครับ! ผมพอลลี่ครับ วันนี้ให้ผมช่วยอะไรดีครับ?",
             pauliSawadeeTts: "สวัสดีครับ",
+            intentAccessibilityTts:
+              "โหมดการเข้าถึงพร้อมแล้ว — คอนทราสต์และอ่านออกเสียงเมื่อคุณต้องการครับ",
+            intentReadPriceTts:
+              "ผมจะหาราคาที่ดีที่สุดให้ทันที — บอกสินค้าหรือแบรนด์มาได้เลยครับ",
+            intentFunCrabTts:
+              "สัญชาตญาณปูบอกว่าวันนี้ถูกแน่นอนครับ!",
             pauliIntroTts:
               "ผมคือ Pauli ไกด์ของคุณที่ช่วยให้กระเป๋าเงินหนาขึ้น!",
             avatarCompanionIntroTts:
@@ -2532,6 +2550,12 @@ window.OSG_LOCALES = {
             coinDoctorGreetBubble:
               "Sawatdee khrap! Jestem Pauli. Co mogę dla ciebie dziś zrobić?",
             pauliSawadeeTts: "Sawadee khrap — สวัสดีครับ",
+            intentAccessibilityTts:
+              "Tryb dostępności włączony — większy kontrast i czytanie na głos, gdy chcesz.",
+            intentReadPriceTts:
+              "Od razu szukam najlepszej ceny — podaj produkt lub markę.",
+            intentFunCrabTts:
+              "Mój krabowy instynkt mówi: dziś będzie tanio — bardzo tanio!",
             pauliIntroTts:
               "Jestem Pauli, twój przewodnik, który pomaga zagęścić twój portfel!",
             avatarCompanionIntroTts:
@@ -3345,6 +3369,12 @@ window.OSG_LOCALES = {
             coinDoctorGreetBubble:
               "Саватди крап! Я Паули. Чем могу сегодня помочь?",
             pauliSawadeeTts: "Sawadee khrap — สวัสดีครับ",
+            intentAccessibilityTts:
+              "Режим доступности включён — контраст и озвучка, когда нужно.",
+            intentReadPriceTts:
+              "Сразу ищу лучшую цену — назови товар или бренд.",
+            intentFunCrabTts:
+              "Крабий инстинкт говорит: сегодня будет дёшево — очень дёшево!",
             pauliIntroTts:
               "Я Pauli, твой проводник, который помогает сделать кошелёк толще!",
             avatarCompanionIntroTts:
@@ -4154,6 +4184,12 @@ window.OSG_LOCALES = {
             coinDoctorGreetBubble:
               "Sawatdee khrap！我是保利。今天需要我帮您做什么？",
             pauliSawadeeTts: "Sawadee khrap — สวัสดีครับ",
+            intentAccessibilityTts:
+              "无障碍模式已开启 — 需要时可提高对比度并朗读。",
+            intentReadPriceTts:
+              "我马上帮你找最优价 — 告诉我产品或品牌。",
+            intentFunCrabTts:
+              "我的螃蟹直觉说：今天会很便宜 — 非常便宜！",
             pauliIntroTts: "我是 Pauli，你的向导，帮你让钱包更鼓！",
             avatarCompanionIntroTts: "嗨，我是 Pauli，你的私人向导。该怎么称呼你，咱们平等地开始？",
             avatarCompanionIntroBubble: "Pauli——你的向导。怎么称呼你？",

@@ -4,7 +4,11 @@
 (function (global) {
   "use strict";
 
-  var LANGS = ["de", "en", "th", "pl", "ru", "zh"];
+  var LANGS = [
+    "th", "en", "de", "pl", "ru", "zh",
+    "fr", "es", "it", "pt", "nl",
+    "ar", "ja", "ko", "vi", "tr", "hi", "id",
+  ];
   var SS_PENDING = "osg-draft-pending-v1";
 
   var COPY = {

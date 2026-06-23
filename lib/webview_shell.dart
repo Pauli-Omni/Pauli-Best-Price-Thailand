@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import 'avatar/avatar_animation_service.dart';
 import 'config/app_web_url.dart';
 
 class PauliWebShellApp extends StatelessWidget {
@@ -32,18 +34,42 @@ class _PauliWebViewScreenState extends State<PauliWebViewScreen> {
   var _loading = true;
   String? _error;
 
+  // Cached after first didChangeDependencies — safe to use in callbacks.
+  late AvatarAnimationService _avatarSvc;
+  bool _controllerReady = false;
+
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _avatarSvc = context.read<AvatarAnimationService>();
+    if (!_controllerReady) {
+      _controllerReady = true;
+      _initController();
+    }
+  }
+
+  void _initController() {
     final uri = Uri.tryParse(kPauliWebAppUrl);
     if (uri == null || !uri.hasScheme) {
-      _error = 'invalid_url';
-      _loading = false;
+      setState(() {
+        _error = 'invalid_url';
+        _loading = false;
+      });
       return;
     }
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0xFF0D0D0D))
+      // JavaScript-Brücke: Web-App ruft
+      //   window.AvatarAnimationChannel.postMessage('CRAB_DANCE')
+      // → Flutter empfängt und spielt Animation ab.
+      ..addJavaScriptChannel(
+        'AvatarAnimationChannel',
+        onMessageReceived: (msg) {
+          if (!mounted) return;
+          _avatarSvc.playAnimation(msg.message);
+        },
+      )
       ..setNavigationDelegate(
         NavigationDelegate(
           onPageStarted: (_) => setState(() => _loading = true),
@@ -84,15 +110,81 @@ class _PauliWebViewScreenState extends State<PauliWebViewScreen> {
               Material(
                 color: Colors.orange.shade900,
                 child: ListTile(
-                  title: Text(_error!, maxLines: 2, overflow: TextOverflow.ellipsis),
+                  title: Text(
+                    _error!,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                   trailing: IconButton(
                     icon: const Icon(Icons.refresh),
                     onPressed: _reload,
                   ),
                 ),
               ),
-            Expanded(child: WebViewWidget(controller: _controller)),
+            Expanded(
+              child: Stack(
+                children: [
+                  WebViewWidget(controller: _controller),
+                  // Unsichtbare Touch-Zone über der 3D-Münze.
+                  // Das echte Visual ist das Three.js-Coin-Objekt im WebView darunter.
+                  _AvatarAnimationOverlay(webController: _controller),
+                ],
+              ),
+            ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Avatar-Touch-Zone — unsichtbar, draggable, steuert Three.js via JS-Bridge
+//
+// Kein eigenes Visual: die 3D-Münze (Frontseite.jpeg in Three.js) im WebView
+// ist Paulis echte Darstellung. Dieses Widget ist nur die greifbare Eingabe-Fläche.
+//
+// Flutter → Web:   runJavaScript  → window.trigger3DAvatar(key)
+// Web    → Flutter: AvatarAnimationChannel.postMessage(key) → AvatarAnimationService
+// ---------------------------------------------------------------------------
+
+class _AvatarAnimationOverlay extends StatefulWidget {
+  const _AvatarAnimationOverlay({required this.webController});
+
+  final WebViewController webController;
+
+  @override
+  State<_AvatarAnimationOverlay> createState() =>
+      _AvatarAnimationOverlayState();
+}
+
+class _AvatarAnimationOverlayState extends State<_AvatarAnimationOverlay> {
+  /// Startposition deckt die Münze im Standard-Layout ab — frei verschiebbar.
+  Offset _position = const Offset(200.0, 500.0);
+
+  void _triggerJS(String animKey) {
+    widget.webController.runJavaScript(
+      "if(window.trigger3DAvatar) window.trigger3DAvatar('$animKey');",
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      left: _position.dx,
+      top: _position.dy,
+      child: GestureDetector(
+        // Transparent-Zone muss explizit auf Touches reagieren
+        behavior: HitTestBehavior.opaque,
+        onTap: () => _triggerJS('SPEAK_FORWARD'),
+        onPanStart: (_) => _triggerJS('EXIT_COIN_CHAIR'),
+        onPanUpdate: (details) {
+          setState(() => _position += details.delta);
+        },
+        child: const MouseRegion(
+          cursor: SystemMouseCursors.grab,
+          // Unsichtbare 80×80-Fläche — Three.js rendert die Münze darunter
+          child: SizedBox(width: 80, height: 80),
         ),
       ),
     );

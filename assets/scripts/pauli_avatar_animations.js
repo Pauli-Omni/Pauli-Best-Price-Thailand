@@ -69,6 +69,7 @@
     root.video.removeAttribute("src");
     root.video.load();
     root.video.hidden = true;
+    root.video.style.display = "none";
   }
 
   function showStatic(show) {
@@ -136,6 +137,9 @@
     stopVideo();
     showStatic(key !== "locked_carousel");
     clearStateClasses();
+    if (key === "speak" || key === "wai_greeting") {
+      return;
+    }
     var cls = CSS_BY_SLOT[key];
     if (cls && root.stage) root.stage.classList.add(cls);
     if (key === "locked_carousel") {
@@ -151,16 +155,11 @@
       key = "idle";
     }
     root.current = key;
-    if (key === "idle") {
-      clearStateClasses();
-      stopVideo();
-      showStatic(true);
-      if (root.flip) root.flip.hidden = true;
-      return;
-    }
-    tryPlayVideo(key, function () {
-      applyCssFallback(key);
-    });
+    stopVideo();
+    clearStateClasses();
+    showStatic(true);
+    if (root.flip) root.flip.hidden = true;
+    if (root.img) root.img.hidden = false;
   }
 
   function buildFlipLayer() {
@@ -290,9 +289,16 @@
     buildVideoLayer();
     bindPayModal();
     refreshLockState(isLicenseExpired());
-    global.setTimeout(function () {
-      preloadSlotMetadata("speak");
-    }, 1200);
+    if (root.video) {
+      root.video.hidden = true;
+      root.video.style.display = "none";
+    }
+    try {
+      global.addEventListener("osg-terms-audio-unlocked", function () {
+        if (!termsAudioOk()) return;
+        if (!root.appMountDone && !root.locked) onAppMount();
+      });
+    } catch (_) {}
     return true;
   }
 
@@ -300,45 +306,41 @@
     root.locked = !!isLocked;
     if (root.locked) {
       root.speakRefCount = 0;
-      setState("locked_carousel");
+      setState("idle");
       return;
     }
     closePaymentModal();
     if (root.current === "locked_carousel") setState("idle");
   }
 
-  function onAppMount() {
-    if (root.appMountDone) return;
-    root.appMountDone = true;
-    try {
-      if (global.sessionStorage.getItem(LS_MOUNT_WAI) === "1") return;
-      global.sessionStorage.setItem(LS_MOUNT_WAI, "1");
-    } catch (_) {}
-    if (root.locked) {
-      setState("locked_carousel");
-      return;
+  function termsAudioOk() {
+    if (typeof global.osgPauliAudioAllowed === "function") {
+      return global.osgPauliAudioAllowed();
     }
-    setState("wai_greeting");
-    try {
-      clearTimeout(root.waiTimer);
-    } catch (_) {}
-    root.waiTimer = global.setTimeout(function () {
-      if (root.speakRefCount > 0) return;
-      setState("idle");
-    }, 2800);
+    return true;
+  }
+
+  function onAppMount() {
+    if (!termsAudioOk()) return;
+    root.appMountDone = true;
   }
 
   function syncSpeakAudio(delta) {
     if (root.locked) return;
     root.speakRefCount = Math.max(0, root.speakRefCount + (delta || 0));
     if (root.speakRefCount > 0) {
-      setState("speak");
+      /* Kein Speak-Video (oft weißer Poster-Hintergrund) — nur Standbild + Lip-Sync */
+      stopVideo();
+      showStatic(true);
+      clearStateClasses();
+      root.current = "speak";
       return;
     }
     if (root.current === "speak") setState("idle");
   }
 
   function onSpeakStart() {
+    if (!termsAudioOk()) return;
     syncSpeakAudio(1);
   }
 
@@ -348,16 +350,12 @@
 
   function onWaiStart() {
     if (root.locked) return;
-    setState("wai_greeting");
   }
 
   function onWaiStop() {
     if (root.locked) return;
-    if (root.speakRefCount > 0) {
-      setState("speak");
-      return;
-    }
-    setState("idle");
+    if (root.speakRefCount > 0) return;
+    if (root.current === "wai_greeting") setState("idle");
   }
 
   function onCheckoutSuccess(amountThb, speakFn) {

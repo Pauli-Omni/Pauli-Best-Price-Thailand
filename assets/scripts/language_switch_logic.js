@@ -8,7 +8,19 @@
   var SS_PENDING = "osg-lang-switch-pending-v1";
   var SS_PROACTIVE_DONE = "osg-lang-switch-proactive-v1";
 
-  var LANGS = ["de", "en", "th", "pl", "ru", "zh"];
+  var LANGS = [
+    "th", "en", "de", "pl", "ru", "zh",
+    "fr", "es", "it", "pt", "nl",
+    "ar", "ja", "ko", "vi", "tr", "hi", "id",
+  ];
+
+  function resolveLangList() {
+    var wl = global.OSG_WORLD_LANG;
+    if (wl && wl.CORE_UI_LANGS && wl.CORE_UI_LANGS.length) {
+      return wl.CORE_UI_LANGS.slice();
+    }
+    return LANGS.slice();
+  }
 
   var LANG_NAMES = {
     de: {

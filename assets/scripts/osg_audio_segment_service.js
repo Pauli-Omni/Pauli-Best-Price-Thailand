@@ -12,6 +12,19 @@
   var activeStopTimer = null;
   var activeTimeHandler = null;
 
+  // Geteilter AudioContext für Lipsync-Analyser (bleibt offen zwischen Segmenten)
+  var _segCtx = null;
+
+  function getSegCtx() {
+    var AC = global.AudioContext || global.webkitAudioContext;
+    if (!AC) return null;
+    try {
+      if (!_segCtx || _segCtx.state === "closed") _segCtx = new AC();
+      if (_segCtx.state === "suspended") _segCtx.resume().catch(function () {});
+    } catch (_) { return null; }
+    return _segCtx;
+  }
+
   function clearActivePlayback() {
     if (activeStopTimer) {
       clearTimeout(activeStopTimer);
@@ -93,12 +106,28 @@
   function playSegmentOnAudio(audio, segment) {
     clearActivePlayback();
     activeAudio = audio;
+
+    // Lipsync-Analyser aufbauen (same-origin Master-MP3, kein crossOrigin nötig)
+    var analyser = null;
+    try {
+      var ctx = getSegCtx();
+      if (ctx) {
+        analyser = ctx.createAnalyser();
+        analyser.fftSize = 256;
+        var src = ctx.createMediaElementSource(audio);
+        src.connect(analyser);
+        analyser.connect(ctx.destination);
+      }
+    } catch (_) { analyser = null; }
+
     return new Promise(function (resolve, reject) {
       var ended = false;
       function finish(ok) {
         if (ended) return;
         ended = true;
         clearActivePlayback();
+        // Lip-Sync-Visuals stoppen (AudioContext bleibt für das nächste Segment offen)
+        if (global.OSGLipsyncStopVisuals) global.OSGLipsyncStopVisuals();
         resolve(!!ok);
       }
 
@@ -114,6 +143,12 @@
           });
         }
         var durationMs = Math.max(80, segment.endMs - segment.startMs);
+
+        // Lipsync starten — AnalyserNode treibt den rAF-Loop in tts-lipsync-bridge.js
+        if (global.OSGLipsyncBindToAudio) {
+          global.OSGLipsyncBindToAudio(audio, analyser);
+        }
+
         activeStopTimer = setTimeout(function () {
           finish(true);
         }, durationMs + 120);

@@ -4,7 +4,11 @@
 (function () {
   "use strict";
 
-  var LANGS = ["de", "en", "th", "pl", "ru", "zh"];
+  var LANGS = [
+    "th", "en", "de", "pl", "ru", "zh",
+    "fr", "es", "it", "pt", "nl",
+    "ar", "ja", "ko", "vi", "tr", "hi", "id",
+  ];
 
   function norm(code) {
     var c = String(code || "en")

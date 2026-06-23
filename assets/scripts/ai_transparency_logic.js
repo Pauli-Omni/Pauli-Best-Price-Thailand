@@ -4,7 +4,11 @@
 (function (global) {
   "use strict";
 
-  var LANGS = ["de", "en", "th", "pl", "ru", "zh"];
+  var LANGS = [
+    "th", "en", "de", "pl", "ru", "zh",
+    "fr", "es", "it", "pt", "nl",
+    "ar", "ja", "ko", "vi", "tr", "hi", "id",
+  ];
 
   var AI_HINT = {
     de: "Da ich eine AI bin, bitte prüfe diesen Entwurf kurz gegen deinen Beleg.",

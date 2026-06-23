@@ -48,6 +48,11 @@
 
   function markTermsAccepted() {
     writeLs(LS_TERMS, "1");
+    try {
+      if (typeof global.osgPauliOnTermsAudioUnlock === "function") {
+        global.osgPauliOnTermsAudioUnlock();
+      }
+    } catch (_) {}
   }
 
   function firstBootComplete() {
@@ -310,6 +315,11 @@
         if (!chk || !chk.checked) return;
         markTermsAccepted();
         done();
+        try {
+          if (typeof global.osgScheduleAvatarCompanionBoot === "function") {
+            global.osgScheduleAvatarCompanionBoot(420);
+          }
+        } catch (_) {}
       }
       function onDecline() {
         cleanup();
@@ -395,6 +405,7 @@
   async function runSessionGreeting(pack, speakApi) {
     pack = pack || {};
     speakApi = speakApi || {};
+    if (!termsAccepted()) return;
     if (sessionGreetDone()) return;
 
     var firstName = "";
@@ -427,7 +438,7 @@
       await speakApi.speakLine(sawLine, {
         gesture: "greet",
         langCode: "th",
-        speechKey: "pauliSawadeeTts",
+        speechKey: "pauliSawadee",
         skipBridge: true,
         returnHome: false,
       });
@@ -444,13 +455,13 @@
       } catch (_) {}
       await speakApi.speakLine(greetLine, {
         gesture: "greet",
-        speechKey: "avatarStartupGreetLine",
+        speechKey: "pauliIntro",
         skipBridge: true,
       });
     } else if (greetLine && typeof speakApi.speakLine === "function") {
       await speakApi.speakLine(greetLine, {
         gesture: "greet",
-        speechKey: "avatarStartupGreetLine",
+        speechKey: "pauliIntro",
       });
     }
 
@@ -579,6 +590,7 @@
   async function runTrustPledgePresentation(pack, speakApi) {
     pack = pack || {};
     speakApi = speakApi || {};
+    if (!termsAccepted()) return;
     if (!shouldShowTrustPledgeAvatar()) return;
 
     var segments = trustPledgeSegments(pack);

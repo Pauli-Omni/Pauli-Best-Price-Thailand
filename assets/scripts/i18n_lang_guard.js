@@ -5,7 +5,11 @@
 (function (global) {
   "use strict";
 
-  var LANGS = ["de", "en", "th", "pl", "ru", "zh"];
+  var LANGS = [
+    "th", "en", "de", "pl", "ru", "zh",
+    "fr", "es", "it", "pt", "nl",
+    "ar", "ja", "ko", "vi", "tr", "hi", "id",
+  ];
 
   function worldLang() {
     return global.OSG_WORLD_LANG || null;
@@ -77,6 +81,7 @@
     var hasTh = lineHasThai(line);
     var hasLat = lineHasLatin(line);
     if (L === "th") return !hasLat || !hasTh;
+    if (L !== "th" && hasTh && hasLat) return false;
     if (L === "de") return !hasTh;
     if (hasTh && hasLat) return false;
     return true;
@@ -85,17 +90,17 @@
   function stripThaiLatinMix(line, lang) {
     var L = normalizeLang(lang);
     if (isMonolingualLine(line, L)) return String(line || "").trim();
-    if (L === "de" || L === "en" || L === "pl" || L === "ru" || L === "zh") {
-      return String(line || "")
-        .replace(/[\u0E00-\u0E7F]+/g, "")
-        .replace(/\s{2,}/g, " ")
-        .replace(/^[\s,;—–-]+|[\s,;—–-]+$/g, "")
-        .trim();
-    }
     if (L === "th") {
       return String(line || "")
         .replace(/\b(Sawatdee khrap!?|sawatdee khrap!?)\b/gi, "")
         .replace(/\s{2,}/g, " ")
+        .trim();
+    }
+    if (L !== "th") {
+      return String(line || "")
+        .replace(/[\u0E00-\u0E7F]+/g, "")
+        .replace(/\s{2,}/g, " ")
+        .replace(/^[\s,;—–-]+|[\s,;—–-]+$/g, "")
         .trim();
     }
     return String(line || "").trim();

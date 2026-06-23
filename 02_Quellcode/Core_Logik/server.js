@@ -1738,9 +1738,13 @@ app.post("/api/pauli-chat", rlChat, async (req, res) => {
   }
 });
 
-/** Default: ElevenLabs male-narrator preset used for Pauli TTS in shipping config. */
-let resolvedVoiceId =
-  (process.env.ELEVENLABS_VOICE_ID || "").trim() || "R6OIrb7V5SxlTzLEZVo";
+/** Pauli-Stimme: Liam (Energetic, Social Media Creator) — ElevenLabs Pre-Made Voice.
+ *  Voice-Settings aus dem Sample-Dateinamen destilliert:
+ *    s=0.66 (stability), sb=0.42 (similarity_boost), sp=1.02 (speed)
+ *  Priorität: ELEVENLABS_VOICE_ID > Name-Hint-Lookup ("Liam") > erster Account-Voice.
+ *  Kein hardcodierter Fallback — erzwingt, dass der richtige Liam-Voice geladen wird.
+ */
+let resolvedVoiceId = (process.env.ELEVENLABS_VOICE_ID || "").trim() || null;
 
 async function resolveVoiceId(apiKey) {
   if (resolvedVoiceId) return resolvedVoiceId;
@@ -1750,19 +1754,18 @@ async function resolveVoiceId(apiKey) {
   if (!r.ok) throw new Error(await r.text());
   const data = await r.json();
   const voices = data.voices || [];
-  const hint = String(process.env.ELEVENLABS_VOICE_NAME_HINT || "").trim();
-  const named = hint
-    ? voices.find((v) => {
-        try {
-          return new RegExp(
-            hint.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
-            "i",
-          ).test(String(v.name || ""));
-        } catch {
-          return false;
-        }
-      })
-    : null;
+  // Primär: ELEVENLABS_VOICE_NAME_HINT (Standard: "Liam")
+  const hint = String(process.env.ELEVENLABS_VOICE_NAME_HINT || "Liam").trim();
+  const named = voices.find((v) => {
+    try {
+      return new RegExp(
+        hint.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+        "i",
+      ).test(String(v.name || ""));
+    } catch {
+      return false;
+    }
+  });
   resolvedVoiceId = named?.voice_id || voices[0]?.voice_id || null;
   return resolvedVoiceId;
 }
@@ -1833,11 +1836,12 @@ app.post("/api/tts", rlTts, async (req, res) => {
     const ttsUrl =
       `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}/stream` +
       `?optimize_streaming_latency=3&output_format=mp3_44100_128`;
-    /* Voice-Settings: nachts (whisper) sanftere, hauchige Stimme;
-       tagsüber klar und kräftig. */
+    /* Voice-Settings: Liam (Energetic, Social Media Creator)
+       Destilliert aus Sample-Dateiname: s=0.66, sb=0.42, sp=1.02
+       Whisper-Modus: etwas stabiler + leicht langsamer (kein Klangwechsel, nur Tempo). */
     const voiceSettings = whisper
-      ? { stability: 0.72, similarity_boost: 0.75, style: 0.15, use_speaker_boost: false }
-      : { stability: 0.48, similarity_boost: 0.82, style: 0.00, use_speaker_boost: true };
+      ? { stability: 0.72, similarity_boost: 0.42, style: 0.00, speed: 0.92, use_speaker_boost: false }
+      : { stability: 0.66, similarity_boost: 0.42, style: 0.00, speed: 1.02, use_speaker_boost: true };
     const r = await fetch(ttsUrl, {
       method: "POST",
       headers: {
