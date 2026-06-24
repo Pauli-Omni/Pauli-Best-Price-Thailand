@@ -349,7 +349,24 @@
   }
 
   function onWaiStart() {
-    if (root.locked) return;
+    playWaiGreeting();
+  }
+
+  function playWaiGreeting() {
+    if (root.locked || !root.stage) return;
+    root.current = "wai_greeting";
+    clearStateClasses();
+    root.stage.classList.add("is-anim-wai");
+    tryPlayVideo("wai_greeting", function () {
+      showStatic(true);
+    });
+  }
+
+  function stopWaiGreeting() {
+    if (root.stage) root.stage.classList.remove("is-anim-wai");
+    stopVideo();
+    showStatic(true);
+    if (root.current === "wai_greeting") root.current = "idle";
   }
 
   function onWaiStop() {
@@ -407,6 +424,8 @@
     onSpeakStop: onSpeakStop,
     onWaiStart: onWaiStart,
     onWaiStop: onWaiStop,
+    playWaiGreeting: playWaiGreeting,
+    stopWaiGreeting: stopWaiGreeting,
     openPaymentModal: openPaymentModal,
     closePaymentModal: closePaymentModal,
     handleCoinClick: handleCoinClick,

@@ -218,7 +218,7 @@ window.OSG_LOCALES = {
               "Sawatdee khrap! Ich bin Pauli. Was kann ich heute für dich tun?",
             coinDoctorGreetBubble:
               "Sawatdee khrap! Ich bin Pauli. Was kann ich heute für dich tun?",
-            pauliSawadeeTts: "Sawadee khrap — สวัสดีครับ",
+            pauliSawadeeTts: "Sawadee krab — สวัสดีครับ",
             intentAccessibilityTts:
               "Barrierefreiheit ist aktiv — größerer Kontrast und Vorlesen, wenn du willst.",
             intentReadPriceTts:
@@ -232,17 +232,19 @@ window.OSG_LOCALES = {
             avatarCompanionIntroBubble:
               "Pauli — dein Wegweiser. Wie darf ich dich nennen?",
             avatarStartupSawadeeTts: "สวัสดีครับ",
-            avatarStartupSawadeeBubble: "Sawadee khrap",
+            avatarStartupSawadeeBubble: "Sawadee krab",
             avatarStartupGreetWithName0:
-              "Ich bin Pauli, dein virtueller Begleiter und Wegweiser durch den Einkauf — schön, dich zu sehen, {NAME}.",
+              "Ich bin Pauli, dein virtueller Einkaufsbegleiter — schön, dich zu sehen, {NAME}.",
             avatarStartupGreetWithName1:
               "{NAME}, willkommen zurück! Ich begleite dich durch die besten Preise in Thailand.",
             avatarStartupGreetWithName2:
               "Hallo {NAME}! Pauli hier — dein Wegweiser fürs smarte Shoppen, ganz ohne Anmeldung.",
             avatarStartupGreetNoName0:
-              "Ich bin Pauli, dein virtueller Begleiter und Wegweiser durch den Einkauf — sofort nutzbar, ohne Login.",
+              "Ich bin Pauli und ich bin dein virtueller Einkaufsbegleiter.",
             avatarStartupGreetNoName1:
               "Pauli Best Price Thailand — ich zeige dir Wege zum Sparen. Kein Konto nötig, du startest direkt hier.",
+            avatarStartupGreetNoName2:
+              "Ich bin Pauli — dein virtueller Begleiter für Einkäufe in Thailand.",
             firstBootLocationGateTitle: "Standort für Lieferadresse",
             firstBootLocationGateLead:
               "Beim ersten Start fragen wir einmalig nach Standortfreigabe — für Liefer- und Filialhinweise auf diesem Gerät. Ohne Freigabe kannst du trotzdem shoppen.",
@@ -1142,7 +1144,7 @@ window.OSG_LOCALES = {
               "Sawatdee khrap! I'm Pauli. What can I do for you today?",
             coinDoctorGreetBubble:
               "Sawatdee khrap! I'm Pauli. What can I do for you today?",
-            pauliSawadeeTts: "Sawadee khrap — สวัสดีครับ",
+            pauliSawadeeTts: "Sawadee krab — สวัสดีครับ",
             intentAccessibilityTts:
               "Accessibility is on — higher contrast and read-aloud when you need it.",
             intentReadPriceTts:
@@ -1156,7 +1158,7 @@ window.OSG_LOCALES = {
             avatarCompanionIntroBubble:
               "Pauli — your guide. What should I call you?",
             avatarStartupSawadeeTts: "สวัสดีครับ",
-            avatarStartupSawadeeBubble: "Sawadee khrap",
+            avatarStartupSawadeeBubble: "Sawadee krab",
             avatarStartupGreetWithName0:
               "I'm Pauli, your virtual companion and shopping guide — good to see you, {NAME}.",
             avatarStartupGreetWithName1:
@@ -1720,7 +1722,7 @@ window.OSG_LOCALES = {
             avatarCompanionIntroBubble:
               "Pauli — ไกด์ของคุณ เรียกว่าอะไรดี?",
             avatarStartupSawadeeTts: "สวัสดีครับ",
-            avatarStartupSawadeeBubble: "Sawadee khrap",
+            avatarStartupSawadeeBubble: "Sawadee krab",
             avatarStartupGreetWithName0:
               "ผมคือ Pauli ผู้ช่วยเสมือนและไกด์ช้อปปิ้งของคุณ — ยินดีที่ได้เจอ {NAME} ครับ",
             avatarStartupGreetWithName1:
@@ -2553,7 +2555,7 @@ window.OSG_LOCALES = {
               "Sawatdee khrap! Jestem Pauli. Co mogę dla ciebie dziś zrobić?",
             coinDoctorGreetBubble:
               "Sawatdee khrap! Jestem Pauli. Co mogę dla ciebie dziś zrobić?",
-            pauliSawadeeTts: "Sawadee khrap — สวัสดีครับ",
+            pauliSawadeeTts: "Sawadee krab — สวัสดีครับ",
             intentAccessibilityTts:
               "Tryb dostępności włączony — większy kontrast i czytanie na głos, gdy chcesz.",
             intentReadPriceTts:
@@ -2567,7 +2569,7 @@ window.OSG_LOCALES = {
             avatarCompanionIntroBubble:
               "Pauli — twój przewodnik. Jak cię wołać?",
             avatarStartupSawadeeTts: "สวัสดีครับ",
-            avatarStartupSawadeeBubble: "Sawadee khrap",
+            avatarStartupSawadeeBubble: "Sawadee krab",
             avatarStartupGreetWithName0:
               "Jestem Pauli, twój wirtualny towarzysz i przewodnik po zakupach — miło cię widzieć, {NAME}.",
             avatarStartupGreetWithName1:
@@ -3372,7 +3374,7 @@ window.OSG_LOCALES = {
               "Саватди крап! Я Паули. Чем могу сегодня помочь?",
             coinDoctorGreetBubble:
               "Саватди крап! Я Паули. Чем могу сегодня помочь?",
-            pauliSawadeeTts: "Sawadee khrap — สวัสดีครับ",
+            pauliSawadeeTts: "Sawadee krab — สวัสดีครับ",
             intentAccessibilityTts:
               "Режим доступности включён — контраст и озвучка, когда нужно.",
             intentReadPriceTts:
@@ -3386,7 +3388,7 @@ window.OSG_LOCALES = {
             avatarCompanionIntroBubble:
               "Pauli — твой проводник. Как тебя звать?",
             avatarStartupSawadeeTts: "สวัสดีครับ",
-            avatarStartupSawadeeBubble: "Sawadee khrap",
+            avatarStartupSawadeeBubble: "Sawadee krab",
             avatarStartupGreetWithName0:
               "Я Pauli, твой виртуальный спутник и гид по покупкам — рад видеть тебя, {NAME}.",
             avatarStartupGreetWithName1:
@@ -4187,7 +4189,7 @@ window.OSG_LOCALES = {
               "Sawatdee khrap！我是保利。今天需要我帮您做什么？",
             coinDoctorGreetBubble:
               "Sawatdee khrap！我是保利。今天需要我帮您做什么？",
-            pauliSawadeeTts: "Sawadee khrap — สวัสดีครับ",
+            pauliSawadeeTts: "Sawadee krab — สวัสดีครับ",
             intentAccessibilityTts:
               "无障碍模式已开启 — 需要时可提高对比度并朗读。",
             intentReadPriceTts:
@@ -4198,7 +4200,7 @@ window.OSG_LOCALES = {
             avatarCompanionIntroTts: "嗨，我是 Pauli，你的私人向导。该怎么称呼你，咱们平等地开始？",
             avatarCompanionIntroBubble: "Pauli——你的向导。怎么称呼你？",
             avatarStartupSawadeeTts: "สวัสดีครับ",
-            avatarStartupSawadeeBubble: "Sawadee khrap",
+            avatarStartupSawadeeBubble: "Sawadee krab",
             avatarStartupGreetWithName0:
               "我是 Pauli，你的虚拟购物伙伴和导购——很高兴见到你，{NAME}。",
             avatarStartupGreetWithName1:
@@ -4826,7 +4828,7 @@ window.OSG_LOCALES = {
               "Sawatdee khrap! I'm Pauli. What can I do for you today?",
             coinDoctorGreetBubble:
               "Sawatdee khrap! I'm Pauli. What can I do for you today?",
-            pauliSawadeeTts: "Sawadee khrap — สวัสดีครับ",
+            pauliSawadeeTts: "Sawadee krab — สวัสดีครับ",
             pauliIntroTts:
               "I'm Pauli, your guide who helps make your wallet thicker!",
             avatarCompanionIntroTts:
@@ -4834,7 +4836,7 @@ window.OSG_LOCALES = {
             avatarCompanionIntroBubble:
               "Pauli — your guide. What should I call you?",
             avatarStartupSawadeeTts: "สวัสดีครับ",
-            avatarStartupSawadeeBubble: "Sawadee khrap",
+            avatarStartupSawadeeBubble: "Sawadee krab",
             avatarStartupGreetWithName0:
               "I'm Pauli, your virtual companion and shopping guide — good to see you, {NAME}.",
             avatarStartupGreetWithName1:

@@ -11809,8 +11809,23 @@
         });
 
         function beginWai() {
-          /* Optik ruhig — kein Wai-Sprung, kein Transform */
+          if (avatarReturnTween) {
+            avatarReturnTween.stop();
+            avatarReturnTween = null;
+          }
+          waiActive = true;
+          waiStart = performance.now();
+          container.classList.add("is-wai", "is-anim-wai");
         }
+
+        function endWai() {
+          waiActive = false;
+          container.classList.remove("is-wai", "is-anim-wai");
+          osgTweenAvatarReturn();
+        }
+
+        window.osgAvatarBeginWai = beginWai;
+        window.osgAvatarEndWai = endWai;
 
         function osgTweenAvatarReturn() {
           if (avatarReturnTween) avatarReturnTween.stop();
@@ -12097,6 +12112,7 @@
 
         function osgLipSyncTick(now) {
           if (!lipSyncActive) return;
+          if (waiActive) return;
           if (lipSyncAnalyser && typeof window.OSGLipsyncTickAnalyser === "function") {
             lipSyncMouthLevel = window.OSGLipsyncTickAnalyser(lipSyncAnalyser);
             return;
@@ -12289,6 +12305,9 @@
             osgAvatarPoint(pointTarget, line, pointDuration);
           }
           osgAvatarGestureStart(gesture, Math.max(2200, pointDuration - 500));
+          if (gesture === "wai" && typeof beginWai === "function" && !waiActive) {
+            beginWai();
+          }
           ttsLoading = true;
           try {
             await window.playPauliVoice(line, {
@@ -12300,6 +12319,9 @@
             osgLipSyncStop();
           } finally {
             ttsLoading = false;
+            if (gesture === "wai" && typeof endWai === "function") {
+              endWai();
+            }
             if (avatarGestureType === gesture) osgAvatarGestureStop();
             if (
               traveled &&
@@ -16584,6 +16606,22 @@
           osgTweenUpdate(now);
           osgLipSyncTick(now);
           osgAvatarGestureTick(now, delta);
+          if (waiActive) {
+            const u = Math.min(1, (now - waiStart) / WAI_MS);
+            const bow = Math.sin(u * Math.PI);
+            avatarBow.rx = bow * -0.28;
+            avatarBow.rz = Math.sin(u * Math.PI * 2) * 0.05 * bow;
+            avatarBow.scale = 1 + bow * 0.04;
+            osgApplyAvatarTransform(
+              "rotateX(" +
+                avatarBow.rx +
+                "rad) rotateZ(" +
+                avatarBow.rz +
+                "rad) scale(" +
+                avatarBow.scale +
+                ")"
+            );
+          }
           if (ttsLoading || lipSyncActive) {
             container.classList.add("is-speaking");
           } else {
