@@ -12,7 +12,7 @@
     />
     <title>Pauli Best Price Thailand — price comparison</title>
     <meta name="keywords" content="price comparison,lazada,shopee,7-eleven,bestprice,thailand,pauli" />
-    <meta name="theme-color" content="#0d0d0d" />
+    <meta name="theme-color" content="transparent" />
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="apple-touch-icon" href="/Frontseite02.png" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -28,6 +28,16 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
+    <style id="osg-transparent-shell">
+      html,
+      body,
+      main.page,
+      #coin-stage,
+      #coin-stage canvas {
+        background: transparent !important;
+        background-color: transparent !important;
+      }
+    </style>
     <!-- Production: serve minified/bundled assets; keep API keys only server-side. Client JS cannot be “sealed” against inspection — device anchors + rate limits complement abuse handling. -->
     <script
       type="text/javascript"
