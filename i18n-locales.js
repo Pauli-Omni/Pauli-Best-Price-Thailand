@@ -553,11 +553,11 @@ window.OSG_LOCALES = {
             legalGuidanceBannerAria: "Rechtlicher Hinweis — Vermittlerstatus",
             legalGuidanceStatement: "Wir sind die Wegweiser und keine Berater.",
             bindingAdviceDisclaimerHtml:
-              'Pauli Best Price bietet Vergleich & Weiterleitung — keine Beratung. Verträge nur zwischen Ihnen und Partnern.<span class="legal-guidance-services"><a href="#partner-affiliate-panel">Immobilienvergleich</a><a href="#partner-affiliate-panel">Finanzen</a><a href="#partner-affiliate-panel">Versicherungen</a></span> Keine Haftung für Falschangaben Dritter. Altersnachweis 20+ ausschließlich bei Immobilien-, Finanz- und Versicherungs‑Vertragsabschlüssen.',
+              'Pauli Best Price bietet Vergleich & Weiterleitung — keine Beratung. Verträge nur zwischen Ihnen und Partnern.<span class="legal-guidance-services"><a href="#partner-affiliate-panel">Immobilienvergleich</a><a href="#partner-affiliate-panel">Finanzen</a><a href="#partner-affiliate-panel">Versicherungen</a></span> Keine Haftung für Falschangaben Dritter. Altersnachweis 15+ ausschließlich bei Immobilien-, Finanz- und Versicherungs‑Vertragsabschlüssen.',
             bindingAdviceDisclaimerPlain:
               "Pauli Best Price bietet Vergleich & Weiterleitung — keine Beratung. Verträge nur zwischen Ihnen und Partnern. Keine Haftung für Falschangaben Dritter.",
             intermediaryScopeDisclaimer:
-              "Immobilien, Finanzprodukte/Kredite und Versicherungen: Altersnachweis 20+ nur bei rechtsgültigen Vertragsabschlüssen; Omni Solutions Global® Co. Ltd. bleibt reiner Vermittler — keine Anlage-/Finanz-/Immo-/Versicherungsberatung.",
+              "Immobilien, Finanzprodukte/Kredite und Versicherungen: Altersnachweis 15+ nur bei rechtsgültigen Vertragsabschlüssen; Omni Solutions Global® Co. Ltd. bleibt reiner Vermittler — keine Anlage-/Finanz-/Immo-/Versicherungsberatung.",
             affiliateSectionBanks: "Bank-Partner",
             affiliateSectionMofa: "Motorrad-/Mofa-Marken Thailand (Orientierung)",
             bookingBtnLabel: "Buchungs-Button: Besuch beim Händler vorab melden",
@@ -706,18 +706,20 @@ window.OSG_LOCALES = {
               "Gespeichert — Shortcut nutzt diese Zeile in Google Maps (lokal)",
             mapsSevenNearHomeShortcutLabel: "7‑Eleven nahe gespeicherter Orientierung",
 
-            ageGateHeading: "Nachweis: mindestens 20 Jahre",
+            ageGateHeading: "Nachweis: mindestens 15 Jahre",
             ageGateLead:
-              "Immobilien-, Finanz- und Versicherungs‑Partner können nach thailändischen Vorgaben rechtsgültige Abschlüsse nur mit Nutzerinnen und Nutzern ab 20 Jahren freischalten. Dein Geburtsdatum wird ausschließlich lokal in diesem Browser gespeichert und nie an Omni Solutions Global® Server geschickt.",
+              "Immobilien-, Finanz- und Versicherungs‑Partner können rechtsgültige Abschlüsse nur mit Nutzerinnen und Nutzern ab 15 Jahren freischalten. Dein Geburtsdatum wird ausschließlich lokal in diesem Browser gespeichert und nie an Omni Solutions Global® Server geschickt.",
             ageGateBirthLabel: "Geburtsdatum",
             ageGateSubmitBtn: "Bestätigen und fortfahren",
             ageGateDismissBtn: "Abbrechen",
             ageGateErrEmpty: "Bitte ein gültiges Geburtsdatum wählen.",
             ageGateErrInvalid: "Dieses Datum ist nicht gültig.",
             ageGateTooYoungToast:
-              "Zugriff verweigert: Für diesen Bereich sind Nutzerinnen und Nutzer unter 20 Jahren gesperrt.",
+              "Zugriff verweigert: Für diesen Bereich sind Nutzerinnen und Nutzer unter 15 Jahren gesperrt.",
+            age_restriction_error:
+              "Du musst mindestens 15 Jahre alt sein, um die App zu nutzen.",
             ageGateAvatarSpeakLine:
-              "Halt! Für diesen Bereich musst du laut thailändischem Gesetz mindestens 20 Jahre alt sein.",
+              "Halt! Für diesen Bereich musst du mindestens 15 Jahre alt sein.",
 
             partnerHandoffSpeakTts:
               "Gute Wahl! Ich leite dich direkt zum Partner weiter, damit dein Bonus reserviert bleibt.",
@@ -1252,7 +1254,7 @@ window.OSG_LOCALES = {
             affiliateTransparency:
               "You may optionally log partner clicks locally on your device (osg_* parameters in the device journal) — without central user profiles and without sending names or phone numbers to us.",
             intermediaryScopeDisclaimer:
-              "Real estate, finance/credit and insurance: age 20+ only for binding contract steps; Omni Solutions Global® Co. Ltd. is a pure intermediary — not an investment, finance, property or insurance advisor.",
+              "Real estate, finance/credit and insurance: age 15+ only for binding contract steps; Omni Solutions Global® Co. Ltd. is a pure intermediary — not an investment, finance, property or insurance advisor.",
             affiliateSectionBanks: "Bank partners",
             affiliateSectionMofa: "Motor / moped brand routes (TH examples)",
             bookingBtnLabel: "Booking: notify the dealership in advance",
@@ -2030,7 +2032,7 @@ window.OSG_LOCALES = {
             legalGuidanceBannerAria: "ประกาศทางกฎหมาย — บทบาทผู้นำทาง",
             legalGuidanceStatement: "เราเป็นผู้นำทาง ไม่ใช่ที่ปรึกษา",
             bindingAdviceDisclaimerHtml:
-              'Pauli Best Price ช่วยเปรียบเทียบและส่งต่อ — ไม่ใช่คำปรึกษา สัญญาเกิดระหว่างคุณกับพาร์ทเนอร์เท่านั้น<span class="legal-guidance-services"><a href="#partner-affiliate-panel">เปรียบเทียบอสังหาริมทรัพย์</a><a href="#partner-affiliate-panel">การเงิน</a><a href="#partner-affiliate-panel">ประกันภัย</a></span> ไม่รับผิดชอบข้อมูลเท็จจากบุคคลที่สาม อายุ 20+ เฉพาะการทำสัญญาอสังหา การเงิน และประกันภัย',
+              'Pauli Best Price ช่วยเปรียบเทียบและส่งต่อ — ไม่ใช่คำปรึกษา สัญญาเกิดระหว่างคุณกับพาร์ทเนอร์เท่านั้น<span class="legal-guidance-services"><a href="#partner-affiliate-panel">เปรียบเทียบอสังหาริมทรัพย์</a><a href="#partner-affiliate-panel">การเงิน</a><a href="#partner-affiliate-panel">ประกันภัย</a></span> ไม่รับผิดชอบข้อมูลเท็จจากบุคคลที่สาม อายุ 15+ เฉพาะการทำสัญญาอสังหา การเงิน และประกันภัย',
             bindingAdviceDisclaimerPlain:
               "Pauli Best Price ช่วยเปรียบเทียบและส่งต่อ — ไม่ใช่คำปรึกษา สัญญาเกิดระหว่างคุณกับพาร์ทเนอร์เท่านั้น",
             affiliateFundingDisclosure:
@@ -2038,7 +2040,7 @@ window.OSG_LOCALES = {
             affiliateTransparency:
               "คุณอาจบันทึกคลิกพาร์ทเนอร์ในเครื่องได้ (พารามิเตอร์ osg_* ในบันทึกเครื่อง) — ไม่มีโปรไฟล์ผู้ใช้กลาง และไม่ส่งชื่อหรือเบอร์โทรให้เรา",
             intermediaryScopeDisclaimer:
-              "อสังหา การเงิน/สินเชื่อ และประกันภัย: อายุ 20+ เฉพาะขั้นตอนทำสัญญา; Omni Solutions Global® Co. Ltd. เป็นผู้ประสานเท่านั้น — ไม่ใช่ที่ปรึกษาการลงทุน การเงิน อสังหา หรือประกันภัย",
+              "อสังหา การเงิน/สินเชื่อ และประกันภัย: อายุ 15+ เฉพาะขั้นตอนทำสัญญา; Omni Solutions Global® Co. Ltd. เป็นผู้ประสานเท่านั้น — ไม่ใช่ที่ปรึกษาการลงทุน การเงิน อสังหา หรือประกันภัย",
             affiliateSectionBanks: "พันธมิตรธนาคาร",
             affiliateSectionMofa: "แบรนด์มอเตอร์ไซค์ / โมฟ่า ไทย (ตัวอย่างเส้นทาง)",
             bookingBtnLabel: "ปุ่มจอง: แจ้งผู้ขายล่วงหน้าว่าจะเข้าชม",
@@ -2159,17 +2161,19 @@ window.OSG_LOCALES = {
               "เก็บแล้ว — ปุ่มลัด Seven ในแผนที่ใช้บรรทัดนี้ (เฉพาะในเครื่อง)",
             mapsSevenNearHomeShortcutLabel: "7‑Eleven ใกล้จุดบ้านเก็บอ้างถึงในเครื่อง",
 
-            ageGateHeading: "ยืนยันอายุ 20 ปีขึ้นไป",
+            ageGateHeading: "ยืนยันอายุ 15 ปีขึ้นไป",
             ageGateLead:
-              "พาร์ทเนอร์อสังหา การเงิน และประกันภัยอาจเปิดขั้นตอนทำสัญญาได้เมื่อผู้ใช้อายุ 20 ปีขึ้นไป วันเกิดเก็บเฉพาะในเบราว์เซอร์นี้ ไม่อัปโหลดไปยัง Omni Solutions Global®",
+              "พาร์ทเนอร์อสังหา การเงิน และประกันภัยอาจเปิดขั้นตอนทำสัญญาได้เมื่อผู้ใช้อายุ 15 ปีขึ้นไป วันเกิดเก็บเฉพาะในเบราว์เซอร์นี้ ไม่อัปโหลดไปยัง Omni Solutions Global®",
             ageGateBirthLabel: "วันเกิด",
             ageGateSubmitBtn: "ยืนยันและดำเนินการต่อ",
             ageGateDismissBtn: "ยกเลิก",
             ageGateErrEmpty: "กรุณาเลือกวันเกิด",
             ageGateErrInvalid: "รูปแบบวันที่ไม่ถูกต้อง",
-            ageGateTooYoungToast: "ไม่สามารถเข้าใช้กลุ่มนี้ — ผู้ที่อายุต่ำกว่า 20 ปี",
+            ageGateTooYoungToast: "ไม่สามารถเข้าใช้กลุ่มนี้ — ผู้ที่อายุต่ำกว่า 15 ปี",
+            age_restriction_error:
+              "คุณต้องมีอายุอย่างน้อย 15 ปีจึงจะใช้แอปได้",
             ageGateAvatarSpeakLine:
-              "หยุดครับ — ในไทยเครื่องมือควบคุมวัยรุ่นกำหนดให้อายุอย่างน้อยยี่สิบปีก่อนเข้าส่วนนี้ครับ",
+              "หยุดครับ — ส่วนนี้เปิดให้ผู้ที่มีอายุอย่างน้อยสิบห้าปีขึ้นไปครับ",
 
             partnerHandoffSpeakTts:
               "เลือกได้ดี! ผมส่งคุณต่อไปยังพาร์ทเนอร์เลยครับ เพื่อให้สิทธิ์โบนัสยังอยู่",
@@ -2878,7 +2882,7 @@ window.OSG_LOCALES = {
             legalGuidanceBannerAria: "Informacja prawna — rola pośrednika",
             legalGuidanceStatement: "Jesteśmy drogowskazem, nie doradcami.",
             bindingAdviceDisclaimerHtml:
-              'Pauli Best Price oferuje porównanie i przekierowanie — bez doradztwa. Umowy tylko między Tobą a partnerami.<span class="legal-guidance-services"><a href="#partner-affiliate-panel">Porównanie nieruchomości</a><a href="#partner-affiliate-panel">Finanse</a><a href="#partner-affiliate-panel">Ubezpieczenia</a></span> Brak odpowiedzialności za fałszywe dane osób trzecich. Wiek 20+ wyłącznie przy umowach nieruchomości, finansów i ubezpieczeń.',
+              'Pauli Best Price oferuje porównanie i przekierowanie — bez doradztwa. Umowy tylko między Tobą a partnerami.<span class="legal-guidance-services"><a href="#partner-affiliate-panel">Porównanie nieruchomości</a><a href="#partner-affiliate-panel">Finanse</a><a href="#partner-affiliate-panel">Ubezpieczenia</a></span> Brak odpowiedzialności za fałszywe dane osób trzecich. Wiek 15+ wyłącznie przy umowach nieruchomości, finansów i ubezpieczeń.',
             bindingAdviceDisclaimerPlain:
               "Pauli Best Price oferuje porównanie i przekierowanie — bez doradztwa. Umowy tylko między Tobą a partnerami.",
             affiliateFundingDisclosure:
@@ -3697,7 +3701,7 @@ window.OSG_LOCALES = {
             legalGuidanceBannerAria: "Правовое уведомление — роль проводника",
             legalGuidanceStatement: "Мы проводники, а не консультанты.",
             bindingAdviceDisclaimerHtml:
-              'Pauli Best Price — сравнение и направление, без консультаций. Договоры только между вами и партнёрами.<span class="legal-guidance-services"><a href="#partner-affiliate-panel">Сравнение недвижимости</a><a href="#partner-affiliate-panel">Финансы</a><a href="#partner-affiliate-panel">Страхование</a></span> Нет ответственности за ложные данные третьих лиц. Возраст 20+ только при договорах по недвижимости, финансам и страхованию.',
+              'Pauli Best Price — сравнение и направление, без консультаций. Договоры только между вами и партнёрами.<span class="legal-guidance-services"><a href="#partner-affiliate-panel">Сравнение недвижимости</a><a href="#partner-affiliate-panel">Финансы</a><a href="#partner-affiliate-panel">Страхование</a></span> Нет ответственности за ложные данные третьих лиц. Возраст 15+ только при договорах по недвижимости, финансам и страхованию.',
             bindingAdviceDisclaimerPlain:
               "Pauli Best Price — сравнение и направление, без консультаций. Договоры только между вами и партнёрами.",
             affiliateFundingDisclosure:
@@ -4498,7 +4502,7 @@ window.OSG_LOCALES = {
             legalGuidanceBannerAria: "法律提示 — 中介角色",
             legalGuidanceStatement: "我们是引路人，不是顾问。",
             bindingAdviceDisclaimerHtml:
-              'Pauli Best Price 提供比较与跳转 — 非咨询。合同仅在您与合作伙伴之间签订。<span class="legal-guidance-services"><a href="#partner-affiliate-panel">房产比较</a><a href="#partner-affiliate-panel">金融</a><a href="#partner-affiliate-panel">保险</a></span> 对第三方虚假信息不承担责任。年满20岁仅适用于房产、金融与保险合同步骤。',
+              'Pauli Best Price 提供比较与跳转 — 非咨询。合同仅在您与合作伙伴之间签订。<span class="legal-guidance-services"><a href="#partner-affiliate-panel">房产比较</a><a href="#partner-affiliate-panel">金融</a><a href="#partner-affiliate-panel">保险</a></span> 对第三方虚假信息不承担责任。年满15岁仅适用于房产、金融与保险合同步骤。',
             bindingAdviceDisclaimerPlain:
               "Pauli Best Price 提供比较与跳转 — 非咨询。合同仅在您与合作伙伴之间签订。",
             affiliateFundingDisclosure:
@@ -5094,7 +5098,7 @@ window.OSG_LOCALES = {
             legalGuidanceBannerAria: "Legal notice — intermediary role",
             legalGuidanceStatement: "We are the signposts, not advisors.",
             bindingAdviceDisclaimerHtml:
-              'Pauli Best Price offers comparison & routing — not advice. Contracts are only between you and partners.<span class="legal-guidance-services"><a href="#partner-affiliate-panel">Property comparison</a><a href="#partner-affiliate-panel">Finance</a><a href="#partner-affiliate-panel">Insurance</a></span> No liability for false third-party information. Age 20+ only for property, finance and insurance contract steps.',
+              'Pauli Best Price offers comparison & routing — not advice. Contracts are only between you and partners.<span class="legal-guidance-services"><a href="#partner-affiliate-panel">Property comparison</a><a href="#partner-affiliate-panel">Finance</a><a href="#partner-affiliate-panel">Insurance</a></span> No liability for false third-party information. Age 15+ only for property, finance and insurance contract steps.',
             bindingAdviceDisclaimerPlain:
               "Pauli Best Price offers comparison & routing — not advice. Contracts are only between you and partners.",
 
@@ -5133,7 +5137,7 @@ window.OSG_LOCALES = {
             affiliateFundingDisclosure:
               "This app is funded via referral commissions. Users do not pay any surcharge for that.",
             intermediaryScopeDisclaimer:
-              "Investment, property, automotive and finance hops require age 20+ where applicable; BestPrice is a pure referrer — no regulated advice.",
+              "Investment, property, automotive and finance hops require age 15+ where applicable; BestPrice is a pure referrer — no regulated advice.",
             legalFooterImprintBtn: "Imprint",
             legalFooterTermsBtn: "Terms · use",
             legalOverlayTitle: "Legal information",
@@ -5174,17 +5178,19 @@ window.OSG_LOCALES = {
             mapsHomeHintSaved: "Stored — shortcuts use this line with Google Maps (local)",
             mapsSevenNearHomeShortcutLabel: "7-Eleven near saved anchor",
 
-            ageGateHeading: "Age check: 20+",
+            ageGateHeading: "Age check: 15+",
             ageGateLead:
-              "Property, finance and insurance partners may require age 20+ for binding contract steps. Your birth date stays only in this browser; it is not uploaded to Omni Solutions Global® servers.",
+              "Property, finance and insurance partners may require age 15+ for binding contract steps. Your birth date stays only in this browser; it is not uploaded to Omni Solutions Global® servers.",
             ageGateBirthLabel: "Birth date",
             ageGateSubmitBtn: "Verify and continue",
             ageGateDismissBtn: "Cancel",
             ageGateErrEmpty: "Please pick a birth date.",
             ageGateErrInvalid: "Invalid date.",
-            ageGateTooYoungToast: "Blocked: section requires age 20+.",
+            ageGateTooYoungToast: "Blocked: section requires age 15+.",
+            age_restriction_error:
+              "You must be at least 15 years old to use the app.",
             ageGateAvatarSpeakLine:
-              "Hold on — Thai law requires you to be at least twenty for this area.",
+              "Hold on — you need to be at least fifteen for this area.",
           };
           function fillMissing(dst, defaults) {
             if (!dst || typeof dst !== "object") return;

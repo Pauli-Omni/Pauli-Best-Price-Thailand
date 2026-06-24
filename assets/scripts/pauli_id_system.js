@@ -11,6 +11,7 @@
   "use strict";
 
   var LS_KEY_PAULI_ID = "osg_pauli_id";
+  var LS_KEY_CUSTOMER_CID = "osg-customer-id-v1";
   var LS_KEY_REFERRER = "osg_referred_by";
   var LS_KEY_REF_SENT = "osg_ref_sent";
 
@@ -66,8 +67,22 @@
     return fetch(url, opts);
   }
 
+  function ensureClientCid() {
+    if (typeof global.osgEnsureCustomerId === "function") {
+      try {
+        var id = global.osgEnsureCustomerId();
+        if (id) return String(id);
+      } catch (_) {}
+    }
+    try {
+      return localStorage.getItem(LS_KEY_CUSTOMER_CID) || null;
+    } catch (_) {
+      return null;
+    }
+  }
+
   function getClientCid() {
-    try { return localStorage.getItem("osg_cid") || null; } catch (_) { return null; }
+    return ensureClientCid();
   }
 
   async function registerInstall(cid) {
@@ -233,10 +248,9 @@
   // ── Bootstrap ────────────────────────────────────────────────────────────
 
   async function boot() {
-    var cid = getClientCid();
+    var cid = ensureClientCid();
     if (!cid) {
-      // CID not yet assigned — retry after a short delay
-      setTimeout(boot, 1800);
+      setTimeout(boot, 400);
       return;
     }
 
@@ -244,21 +258,22 @@
 
     if (!pauliId) {
       pauliId = await registerInstall(cid);
-      if (pauliId) writeLocalId(pauliId);
+      if (!pauliId) {
+        setTimeout(boot, 2000);
+        return;
+      }
+      writeLocalId(pauliId);
     }
 
-    if (pauliId) {
-      renderProfileBlock(pauliId);
+    renderProfileBlock(pauliId);
 
-      // If a referrer was saved locally but not yet sent, send now
-      var sentFlag = false;
-      try { sentFlag = localStorage.getItem(LS_KEY_REF_SENT) === "1"; } catch (_) {}
-      var referrer = readReferrer();
-      if (referrer && !sentFlag) {
-        var ok = await sendReferrer(cid, referrer);
-        if (ok) {
-          try { localStorage.setItem(LS_KEY_REF_SENT, "1"); } catch (_) {}
-        }
+    var sentFlag = false;
+    try { sentFlag = localStorage.getItem(LS_KEY_REF_SENT) === "1"; } catch (_) {}
+    var referrer = readReferrer();
+    if (referrer && !sentFlag) {
+      var ok = await sendReferrer(cid, referrer);
+      if (ok) {
+        try { localStorage.setItem(LS_KEY_REF_SENT, "1"); } catch (_) {}
       }
     }
 
@@ -266,6 +281,7 @@
 
     global.OSG_PAULI_ID = {
       get: function () { return readLocalId(); },
+      getCid: function () { return ensureClientCid(); },
       format: formatPauliId,
       normalise: normalisePauliId,
     };

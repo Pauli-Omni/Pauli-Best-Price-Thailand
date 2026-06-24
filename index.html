@@ -1551,7 +1551,9 @@
         /** Gastprofil: zur Ansprache nur userName (Onboarding); kein customerName mehr */
         var OSG_LS_USER_PROFILE = "osg-user-profile-v1";
         /** lokales DOB yyyy-mm-dd zur TH-Jugendsperre Immo/Kfz/Finanz – nur Gerät */
-        var OSG_LS_AGE_GATE = "osg-age-gate-th20-v1";
+        var OSG_MIN_AGE_YEARS = 15;
+        var OSG_LS_AGE_GATE = "osg-age-gate-th15-v1";
+        var OSG_LS_AGE_GATE_LEGACY = "osg-age-gate-th20-v1";
         var OSG_LS_JOURNAL = "osg-lead-journal-v1";
         var OSG_LS_JOURNAL_CHAIN = "osg-journal-chain-v1";
         var OSG_LS_POST_TRIAL_PAID = "osg-post-trial-paid-v1";
@@ -1763,6 +1765,7 @@
             return "osgc_sess_" + osgRandHex(6);
           }
         }
+        window.osgEnsureCustomerId = osgEnsureCustomerId;
 
         function osgLoadInstallBundle() {
           try {
@@ -4062,6 +4065,14 @@
         function osgBirthIsoLoad() {
           try {
             var raw = localStorage.getItem(OSG_LS_AGE_GATE);
+            if (!raw) {
+              raw = localStorage.getItem(OSG_LS_AGE_GATE_LEGACY);
+              if (raw) {
+                try {
+                  localStorage.setItem(OSG_LS_AGE_GATE, raw);
+                } catch (_) {}
+              }
+            }
             var o = raw ? JSON.parse(raw) : null;
             if (!o || typeof o !== "object") return "";
             var b = String(o.birthISO || "").trim();
@@ -4108,7 +4119,7 @@
         function osgVerifiedTwentyPlusNow() {
           var iso = osgBirthIsoLoad();
           if (!iso) return false;
-          return osgYearsOldFromBirthIso(iso, new Date()) >= 20;
+          return osgYearsOldFromBirthIso(iso, new Date()) >= OSG_MIN_AGE_YEARS;
         }
 
         function osgJournalAgeGateOnce(sectorShort) {
@@ -4119,12 +4130,13 @@
               customerId: osgEnsureCustomerId(),
               osg_partner: "age_declaration",
               osg_ch: "age_gate",
-              landingHref: "internal:age_twenty_declaration",
+              landingHref: "internal:age_declaration",
               trackedHref: "",
               clickedAtISO: ts,
               conversionBasis: false,
-              leadIntent: "th_youth_protect_20",
+              leadIntent: "th_youth_protect_15",
               ageConfirmed20: true,
+              minAgeYears: OSG_MIN_AGE_YEARS,
               ageGateSector: String(sectorShort || "restricted").slice(0, 24),
             },
             { skipBump: true }
@@ -4247,11 +4259,13 @@
               osgShowAgeGateError(pack.ageGateErrInvalid || "");
               return;
             }
-            if (age < 20) {
-              osgShowAgeGateError("");
+            if (age < OSG_MIN_AGE_YEARS) {
+              var tooYoungMsg =
+                pack.age_restriction_error || pack.ageGateTooYoungToast || "";
+              osgShowAgeGateError(tooYoungMsg);
               osgSpeakAgeBlockedLine();
               try {
-                alert(pack.ageGateTooYoungToast || "");
+                alert(tooYoungMsg);
               } catch (_) {}
               return;
             }
@@ -11598,8 +11612,12 @@
         }
         window.osgEstimateAffiliatePurchaseThb = osgEstimateAffiliatePurchaseThb;
 
-        function osgApplyAvatarTransform(_extra) {
-          if (avatarImg) avatarImg.style.transform = "none";
+        function osgApplyAvatarTransform(extra) {
+          const host = osgAvatarVisualHost();
+          if (!host) return;
+          const val = extra ? String(extra) : "";
+          host.style.transform = val;
+          if (!val) host.style.willChange = "";
         }
 
         const OSG_COIN_STAGE_POS_KEY = "osg-coin-stage-pos-v1";
@@ -12052,6 +12070,9 @@
           lipSyncActive = false;
           lipSyncAnalyser = null;
           lipSyncMouthLevel = 0;
+          if (typeof window.OSGLipsyncClearVisuals === "function") {
+            window.OSGLipsyncClearVisuals();
+          }
           if (
             window.OSG_PauliAvatarAnimations &&
             typeof window.OSG_PauliAvatarAnimations.onSpeakStop === "function"
@@ -12064,9 +12085,76 @@
           osgLipSyncBegin({ durationMs: durationMs || 2000 });
         }
 
-        function osgLipSyncTick(_now) {
+        function osgLipSyncTick(now) {
           if (!lipSyncActive) return;
+          if (lipSyncAnalyser && typeof window.OSGLipsyncTickAnalyser === "function") {
+            lipSyncMouthLevel = window.OSGLipsyncTickAnalyser(lipSyncAnalyser);
+            return;
+          }
+          const elapsed = now - lipSyncStart;
+          if (lipSyncDuration > 0 && elapsed > lipSyncDuration) {
+            osgLipSyncStop();
+            return;
+          }
+          const phase = (elapsed / 160) % 1;
+          lipSyncMouthLevel = 0.32 + Math.sin(phase * Math.PI * 2) * 0.28;
+          if (typeof window.OSGLipsyncApplyLevel === "function") {
+            window.OSGLipsyncApplyLevel(lipSyncMouthLevel);
+          }
         }
+
+        window.triggerAvatarAnimation = function (analyser) {
+          osgLipSyncBegin({
+            analyser: analyser || null,
+            durationMs: 60000,
+          });
+          osgAvatarGestureStart("acknowledge", 60000);
+        };
+
+        window.stopAvatarAnimation = function () {
+          osgLipSyncStop();
+          osgAvatarGestureStop();
+        };
+
+        window.stopAllSpeech = function () {
+          try {
+            if (typeof speechSynthesis !== "undefined") {
+              speechSynthesis.cancel();
+            }
+          } catch (_) {}
+          const src = window.__OSG_activePauliBufferSource;
+          if (src) {
+            try {
+              src.stop();
+            } catch (_) {}
+            window.__OSG_activePauliBufferSource = null;
+          }
+          window.currentAudioSource = null;
+          const htmlAud = window.__OSG_activePauliHtmlAudio;
+          if (htmlAud) {
+            try {
+              htmlAud.pause();
+              htmlAud.currentTime = 0;
+            } catch (_) {}
+            window.__OSG_activePauliHtmlAudio = null;
+          }
+          try {
+            if (
+              typeof window.OSG_AUDIO_SEGMENT !== "undefined" &&
+              window.OSG_AUDIO_SEGMENT &&
+              typeof window.OSG_AUDIO_SEGMENT.stop === "function"
+            ) {
+              window.OSG_AUDIO_SEGMENT.stop();
+            }
+          } catch (_) {}
+          try {
+            if (typeof window.stopPauliSpeech === "function") {
+              window.stopPauliSpeech();
+            }
+          } catch (_) {}
+          osgLipSyncStop();
+          osgAvatarGestureStop();
+        };
 
         window.OSGLipSync = {
           start: osgLipSyncStart,
@@ -12084,13 +12172,41 @@
           avatarGestureType = "idle";
         }
 
-        function osgAvatarGestureTick(_now, _delta) {
+        function osgAvatarGestureTick(_now, delta) {
           if (waiActive && busy) return;
           const elapsed = _now - avatarGestureStart;
           const t =
             avatarGestureDuration > 0
               ? Math.min(1, elapsed / avatarGestureDuration)
               : 1;
+
+          if (lipSyncActive && !waiActive) {
+            avatarIdlePhase += delta * 2.1;
+            if (
+              t >= 1 &&
+              avatarGestureType !== "idle" &&
+              avatarGestureType !== "greet"
+            ) {
+              osgAvatarGestureStop();
+            }
+            return;
+          } else if (avatarGestureType === "idle" && !busy && !avatarTourRunning) {
+            avatarIdlePhase += delta * 1.15;
+            const breathe = Math.sin(avatarIdlePhase) * 0.012;
+            osgApplyAvatarTransform("scale(" + (1 + breathe).toFixed(4) + ")");
+          } else if (
+            avatarGestureType === "confirm" ||
+            avatarGestureType === "acknowledge"
+          ) {
+            const nod = Math.sin(t * Math.PI * 2.2) * 8 * (1 - t * 0.25);
+            osgApplyAvatarTransform("rotateX(" + nod.toFixed(2) + "deg)");
+          } else if (avatarGestureType === "help") {
+            const tilt = Math.sin(t * Math.PI) * 6;
+            osgApplyAvatarTransform("rotateZ(" + tilt.toFixed(2) + "deg)");
+          } else if (avatarGestureType === "greet" && !waiActive) {
+            const bow = Math.sin(t * Math.PI) * -10;
+            osgApplyAvatarTransform("rotateX(" + bow.toFixed(2) + "deg)");
+          }
 
           if (t >= 1 && avatarGestureType !== "idle" && avatarGestureType !== "greet") {
             osgAvatarGestureStop();
@@ -14013,12 +14129,25 @@
           return false;
         }
 
+        window.__OSG_activePauliBufferSource = null;
+        window.__OSG_activePauliHtmlAudio = null;
+        window.currentAudioSource = null;
+
+        window.osgPauliStopActivePlayback = function () {
+          if (typeof window.stopAllSpeech === "function") {
+            window.stopAllSpeech();
+          }
+        };
+
         async function playPauliAudioBuffer(arrayBuf, opts) {
           if (
             typeof osgPauliAudioAllowed === "function" &&
             !osgPauliAudioAllowed()
           ) {
             return;
+          }
+          if (typeof window.stopAllSpeech === "function") {
+            window.stopAllSpeech();
           }
           const whisper = !!(opts && opts.whisper);
           const mimeType =
@@ -14029,8 +14158,13 @@
 
           function playWithAnalyser(ctx, audioBuffer, extraNode) {
             return new Promise((resolve) => {
+              if (typeof window.stopAllSpeech === "function") {
+                window.stopAllSpeech();
+              }
               const src = ctx.createBufferSource();
               src.buffer = audioBuffer;
+              window.__OSG_activePauliBufferSource = src;
+              window.currentAudioSource = src;
               const gain = ctx.createGain();
               gain.gain.value = gainVal;
               const analyser = ctx.createAnalyser();
@@ -14043,17 +14177,31 @@
               } else {
                 analyser.connect(ctx.destination);
               }
-              osgLipSyncBegin({
-                durationMs: Math.ceil(audioBuffer.duration * 1000) + 120,
-                analyser,
-              });
+              if (typeof window.triggerAvatarAnimation === "function") {
+                window.triggerAvatarAnimation(analyser);
+              } else {
+                osgLipSyncBegin({
+                  durationMs: Math.ceil(audioBuffer.duration * 1000) + 120,
+                  analyser,
+                });
+              }
               src.onended = () => {
+                if (window.__OSG_activePauliBufferSource === src) {
+                  window.__OSG_activePauliBufferSource = null;
+                }
+                if (window.currentAudioSource === src) {
+                  window.currentAudioSource = null;
+                }
                 try {
                   gain.disconnect();
                   analyser.disconnect();
                   src.disconnect();
                 } catch (_) {}
-                osgLipSyncStop();
+                if (typeof window.stopAvatarAnimation === "function") {
+                  window.stopAvatarAnimation();
+                } else {
+                  osgLipSyncStop();
+                }
                 resolve();
               };
               src.start(0);
@@ -14065,24 +14213,40 @@
             const url = URL.createObjectURL(blob);
             const audio = new Audio(url);
             audio.volume = gainVal;
+            window.__OSG_activePauliHtmlAudio = audio;
             audio.onloadedmetadata = function () {
-              osgLipSyncStart(Math.ceil((audio.duration || 3) * 1000));
+              if (typeof window.triggerAvatarAnimation === "function") {
+                window.triggerAvatarAnimation(null);
+              } else {
+                osgLipSyncStart(Math.ceil((audio.duration || 3) * 1000));
+              }
             };
             try {
               await audio.play();
             } catch (e) {
+              window.__OSG_activePauliHtmlAudio = null;
               URL.revokeObjectURL(url);
               throw e;
             }
             await new Promise((resolve) => {
               audio.onended = () => {
+                window.__OSG_activePauliHtmlAudio = null;
                 URL.revokeObjectURL(url);
-                osgLipSyncStop();
+                if (typeof window.stopAvatarAnimation === "function") {
+                  window.stopAvatarAnimation();
+                } else {
+                  osgLipSyncStop();
+                }
                 resolve();
               };
               audio.onerror = () => {
+                window.__OSG_activePauliHtmlAudio = null;
                 URL.revokeObjectURL(url);
-                osgLipSyncStop();
+                if (typeof window.stopAvatarAnimation === "function") {
+                  window.stopAvatarAnimation();
+                } else {
+                  osgLipSyncStop();
+                }
                 resolve();
               };
             });
@@ -14101,24 +14265,40 @@
             const audio = new Audio(url);
             audio.setAttribute("playsinline", "");
             audio.volume = gainVal;
+            window.__OSG_activePauliHtmlAudio = audio;
             audio.onloadedmetadata = function () {
-              osgLipSyncStart(Math.ceil((audio.duration || 3) * 1000));
+              if (typeof window.triggerAvatarAnimation === "function") {
+                window.triggerAvatarAnimation(null);
+              } else {
+                osgLipSyncStart(Math.ceil((audio.duration || 3) * 1000));
+              }
             };
             try {
               await audio.play();
             } catch (e) {
+              window.__OSG_activePauliHtmlAudio = null;
               URL.revokeObjectURL(url);
               throw e;
             }
             await new Promise((resolve) => {
               audio.onended = () => {
+                window.__OSG_activePauliHtmlAudio = null;
                 URL.revokeObjectURL(url);
-                osgLipSyncStop();
+                if (typeof window.stopAvatarAnimation === "function") {
+                  window.stopAvatarAnimation();
+                } else {
+                  osgLipSyncStop();
+                }
                 resolve();
               };
               audio.onerror = () => {
+                window.__OSG_activePauliHtmlAudio = null;
                 URL.revokeObjectURL(url);
-                osgLipSyncStop();
+                if (typeof window.stopAvatarAnimation === "function") {
+                  window.stopAvatarAnimation();
+                } else {
+                  osgLipSyncStop();
+                }
                 resolve();
               };
             });
@@ -14921,7 +15101,7 @@
 
         function osgPauliLiveStopWake() {
           try {
-            if (typeof osgWakeStopAll === "function") osgWakeStopAll();
+            if (typeof window.osgWakeStopAll === "function") window.osgWakeStopAll();
           } catch (_) {}
         }
 
@@ -15239,7 +15419,7 @@
           if (!(opts && opts.skipWakeRestart)) {
             setTimeout(function () {
               try {
-                if (typeof osgWakeStart === "function") osgWakeStart();
+                if (typeof window.osgWakeStart === "function") window.osgWakeStart();
               } catch (_) {}
             }, 700);
           }
@@ -16351,6 +16531,11 @@
           });
 
           setTimeout(osgWakeMaybeStart, 600);
+
+          if (typeof window !== "undefined") {
+            window.osgWakeStopAll = osgWakeStopAll;
+            window.osgWakeStart = osgWakeStart;
+          }
         }
 
         function osgWakeMaybeStart() {
@@ -16360,7 +16545,7 @@
           ) {
             return;
           }
-          osgWakeStart();
+          if (typeof window.osgWakeStart === "function") window.osgWakeStart();
         }
 
         document.addEventListener("osg-terms-audio-unlocked", function () {
@@ -16387,6 +16572,13 @@
           const now = performance.now();
           const delta = Math.min(0.05, 1 / 60);
           osgTweenUpdate(now);
+          osgLipSyncTick(now);
+          osgAvatarGestureTick(now, delta);
+          if (ttsLoading || lipSyncActive) {
+            container.classList.add("is-speaking");
+          } else {
+            container.classList.remove("is-speaking");
+          }
           if (coinDebugOn && now >= coinDbgTickAt) {
             coinDbgTickAt = now + 700;
             coinDbgRender();

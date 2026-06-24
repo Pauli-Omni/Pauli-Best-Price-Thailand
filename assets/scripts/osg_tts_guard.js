@@ -71,9 +71,14 @@
 
   /**
    * Bricht den laufenden TTS-Await sofort ab (für osg_tts_interrupt).
-   * Das Audio selbst muss extern gestoppt werden.
+   * Stoppt Web-Audio-BufferSource und Segment-Wiedergabe.
    */
   window.osgPauliTtsAbort = function () {
+    if (typeof window.stopAllSpeech === 'function') {
+      window.stopAllSpeech();
+    } else if (typeof window.osgPauliStopActivePlayback === 'function') {
+      window.osgPauliStopActivePlayback();
+    }
     if (typeof _currentAbortResolve === 'function') {
       _currentAbortResolve();
       _currentAbortResolve = null;

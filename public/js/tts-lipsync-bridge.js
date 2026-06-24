@@ -69,6 +69,25 @@
   }
 
   /**
+   * Ein Frame Lip-Sync aus Analyser-Frequenzdaten (BufferSource / Web-Audio-Pfad).
+   * @returns {number} normiertes Level 0…1
+   */
+  function tickAnalyserFrame(analyser) {
+    if (!analyser) return 0;
+    var dataArray = new Uint8Array(analyser.frequencyBinCount);
+    analyser.getByteFrequencyData(dataArray);
+    var sum = 0;
+    for (var i = 0; i < dataArray.length; i++) sum += dataArray[i];
+    var level = Math.min(1, (sum / dataArray.length) / 80);
+    applyLipsyncToCoinStage(level);
+    return level;
+  }
+
+  global.OSGLipsyncApplyLevel = applyLipsyncToCoinStage;
+  global.OSGLipsyncClearVisuals = clearLipsyncStyles;
+  global.OSGLipsyncTickAnalyser = tickAnalyserFrame;
+
+  /**
    * Visem-ID → Level-Mapping (ersetzt MorphTarget-Indexierung).
    * Standard-Visem-Sätze (z. B. Azure / ElevenLabs): 0 = Stille, 1–4 = Konsonanten,
    * 5–14 = Vokale / Diphthonge (höhere Mundöffnung).
