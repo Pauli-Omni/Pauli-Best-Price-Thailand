@@ -1538,26 +1538,33 @@ body {
 
   /* ── Schriftgrößen & Abstände Desktop ── */
   .brand-app-title {
-    font-size: clamp(2.5rem, 3.2vw, 3.5rem);
+    font-size: clamp(2rem, 2.6vw, 2.8rem);
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 
   .page .lead {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     line-height: 1.65;
-    margin-bottom: 1.85rem;
+    margin-bottom: 1.5rem;
+    overflow-wrap: break-word;
   }
 
   .page section {
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
+    overflow: visible; /* allows nested absolute, but baseline is block flow */
   }
 
   .page section h2 {
-    font-size: 1.35rem;
-    margin-bottom: 0.85rem;
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 
   .page p {
     line-height: 1.65;
+    overflow-wrap: break-word;
   }
 
   .compare-panel {
@@ -1598,11 +1605,13 @@ body {
   }
 
   .page .lead {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
   }
 
   .page section h2 {
-    font-size: 1.5rem;
+    font-size: 1.35rem;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 
   .compare-table {
@@ -1626,11 +1635,13 @@ body {
   }
 
   .page .lead {
-    font-size: 1.25rem;
+    font-size: 1.18rem;
   }
 
   .page section h2 {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 
   .compare-table {
@@ -5941,3 +5952,226 @@ body.osg-vip-gift-open {
 #coin-stage.is-bridge-3d-spin {
   pointer-events: none;
 }
+
+/* ══ Copy-Protection — Kerninhalte nicht kopierbar ══════════════════════ */
+.osg-protected,
+.coin-stage,
+#coin-stage,
+.compare-panel,
+.compare-table,
+.page .lead,
+.brand-app-title,
+.partner-panel,
+#partner-affiliate-panel,
+.osg-b2b-list {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.osg-protected img,
+#coin-stage img,
+.coin-stage img,
+.compare-panel img {
+  pointer-events: none;
+  -webkit-user-drag: none;
+  user-drag: none;
+}
+/* ══════════════════════════════════════════════════════════════════════ */
+
+/* ══ Wake-Button Pulse: zeigt dem Nutzer, dass das Mikrofon bereit ist ══ */
+@keyframes osg-pulse-glow {
+  0%   { box-shadow: 0 0 0 0 rgba(212,175,55,0.65); }
+  60%  { box-shadow: 0 0 0 10px rgba(212,175,55,0); }
+  100% { box-shadow: 0 0 0 0 rgba(212,175,55,0); }
+}
+
+.pauli-voice-wake-btn.osg-pulse-ready {
+  animation: osg-pulse-glow 1.4s ease-out infinite;
+  border-color: var(--primary-gold, #d4af37) !important;
+  opacity: 1 !important;
+}
+
+/* ══ Pauli-ID System: Profile block + Referral input ══════════════════ */
+
+/* Profile block: QR + ID text */
+.pauli-id-profile-panel {
+  text-align: center;
+}
+
+.pauli-id-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 0.5rem;
+}
+
+.pauli-id-profile__heading {
+  color: var(--primary-gold);
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.pauli-id-profile__qr {
+  background: rgba(12, 4, 28, 0.9);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  border-radius: 12px;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 160px;
+  min-height: 160px;
+}
+
+.pauli-id-profile__id-text {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--primary-gold);
+  margin: 0;
+  user-select: all;
+}
+
+.pauli-id-profile__copy-btn {
+  font-size: 0.8rem;
+  padding: 0.3rem 0.9rem;
+}
+
+.pauli-id-profile__hint {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin: 0;
+  max-width: 24rem;
+}
+
+/* Referral input */
+.pauli-id-referral-wrap {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(212, 175, 55, 0.18);
+}
+
+.pauli-id-referral__label {
+  display: block;
+  font-size: 0.87rem;
+  color: var(--text-muted);
+  margin-bottom: 0.45rem;
+}
+
+.pauli-id-referral__row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.pauli-id-referral__input {
+  flex: 1 1 10rem;
+  min-width: 10rem;
+  max-width: 14rem;
+  padding: 0.45rem 0.7rem;
+  border-radius: 8px;
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  background: rgba(12, 4, 28, 0.6);
+  color: rgba(255, 248, 230, 0.95);
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  outline: none;
+}
+
+.pauli-id-referral__input:focus {
+  border-color: var(--primary-gold);
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.22);
+}
+
+.pauli-id-referral__btn {
+  flex-shrink: 0;
+  font-size: 0.82rem;
+  padding: 0.45rem 0.9rem;
+}
+
+.pauli-id-referral__status {
+  margin: 0.35rem 0 0;
+  font-size: 0.82rem;
+  min-height: 1.2em;
+}
+
+.pauli-id-referral__status.is-ok { color: #7de09c; }
+.pauli-id-referral__status.is-error { color: #f87171; }
+
+/* Admin ranking tables */
+.admin-pauli-id-rank-load {
+  margin-top: 0.6rem;
+  font-size: 0.82rem;
+  padding: 0.4rem 1rem;
+}
+
+/* ══════════════════════════════════════════════════════════════════════ */
+
+/* ══ Layout-Overlap-Fix: sections always in normal flow, no clipping ════ */
+
+/* Sections: block flow, NO overflow:hidden (would collapse dynamic content) */
+.page section,
+.page > section {
+  display: block;
+  overflow: visible;
+  box-sizing: border-box;
+  /* Flex gap ensures stacked sections never touch */
+  margin-bottom: 1.25rem;
+}
+
+/* i18n block-level text elements: robust wrapping for Thai/long strings */
+#i18n-intro,
+#i18n-lead,
+#i18n-compare-sub,
+#i18n-footer-legal {
+  display: block;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  min-height: 0;
+  height: auto;
+}
+
+/* Section headings: force wrap for all languages */
+.page section h2 {
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  /* No fixed height — let content dictate */
+  height: auto;
+  min-height: 0;
+}
+
+/* Personal greeting: stays in flex flow, never overlaps other content */
+.personal-greeting-line {
+  /* Preserve the original flex display from the base rule — do NOT change position */
+  clear: both;
+  /* z-index: leave at default (auto) — setting it higher caused stacking issues */
+}
+
+/* Live-Caption: float above content at bottom, never push into the scroll area */
+.pauli-live-caption {
+  /* Already position:fixed — just ensure it has room on both viewports */
+  bottom: max(0.75rem, calc(0.75rem + env(safe-area-inset-bottom, 0px)));
+  z-index: 902;
+}
+
+@media (min-width: 769px) {
+  .pauli-live-caption {
+    bottom: calc(1.25rem + max(0px, var(--safe-bottom, 0px)));
+    /* Wider on desktop so long Thai strings don't truncate */
+    max-width: min(680px, 90vw);
+  }
+  /* Extra bottom padding so caption never hides the last content row */
+  .page {
+    padding-bottom: max(5.5rem, calc(clamp(4rem, 8vh, 6rem) + 2rem));
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════ */

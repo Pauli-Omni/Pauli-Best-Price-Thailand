@@ -59,5 +59,16 @@
   "fun.savingHappy": "省钱让我太开心了。来跳个舞吧！",
   "interrupt.resumeTriggers": "对不起,继续,继续说,你在说什么,你说到哪了,请继续,说下去",
   "interrupt.resumePrefix": "当然！那么，我说到哪里了... 对了 —",
-  "interrupt.llmContextHint": "[系统：用户打断时，Pauli 正在说话。Pauli 正在说：“{TEXT}”。请记住这一点，保持对话的自然连贯性。]"
+  "interrupt.llmContextHint": "[系统：用户打断时，Pauli 正在说话。Pauli 正在说：“{TEXT}”。请记住这一点，保持对话的自然连贯性。]",
+  "pauliId.sectionHeading": "我的Pauli码",
+  "pauliId.profileHeading": "我的Pauli码",
+  "pauliId.idAriaLabel": "您的Pauli ID：",
+  "pauliId.qrAriaLabel": "Pauli ID二维码",
+  "pauliId.copyBtn": "复制",
+  "pauliId.copied": "已复制 ✓",
+  "pauliId.profileHint": "分享此码或二维码来推荐朋友。",
+  "pauliId.referralLabel": "推荐人App ID（例如 1 M 000 123）",
+  "pauliId.referralConfirm": "确认",
+  "pauliId.referralInvalid": "格式无效。示例：1 M 000 123",
+  "pauliId.referralSaved": "已保存 ✓"
 }

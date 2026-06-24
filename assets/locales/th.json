@@ -63,5 +63,16 @@
   "fun.savingHappy": "ประหยัดเงินทำให้ผมมีความสุขมากครับ มาเต้นกันเลย!",
   "interrupt.resumeTriggers": "ขอโทษ,พูดต่อ,ต่อเลย,พูดต่อนะ,เล่าต่อ,ว่าอะไรอีก,พูดต่อได้เลย,กำลังพูดอะไรอยู่",
   "interrupt.resumePrefix": "ได้เลยครับ! ผมกำลังพูดถึง —",
-  "interrupt.llmContextHint": "[ระบบ: พอลลีถูกขัดจังหะขณะที่พูดว่า: \"{TEXT}\". พอลลีรู้จักประโยคนี้และสามารถอ้างอิงได้อย่างเป็นธรรมชาติตามความเหมาะสม]"
+  "interrupt.llmContextHint": "[ระบบ: พอลลีถูกขัดจังหะขณะที่พูดว่า: \"{TEXT}\". พอลลีรู้จักประโยคนี้และสามารถอ้างอิงได้อย่างเป็นธรรมชาติตามความเหมาะสม]",
+  "pauliId.sectionHeading": "รหัส Pauli ของฉัน",
+  "pauliId.profileHeading": "รหัส Pauli ของฉัน",
+  "pauliId.idAriaLabel": "รหัส Pauli ของคุณ: ",
+  "pauliId.qrAriaLabel": "QR Code สำหรับ Pauli ID",
+  "pauliId.copyBtn": "คัดลอก",
+  "pauliId.copied": "คัดลอกแล้ว ✓",
+  "pauliId.profileHint": "แชร์โค้ดหรือ QR เพื่อแนะนำเพื่อน",
+  "pauliId.referralLabel": "แนะนำโดย App ID (เช่น 1 M 000 123)",
+  "pauliId.referralConfirm": "ยืนยัน",
+  "pauliId.referralInvalid": "รูปแบบไม่ถูกต้อง ตัวอย่าง: 1 M 000 123",
+  "pauliId.referralSaved": "บันทึกแล้ว ✓"
 }

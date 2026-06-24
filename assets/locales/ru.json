@@ -59,5 +59,16 @@
   "fun.savingHappy": "Экономить деньги — это просто счастье. Время потанцевать!",
   "interrupt.resumeTriggers": "извини,продолжай,давай,где ты был,что ты говорил,пожалуйста продолжай,говори дальше",
   "interrupt.resumePrefix": "Конечно! Итак, на чём я остановился... ах да —",
-  "interrupt.llmContextHint": "[Система: Паули был на середине предложения, когда пользователь прервал. Паули говорил: \"{TEXT}\". Учитывайте это для естественного продолжения разговора.]"
+  "interrupt.llmContextHint": "[Система: Паули был на середине предложения, когда пользователь прервал. Паули говорил: \"{TEXT}\". Учитывайте это для естественного продолжения разговора.]",
+  "pauliId.sectionHeading": "Мой код Паули",
+  "pauliId.profileHeading": "Мой код Паули",
+  "pauliId.idAriaLabel": "Ваш ID Паули: ",
+  "pauliId.qrAriaLabel": "QR-код для вашего ID Паули",
+  "pauliId.copyBtn": "Копировать",
+  "pauliId.copied": "Скопировано ✓",
+  "pauliId.profileHint": "Поделитесь кодом или QR, чтобы пригласить друзей.",
+  "pauliId.referralLabel": "Приглашён по App ID (напр. 1 M 000 123)",
+  "pauliId.referralConfirm": "Подтвердить",
+  "pauliId.referralInvalid": "Неверный формат. Пример: 1 M 000 123",
+  "pauliId.referralSaved": "Сохранено ✓"
 }

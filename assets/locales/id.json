@@ -55,5 +55,16 @@
   "avatarFinanceGuideFinanceTts": "As your guide, I spot a chance to save on financial products here. You decide on your own, of course.",
   "interrupt.resumeTriggers": "maaf,lanjutkan,terus,silakan lanjutkan,apa yang kamu bilang,di mana kamu,tolong lanjutkan,lanjut",
   "interrupt.resumePrefix": "Tentu saja! Jadi, tadi di mana... ah ya —",
-  "interrupt.llmContextHint": "[Sistem: Pauli sedang berbicara ketika pengguna menyela. Pauli sedang mengatakan: \"{TEXT}\". Ingat ini untuk kesinambungan percakapan yang alami.]"
+  "interrupt.llmContextHint": "[Sistem: Pauli sedang berbicara ketika pengguna menyela. Pauli sedang mengatakan: \"{TEXT}\". Ingat ini untuk kesinambungan percakapan yang alami.]",
+  "pauliId.sectionHeading": "My Pauli Code",
+  "pauliId.profileHeading": "My Pauli Code",
+  "pauliId.idAriaLabel": "Your Pauli ID: ",
+  "pauliId.qrAriaLabel": "QR code for your Pauli ID",
+  "pauliId.copyBtn": "Copy",
+  "pauliId.copied": "Copied ✓",
+  "pauliId.profileHint": "Share this code or QR to refer friends.",
+  "pauliId.referralLabel": "Referred by App ID (e.g. 1 M 000 123)",
+  "pauliId.referralConfirm": "Confirm",
+  "pauliId.referralInvalid": "Invalid format. Example: 1 M 000 123",
+  "pauliId.referralSaved": "Saved ✓"
 }

@@ -55,5 +55,16 @@
   "avatarFinanceGuideFinanceTts": "As your guide, I spot a chance to save on financial products here. You decide on your own, of course.",
   "interrupt.resumeTriggers": "ごめん,続けて,話して,何を言ってたの,どこまで話した,お願い続けて,また話して",
   "interrupt.resumePrefix": "もちろんです！ えーと、どこまで話しましたっけ... そうそう —",
-  "interrupt.llmContextHint": "[システム：ユーザーが割り込んだとき、Pauliは話の途中でした。Pauliは次のことを話していました：\"{TEXT}\"。自然な会話の継続性のためにこれを念頭においてください。]"
+  "interrupt.llmContextHint": "[システム：ユーザーが割り込んだとき、Pauliは話の途中でした。Pauliは次のことを話していました：\"{TEXT}\"。自然な会話の継続性のためにこれを念頭においてください。]",
+  "pauliId.sectionHeading": "My Pauli Code",
+  "pauliId.profileHeading": "My Pauli Code",
+  "pauliId.idAriaLabel": "Your Pauli ID: ",
+  "pauliId.qrAriaLabel": "QR code for your Pauli ID",
+  "pauliId.copyBtn": "Copy",
+  "pauliId.copied": "Copied ✓",
+  "pauliId.profileHint": "Share this code or QR to refer friends.",
+  "pauliId.referralLabel": "Referred by App ID (e.g. 1 M 000 123)",
+  "pauliId.referralConfirm": "Confirm",
+  "pauliId.referralInvalid": "Invalid format. Example: 1 M 000 123",
+  "pauliId.referralSaved": "Saved ✓"
 }

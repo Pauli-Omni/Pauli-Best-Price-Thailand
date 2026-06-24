@@ -59,5 +59,16 @@
   "fun.savingHappy": "Saving money just makes me happy. Time for a little dance!",
   "interrupt.resumeTriggers": "sorry,continue,go on,go ahead,carry on,what were you saying,finish that,please continue,keep going,you were saying,where were you",
   "interrupt.resumePrefix": "Of course! So, where was I... ah yes —",
-  "interrupt.llmContextHint": "[System: Pauli was mid-sentence when the user interrupted. Pauli had started saying: \"{TEXT}\". Keep this in mind for natural conversational continuity — do not repeat the full statement unless the user asks to resume.]"
+  "interrupt.llmContextHint": "[System: Pauli was mid-sentence when the user interrupted. Pauli had started saying: \"{TEXT}\". Keep this in mind for natural conversational continuity — do not repeat the full statement unless the user asks to resume.]",
+  "pauliId.sectionHeading": "My Pauli Code",
+  "pauliId.profileHeading": "My Pauli Code",
+  "pauliId.idAriaLabel": "Your Pauli ID: ",
+  "pauliId.qrAriaLabel": "QR code for your Pauli ID",
+  "pauliId.copyBtn": "Copy",
+  "pauliId.copied": "Copied ✓",
+  "pauliId.profileHint": "Share this code or QR to refer friends.",
+  "pauliId.referralLabel": "Referred by App ID (e.g. 1 M 000 123)",
+  "pauliId.referralConfirm": "Confirm",
+  "pauliId.referralInvalid": "Invalid format. Example: 1 M 000 123",
+  "pauliId.referralSaved": "Saved ✓"
 }

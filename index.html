@@ -517,7 +517,43 @@
             <p class="pickup-mode-hint" id="vip-live-email-status" hidden></p>
           </div>
         </div>
+
+        <!-- ── Geworben von: Referral-Eingabe ──────────────────────────── -->
+        <div class="pauli-id-referral-wrap" id="osg-pauli-referred-by-wrap">
+          <label class="pauli-id-referral__label" for="osg-pauli-referred-by-input">
+            <span id="osg-pauli-referred-by-label-text">Geworben von App-ID (z. B. 1 M 000 123)</span>
+          </label>
+          <div class="pauli-id-referral__row">
+            <input
+              type="text"
+              id="osg-pauli-referred-by-input"
+              class="pauli-id-referral__input"
+              inputmode="text"
+              maxlength="14"
+              placeholder="1 M 000 123"
+              spellcheck="false"
+              autocomplete="off"
+              aria-describedby="osg-pauli-referred-by-status"
+            />
+            <button type="button" class="booking-btn-secondary pauli-id-referral__btn" id="osg-pauli-referred-by-btn">
+              Bestätigen
+            </button>
+          </div>
+          <p id="osg-pauli-referred-by-status" class="pauli-id-referral__status" aria-live="polite"></p>
+        </div>
+        <!-- ──────────────────────────────────────────────────────────────── -->
       </section>
+
+      <!-- ── Mein Pauli-Code (QR + ID) ─────────────────────────────────── -->
+      <section
+        class="pauli-id-profile-panel osg-personal-block"
+        id="osg-pauli-id-profile-section"
+        aria-labelledby="osg-pauli-id-profile-heading"
+      >
+        <h2 id="osg-pauli-id-profile-heading" data-i18n="pauliId.sectionHeading">Mein Pauli-Code</h2>
+        <div id="osg-pauli-id-profile-block" class="pauli-id-profile" hidden></div>
+      </section>
+      <!-- ──────────────────────────────────────────────────────────────── -->
 
       <section class="compare-panel" aria-labelledby="compare-heading">
         <h2 id="compare-heading">Preisbeispiele (Thailand)</h2>
@@ -1333,6 +1369,41 @@
             Leads als CSV herunterladen (gefiltert)
           </button>
         </section>
+        <!-- ── Pauli-ID Empfehlungs-Ranking ─────────────────────────────── -->
+        <section class="admin-dash-section" aria-labelledby="admin-pauli-id-rank-label">
+          <h3 id="admin-pauli-id-rank-label" class="admin-dash-h3">
+            Pauli-ID Empfehlungs-Ranking
+          </h3>
+          <p class="admin-export-follows-note">
+            Installationen gesamt: <strong id="admin-pauli-id-total-installs">—</strong>
+            &nbsp;·&nbsp; Aktueller Zählerstand: <strong id="admin-pauli-id-counter">—</strong>
+          </p>
+          <button type="button" class="booking-btn-secondary admin-pauli-id-rank-load" id="admin-pauli-id-rank-load">
+            Ranking laden
+          </button>
+          <div class="admin-pauli-id-rank-tables" id="admin-pauli-id-rank-tables" hidden>
+            <div class="admin-dash-scroll admin-dash-scroll-wide" style="margin-top:1rem">
+              <strong style="color:var(--primary-gold)">A) Werber-Bonus — Meiste geworbene Nutzer</strong>
+              <table class="admin-dash-table" style="margin-top:0.5rem">
+                <thead>
+                  <tr><th>#</th><th>Pauli-ID</th><th>Geworbene Nutzer</th></tr>
+                </thead>
+                <tbody id="admin-pauli-id-rank-referrers"></tbody>
+              </table>
+            </div>
+            <div class="admin-dash-scroll admin-dash-scroll-wide" style="margin-top:1.25rem">
+              <strong style="color:var(--primary-gold)">B) Umsatz-Bonus — Höchster Umsatz / Provisionen</strong>
+              <table class="admin-dash-table" style="margin-top:0.5rem">
+                <thead>
+                  <tr><th>#</th><th>Pauli-ID</th><th>Umsatz (THB)</th></tr>
+                </thead>
+                <tbody id="admin-pauli-id-rank-revenue"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+        <!-- ──────────────────────────────────────────────────────────────── -->
+
         <section class="admin-dash-section" aria-labelledby="admin-hist-label">
           <h3 id="admin-hist-label" class="admin-dash-h3">
             Leads im gewählten Zeitraum (max. 150, neueste zuerst)
@@ -10355,6 +10426,69 @@
             });
           document.addEventListener("keydown", osgAdminOverlayKeyboardNav, true);
 
+          // ── Pauli-ID Ranking Load Button ───────────────────────────────
+          var rankLoadBtn = document.getElementById("admin-pauli-id-rank-load");
+          if (rankLoadBtn) {
+            rankLoadBtn.addEventListener("click", async function () {
+              var vipCode = "";
+              try { vipCode = localStorage.getItem("osg-vip-code-v1") || ""; } catch (_) {}
+              if (!vipCode) {
+                vipCode = prompt("VIP-Code für Ranking-Zugriff:") || "";
+              }
+              if (!vipCode) return;
+              rankLoadBtn.disabled = true;
+              rankLoadBtn.textContent = "Lade…";
+              try {
+                var res = await osgApiFetch("/api/pauli-id/ranking?code=" + encodeURIComponent(vipCode));
+                if (!res.ok) {
+                  rankLoadBtn.textContent = "Fehler – Code prüfen";
+                  rankLoadBtn.disabled = false;
+                  return;
+                }
+                var data = await res.json();
+                rankLoadBtn.textContent = "Aktualisieren";
+                rankLoadBtn.disabled = false;
+                // Totals
+                var totalEl = document.getElementById("admin-pauli-id-total-installs");
+                var counterEl = document.getElementById("admin-pauli-id-counter");
+                if (totalEl) totalEl.textContent = String(data.totalInstalls || 0);
+                if (counterEl) counterEl.textContent = String(data.currentCounter || 0);
+                // Referrer ranking (A)
+                var refBody = document.getElementById("admin-pauli-id-rank-referrers");
+                if (refBody) {
+                  refBody.innerHTML = "";
+                  (data.topReferrers || []).forEach(function (row, i) {
+                    var tr = document.createElement("tr");
+                    tr.innerHTML = "<td>" + (i + 1) + "</td><td><strong>" + row.pauliId + "</strong></td><td>" + row.referredCount + "</td>";
+                    refBody.appendChild(tr);
+                  });
+                  if (!(data.topReferrers || []).length) {
+                    refBody.innerHTML = "<tr><td colspan='3'>Noch keine Daten</td></tr>";
+                  }
+                }
+                // Revenue ranking (B)
+                var revBody = document.getElementById("admin-pauli-id-rank-revenue");
+                if (revBody) {
+                  revBody.innerHTML = "";
+                  (data.topRevenue || []).forEach(function (row, i) {
+                    var tr = document.createElement("tr");
+                    tr.innerHTML = "<td>" + (i + 1) + "</td><td><strong>" + row.pauliId + "</strong></td><td>" + row.totalThb.toLocaleString("de-DE", { minimumFractionDigits: 2 }) + " THB</td>";
+                    revBody.appendChild(tr);
+                  });
+                  if (!(data.topRevenue || []).length) {
+                    revBody.innerHTML = "<tr><td colspan='3'>Noch keine Daten</td></tr>";
+                  }
+                }
+                var tables = document.getElementById("admin-pauli-id-rank-tables");
+                if (tables) tables.hidden = false;
+              } catch (err) {
+                rankLoadBtn.textContent = "Netzwerkfehler";
+                rankLoadBtn.disabled = false;
+              }
+            });
+          }
+          // ─────────────────────────────────────────────────────────────────
+
           var expRadios = document.querySelectorAll(
             'input[name="admin-export-range"]'
           );
@@ -11436,8 +11570,8 @@
             window.OSG_PauliAvatarAnimations.onCheckoutSuccess(
               amountThb,
               async function () {
-                if (quote && typeof playPauliVoice === "function") {
-                  await playPauliVoice(quote, { skipBridge: true });
+                if (quote && typeof window.playPauliVoice === "function") {
+                  await window.playPauliVoice(quote, { skipBridge: true });
                 }
               }
             );
@@ -12031,7 +12165,7 @@
           osgAvatarGestureStart(gesture, Math.max(2200, pointDuration - 500));
           ttsLoading = true;
           try {
-            await playPauliVoice(line, {
+            await window.playPauliVoice(line, {
               whisper,
               langCode,
               speechKey: opts.speechKey || "",
@@ -12797,7 +12931,7 @@
             var mishapSpeechKey =
               mod && mod.speechKey ? String(mod.speechKey).trim() : "";
             if (line) {
-              await playPauliVoice(line, {
+              await window.playPauliVoice(line, {
                 whisper: true,
                 langCode: langCode,
                 speechKey: mishapSpeechKey,
@@ -13465,6 +13599,8 @@
             window.__OSG_AVATAR_COMPANION_BOOT_RETRY__ = true;
             return;
           }
+          // If live conversation is already running, skip this boot entirely
+          if (osgPauliLiveActive) return;
           window.__OSG_AVATAR_COMPANION_BOOT_RUNNING__ = true;
           try {
             osgRefreshAvatarLockUi();
@@ -13559,49 +13695,36 @@
             window.__OSG_AVATAR_COMPANION_BOOT_RUNNING__ = false;
             if (window.__OSG_AVATAR_COMPANION_BOOT_RETRY__) {
               window.__OSG_AVATAR_COMPANION_BOOT_RETRY__ = false;
-              if (typeof window.osgScheduleAvatarCompanionBoot === "function") {
+              // Cap retries to prevent repeated playback loops
+              var _retryCount = (window.__OSG_AVATAR_COMPANION_BOOT_RETRY_COUNT__ || 0) + 1;
+              window.__OSG_AVATAR_COMPANION_BOOT_RETRY_COUNT__ = _retryCount;
+              if (_retryCount <= 1 && typeof window.osgScheduleAvatarCompanionBoot === "function") {
                 window.osgScheduleAvatarCompanionBoot(220);
               }
+            } else {
+              window.__OSG_AVATAR_COMPANION_BOOT_RETRY_COUNT__ = 0;
             }
+            // Signal that greeting is done: mic starts on the NEXT user gesture.
+            // The _osgAnyClickMicStart listener (registered in installPauliVoiceWake)
+            // and the wake-button click handler both react to this flag.
+            window.__OSG_GREETING_DONE_PENDING_MIC__ = true;
+            // Show and pulse the wake button as a clear call-to-action
+            try {
+              var _wb = document.getElementById("pauli-voice-wake-btn");
+              if (_wb) {
+                _wb.removeAttribute("hidden");
+                _wb.classList.add("osg-pulse-ready");
+              }
+            } catch (_) {}
           }
         }
 
         window.osgAvatarCompanionBoot = osgAvatarCompanionBoot;
 
         function osgAvatarTourBoot() {
-          try {
-            if (localStorage.getItem(OSG_TOUR_SEEN_KEY) === "1") return;
-          } catch (_) {}
-          let attempts = 0;
-          function tryStart() {
-            attempts += 1;
-            try {
-              if (localStorage.getItem(OSG_TOUR_SEEN_KEY) === "1") return;
-            } catch (_) {}
-            if (avatarTourRunning) return;
-            if (
-              window.__OSG_AVATAR_COMPANION_BOOT_RUNNING__ ||
-              window.__OSG_AVATAR_VIP_GREET_PENDING__ ||
-              (window.osgVipScanPendingForAvatar &&
-                window.osgVipScanPendingForAvatar() &&
-                !window.__OSG_VIP_CULTURE_GREET_DONE__)
-            ) {
-              if (attempts < 22) {
-                setTimeout(tryStart, 1400);
-                return;
-              }
-            }
-            if (busy && attempts < 18) {
-              setTimeout(tryStart, 1200);
-              return;
-            }
-            if (busy) return;
-            const pack =
-              window.__OSG_CURRENT_PACK_CACHE ||
-              (typeof T !== "undefined" ? T.th || T.de || {} : {});
-            void osgAvatarTour(pack);
-          }
-          setTimeout(tryStart, 2800);
+          // Auto-tour disabled: reading all page sections on load blocks the live mic
+          // and causes overlapping TTS. Tour can be triggered via voice command only.
+          try { localStorage.setItem(OSG_TOUR_SEEN_KEY, "1"); } catch (_) {}
         }
 
         window.osgAvatarTourBoot = osgAvatarTourBoot;
@@ -13658,6 +13781,9 @@
                 if (ctx && ctx.state === "suspended") await ctx.resume();
               } catch (_) {}
             }
+
+            // Mic auto-start is handled by _osgAnyClickMicStart listener in installPauliVoiceWake
+            // (added after boot completes). No action needed here for that flag.
 
             if (typeof window.osgScheduleAvatarCompanionBoot === "function") {
               var sb = window.OSG_STARTUP_BOOT;
@@ -15047,7 +15173,7 @@
             try {
               // isNight OR acoustic whisper detection (user was whispering → Pauli whispers back)
               const effectiveWhisper = isNight || !!window.osgUserInputIsWhisper;
-              await playPauliVoice(chunk, {
+              await window.playPauliVoice(chunk, {
                 whisper: effectiveWhisper,
                 langCode: lang,
                 speechKey: extra.speechKey || "",
@@ -15135,7 +15261,7 @@
           const ack = osgPauliPickLiveAck(pack);
           if (!ack) return;
           try {
-            await playPauliVoice(ack, {
+            await window.playPauliVoice(ack, {
               whisper: isNight,
               langCode: lang,
               skipCaptionClear: true,
@@ -15158,7 +15284,8 @@
           const wakeBtn = document.getElementById("pauli-voice-wake-btn");
           let turns = 0;
 
-          if ((opts.fromCoin || opts.fromWake) && !opts.initialText) {
+          // fromGreeting: skip opening Spruch, go straight to listening
+          if ((opts.fromCoin || opts.fromWake) && !opts.fromGreeting && !opts.initialText) {
             try {
               const trend = pickNextPauliSpruch(osgVcCurrentLangCode());
               if (trend && trend.text) {
@@ -16158,9 +16285,52 @@
           if (wakeBtn) {
             wakeBtn.addEventListener("click", function (e) {
               e.stopPropagation();
+              // If the boot greeting just finished, start the live conversation
+              // immediately (no wake-word phase needed, no Spruch — user just heard the greeting)
+              if (window.__OSG_GREETING_DONE_PENDING_MIC__) {
+                window.__OSG_GREETING_DONE_PENDING_MIC__ = false;
+                wakeBtn.classList.remove("osg-pulse-ready");
+                if (
+                  !osgPauliLiveActive &&
+                  !busy &&
+                  typeof startPauliLiveConversation === "function"
+                ) {
+                  unlockAudioSystemFromCoinGesture();
+                  void startPauliLiveConversation({ fromGreeting: true });
+                  return;
+                }
+              }
               void osgWakePushToTalk();
             });
           }
+
+          // One-time any-click listener: if boot greeting done but user clicks
+          // somewhere OTHER than the wake button, still start the mic.
+          (function () {
+            function _osgAnyClickMicStart(ev) {
+              if (!window.__OSG_GREETING_DONE_PENDING_MIC__) return;
+              // Wake button click already handled above (stopPropagation = not reaching here)
+              window.__OSG_GREETING_DONE_PENDING_MIC__ = false;
+              document.removeEventListener("click", _osgAnyClickMicStart, true);
+              document.removeEventListener("touchend", _osgAnyClickMicStart, true);
+              var _wb = document.getElementById("pauli-voice-wake-btn");
+              if (_wb) _wb.classList.remove("osg-pulse-ready");
+              if (
+                !osgPauliLiveActive &&
+                !busy &&
+                typeof startPauliLiveConversation === "function"
+              ) {
+                unlockAudioSystemFromCoinGesture();
+                void startPauliLiveConversation({ fromGreeting: true });
+              }
+            }
+            document.addEventListener("click", _osgAnyClickMicStart, true);
+            document.addEventListener("touchend", _osgAnyClickMicStart, { capture: true, passive: true });
+            window.__OSG_CLEAR_MIC_GESTURE_LISTENER__ = function () {
+              document.removeEventListener("click", _osgAnyClickMicStart, true);
+              document.removeEventListener("touchend", _osgAnyClickMicStart, true);
+            };
+          })();
 
           document.addEventListener("visibilitychange", function () {
             if (document.visibilityState === "hidden") osgWakeStopAll();
@@ -16244,6 +16414,54 @@
     </script>
     <script src="assets/scripts/osg_tts_guard.js"></script>
     <script src="assets/scripts/osg_tts_interrupt.js"></script>
+    <script src="assets/scripts/pauli_id_system.js"></script>
+    <script>
+      /* ── OSG Copy-Protection Guard ──────────────────────────────────── */
+      (function () {
+        var PROTECTED_SELECTORS = [
+          '.compare-panel', '.compare-table', '.brand-app-title',
+          '.page .lead', '#partner-affiliate-panel', '.partner-panel',
+          '.osg-b2b-list', '#coin-stage', '.coin-stage',
+        ];
+
+        function isProtected(el) {
+          if (!el) return false;
+          for (var i = 0; i < PROTECTED_SELECTORS.length; i++) {
+            try {
+              if (el.closest && el.closest(PROTECTED_SELECTORS[i])) return true;
+            } catch (_) {}
+          }
+          return false;
+        }
+
+        // Block right-click on protected elements
+        document.addEventListener('contextmenu', function (e) {
+          if (isProtected(e.target)) e.preventDefault();
+        }, true);
+
+        // Block copy/cut on protected elements
+        document.addEventListener('copy', function (e) {
+          if (isProtected(e.target)) e.preventDefault();
+        }, true);
+        document.addEventListener('cut', function (e) {
+          if (isProtected(e.target)) e.preventDefault();
+        }, true);
+
+        // Block image dragging globally
+        document.addEventListener('dragstart', function (e) {
+          if (e.target && e.target.tagName === 'IMG') e.preventDefault();
+        }, true);
+
+        // Prevent devtools shortcut F12 from saving screenshots via right-click
+        document.addEventListener('keydown', function (e) {
+          // Block Ctrl+S (save page) over protected areas
+          if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+            if (isProtected(document.activeElement)) e.preventDefault();
+          }
+        }, true);
+      })();
+      /* ──────────────────────────────────────────────────────────────── */
+    </script>
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", function () {

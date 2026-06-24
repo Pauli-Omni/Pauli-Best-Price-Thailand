@@ -35,7 +35,7 @@
   "personalGreetEveningWithName": "Guten Abend, {NAME}! Wir halten deine Routen smart und privat.",
   "personalGreetEveningNoName": "Guten Abend — Routeninformationen ohne Cloud-Hosting.",
   "personalGreetEveningWithMembership": "Guten Abend — Gutscheine, Karten-Cashback und Punkte kombiniert diese App lokal; der Server sieht keine Notizen.",
-  "personalGreetNightWithName": "Hey {NAME}! Auch spät bleibt Best Price privat bei dir.",
+  "personalGreetNightWithName": "Hi {NAME}, auch spät bist du bei Pauli Best Price gut aufgehoben.",
   "personalGreetNightNoName": "Auch später begleitet dich Best Price — ohne zentrale Namens- oder Mitglieds-Hosting-Pflicht bei uns.",
   "personalGreetNightWithMembership": "Auch spät: Mobil- und Bankoptionen scoutest du lokal — Fahrzeug- und Versicherungsvergleiche in deinem Tempo, privat.",
   "vipGiftOverlayAria": "VIP-Willkommensgeschenk von Pauli Best Price Thailand",
@@ -63,5 +63,16 @@
   "fun.savingHappy": "Geld sparen macht mich einfach glücklich. Zeit für ein Tänzchen!",
   "interrupt.resumeTriggers": "entschuldigung,weiter,mach weiter,bitte weiter,was wolltest du sagen,was hast du gesagt,erkläre weiter,bitte erkläre weiter,erzähl weiter,weiter bitte,wo warst du",
   "interrupt.resumePrefix": "Klar! Also, wo war ich stehengeblieben... genau —",
-  "interrupt.llmContextHint": "[System: Pauli wurde unterbrochen, als er sagte: \"{TEXT}\". Pauli kennt diesen Satz und kann ihn bei Bedarf natürlich aufgreifen — nur vollständig wiederholen, wenn der Nutzer es verlangt.]"
+  "interrupt.llmContextHint": "[System: Pauli wurde unterbrochen, als er sagte: \"{TEXT}\". Pauli kennt diesen Satz und kann ihn bei Bedarf natürlich aufgreifen — nur vollständig wiederholen, wenn der Nutzer es verlangt.]",
+  "pauliId.sectionHeading": "Mein Pauli-Code",
+  "pauliId.profileHeading": "Mein Pauli-Code",
+  "pauliId.idAriaLabel": "Deine Pauli-ID: ",
+  "pauliId.qrAriaLabel": "QR-Code für deine Pauli-ID",
+  "pauliId.copyBtn": "Kopieren",
+  "pauliId.copied": "Kopiert ✓",
+  "pauliId.profileHint": "Teile diesen Code oder QR, um Freunde zu werben.",
+  "pauliId.referralLabel": "Geworben von App-ID (z. B. 1 M 000 123)",
+  "pauliId.referralConfirm": "Bestätigen",
+  "pauliId.referralInvalid": "Ungültiges Format. Beispiel: 1 M 000 123",
+  "pauliId.referralSaved": "Gespeichert ✓"
 }

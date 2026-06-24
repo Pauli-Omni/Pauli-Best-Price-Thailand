@@ -906,6 +906,229 @@ app.get("/api/install-fingerprint", rlInstallFp, (req, res) => {
   }
 });
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Pauli-ID System: sequential human-readable installation IDs
+// ─────────────────────────────────────────────────────────────────────────────
+const PAULI_ID_COUNTER_FILE = path.join(DATA_DIR, "pauli_id_counter.json");
+const PAULI_ID_REGISTRY_FILE = path.join(DATA_DIR, "pauli_id_registry.jsonl");
+
+function pauliIdReadCounter() {
+  try {
+    if (!fs.existsSync(PAULI_ID_COUNTER_FILE)) return 1_000_000;
+    return JSON.parse(fs.readFileSync(PAULI_ID_COUNTER_FILE, "utf8")).counter || 1_000_000;
+  } catch (_) { return 1_000_000; }
+}
+
+function pauliIdWriteCounter(n) {
+  fs.mkdirSync(path.dirname(PAULI_ID_COUNTER_FILE), { recursive: true });
+  fs.writeFileSync(PAULI_ID_COUNTER_FILE, JSON.stringify({ counter: n }));
+}
+
+/** Format a counter integer as "1 M 000 001" or "1 T 000 000" */
+function pauliIdFormat(n) {
+  const pad3 = (x) => String(Math.max(0, Math.floor(x))).padStart(3, "0");
+  if (n <= 1_999_999) {
+    const offset = n - 1_000_000;
+    return `1 M ${pad3(Math.floor(offset / 1000))} ${pad3(offset % 1000)}`;
+  }
+  const offset = n - 2_000_000;
+  return `1 T ${pad3(Math.floor(offset / 1000))} ${pad3(offset % 1000)}`;
+}
+
+/** Parse a display ID back to the raw integer (for validation). */
+function pauliIdParse(display) {
+  const s = String(display || "").replace(/\s+/g, " ").trim().toUpperCase();
+  const m = s.match(/^(\d)\s*([MT])\s*(\d{3})\s*(\d{3})$/);
+  if (!m) return null;
+  const [, prefix, letter, thousands, units] = m;
+  const offset = parseInt(thousands, 10) * 1000 + parseInt(units, 10);
+  const base = letter === "M" ? 1_000_000 : 2_000_000;
+  return base + offset + (parseInt(prefix, 10) - 1) * 1_000_000;
+}
+
+function pauliIdLookupByCid(cid) {
+  try {
+    if (!fs.existsSync(PAULI_ID_REGISTRY_FILE)) return null;
+    const lines = fs.readFileSync(PAULI_ID_REGISTRY_FILE, "utf8").split("\n");
+    for (const line of lines) {
+      if (!line.trim()) continue;
+      try {
+        const rec = JSON.parse(line);
+        if (rec.cid === cid) return rec;
+      } catch (_) {}
+    }
+  } catch (_) {}
+  return null;
+}
+
+function pauliIdLookupByDisplayId(displayId) {
+  try {
+    if (!fs.existsSync(PAULI_ID_REGISTRY_FILE)) return null;
+    const norm = String(displayId || "").replace(/\s+/g, " ").trim().toUpperCase();
+    const lines = fs.readFileSync(PAULI_ID_REGISTRY_FILE, "utf8").split("\n");
+    for (const line of lines) {
+      if (!line.trim()) continue;
+      try {
+        const rec = JSON.parse(line);
+        if (rec.pauliId === norm) return rec;
+      } catch (_) {}
+    }
+  } catch (_) {}
+  return null;
+}
+
+const rlPauliId = osgRateLimit({ windowMs: 60_000, max: 8, envMax: "OSG_RL_PAULI_ID_MAX" });
+
+/** Assign a new sequential Pauli-ID to a client device (idempotent). */
+app.post("/api/pauli-id/register", rlPauliId, (req, res) => {
+  try {
+    const cid = String((req.body || {}).cid || "").trim().slice(0, 80);
+    if (!cid) return res.status(400).json({ ok: false, error: "missing_cid" });
+    // Idempotent: if already registered, return existing ID
+    const existing = pauliIdLookupByCid(cid);
+    if (existing) return res.json({ ok: true, pauliId: existing.pauliId, new: false });
+    // Assign next counter
+    const counter = pauliIdReadCounter() + 1;
+    pauliIdWriteCounter(counter);
+    const pauliId = pauliIdFormat(counter);
+    const record = { cid, pauliId, counter, installedAt: new Date().toISOString(), referredBy: null };
+    fs.mkdirSync(path.dirname(PAULI_ID_REGISTRY_FILE), { recursive: true });
+    fs.appendFileSync(PAULI_ID_REGISTRY_FILE, JSON.stringify(record) + "\n");
+    return res.json({ ok: true, pauliId, new: true });
+  } catch (e) {
+    console.error("[pauli-id/register]", e);
+    res.status(500).json({ ok: false, error: "register_failed" });
+  }
+});
+
+/** Link a new install to a referrer (one-time, first-write-wins). */
+app.post("/api/pauli-id/set-referrer", rlPauliId, (req, res) => {
+  try {
+    const cid = String((req.body || {}).cid || "").trim().slice(0, 80);
+    const referrerRaw = String((req.body || {}).referrerPauliId || "").trim().slice(0, 20);
+    if (!cid || !referrerRaw) return res.status(400).json({ ok: false, error: "missing_fields" });
+    // Validate referrer format
+    if (!pauliIdParse(referrerRaw)) return res.status(400).json({ ok: false, error: "invalid_referrer_id" });
+    const referrerNorm = referrerRaw.replace(/\s+/g, " ").trim().toUpperCase();
+    // Check referrer exists
+    const referrerRec = pauliIdLookupByDisplayId(referrerNorm);
+    if (!referrerRec) return res.status(404).json({ ok: false, error: "referrer_not_found" });
+    // Find own record and update only if not yet linked
+    if (!fs.existsSync(PAULI_ID_REGISTRY_FILE)) return res.status(404).json({ ok: false, error: "not_registered" });
+    const lines = fs.readFileSync(PAULI_ID_REGISTRY_FILE, "utf8").split("\n");
+    let found = false;
+    const updated = lines.map((line) => {
+      if (!line.trim()) return line;
+      try {
+        const rec = JSON.parse(line);
+        if (rec.cid === cid) {
+          found = true;
+          if (rec.referredBy) return line; // already set
+          return JSON.stringify({ ...rec, referredBy: referrerNorm });
+        }
+      } catch (_) {}
+      return line;
+    });
+    if (!found) return res.status(404).json({ ok: false, error: "not_registered" });
+    fs.writeFileSync(PAULI_ID_REGISTRY_FILE, updated.join("\n"));
+    return res.json({ ok: true });
+  } catch (e) {
+    console.error("[pauli-id/set-referrer]", e);
+    res.status(500).json({ ok: false, error: "set_referrer_failed" });
+  }
+});
+
+/** Record a revenue event for Umsatz-Bonus calculation. */
+const PAULI_ID_REVENUE_FILE = path.join(DATA_DIR, "pauli_id_revenue.jsonl");
+const rlPauliIdRevenue = osgRateLimit({ windowMs: 60_000, max: 30, envMax: "OSG_RL_PAULI_ID_REV_MAX" });
+
+app.post("/api/pauli-id/revenue-event", rlPauliIdRevenue, (req, res) => {
+  try {
+    const b = req.body || {};
+    const pauliId = String(b.pauliId || "").trim().slice(0, 20);
+    const amountThb = Number(b.amountThb) || 0;
+    const type = String(b.type || "purchase").slice(0, 32);
+    if (!pauliId || !pauliIdParse(pauliId)) return res.status(400).json({ ok: false, error: "invalid_pauli_id" });
+    if (amountThb <= 0) return res.status(400).json({ ok: false, error: "invalid_amount" });
+    fs.mkdirSync(path.dirname(PAULI_ID_REVENUE_FILE), { recursive: true });
+    fs.appendFileSync(PAULI_ID_REVENUE_FILE, JSON.stringify({ pauliId: pauliId.toUpperCase(), amountThb, type, ts: Date.now() }) + "\n");
+    res.json({ ok: true });
+  } catch (e) {
+    console.error("[pauli-id/revenue-event]", e);
+    res.status(500).json({ ok: false, error: "revenue_event_failed" });
+  }
+});
+
+/** Admin ranking: top referrers (Werber-Bonus) + top revenue (Umsatz-Bonus). */
+app.get("/api/pauli-id/ranking", rlVipStats, (req, res) => {
+  try {
+    // Require valid VIP code with canViewAllStats or slot 55/56
+    const code = String(req.query.code || "").trim().slice(0, 64);
+    const profile = vipProfileForCode(code);
+    if (!profile) return res.status(403).json({ ok: false, error: "invalid_code" });
+    if (!profile.canViewAllStats && profile.slot !== 55 && profile.slot !== 56) {
+      return res.status(403).json({ ok: false, error: "forbidden" });
+    }
+
+    // Build referral map: referrerPauliId → count
+    const referralCounts = {};
+    if (fs.existsSync(PAULI_ID_REGISTRY_FILE)) {
+      const lines = fs.readFileSync(PAULI_ID_REGISTRY_FILE, "utf8").split("\n");
+      for (const line of lines) {
+        if (!line.trim()) continue;
+        try {
+          const rec = JSON.parse(line);
+          if (rec.referredBy) {
+            referralCounts[rec.referredBy] = (referralCounts[rec.referredBy] || 0) + 1;
+          }
+        } catch (_) {}
+      }
+    }
+
+    // Build revenue map: pauliId → total THB
+    const revenueTotals = {};
+    if (fs.existsSync(PAULI_ID_REVENUE_FILE)) {
+      const lines = fs.readFileSync(PAULI_ID_REVENUE_FILE, "utf8").split("\n");
+      for (const line of lines) {
+        if (!line.trim()) continue;
+        try {
+          const rec = JSON.parse(line);
+          if (rec.pauliId && rec.amountThb > 0) {
+            revenueTotals[rec.pauliId] = (revenueTotals[rec.pauliId] || 0) + rec.amountThb;
+          }
+        } catch (_) {}
+      }
+    }
+
+    // Sort and top-N
+    const topReferrers = Object.entries(referralCounts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 100)
+      .map(([pauliId, count]) => ({ pauliId, referredCount: count }));
+
+    const topRevenue = Object.entries(revenueTotals)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 100)
+      .map(([pauliId, totalThb]) => ({ pauliId, totalThb: Number(totalThb.toFixed(2)) }));
+
+    // Total installs
+    let totalInstalls = 0;
+    let currentCounter = pauliIdReadCounter();
+    if (currentCounter > 1_000_000) totalInstalls = currentCounter - 1_000_000;
+
+    res.json({
+      ok: true,
+      totalInstalls,
+      currentCounter,
+      topReferrers,
+      topRevenue,
+    });
+  } catch (e) {
+    console.error("[pauli-id/ranking]", e);
+    res.status(500).json({ ok: false, error: "ranking_failed" });
+  }
+});
+
 app.post("/api/avatar/status", rlRefStatus, (req, res) => {
   try {
     const payload = avatarStatusPayload(DATA_DIR, req.body || {});

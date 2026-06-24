@@ -31,7 +31,7 @@ window.OSG_LOCALES = {
               '<ul class="osg-b2b-list"><li>Automotive, Antriebs- und Prüfstandsumgebungen</li><li>Broadcasting, Studios und Sendetechnik</li><li>Kino- und Großbildtechnik</li><li>Sicherheits- und Infrastrukturrollen (international)</li><li>Handel, Marktplätze und grenzüberschreitende Fertigung — Integrationspfade</li></ul>',
             introTitle: "Willkommen",
             intro:
-              "Willkommen bei PAULI BEST PRICE THAILAND von Omni Solutions Global®. Hier findest du strukturierte Infos rund um Einkaufen und Lieferung in Thailand — korrekt geschrieben: Thailand (nicht „Thallands“). Die Tabelle zeigt illustrative Beispielpreise über Lazada, Shopee und 7-Eleven.",
+              "Willkommen bei PAULI BEST PRICE THAILAND von Omni Solutions Global®. Hier findest du strukturierte Infos rund um Einkaufen und Lieferung in Thailand.",
             compareTitle: "Preisbeispiele (Thailand)",
             clipScanHeading: "Clip-Scan — Live-Preisvergleich im Laden",
             clipScanLead:
@@ -819,7 +819,7 @@ window.OSG_LOCALES = {
             personalGreetEveningNoName: "Guten Abend — Routeninformationen ohne Cloud-Hosting.",
             personalGreetEveningWithMembership:
               "Guten Abend — Gutscheine, Karten-Cashback und Punkte lässt diese Shell lokal kombinieren, Server sehen keine Notizzettel-Inhalte.",
-            personalGreetNightWithName: "Hey {NAME}! Auch spät bleibt Best Price privat mit dir.",
+            personalGreetNightWithName: "Hi {NAME}, auch spät bist du bei Pauli Best Price gut aufgehoben.",
             personalGreetNightNoName: "Auch später begleitet dich Best Price ohne zentrale Namens‑ oder Mitglieds-Hosting‑Pflicht bei uns.",
             personalGreetNightWithMembership:
               "Auch später: Mobil‑ und Bankoptionen kannst du lokal scouten — Fahrzeug- und Versicherungsvergleiche bleiben in deinem Tempo privat.",
@@ -955,7 +955,7 @@ window.OSG_LOCALES = {
               '<ul class="osg-b2b-list"><li>Automotive, powertrain, and test-environment programmes</li><li>Broadcast, studio, and transmission infrastructure</li><li>Cinema and large-venue display technology</li><li>Security and infrastructure deployments (international)</li><li>Retail, marketplaces, and cross-border manufacturing integration paths</li></ul>',
             introTitle: "Welcome",
             intro:
-              "Welcome to PAULI BEST PRICE THAILAND by Omni Solutions Global®: structured shopping and delivery guidance for Thailand — spelled Thailand (not “Thallands”). The table shows illustrative sample prices on Lazada, Shopee, and 7-Eleven.",
+              "Welcome to PAULI BEST PRICE THAILAND by Omni Solutions Global®: structured shopping and delivery guidance for Thailand.",
             compareTitle: "Sample prices (Thailand)",
             clipScanHeading: "Clip scan — in-store live price compare",
             clipScanLead:
@@ -1385,7 +1385,7 @@ window.OSG_LOCALES = {
             personalGreetEveningNoName: "Good evening — smart routing without Omni hosting your onboarding notes.",
             personalGreetEveningWithMembership:
               "Good evening — coupon automation, cashback cards, and loyalty points remix locally until you checkout elsewhere.",
-            personalGreetNightWithName: "Hey {NAME}! Best Price keeps things private even late.",
+            personalGreetNightWithName: "Hi {NAME}, Best Price is here for you even late at night.",
             personalGreetNightNoName: "Even late, Best Price stays private on-device first.",
             personalGreetNightWithMembership:
               "Even late — two-wheel/four-wheel finance scouts and Roojai/Silkspan benchmarks stay conversational on your handset timeline.",
@@ -1520,7 +1520,7 @@ window.OSG_LOCALES = {
               '<ul class="osg-b2b-list"><li>ยานยนต์ ระบบส่งกำลัง และสภาพแวดล้อมทดสอบ</li><li>การออกอากาศ สตูดิโอ และโครงสร้างพื้นฐานส่งสัญญาณ</li><li>โรงภาพยนตร์และเทคโนโลยีจอขนาดใหญ่</li><li>ความปลอดภัยและโครงสร้างพื้นฐาน (ระดับนานาชาติ)</li><li>ค้าปลีก มาร์เก็ตเพลส และเส้นทางบูรณาการการผลิตข้ามพรมแดน</li></ul>',
             introTitle: "ยินดีต้อนรับ",
             intro:
-              "ยินดีต้อนรับสู่ PAULI BEST PRICE THAILAND จาก Omni Solutions Global® — ข้อมูลการช้อปและจัดส่งในประเทศไทย เขียนถูกว่า ประเทศไทย ไม่ใช่ “Thallands” ตารางแสดงตัวอย่างราคาบน Lazada Shopee และ 7-Eleven",
+              "ยินดีต้อนรับสู่ PAULI BEST PRICE THAILAND จาก Omni Solutions Global® — ข้อมูลการช้อปและจัดส่งในประเทศไทย",
             compareTitle: "ตัวอย่างราคา (ประเทศไทย)",
             clipScanHeading: "Clip Scan — เปรียบเทียบราคาในร้านทันที",
             clipScanLead:
@@ -2359,7 +2359,7 @@ window.OSG_LOCALES = {
               '<ul class="osg-b2b-list"><li>Motoryzacja, układy napędowe i środowiska testowe</li><li>Nadawanie, studia i infrastruktura transmisji</li><li>Kino i technologia dużych ekranów</li><li>Bezpieczeństwo i infrastruktura (projekty międzynarodowe)</li><li>Handel, marketplace’y i integracja produkcji transgranicznej</li></ul>',
             introTitle: "Witamy",
             intro:
-              "Witamy w PAULI BEST PRICE THAILAND od Omni Solutions Global® — porządkujemy zakupy i dostawy w Tajlandii; poprawna nazwa to Tajlandia (nie „Thallands”). Tabela pokazuje przykładowe ceny na Lazada, Shopee i 7-Eleven.",
+              "Witamy w PAULI BEST PRICE THAILAND od Omni Solutions Global® — porądkujemy zakupy i dostawy w Tajlandii.",
             compareTitle: "Przykładowe ceny (Tajlandia)",
             clipScanHeading: "Clip Scan — porównanie cen w sklepie na żywo",
             clipScanLead:
@@ -3021,7 +3021,7 @@ window.OSG_LOCALES = {
             personalGreetEveningNoName: "Good evening — smart routing without Omni hosting your onboarding notes.",
             personalGreetEveningWithMembership:
               "Good evening — coupon automation, cashback cards, and loyalty points remix locally until you checkout elsewhere.",
-            personalGreetNightWithName: "Hey {NAME}! Best Price keeps things private even late.",
+            personalGreetNightWithName: "Hi {NAME}, Best Price is here for you even late at night.",
             personalGreetNightNoName: "Even late, Best Price stays private on-device first.",
             personalGreetNightWithMembership:
               "Even late — two-wheel/four-wheel finance scouts and Roojai/Silkspan benchmarks stay conversational on your handset timeline.",
@@ -3179,7 +3179,7 @@ window.OSG_LOCALES = {
               '<ul class="osg-b2b-list"><li>Автомобилестроение, силовые установки и испытательные стенды</li><li>Вещание, студии и инфраструктура передачи</li><li>Кинотехника и крупноформатные дисплеи</li><li>Безопасность и инфраструктурные проекты (международный контекст)</li><li>Ритейл, маркетплейсы и пути интеграции трансграничного производства</li></ul>',
             introTitle: "Добро пожаловать",
             intro:
-              "Добро пожаловать в PAULI BEST PRICE THAILAND от Omni Solutions Global® — структурированная информация о покупках и доставке в Таиланде; правильно: Таиланд (не «Thallands»). Таблица — примерные цены Lazada, Shopee и 7-Eleven.",
+              "Добро пожаловать в PAULI BEST PRICE THAILAND от Omni Solutions Global® — структурированная информация о покупках и доставке в Таиланде.",
             compareTitle: "Примеры цен (Таиланд)",
             clipScanHeading: "Clip Scan — сравнение цен в магазине",
             clipScanLead:
@@ -3839,7 +3839,7 @@ window.OSG_LOCALES = {
             personalGreetEveningNoName: "Good evening — smart routing without Omni hosting your onboarding notes.",
             personalGreetEveningWithMembership:
               "Good evening — coupon automation, cashback cards, and loyalty points remix locally until you checkout elsewhere.",
-            personalGreetNightWithName: "Hey {NAME}! Best Price keeps things private even late.",
+            personalGreetNightWithName: "Hi {NAME}, Best Price is here for you even late at night.",
             personalGreetNightNoName: "Even late, Best Price stays private on-device first.",
             personalGreetNightWithMembership:
               "Even late — two-wheel/four-wheel finance scouts and Roojai/Silkspan benchmarks stay conversational on your handset timeline.",
@@ -4002,7 +4002,7 @@ window.OSG_LOCALES = {
               '<ul class="osg-b2b-list"><li>汽车、动力总成与试验环境</li><li>广播、演播与传输基础设施</li><li>影院与大型显示技术</li><li>安防与国际基建类项目</li><li>零售、电商平台与跨境制造集成路径</li></ul>',
             introTitle: "欢迎",
             intro:
-              "欢迎访问 Omni Solutions Global® 旗下的 PAULI BEST PRICE THAILAND：泰国购物与配送的结构化资讯 — 国家名称请写作<strong>泰国 Thailand</strong>（勿写成 “Thallands”）。下表为 Lazada、Shopee、7-Eleven 的示例价格。",
+              "欢迎访问 Omni Solutions Global® 旗下的 PAULI BEST PRICE THAILAND：泰国购物与配送的结构化资讯。",
             compareTitle: "示例价格（泰国）",
             clipScanHeading: "Clip Scan — 店内实时比价",
             clipScanLead:
@@ -4635,7 +4635,7 @@ window.OSG_LOCALES = {
             personalGreetEveningNoName: "Good evening — smart routing without Omni hosting your onboarding notes.",
             personalGreetEveningWithMembership:
               "Good evening — coupon automation, cashback cards, and loyalty points remix locally until you checkout elsewhere.",
-            personalGreetNightWithName: "Hey {NAME}! Best Price keeps things private even late.",
+            personalGreetNightWithName: "Hi {NAME}, Best Price is here for you even late at night.",
             personalGreetNightNoName: "Even late, Best Price stays private on-device first.",
             personalGreetNightWithMembership:
               "Even late — two-wheel/four-wheel finance scouts and Roojai/Silkspan benchmarks stay conversational on your handset timeline.",
