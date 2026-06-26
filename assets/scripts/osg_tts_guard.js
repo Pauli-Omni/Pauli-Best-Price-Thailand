@@ -42,16 +42,13 @@
     ) ? window.OSG_AUDIO_REGISTRY.getGeneration() : -1;
   }
 
-  function isEpochBlocked() {
-    return !!(
-      window.OSG_AUDIO_REGISTRY &&
-      typeof window.OSG_AUDIO_REGISTRY.isAbortEpochActive === 'function' &&
-      window.OSG_AUDIO_REGISTRY.isAbortEpochActive()
-    );
-  }
-
   function releaseEpoch() {
     if (
+      window.OSG_AUDIO_REGISTRY &&
+      typeof window.OSG_AUDIO_REGISTRY.resetAbortEpoch === 'function'
+    ) {
+      window.OSG_AUDIO_REGISTRY.resetAbortEpoch();
+    } else if (
       window.OSG_AUDIO_REGISTRY &&
       typeof window.OSG_AUDIO_REGISTRY.clearAbortEpoch === 'function'
     ) {
@@ -59,13 +56,24 @@
     }
   }
 
+  function beginAbortEpoch() {
+    if (
+      window.OSG_AUDIO_REGISTRY &&
+      typeof window.OSG_AUDIO_REGISTRY.beginAbortEpoch === 'function'
+    ) {
+      window.OSG_AUDIO_REGISTRY.beginAbortEpoch();
+    }
+  }
+
   // ── Queue-Verarbeitung ────────────────────────────────────────────────────
 
   async function processQueue() {
-    // Läuft bereits, Queue leer, oder Epoch noch gesperrt → kein Start
-    if (isSpeaking || ttsQueue.length === 0 || isEpochBlocked()) return;
+    // Läuft bereits oder Queue leer → kein Start
+    if (isSpeaking || ttsQueue.length === 0) return;
 
     isSpeaking = true;
+    // Neuer Sprechauftrag: Abort-Gate freigeben — stale Callbacks via Generation-Guard
+    releaseEpoch();
     var myGeneration = _abortGeneration;
     var myRegistryGen = registryGen();
     var current = ttsQueue.shift();
@@ -100,6 +108,9 @@
         // Stale: Queue leeren ohne Callbacks zu triggern (bereits durch Abort erledigt)
         ttsQueue.forEach(function (item) { item.resolve(); });
         ttsQueue = [];
+      } else {
+        // Normaler Abschluss: Abort-Epoch sicher zurücksetzen
+        releaseEpoch();
       }
       // Kein processQueue()-Aufruf hier — nie, unter keinen Umständen.
     }
@@ -110,12 +121,6 @@
   function guardedPlayPauliVoice(text, options) {
     options = options || {};
     return new Promise(function (resolve, reject) {
-      // Epoch noch gesperrt → silent skip (async Task von vor dem Abort)
-      if (isEpochBlocked()) {
-        resolve();
-        return;
-      }
-
       // Text-Batch-Guard
       var textKey = normTextKey(text);
       var now = typeof Date.now === 'function' ? Date.now() : 0;
@@ -165,7 +170,10 @@
     // Abort-Generation hochzählen → finally-Blöcke erkennen Stale-State
     _abortGeneration += 1;
 
-    // Alle Audio-Quellen stoppen (stopAll() setzt auch Abort-Epoch in der Registry)
+    // Interrupt-Epoch setzen (stopAllSpeech allein setzt sie nicht mehr)
+    beginAbortEpoch();
+
+    // Alle Audio-Quellen stoppen
     if (typeof window.stopAllSpeech === 'function') {
       window.stopAllSpeech();
     } else if (typeof window.osgPauliStopActivePlayback === 'function') {
@@ -188,8 +196,8 @@
     _epochReleaseTimer = setTimeout(function () {
       _epochReleaseTimer = null;
       releaseEpoch();
-      // Queue bleibt leer — kein processQueue()-Aufruf.
-      // Neues Audio startet nur durch expliziten guardedPlayPauliVoice()-Aufruf.
+      // Nach Interrupt-Delay: wartende Queue-Einträge zulassen
+      processQueue();
     }, _EPOCH_RELEASE_MS);
   };
 

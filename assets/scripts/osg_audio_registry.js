@@ -10,10 +10,9 @@
   // Ein abweichender Wert bedeutet: ein Abort ist seit dem Start aufgetreten → stale.
   var _generation = 0;
 
-  // Abort-Epoch: wird in stopAll() gesetzt, in clearAbortEpoch() freigegeben.
-  // Solange _abortEpoch > 0, blockiert register() jeden neuen Audio-Start,
-  // es sei denn force:true wird übergeben.
-  // Kein automatisches Ablaufen per Timeout — die TTS-Guard steuert die Freigabe.
+  // Abort-Epoch: nur bei explizitem Interrupt (beginAbortEpoch) gesetzt.
+  // Blockiert register() für stale async Callbacks bis resetAbortEpoch().
+  // Normales stopAllSpeech() erhöht _abortEpoch NICHT — kein dauerhafter Abort-Zustand.
   var _abortEpoch = 0;
 
   /**
@@ -61,12 +60,12 @@
 
   /**
    * Stoppt ALLE bekannten Audioquellen (Registry + Legacy-Globals + Browser-Speech).
-   * Setzt Abort-Epoch — blockiert jeden neuen register()-Aufruf bis clearAbortEpoch().
-   * Wird von stopAllSpeech() und osgPauliTtsAbort() aufgerufen.
+   * @param {Object} [opts]  { abort: true } setzt zusätzlich die Abort-Epoch (Interrupt-Pfad)
    */
-  function stopAll() {
-    // Abort-Epoch setzen: blockiert register() für alle folgenden async Callbacks
-    _abortEpoch += 1;
+  function stopAll(opts) {
+    if (opts && opts.abort) {
+      _abortEpoch += 1;
+    }
 
     // Generation hochzählen: Snapshot-Vergleiche in Callbacks erkennen Stale-State
     _generation += 1;
@@ -142,14 +141,21 @@
     global.currentAudioSource = null;
   }
 
+  /** Setzt Abort-Epoch für Interrupt — stale async register()-Aufrufe blockieren. */
+  function beginAbortEpoch() {
+    _abortEpoch += 1;
+  }
+
   /**
-   * Gibt den Abort-Epoch-Guard frei.
-   * Muss explizit von der TTS-Guard aufgerufen werden, nachdem alle async
-   * Callbacks sicher beendet wurden (d.h. nach dem Re-Entry-Delay).
-   * Kein automatisches Ablaufen — vollständig atomar gesteuert.
+   * Setzt Abort-Epoch vollständig zurück (normaler Sprechabschluss / nach Interrupt-Delay).
    */
+  function resetAbortEpoch() {
+    _abortEpoch = 0;
+  }
+
+  /** @deprecated Legacy-Alias — bevorzugt resetAbortEpoch() */
   function clearAbortEpoch() {
-    if (_abortEpoch > 0) _abortEpoch -= 1;
+    resetAbortEpoch();
   }
 
   /**
@@ -163,6 +169,8 @@
     register: register,
     unregister: unregister,
     stopAll: stopAll,
+    beginAbortEpoch: beginAbortEpoch,
+    resetAbortEpoch: resetAbortEpoch,
     clearAbortEpoch: clearAbortEpoch,
     isAbortEpochActive: isAbortEpochActive,
     // Legacy-Alias — älterer Code der isReEntryBlocked() nutzt bleibt kompatibel
