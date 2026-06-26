@@ -1,0 +1,155 @@
+/* OSG Digital Human — Phase 4 Emotion Layer CSS
+ *
+ * All values driven by CSS custom properties written by osg_dh_emotion_layer.js.
+ * Only #coin-stage receives the compound filter + transform additions.
+ * Does NOT touch .coin-visual-shadow-host--main transforms
+ * (that path remains owned by Phase 2/3 motion engine).
+ *
+ * Activation: class is-dh4-active on #coin-stage (set by JS).
+ * No animations at all — all motion driven by JS tick → CSS vars.
+ */
+
+/* ── CSS custom property defaults ─────────────────────────────────────── */
+
+#coin-stage {
+  --dh4-face-bright:   1;
+  --dh4-face-sat:      1;
+  --dh4-face-contrast: 1;
+  --dh4-head-rx:       0deg;
+  --dh4-head-rz:       0deg;
+  --dh4-eye-x:         0px;
+  --dh4-eye-y:         0px;
+}
+
+/* ── Face channel: filter on the visual host ─────────────────────────── */
+/* Applied independently of Phase 2/3 transform — uses filter property
+ * which composites on top of Phase 2/3's brightness from emotion classes. */
+
+#coin-stage.is-dh4-active .coin-visual-shadow-host--main {
+  filter:
+    brightness(var(--dh4-face-bright))
+    saturate(var(--dh4-face-sat))
+    contrast(var(--dh4-face-contrast));
+  transition: filter 0.08s linear;
+}
+
+/* ── Eye channel: radial gradient gaze indicator ────────────────────── */
+/* Phase 2/3 already has a ::before eye glow; Phase 4 overrides it with
+ * blended position driven by --dh4-eye-x / --dh4-eye-y. */
+
+#coin-stage.is-dh4-active .coin-visual-shadow-host--main::before {
+  background: radial-gradient(
+    circle at
+      calc(50% + var(--dh4-eye-x, 0px) + var(--dh2-eye-x, 0px))
+      calc(35% + var(--dh4-eye-y, 0px) + var(--dh2-eye-y, 0px)),
+    rgba(212, 175, 55, 0.10) 0%,
+    transparent 55%
+  );
+}
+
+/* ── Head channel: additive offset to Phase 2/3 compound transform ───── */
+/* Phase 4 head values are additive — added via calc() on the existing
+ * Phase 2/3 custom properties. The CSS below recomputes the compound
+ * transform when is-dh4-active is set, adding --dh4-head-* on top of
+ * the Phase 2/3 head vars.
+ * This selector mirrors the Phase 2/3 motion selector so it wins
+ * (same specificity, later in cascade). */
+
+#coin-stage.is-dh4-active:not(.is-speaking):not(.is-wai):not(.is-busy):not(.is-avatar-running)
+  .coin-visual-shadow-host--main {
+  transform:
+    translateX(calc(var(--dh2-sway-x, 0px) + var(--dh2-weight-x, 0px)))
+    translateY(var(--dh2-head-ty, 0px))
+    rotateX(calc(var(--dh2-head-rx, 0deg) + var(--dh4-head-rx, 0deg)))
+    rotateY(var(--dh2-head-ry, 0deg))
+    rotateZ(calc(
+      var(--dh2-head-rz, 0deg) +
+      var(--dh2-sway-z, 0deg) +
+      var(--dh2-shoulder-rz, 0deg) +
+      var(--dh4-head-rz, 0deg)
+    ))
+    scaleX(var(--dh2-breath-sx, 1))
+    scaleY(var(--dh2-breath-sy, 1));
+}
+
+/* ── Dominant-emotion ambient glows (Phase 4 versions) ──────────────── */
+/* These are separate from Phase 2/3 emotion glows (which use is-dh2-emotion-*)
+ * so neither set interferes with the other. */
+
+#coin-stage.is-dh4-emotion-happy {
+  --dh4-ambient: rgba(255, 230, 80, 0.06);
+}
+
+#coin-stage.is-dh4-emotion-sad,
+#coin-stage.is-dh4-emotion-separation,
+#coin-stage.is-dh4-emotion-sympathy {
+  --dh4-ambient: rgba(80, 120, 200, 0.05);
+}
+
+#coin-stage.is-dh4-emotion-anger {
+  --dh4-ambient: rgba(220, 60, 40, 0.06);
+}
+
+#coin-stage.is-dh4-emotion-love {
+  --dh4-ambient: rgba(255, 140, 170, 0.07);
+}
+
+#coin-stage.is-dh4-emotion-confident,
+#coin-stage.is-dh4-emotion-sales {
+  --dh4-ambient: rgba(212, 175, 55, 0.08);
+}
+
+#coin-stage.is-dh4-emotion-curious {
+  --dh4-ambient: rgba(100, 200, 255, 0.06);
+}
+
+/* Subtle stage background hint (glow behind coin) */
+#coin-stage.is-dh4-active::after {
+  content: "";
+  position: absolute;
+  inset: -8%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    var(--dh4-ambient, transparent) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+  transition: background 0.6s ease;
+}
+
+/* ── Reduced motion ──────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  #coin-stage.is-dh4-active .coin-visual-shadow-host--main {
+    filter: none !important;
+    transform: none !important;
+  }
+  #coin-stage.is-dh4-active::after {
+    display: none !important;
+  }
+  #coin-stage {
+    --dh4-face-bright:   1 !important;
+    --dh4-face-sat:      1 !important;
+    --dh4-face-contrast: 1 !important;
+    --dh4-head-rx:       0deg !important;
+    --dh4-head-rz:       0deg !important;
+    --dh4-eye-x:         0px !important;
+    --dh4-eye-y:         0px !important;
+  }
+}
+
+/* ── Mobile ──────────────────────────────────────────────────────────── */
+
+@media (max-width: 480px) {
+  /* Keep face filter (visible), but suppress head offset on mobile */
+  #coin-stage {
+    --dh4-head-rx: 0deg !important;
+    --dh4-head-rz: 0deg !important;
+  }
+  /* Suppress ambient glow on mobile (performance) */
+  #coin-stage.is-dh4-active::after {
+    display: none !important;
+  }
+}

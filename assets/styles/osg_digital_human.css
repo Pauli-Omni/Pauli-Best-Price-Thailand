@@ -1,0 +1,355 @@
+/* OSG Digital Human — Phase 1 CSS fallbacks (additive layer on #coin-stage) */
+
+#coin-stage[data-dh-phase] .coin-visual-shadow-host--main {
+  transform-origin: center center;
+  transition: transform 0.35s ease, filter 0.35s ease, opacity 0.35s ease;
+}
+
+#coin-stage[data-dh-emotion] .coin-visual-shadow-host--main {
+  --dh-head-tilt: 0deg;
+  --dh-body-lean: 0deg;
+  --dh-eye-scale: 1;
+  --dh-bright: 1;
+}
+
+/* ── Shared keyframes ─────────────────────────────────────────────────── */
+
+@keyframes dh-idle-breathe {
+  0%, 100% { transform: scale(1) rotate(var(--dh-head-tilt, 0deg)); }
+  50% { transform: scale(1.018) rotate(var(--dh-head-tilt, 0deg)); }
+}
+
+@keyframes dh-idle-blink {
+  0%, 88%, 100% { filter: brightness(var(--dh-bright, 1)); }
+  92% { filter: brightness(calc(var(--dh-bright, 1) * 0.82)); }
+}
+
+@keyframes dh-thinking-head {
+  0%, 100% { transform: rotate(-2deg) scale(1.01); }
+  50% { transform: rotate(3deg) scale(1.025); }
+}
+
+@keyframes dh-thinking-breathe {
+  0%, 100% { transform: scale(1.02) rotate(-1.5deg); }
+  50% { transform: scale(1.04) rotate(2deg); }
+}
+
+@keyframes dh-listening-forward {
+  0%, 100% { transform: translateY(0) scale(1.03) rotate(0deg); }
+  50% { transform: translateY(-2%) scale(1.05) rotate(1.5deg); }
+}
+
+@keyframes dh-listening-nod {
+  0%, 100% { transform: translateY(-1%) rotate(0deg); }
+  40% { transform: translateY(-2%) rotate(2.5deg); }
+}
+
+@keyframes dh-speaking-pulse {
+  0%, 100% { transform: scale(1.02); }
+  50% { transform: scale(1.06); }
+}
+
+@keyframes dh-point-left {
+  0%, 100% { transform: rotate(-6deg) translateX(-2%); }
+  50% { transform: rotate(-10deg) translateX(-4%); }
+}
+
+@keyframes dh-point-right {
+  0%, 100% { transform: rotate(6deg) translateX(2%); }
+  50% { transform: rotate(10deg) translateX(4%); }
+}
+
+@keyframes dh-celebrate {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.08) rotate(-4deg); }
+  75% { transform: scale(1.08) rotate(4deg); }
+}
+
+@keyframes dh-wait-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.92; transform: scale(0.98); }
+}
+
+@keyframes dh-loading-spin {
+  0% { transform: rotate(0deg) scale(1.02); }
+  100% { transform: rotate(360deg) scale(1.02); }
+}
+
+@keyframes dh-error-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-3px); }
+  40% { transform: translateX(3px); }
+  60% { transform: translateX(-2px); }
+  80% { transform: translateX(2px); }
+}
+
+@keyframes dh-success-pop {
+  0% { transform: scale(0.96); filter: brightness(1); }
+  50% { transform: scale(1.08); filter: brightness(1.15); }
+  100% { transform: scale(1.02); filter: brightness(1.05); }
+}
+
+@keyframes dh-confused-tilt {
+  0%, 100% { transform: rotate(-4deg); }
+  50% { transform: rotate(4deg); }
+}
+
+/* ── Idle family ──────────────────────────────────────────────────────── */
+
+#coin-stage.is-dh-idle .coin-visual-shadow-host--main,
+#coin-stage.is-dh-idle-breathing .coin-visual-shadow-host--main {
+  animation: dh-idle-breathe 3.2s ease-in-out infinite;
+}
+
+#coin-stage.is-dh-idle-blink .coin-visual-shadow-host--main {
+  animation: dh-idle-blink 0.18s ease-out;
+}
+
+/* ── Thinking ─────────────────────────────────────────────────────────── */
+
+#coin-stage.is-dh-thinking .coin-visual-shadow-host--main {
+  animation: dh-thinking-breathe 2.4s ease-in-out infinite,
+    dh-thinking-head 4.2s ease-in-out infinite;
+}
+
+#coin-stage.is-dh-thinking-deep .coin-visual-shadow-host--main {
+  animation: dh-thinking-breathe 1.8s ease-in-out infinite,
+    dh-thinking-head 3s ease-in-out infinite;
+  filter: brightness(1.04);
+}
+
+/* ── Listening ────────────────────────────────────────────────────────── */
+
+#coin-stage.is-dh-listening .coin-visual-shadow-host--main {
+  animation: dh-listening-forward 2.6s ease-in-out infinite,
+    dh-listening-nod 3.4s ease-in-out infinite;
+}
+
+#coin-stage.is-dh-listening-focus .coin-visual-shadow-host--main {
+  animation: dh-listening-forward 2s ease-in-out infinite,
+    dh-listening-nod 2.2s ease-in-out infinite;
+  filter: brightness(1.06);
+}
+
+/* ── Speaking variants ────────────────────────────────────────────────── */
+
+#coin-stage.is-dh-speaking .coin-visual-shadow-host--main,
+#coin-stage.is-dh-speaking-calm .coin-visual-shadow-host--main {
+  animation: dh-speaking-pulse 1.6s ease-in-out infinite;
+}
+
+#coin-stage.is-dh-speaking-professional .coin-visual-shadow-host--main {
+  animation: dh-idle-breathe 2.8s ease-in-out infinite;
+  filter: brightness(1.03);
+}
+
+#coin-stage.is-dh-speaking-sales .coin-visual-shadow-host--main {
+  animation: dh-speaking-pulse 1.1s ease-in-out infinite;
+  filter: brightness(1.08);
+}
+
+#coin-stage.is-dh-resume-speaking .coin-visual-shadow-host--main {
+  animation: dh-speaking-pulse 1.4s ease-in-out infinite;
+}
+
+/* ── Gestures / actions ───────────────────────────────────────────────── */
+
+#coin-stage.is-dh-confirm .coin-visual-shadow-host--main {
+  animation: dh-listening-nod 1.2s ease-in-out 2;
+}
+
+#coin-stage.is-dh-celebrate .coin-visual-shadow-host--main {
+  animation: dh-celebrate 1.4s ease-in-out 2;
+}
+
+#coin-stage.is-dh-welcome .coin-visual-shadow-host--main,
+#coin-stage.is-dh-greeting .coin-visual-shadow-host--main,
+#coin-stage.is-dh-wai .coin-visual-shadow-host--main {
+  animation: dh-listening-nod 2.2s ease-in-out infinite;
+}
+
+#coin-stage.is-dh-goodbye .coin-visual-shadow-host--main {
+  animation: dh-idle-breathe 2.8s ease-in-out 2;
+  opacity: 0.96;
+}
+
+#coin-stage.is-dh-point-left .coin-visual-shadow-host--main {
+  animation: dh-point-left 1.8s ease-in-out infinite;
+}
+
+#coin-stage.is-dh-point-right .coin-visual-shadow-host--main {
+  animation: dh-point-right 1.8s ease-in-out infinite;
+}
+
+#coin-stage.is-dh-show-product .coin-visual-shadow-host--main,
+#coin-stage.is-dh-show-voucher .coin-visual-shadow-host--main,
+#coin-stage.is-dh-show-hotel .coin-visual-shadow-host--main,
+#coin-stage.is-dh-show-insurance .coin-visual-shadow-host--main,
+#coin-stage.is-dh-show-booking .coin-visual-shadow-host--main {
+  animation: dh-point-right 2s ease-in-out infinite;
+  filter: brightness(1.05);
+}
+
+#coin-stage.is-dh-partner-recommendation .coin-visual-shadow-host--main {
+  animation: dh-point-right 2.2s ease-in-out 2;
+}
+
+#coin-stage.is-dh-offer-premium .coin-visual-shadow-host--main {
+  animation: dh-celebrate 1.6s ease-in-out infinite;
+}
+
+#coin-stage.is-dh-offer-standard .coin-visual-shadow-host--main {
+  animation: dh-listening-nod 1.4s ease-in-out 2;
+}
+
+/* ── Utility states ───────────────────────────────────────────────────── */
+
+#coin-stage.is-dh-wait .coin-visual-shadow-host--main,
+#coin-stage.is-dh-busy .coin-visual-shadow-host--main {
+  animation: dh-wait-pulse 2.4s ease-in-out infinite;
+}
+
+#coin-stage.is-dh-searching .coin-visual-shadow-host--main,
+#coin-stage.is-dh-loading .coin-visual-shadow-host--main {
+  animation: dh-loading-spin 4.8s linear infinite;
+  opacity: 0.94;
+}
+
+#coin-stage.is-dh-error .coin-visual-shadow-host--main {
+  animation: dh-error-shake 0.5s ease-in-out 2;
+  filter: brightness(0.92);
+}
+
+#coin-stage.is-dh-warning .coin-visual-shadow-host--main {
+  animation: dh-wait-pulse 1.2s ease-in-out infinite;
+  filter: brightness(1.1) saturate(1.1);
+}
+
+#coin-stage.is-dh-success .coin-visual-shadow-host--main {
+  animation: dh-success-pop 0.9s ease-out 1;
+}
+
+#coin-stage.is-dh-confused .coin-visual-shadow-host--main {
+  animation: dh-confused-tilt 2.2s ease-in-out infinite;
+}
+
+#coin-stage.is-dh-interrupted .coin-visual-shadow-host--main {
+  animation: dh-error-shake 0.35s ease-in-out 1;
+}
+
+#coin-stage.is-dh-resume .coin-visual-shadow-host--main,
+#coin-stage.is-dh-conversation-restart .coin-visual-shadow-host--main {
+  animation: dh-success-pop 0.7s ease-out 1;
+}
+
+#coin-stage.is-dh-conversation-finished .coin-visual-shadow-host--main {
+  animation: dh-idle-breathe 3.6s ease-in-out infinite;
+}
+
+/* Purchase states delegate to legacy CSS when present; fallback nod */
+#coin-stage.is-dh-purchase-standard .coin-visual-shadow-host--main {
+  animation: dh-listening-nod 1.1s ease-in-out 2;
+}
+
+#coin-stage.is-dh-purchase-premium .coin-visual-shadow-host--main {
+  animation: dh-celebrate 1.8s ease-in-out infinite;
+}
+
+/* ── Emotion modifiers (face/eyes/head/body posture) ──────────────────── */
+
+#coin-stage[data-dh-emotion="neutral"] .coin-visual-shadow-host--main {
+  --dh-head-tilt: 0deg;
+  --dh-bright: 1;
+}
+
+#coin-stage[data-dh-emotion="happy"] .coin-visual-shadow-host--main,
+#coin-stage[data-dh-emotion="friendly"] .coin-visual-shadow-host--main {
+  --dh-head-tilt: 2deg;
+  --dh-bright: 1.08;
+  filter: brightness(1.08);
+}
+
+#coin-stage[data-dh-emotion="sympathy"] .coin-visual-shadow-host--main,
+#coin-stage[data-dh-emotion="separation"] .coin-visual-shadow-host--main {
+  --dh-head-tilt: -3deg;
+  --dh-bright: 0.96;
+  filter: brightness(0.96) saturate(0.95);
+}
+
+#coin-stage[data-dh-emotion="serious"] .coin-visual-shadow-host--main,
+#coin-stage[data-dh-emotion="anger"] .coin-visual-shadow-host--main {
+  --dh-head-tilt: -1deg;
+  --dh-bright: 0.94;
+  filter: brightness(0.94) contrast(1.04);
+}
+
+#coin-stage[data-dh-emotion="professional"] .coin-visual-shadow-host--main,
+#coin-stage[data-dh-emotion="confident"] .coin-visual-shadow-host--main {
+  --dh-head-tilt: 1deg;
+  --dh-bright: 1.02;
+  filter: brightness(1.02);
+}
+
+#coin-stage[data-dh-emotion="curious"] .coin-visual-shadow-host--main {
+  --dh-head-tilt: 4deg;
+  --dh-bright: 1.04;
+}
+
+#coin-stage[data-dh-emotion="sales"] .coin-visual-shadow-host--main {
+  --dh-head-tilt: 2deg;
+  --dh-bright: 1.1;
+  filter: brightness(1.1);
+}
+
+#coin-stage[data-dh-emotion="love"] .coin-visual-shadow-host--main,
+#coin-stage.is-dh-happy .coin-visual-shadow-host--main,
+#coin-stage.is-dh-sympathy .coin-visual-shadow-host--main,
+#coin-stage.is-dh-serious .coin-visual-shadow-host--main,
+#coin-stage.is-dh-neutral .coin-visual-shadow-host--main,
+#coin-stage.is-dh-curious .coin-visual-shadow-host--main {
+  animation: dh-idle-breathe 3s ease-in-out infinite;
+}
+
+#coin-stage.is-dh-sympathy .coin-visual-shadow-host--main {
+  filter: brightness(0.96);
+}
+
+#coin-stage.is-dh-serious .coin-visual-shadow-host--main {
+  filter: brightness(0.94);
+}
+
+#coin-stage.is-dh-happy .coin-visual-shadow-host--main {
+  animation: dh-celebrate 2.4s ease-in-out infinite;
+}
+
+#coin-stage.is-dh-curious .coin-visual-shadow-host--main {
+  animation: dh-confused-tilt 3s ease-in-out infinite;
+}
+
+/* Hand motion hints (existing hand layers) */
+#coin-stage.is-dh-point-left .pauli-avatar-hand--left,
+#coin-stage.is-dh-show-product .pauli-avatar-hand--left {
+  animation: dh-point-left 1.6s ease-in-out infinite;
+}
+
+#coin-stage.is-dh-point-right .pauli-avatar-hand--right,
+#coin-stage.is-dh-show-voucher .pauli-avatar-hand--right,
+#coin-stage.is-dh-show-hotel .pauli-avatar-hand--right {
+  animation: dh-point-right 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #coin-stage[data-dh-phase] .coin-visual-shadow-host--main,
+  #coin-stage[data-dh-phase] .pauli-avatar-hand--left,
+  #coin-stage[data-dh-phase] .pauli-avatar-hand--right {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  #coin-stage.is-dh-thinking .coin-visual-shadow-host--main,
+  #coin-stage.is-dh-listening .coin-visual-shadow-host--main {
+    animation-duration: 3s, 4s;
+  }
+}

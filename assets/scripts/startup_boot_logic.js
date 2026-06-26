@@ -67,6 +67,8 @@
     writeLs(LS_FIRST_BOOT, "1");
   }
 
+  var sessionGreetInFlight = false;
+
   function sessionGreetDone() {
     return readSs(SS_SESSION_GREET) === "1";
   }
@@ -367,11 +369,6 @@
         if (!chk || !chk.checked) return;
         markTermsAccepted();
         done();
-        try {
-          if (typeof global.osgScheduleAvatarCompanionBoot === "function") {
-            global.osgScheduleAvatarCompanionBoot(420);
-          }
-        } catch (_) {}
       }
       function onDecline() {
         cleanup();
@@ -459,8 +456,9 @@
     pack = pack || {};
     speakApi = speakApi || {};
     if (!termsAccepted()) return;
-    if (sessionGreetDone()) return;
-
+    if (sessionGreetDone() || sessionGreetInFlight) return;
+    sessionGreetInFlight = true;
+    try {
     var firstName = "";
     try {
       if (typeof global.osgResolveCustomerDisplayName === "function") {
@@ -513,6 +511,9 @@
     }
 
     markSessionGreetDone();
+    } finally {
+      sessionGreetInFlight = false;
+    }
   }
 
   function trustPledgeLaunchCount() {

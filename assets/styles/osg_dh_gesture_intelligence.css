@@ -1,0 +1,135 @@
+/* OSG Digital Human — Phase 6 Gesture Intelligence CSS
+ * Combinable secondary gesture overlays on #coin-stage.
+ * Primary legacy gesture still via osgAvatarGestureStart.
+ * Multiple is-dh6-gesture-* classes may coexist.
+ */
+
+/* ── Explain (explanation) — subtle left tilt + brightness ───────────── */
+
+@keyframes dh6-gesture-explain {
+  0%, 100% { filter: brightness(1.02); transform: rotateZ(-2deg); }
+  50%       { filter: brightness(1.05); transform: rotateZ(-3.5deg); }
+}
+
+#coin-stage.is-dh6-gesture-explain:not(.is-speaking):not(.is-wai):not(.is-busy)
+  .coin-visual-shadow-host--main {
+  animation: dh6-gesture-explain 2.8s ease-in-out infinite;
+}
+
+/* ── Sales present — forward lean pulse ─────────────────────────────── */
+
+@keyframes dh6-gesture-sales-present {
+  0%, 100% { transform: scale(1.02) rotateX(-2deg); }
+  50%       { transform: scale(1.05) rotateX(-4deg); }
+}
+
+#coin-stage.is-dh6-gesture-sales-present:not(.is-speaking):not(.is-wai):not(.is-busy)
+  .coin-visual-shadow-host--main {
+  animation: dh6-gesture-sales-present 1.6s ease-in-out infinite;
+}
+
+/* ── Point left / right — lateral shift ──────────────────────────────── */
+
+@keyframes dh6-gesture-point-left {
+  0%, 100% { transform: translateX(-3px) rotateZ(-4deg); }
+  50%       { transform: translateX(-5px) rotateZ(-6deg); }
+}
+
+@keyframes dh6-gesture-point-right {
+  0%, 100% { transform: translateX(3px) rotateZ(4deg); }
+  50%       { transform: translateX(5px) rotateZ(6deg); }
+}
+
+#coin-stage.is-dh6-gesture-point-left:not(.is-speaking):not(.is-wai):not(.is-busy)
+  .coin-visual-shadow-host--main {
+  animation: dh6-gesture-point-left 2.2s ease-in-out infinite;
+}
+
+#coin-stage.is-dh6-gesture-point-right:not(.is-speaking):not(.is-wai):not(.is-busy)
+  .coin-visual-shadow-host--main {
+  animation: dh6-gesture-point-right 2.2s ease-in-out infinite;
+}
+
+/* ── Apologize — slight bow ─────────────────────────────────────────── */
+
+@keyframes dh6-gesture-apologize {
+  0%, 100% { transform: rotateX(4deg) scale(0.99); }
+  50%       { transform: rotateX(6deg) scale(0.985); }
+}
+
+#coin-stage.is-dh6-gesture-apologize:not(.is-speaking):not(.is-wai):not(.is-busy)
+  .coin-visual-shadow-host--main {
+  animation: dh6-gesture-apologize 2.4s ease-in-out 2;
+}
+
+/* ── Wave goodbye — gentle side sway ───────────────────────────────── */
+
+@keyframes dh6-gesture-wave-goodbye {
+  0%, 100% { transform: rotateZ(0deg); }
+  25%       { transform: rotateZ(-5deg); }
+  75%       { transform: rotateZ(5deg); }
+}
+
+#coin-stage.is-dh6-gesture-wave-goodbye:not(.is-speaking):not(.is-wai):not(.is-busy)
+  .coin-visual-shadow-host--main {
+  animation: dh6-gesture-wave-goodbye 1.8s ease-in-out 2;
+}
+
+/* ── Humor laugh — uses bridge laugh if available, else bounce ──────── */
+
+@keyframes dh6-gesture-humor-laugh {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  20%       { transform: rotate(-4deg) scale(1.04); }
+  40%       { transform: rotate(4deg) scale(1.06); }
+  60%       { transform: rotate(-3deg) scale(1.04); }
+  80%       { transform: rotate(2deg) scale(1.02); }
+}
+
+#coin-stage.is-dh6-gesture-humor-laugh:not(.is-speaking):not(.is-wai):not(.is-busy)
+  .coin-visual-shadow-host--main {
+  animation: dh6-gesture-humor-laugh 1.4s ease-in-out 2;
+}
+
+/* ── Empathy soft — warm dim glow ──────────────────────────────────── */
+
+#coin-stage.is-dh6-gesture-empathy-soft:not(.is-speaking):not(.is-wai):not(.is-busy)
+  .coin-visual-shadow-host--main {
+  filter: brightness(0.96) saturate(0.92);
+  transition: filter 0.4s ease;
+}
+
+/* ── Listen nod — subtle vertical nod ──────────────────────────────── */
+
+@keyframes dh6-gesture-listen-nod {
+  0%, 100% { transform: translateY(0); }
+  40%       { transform: translateY(-2px); }
+}
+
+#coin-stage.is-dh6-gesture-listen-nod:not(.is-speaking):not(.is-wai):not(.is-busy)
+  .coin-visual-shadow-host--main {
+  animation: dh6-gesture-listen-nod 2s ease-in-out infinite;
+}
+
+/* ── Celebrate (secondary overlay) ─────────────────────────────────── */
+
+#coin-stage.is-dh6-gesture-celebrate:not(.is-speaking):not(.is-wai):not(.is-busy) {
+  animation: dh2-gesture-celebrate 1.2s ease-in-out infinite;
+}
+
+/* When multiple gesture classes: last matching animation wins on host;
+ * combine with filter-only gestures (empathy-soft) for true stacking. */
+
+@media (prefers-reduced-motion: reduce) {
+  #coin-stage[class*="is-dh6-gesture-"] .coin-visual-shadow-host--main,
+  #coin-stage[class*="is-dh6-gesture-"] {
+    animation: none !important;
+    filter: none !important;
+    transform: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  #coin-stage[class*="is-dh6-gesture-"] .coin-visual-shadow-host--main {
+    animation: none !important;
+  }
+}

@@ -1,0 +1,255 @@
+/* OSG Digital Human — Phase 2 + Phase 3 Micro Motion CSS
+ * Additive layer. All values driven by CSS custom properties set by
+ * osg_digital_human_motion.js via JavaScript (no inline transform on host).
+ * Only #coin-stage itself receives the compound motion transform.
+ * .coin-visual-shadow-host--main is NOT touched here — that path belongs to
+ * osgApplyAvatarTransform / Phase 1 CSS / tts-lipsync-bridge.
+ */
+
+/* ── CSS custom property defaults ────────────────────────────────────── */
+
+#coin-stage {
+  /* Phase 2 vars */
+  --dh2-breath-sy: 1;
+  --dh2-breath-sx: 1;
+  --dh2-sway-x: 0px;
+  --dh2-sway-y: 0px;
+  --dh2-sway-z: 0deg;
+  --dh2-head-rx: 0deg;
+  --dh2-head-ry: 0deg;
+  --dh2-head-rz: 0deg;
+  --dh2-head-ty: 0px;
+  --dh2-eye-x: 0px;
+  --dh2-eye-y: 0px;
+  --dh2-blink: 0;
+  /* Phase 3 vars */
+  --dh2-shoulder-rz: 0deg;
+  --dh2-weight-x: 0px;
+}
+
+/* ── Compound motion transform on .coin-visual-shadow-host--main ─────── */
+/* Applied only when Phase 2 motion is active (stage has data-dh-phase).
+ * We write to the inner visual host, NOT to #coin-stage, so that the
+ * legacy layout-reset rules in style.css (transform:none !important on
+ * is-speaking, is-wai, is-busy …) remain effective on #coin-stage itself.
+ * The tts-lipsync-bridge also writes inline transforms to this host;
+ * both coexist because the lipsync bridge writes inline style.transform
+ * and we use CSS (lower specificity than inline). When lipsync is active,
+ * its inline style wins naturally — our CSS acts as the base/idle layer. */
+
+#coin-stage[data-dh-phase]:not(.is-speaking):not(.is-wai):not(.is-busy):not(.is-avatar-running)
+  .coin-visual-shadow-host--main {
+  /* Phase 3: weight-x added to sway-x; shoulder-rz added to head-rz */
+  transform:
+    translateX(calc(var(--dh2-sway-x) + var(--dh2-weight-x)))
+    translateY(var(--dh2-head-ty))
+    rotateX(var(--dh2-head-rx))
+    rotateY(var(--dh2-head-ry))
+    rotateZ(calc(var(--dh2-head-rz) + var(--dh2-sway-z) + var(--dh2-shoulder-rz)))
+    scaleX(var(--dh2-breath-sx))
+    scaleY(var(--dh2-breath-sy));
+  will-change: transform;
+  transform-origin: center bottom;
+  transform-style: preserve-3d;
+}
+
+/* Suppress competing Phase 1 CSS keyframe animations on host when motion is live */
+#coin-stage[data-dh-phase].is-dh-idle .coin-visual-shadow-host--main,
+#coin-stage[data-dh-phase].is-dh-idle-breathing .coin-visual-shadow-host--main {
+  animation: none;
+}
+
+/* ── Blink overlay ───────────────────────────────────────────────────── */
+
+/* Global blink: uses ::after pseudo on the coin-stage inner host as a brightness
+ * overlay — no alteration to img or other child transforms.
+ * Blink progress drives opacity of a very thin dark overlay. */
+
+#coin-stage.is-dh2-blinking .coin-visual-shadow-host--main::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, calc(0.18 * var(--dh2-blink, 0)));
+  pointer-events: none;
+  z-index: 3;
+  transition: none;
+}
+
+/* ── Eye movement overlay ────────────────────────────────────────────── */
+
+/* Subtle luminance shift at the eye-gaze offset position */
+#coin-stage[data-dh-phase] .coin-visual-shadow-host--main::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at
+      calc(50% + var(--dh2-eye-x))
+      calc(35% + var(--dh2-eye-y)),
+    rgba(212, 175, 55, 0.08) 0%,
+    transparent 55%
+  );
+  pointer-events: none;
+  z-index: 2;
+  transition: none;
+}
+
+/* ── Phase-specific motion classes ───────────────────────────────────── */
+
+/* Thinking — head tilts, slower breath (via JS vars), pupil drift */
+#coin-stage.is-dh2-thinking {
+  /* No extra CSS needed — all driven by JS vars */
+}
+
+/* Listening — forward lean effect via perspective + scale */
+#coin-stage.is-dh2-listening {
+  perspective: 600px;
+}
+
+/* Speaking — no extra CSS (lip-sync JS handles transform on shadow host) */
+
+/* Idle — very subtle drop-shadow pulse to signal "alive" */
+@keyframes dh2-idle-alive {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(212, 175, 55, 0.18)); }
+  50%       { filter: drop-shadow(0 0 7px rgba(212, 175, 55, 0.28)); }
+}
+
+#coin-stage.is-dh2-idle {
+  animation: dh2-idle-alive 4s ease-in-out infinite;
+}
+
+/* ── Emotion-driven subtle glow modifiers ────────────────────────────── */
+
+@keyframes dh2-emotion-happy-glow {
+  0%, 100% { filter: drop-shadow(0 0 5px rgba(255, 220, 80, 0.22)); }
+  50%       { filter: drop-shadow(0 0 11px rgba(255, 220, 80, 0.40)); }
+}
+
+@keyframes dh2-emotion-sad-dim {
+  0%, 100% { filter: brightness(0.96) saturate(0.9); }
+  50%       { filter: brightness(0.93) saturate(0.85); }
+}
+
+@keyframes dh2-emotion-anger-pulse {
+  0%, 100% { filter: brightness(1) contrast(1.02); }
+  50%       { filter: brightness(1.04) contrast(1.06) saturate(1.1); }
+}
+
+@keyframes dh2-emotion-separation-dim {
+  0%, 100% { filter: brightness(0.94) saturate(0.88); }
+  50%       { filter: brightness(0.90) saturate(0.82); }
+}
+
+@keyframes dh2-emotion-love-glow {
+  0%, 100% { filter: drop-shadow(0 0 6px rgba(255, 160, 180, 0.30)); }
+  50%       { filter: drop-shadow(0 0 12px rgba(255, 160, 180, 0.50)); }
+}
+
+@keyframes dh2-emotion-confident-shine {
+  0%, 100% { filter: brightness(1.02); }
+  50%       { filter: brightness(1.06); }
+}
+
+@keyframes dh2-emotion-curious-tilt {
+  0%, 100% { filter: brightness(1.01); }
+  50%       { filter: brightness(1.04) saturate(1.04); }
+}
+
+/* Apply emotion glows to #coin-stage (not shadow-host — additive) */
+#coin-stage.is-dh2-emotion-happy {
+  animation: dh2-emotion-happy-glow 2.8s ease-in-out infinite;
+}
+
+#coin-stage.is-dh2-emotion-sad,
+#coin-stage.is-dh2-emotion-separation {
+  animation: dh2-emotion-sad-dim 3.2s ease-in-out infinite;
+}
+
+#coin-stage.is-dh2-emotion-anger {
+  animation: dh2-emotion-anger-pulse 2s ease-in-out infinite;
+}
+
+#coin-stage.is-dh2-emotion-love {
+  animation: dh2-emotion-love-glow 3s ease-in-out infinite;
+}
+
+#coin-stage.is-dh2-emotion-confident {
+  animation: dh2-emotion-confident-shine 2.4s ease-in-out infinite;
+}
+
+#coin-stage.is-dh2-emotion-curious {
+  animation: dh2-emotion-curious-tilt 2.6s ease-in-out infinite;
+}
+
+/* ── Gesture layer ───────────────────────────────────────────────────── */
+
+/* Gesture classes are additive to emotion — no transform conflict
+ * because gesture runs on #coin-stage, LipSync on .shadow-host */
+
+@keyframes dh2-gesture-celebrate {
+  0%, 100% { filter: brightness(1.05) drop-shadow(0 0 8px rgba(212, 175, 55, 0.4)); }
+  50%       { filter: brightness(1.12) drop-shadow(0 0 16px rgba(212, 175, 55, 0.6)); }
+}
+
+@keyframes dh2-gesture-nod {
+  0%, 100% { margin-top: 0; }
+  40%       { margin-top: -3px; }
+}
+
+#coin-stage.is-dh2-gesture-celebrate {
+  animation: dh2-gesture-celebrate 1.2s ease-in-out infinite;
+}
+
+#coin-stage.is-dh2-gesture-nod,
+#coin-stage.is-dh2-gesture-acknowledge,
+#coin-stage.is-dh2-gesture-confirm {
+  animation: dh2-gesture-nod 0.55s ease-in-out 2;
+}
+
+/* ── Reduced motion (accessibility) ─────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  #coin-stage[data-dh-phase]:not(.is-speaking):not(.is-wai):not(.is-busy):not(.is-avatar-running)
+    .coin-visual-shadow-host--main {
+    transform: none !important;
+    animation: none !important;
+    will-change: auto !important;
+  }
+  #coin-stage[data-dh-phase] .coin-visual-shadow-host--main::before,
+  #coin-stage.is-dh2-blinking .coin-visual-shadow-host--main::after {
+    display: none !important;
+  }
+  #coin-stage[class*="is-dh2-"] {
+    animation: none !important;
+    filter: none !important;
+  }
+  /* Phase 3: reset all motion vars */
+  #coin-stage {
+    --dh2-breath-sy: 1 !important;
+    --dh2-breath-sx: 1 !important;
+    --dh2-sway-x: 0px !important;
+    --dh2-sway-y: 0px !important;
+    --dh2-sway-z: 0deg !important;
+    --dh2-head-rx: 0deg !important;
+    --dh2-head-ry: 0deg !important;
+    --dh2-head-rz: 0deg !important;
+    --dh2-head-ty: 0px !important;
+    --dh2-shoulder-rz: 0deg !important;
+    --dh2-weight-x: 0px !important;
+  }
+}
+
+/* ── Mobile (≤480px) ────────────────────────────────────────────────── */
+
+@media (max-width: 480px) {
+  /* Phase 3 mobile: clamp sway + weight shift to zero (JS still ticks
+   * at 30 fps via frameSkip=2; CSS zeroes the visible result) */
+  #coin-stage[data-dh-phase] {
+    --dh2-sway-x: 0px !important;
+    --dh2-sway-y: 0px !important;
+    --dh2-weight-x: 0px !important;
+    --dh2-shoulder-rz: 0deg !important;
+  }
+}

@@ -1,0 +1,86 @@
+/* OSG Digital Human — Phase 5 Eye Contact CSS
+ *
+ * Additive layer. All gaze driven by CSS custom properties written by
+ * osg_dh_eye_contact.js. Values are additive to Phase 2/3 (--dh2-eye-*)
+ * and Phase 4 (--dh4-eye-*).
+ *
+ * The combined gaze renders as a luminance hotspot on the coin face,
+ * visualizing where the avatar is "looking" to the user.
+ *
+ * No animations in this file — all motion is JS-driven via CSS vars.
+ */
+
+/* ── CSS custom property defaults ─────────────────────────────────────── */
+
+#coin-stage {
+  --dh5-eye-x:   0px;
+  --dh5-eye-y:   0px;
+  --dh5-gaze-x:  0;
+  --dh5-gaze-y:  0;
+}
+
+/* ── Combined gaze overlay (::before on shadow host) ─────────────────── */
+/* When Phase 5 is active, override Phase 2/3 and Phase 4 ::before
+ * with the fully combined gaze position. Uses calc() to sum all layers. */
+
+#coin-stage[data-dh-phase] .coin-visual-shadow-host--main::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at
+      calc(50%
+        + var(--dh2-eye-x, 0px)
+        + var(--dh4-eye-x, 0px)
+        + var(--dh5-eye-x, 0px)
+      )
+      calc(35%
+        + var(--dh2-eye-y, 0px)
+        + var(--dh4-eye-y, 0px)
+        + var(--dh5-eye-y, 0px)
+      ),
+    rgba(212, 175, 55, 0.11) 0%,
+    rgba(212, 175, 55, 0.04) 30%,
+    transparent 58%
+  );
+  pointer-events: none;
+  z-index: 2;
+  transition: none;
+}
+
+/* ── State indicator classes (set by JS for debugging/a11y) ──────────── */
+
+/* No visible change for state classes — they exist for data-attributes
+ * and potential future SVG eye rig (Phase 6+). */
+
+#coin-stage[data-dh5-state="away_think"] .coin-visual-shadow-host--main::before,
+#coin-stage[data-dh5-state="away_recall"] .coin-visual-shadow-host--main::before {
+  /* Slightly dimmer glow when looking away — avatar feels less present */
+  opacity: 0.70;
+}
+
+#coin-stage[data-dh5-state="user"] .coin-visual-shadow-host--main::before,
+#coin-stage[data-dh5-state="camera"] .coin-visual-shadow-host--main::before {
+  opacity: 1;
+}
+
+/* ── Reduced motion ──────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  #coin-stage {
+    --dh5-eye-x: 0px !important;
+    --dh5-eye-y: 0px !important;
+  }
+}
+
+/* ── Mobile ──────────────────────────────────────────────────────────── */
+
+@media (max-width: 480px) {
+  /* On mobile, suppress gaze offset (JS runs, but visual clamped to zero).
+   * The glow stays centered — still "alive" but not distracting on small screen. */
+  #coin-stage {
+    --dh5-eye-x: 0px !important;
+    --dh5-eye-y: 0px !important;
+  }
+}

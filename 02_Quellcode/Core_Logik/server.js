@@ -28,6 +28,7 @@ import {
   verifyAppEmailRegistry,
 } from "./services/osg-email-connectivity.js";
 import intentClassifier from "./services/IntentClassifierService.js";
+import { buildReportOnlyPolicy, buildEnforcementPolicy } from "./osg-csp-policy.mjs";
 import {
   avatarStatusPayload,
   registerSocialExempt,
@@ -133,6 +134,24 @@ function osgSecurityHeaders(_req, res, next) {
     "Permissions-Policy",
     "geolocation=(self), camera=(self), microphone=(self), payment=()",
   );
+  if (process.env.OSG_CSP_REPORT_ONLY === "1") {
+    res.setHeader(
+      "Content-Security-Policy-Report-Only",
+      buildReportOnlyPolicy({
+        apiOrigin: process.env.OSG_CSP_CONNECT_ORIGIN || "'self'",
+        reportUri: process.env.OSG_CSP_REPORT_URI || "",
+      }),
+    );
+  }
+  if (process.env.OSG_CSP_ENFORCE === "1") {
+    res.setHeader(
+      "Content-Security-Policy",
+      buildEnforcementPolicy({
+        apiOrigin: process.env.OSG_CSP_CONNECT_ORIGIN || "'self'",
+        nonce: "",
+      }),
+    );
+  }
   /** HSTS belongs on the terminating TLS proxy (nginx); enable only when terminating HTTPS here */
   if (process.env.OSG_ENABLE_HSTS === "1") {
     res.setHeader(

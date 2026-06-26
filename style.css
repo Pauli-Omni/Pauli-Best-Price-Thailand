@@ -229,8 +229,14 @@ body {
 .coin-visual-img--light,
 #pauli-main-avatar-img {
   mix-blend-mode: normal;
-  -webkit-mask-image: none;
-  mask-image: none;
+}
+
+#pauli-main-avatar-img:not([data-knockout-applied]) {
+  opacity: 0;
+}
+
+#pauli-main-avatar-img[data-knockout-applied] {
+  opacity: 1;
 }
 
 /* Avatar ruhig: kein Video-Loop, kein Flip — transparent auf Lila-Hintergrund */

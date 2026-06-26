@@ -71,5 +71,6 @@
   "pauliId.referralLabel": "Referred by App ID (e.g. 1 M 000 123)",
   "pauliId.referralConfirm": "Confirm",
   "pauliId.referralInvalid": "Invalid format. Example: 1 M 000 123",
-  "pauliId.referralSaved": "Saved ✓"
+  "pauliId.referralSaved": "Saved ✓",
+  "coinAriaLabel": "Pauli avatar — tap for greeting, draggable; or say “Hallo / Hey Pauli”, or use chat"
 }

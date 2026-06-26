@@ -1,0 +1,1074 @@
+{
+  "generatedAt": "2026-06-25T23:38:02.348Z",
+  "manifestKeyCount": 88,
+  "onDiskMp3Count": 90,
+  "missingFiles": [],
+  "unusedOnDisk": [
+    "fun_clapping",
+    "fun_laugh"
+  ],
+  "duplicates": [
+    {
+      "a": {
+        "file": "accessibility_activated.mp3",
+        "size": 47435,
+        "hash": "aac83538875a1b4bc3459ae8e6b45059"
+      },
+      "b": {
+        "file": "ageGateAvatarSpeakLine.mp3",
+        "size": 47435,
+        "hash": "aac83538875a1b4bc3459ae8e6b45059"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "avatarFinanceGuideCreditTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "avatarFinanceGuideFinanceTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "avatarFinanceGuideInsuranceTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "accessibility_activated.mp3",
+        "size": 47435,
+        "hash": "aac83538875a1b4bc3459ae8e6b45059"
+      },
+      "b": {
+        "file": "avatarNameAskFollowTts.mp3",
+        "size": 47435,
+        "hash": "aac83538875a1b4bc3459ae8e6b45059"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "avatarNameSavedTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "accessibility_activated.mp3",
+        "size": 47435,
+        "hash": "aac83538875a1b4bc3459ae8e6b45059"
+      },
+      "b": {
+        "file": "avatarTourDone.mp3",
+        "size": 47435,
+        "hash": "aac83538875a1b4bc3459ae8e6b45059"
+      }
+    },
+    {
+      "a": {
+        "file": "accessibility_activated.mp3",
+        "size": 47435,
+        "hash": "aac83538875a1b4bc3459ae8e6b45059"
+      },
+      "b": {
+        "file": "avatarTourIntro.mp3",
+        "size": 47435,
+        "hash": "aac83538875a1b4bc3459ae8e6b45059"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "avatarTourStep1.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "avatarTourStep2.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "avatarTourStep3.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "avatarTourStep4.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "avatarTourStep5.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "avatarTourStep6.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "certificateAvatarTtsNoName.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "certificateAvatarTtsWithName.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "accessibility_activated.mp3",
+        "size": 47435,
+        "hash": "aac83538875a1b4bc3459ae8e6b45059"
+      },
+      "b": {
+        "file": "coinDoctorGreetTts.mp3",
+        "size": 47435,
+        "hash": "aac83538875a1b4bc3459ae8e6b45059"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "fun_clapping.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "fun_crab_instinct.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "fun_laugh.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "bookingSpeakTts.mp3",
+        "size": 51729,
+        "hash": "205ffb369edaff4be058ea1776ce15d3"
+      },
+      "b": {
+        "file": "partnerHandoffSpeakTts.mp3",
+        "size": 51729,
+        "hash": "205ffb369edaff4be058ea1776ce15d3"
+      }
+    },
+    {
+      "a": {
+        "file": "accessibility_activated.mp3",
+        "size": 47435,
+        "hash": "aac83538875a1b4bc3459ae8e6b45059"
+      },
+      "b": {
+        "file": "pauliSawadee.mp3",
+        "size": 47435,
+        "hash": "aac83538875a1b4bc3459ae8e6b45059"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "pauliSpruch0.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "pauliSpruch1.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "pauliSpruch2.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychAutomotiveClickTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychCreditClickTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychCreditHesitateTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychCreditViewTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychCrossAuthTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychCrossCarpetTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychCrossMopedTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychCrossToolsTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychEmpathyGrief1Tts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychEmpathyGrief2Tts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychEmpathyHousing1Tts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychEmpathyHousing2Tts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychEmpathyHousing3Tts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychEmpathyImprove1Tts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychEmpathyImprove2Tts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychEmpathyImprove3Tts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychEmpathyNew1Tts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychEmpathyNew2Tts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychEmpathyNew3Tts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychEmpathySad1Tts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychEmpathySad2Tts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychGiftBundleDeTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychGiftBundleThTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychGiftBundleTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "bookingSpeakTts.mp3",
+        "size": 51729,
+        "hash": "205ffb369edaff4be058ea1776ce15d3"
+      },
+      "b": {
+        "file": "psychHeroCouponTts.mp3",
+        "size": 51729,
+        "hash": "205ffb369edaff4be058ea1776ce15d3"
+      }
+    },
+    {
+      "a": {
+        "file": "bookingSpeakTts.mp3",
+        "size": 51729,
+        "hash": "205ffb369edaff4be058ea1776ce15d3"
+      },
+      "b": {
+        "file": "psychHeroScanTts.mp3",
+        "size": 51729,
+        "hash": "205ffb369edaff4be058ea1776ce15d3"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychInclusionClickTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychInclusionReadTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychInsuranceClickTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychInsuranceHesitateTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychInsuranceViewTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychLangSwitchAlreadyTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychLangSwitchConfirmedTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychLangSwitchDeclinedTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychLangSwitchOfferTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychLangSwitchProactiveTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychMishapSnagTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychMishapStumbleTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychMishapTripTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychNoPressureTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychPurchaseUrgencyTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychRealEstateClickTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychRelBridgeAnchorTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychRelBridgeQuestionTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychRelBridgeRecommendTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychRelBridgeWarmthTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychVerliebt1Tts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychVerliebt2aTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychVerliebt2bTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychVerliebt3Tts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "psychVerliebtFriendlyTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "pauliIntro.mp3",
+        "size": 1282652,
+        "hash": "0aef10196bfebf2da53cef0b291f7267"
+      },
+      "b": {
+        "file": "search_intro_long.mp3",
+        "size": 1282652,
+        "hash": "0aef10196bfebf2da53cef0b291f7267"
+      }
+    },
+    {
+      "a": {
+        "file": "bookingSpeakTts.mp3",
+        "size": 51729,
+        "hash": "205ffb369edaff4be058ea1776ce15d3"
+      },
+      "b": {
+        "file": "search_processing.mp3",
+        "size": 51729,
+        "hash": "205ffb369edaff4be058ea1776ce15d3"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "sevenVoucherActivatedTtsNoName.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "sevenVoucherActivatedTtsWithName.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "sevenVoucherPickupRewardTtsNoName.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "sevenVoucherPickupRewardTtsWithName.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "sevenVoucherQrOpenBriefingNoName.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "sevenVoucherQrOpenBriefingWithName.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "sevenVoucherRequireTrackingTtsNoName.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    },
+    {
+      "a": {
+        "file": "avatarFinanceDisclaimerTts.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      },
+      "b": {
+        "file": "sevenVoucherRequireTrackingTtsWithName.mp3",
+        "size": 75368,
+        "hash": "13712147ba98e487754f98321973c78c"
+      }
+    }
+  ],
+  "repoSpeechKeyReferences": [
+    "ageGateAvatarSpeakLine",
+    "avatarFinanceDisclaimerTts",
+    "avatarTourDone",
+    "avatarTourIntro",
+    "avatarTourStep1",
+    "avatarTourStep2",
+    "avatarTourStep3",
+    "avatarTourStep4",
+    "avatarTourStep5",
+    "avatarTourStep6",
+    "binCreditTpl",
+    "bookingSpeakTts",
+    "liveTrackingFirstExplainTts",
+    "partnerHandoffSpeakTts",
+    "pauliSpruch",
+    "pauliSpruch0"
+  ],
+  "unreachableKeys": [
+    "binCreditTpl",
+    "liveTrackingFirstExplainTts",
+    "pauliSpruch"
+  ],
+  "wrongMappings": [],
+  "summary": {
+    "missingCount": 0,
+    "duplicatePairCount": 86,
+    "unusedOnDiskCount": 2,
+    "unreachableCount": 3
+  }
+}

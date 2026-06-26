@@ -1,0 +1,96 @@
+/* OSG Digital Human — Phase 7 Final Polish CSS
+ * Additive layer on Phase 2/3/4 motion. Never replaces prior transforms.
+ * --dh7-* vars written by osg_dh_final_polish.js
+ */
+
+#coin-stage {
+  --dh7-micro-x: 0px;
+  --dh7-micro-y: 0px;
+  --dh7-micro-rx: 0deg;
+  --dh7-micro-rz: 0deg;
+  --dh7-micro-sx: 1;
+  --dh7-micro-sy: 1;
+  --dh7-breath-hold: 1;
+  --dh7-phase-blend: 1;
+  --dh7-react-bright: 1;
+}
+
+/* Smooth filter transitions (emotion + micro-reactions) */
+#coin-stage.is-dh7-active .coin-visual-shadow-host--main {
+  transition:
+    filter 0.42s cubic-bezier(0.33, 0, 0.2, 1),
+    opacity 0.35s ease;
+}
+
+#coin-stage.is-dh7-active.is-dh4-active .coin-visual-shadow-host--main {
+  filter:
+    brightness(calc(var(--dh4-face-bright, 1) * var(--dh7-react-bright, 1)))
+    saturate(var(--dh4-face-sat, 1))
+    contrast(var(--dh4-face-contrast, 1));
+}
+
+/* Idle floor + breath pause + micro offset on visual host */
+#coin-stage.is-dh7-active:not(.is-wai):not(.is-busy):not(.is-avatar-running)
+  .coin-visual-shadow-host--main {
+  transform:
+    translateX(calc(
+      (var(--dh2-sway-x, 0px) + var(--dh2-weight-x, 0px) + var(--dh7-micro-x, 0px))
+      * var(--dh7-phase-blend, 1)
+    ))
+    translateY(calc(var(--dh2-head-ty, 0px) + var(--dh7-micro-y, 0px)))
+    rotateX(calc(
+      var(--dh2-head-rx, 0deg) + var(--dh4-head-rx, 0deg) + var(--dh7-micro-rx, 0deg)
+    ))
+    rotateY(var(--dh2-head-ry, 0deg))
+    rotateZ(calc(
+      var(--dh2-head-rz, 0deg) + var(--dh2-sway-z, 0deg) + var(--dh2-shoulder-rz, 0deg)
+      + var(--dh4-head-rz, 0deg) + var(--dh7-micro-rz, 0deg)
+    ))
+    scaleX(calc(
+      var(--dh2-breath-sx, 1) * (1 + (var(--dh7-micro-sx, 1) - 1) * var(--dh7-breath-hold, 1))
+    ))
+    scaleY(calc(
+      var(--dh2-breath-sy, 1) * (0.92 + 0.08 * var(--dh7-breath-hold, 1))
+      * (1 + (var(--dh7-micro-sy, 1) - 1) * var(--dh7-breath-hold, 1))
+    ));
+  transform-origin: center bottom;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Speaking: micro motion via filter only (inline transform owned by lipsync) */
+#coin-stage.is-dh7-active.is-speaking .coin-visual-shadow-host--main {
+  filter: brightness(var(--dh7-react-bright, 1));
+  transition: filter 0.28s ease;
+}
+
+/* Always-alive subtle pulse when fully idle (CSS fallback if JS throttled) */
+@keyframes dh7-idle-alive {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.992; }
+}
+
+#coin-stage.is-dh7-active[data-dh7-phase="idle"],
+#coin-stage.is-dh7-active[data-dh7-phase="idle_breathing"] {
+  animation: dh7-idle-alive 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #coin-stage.is-dh7-active .coin-visual-shadow-host--main,
+  #coin-stage.is-dh7-active[data-dh7-phase="idle"],
+  #coin-stage.is-dh7-active[data-dh7-phase="idle_breathing"] {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  #coin-stage.is-dh7-active:not(.is-speaking) .coin-visual-shadow-host--main {
+    /* Keep micro vars but skip heavy compound transform on narrow viewports */
+    transform: none;
+  }
+  #coin-stage.is-dh7-active.is-speaking .coin-visual-shadow-host--main {
+    filter: brightness(var(--dh7-react-bright, 1));
+  }
+}

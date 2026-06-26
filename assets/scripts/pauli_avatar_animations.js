@@ -154,7 +154,11 @@
     if (key === "speak" && root.speakRefCount <= 0 && !root.locked) {
       key = "idle";
     }
-    root.current = key;
+    root.current = key;if (key === "purchase_standard") {
+      tryPlayVideo("purchase_standard", function () {
+        applyCssFallback("purchase_standard");
+      });
+    }
     stopVideo();
     clearStateClasses();
     showStatic(true);
@@ -357,9 +361,7 @@
     root.current = "wai_greeting";
     clearStateClasses();
     root.stage.classList.add("is-anim-wai");
-    tryPlayVideo("wai_greeting", function () {
-      showStatic(true);
-    });
+    showStatic(true);
   }
 
   function stopWaiGreeting() {

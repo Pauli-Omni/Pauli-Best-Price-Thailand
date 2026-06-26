@@ -146,10 +146,35 @@
       );
     };
     _activeAudio = audio;
+    // Phase 4: Registrierung in AudioRegistry
+    var _bridgeRegEntry = null;
+    if (global.OSG_AUDIO_REGISTRY && typeof global.OSG_AUDIO_REGISTRY.register === "function") {
+      _bridgeRegEntry = global.OSG_AUDIO_REGISTRY.register("bridge-sfx", function () {
+        try { audio.pause(); } catch (_) {}
+        if (_activeAudio === audio) _activeAudio = null;
+      });
+    }
+    audio.addEventListener("ended", function () {
+      if (_bridgeRegEntry && global.OSG_AUDIO_REGISTRY) {
+        global.OSG_AUDIO_REGISTRY.unregister(_bridgeRegEntry);
+      }
+      if (_activeAudio === audio) _activeAudio = null;
+    });
     audio.play().catch(function (e) {
       console.info("[avatar-3d-bridge] Autoplay blockiert:", e.message || e);
+      if (_bridgeRegEntry && global.OSG_AUDIO_REGISTRY) {
+        global.OSG_AUDIO_REGISTRY.unregister(_bridgeRegEntry);
+      }
     });
   }
+
+  // Phase 4: Stop-Hook für Registry-Legacy-Fallback
+  global.osgAvatar3dBridgeStopAudio = function () {
+    if (_activeAudio) {
+      try { _activeAudio.pause(); } catch (_) {}
+      _activeAudio = null;
+    }
+  };
 
   /**
    * Gibt den locale-aware Pfad für einen expressive Sound zurück.

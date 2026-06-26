@@ -12,4 +12,8 @@
   /** Optional: native App-Shell setzt Kanal/Build für Lead-Tracking */
   // window.OSG_CLIENT_CHANNEL = "ios-app";
   // window.OSG_CLIENT_BUILD = "1.0.0";
+
+  /** Phase 1: Cloud-TTS für freie KI-Antworten (ElevenLabs/OpenAI via /api/tts) */
+  // window.OSG_PAULI_ALLOW_CLOUD_TTS = true;
+  // window.OSG_PAULI_DISABLE_CLOUD_TTS = false;
 })();

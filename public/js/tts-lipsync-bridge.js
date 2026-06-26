@@ -37,6 +37,23 @@
     return el ? el.querySelector(".coin-visual-shadow-host--main") : null;
   }
 
+  // ── Guard-Helpers ─────────────────────────────────────────────────────────
+
+  function isEpochBlocked() {
+    return !!(
+      global.OSG_AUDIO_REGISTRY &&
+      typeof global.OSG_AUDIO_REGISTRY.isAbortEpochActive === "function" &&
+      global.OSG_AUDIO_REGISTRY.isAbortEpochActive()
+    );
+  }
+
+  function registryGen() {
+    return (
+      global.OSG_AUDIO_REGISTRY &&
+      typeof global.OSG_AUDIO_REGISTRY.getGeneration === "function"
+    ) ? global.OSG_AUDIO_REGISTRY.getGeneration() : -1;
+  }
+
   // ── CSS-Treiber (ersetzt applyVisemeTo3DModel / MorphTargets) ────────────
 
   /**
@@ -135,10 +152,29 @@
 
   // ── Amplitude-Loop (Modus B — kein visemeData) ───────────────────────────
 
-  function startAmplitudeLoop(audio, analyser) {
+  /**
+   * Startet den rAF-Loop.
+   * @param {HTMLAudioElement} audio
+   * @param {AnalyserNode} analyser
+   * @param {number} startGen  Generation-Snapshot beim Start — Loop stoppt bei Abweichung.
+   */
+  function startAmplitudeLoop(audio, analyser, startGen) {
     var dataArray = new Uint8Array(analyser.frequencyBinCount);
 
     function tick() {
+      // Stale-Check: Epoch oder Generation-Abweichung → Loop sofort beenden
+      if (isEpochBlocked()) {
+        cancelAnimationFrame(_animFrame);
+        _animFrame = null;
+        clearLipsyncStyles();
+        return;
+      }
+      if (startGen >= 0 && registryGen() !== startGen) {
+        cancelAnimationFrame(_animFrame);
+        _animFrame = null;
+        clearLipsyncStyles();
+        return;
+      }
       if (!audio.paused && !audio.ended) {
         analyser.getByteFrequencyData(dataArray);
         var sum = 0;
@@ -173,6 +209,9 @@
       return;
     }
 
+    // Epoch-Guard: kein Start während Abort aktiv
+    if (isEpochBlocked()) return;
+
     var ctx      = new AudioCtx();
     _audioCtx    = ctx;
     var analyser = ctx.createAnalyser();
@@ -185,11 +224,44 @@
     source.connect(analyser);
     analyser.connect(ctx.destination);
 
+    // Generation-Snapshot für handleEnd-Guard
+    var startGeneration = registryGen();
+
+    // Registrierung in AudioRegistry
+    var _lipsyncRegEntry = null;
+    if (global.OSG_AUDIO_REGISTRY && typeof global.OSG_AUDIO_REGISTRY.register === "function") {
+      _lipsyncRegEntry = global.OSG_AUDIO_REGISTRY.register("lipsync-bridge", function () {
+        cancelAnimationFrame(_animFrame);
+        _animFrame = null;
+        clearLipsyncStyles();
+        try { audio.pause(); } catch (_) {}
+        try { if (ctx) ctx.close(); } catch (_) {}
+        _audioCtx = null;
+        if (global.OSGLipSync && typeof global.OSGLipSync.stop === "function") {
+          global.OSGLipSync.stop();
+        }
+        if (global.OSG_PauliAvatarAnimations && typeof global.OSG_PauliAvatarAnimations.onSpeakStop === "function") {
+          global.OSG_PauliAvatarAnimations.onSpeakStop();
+        }
+      });
+      // register() gibt null zurück wenn Epoch gesperrt
+      if (_lipsyncRegEntry === null) {
+        try { ctx.close(); } catch (_) {}
+        _audioCtx = null;
+        return;
+      }
+    }
+
     onSpeechStart(analyser);
 
     // Modus A — visemeData vorhanden: timeupdate-Pfad
     if (Array.isArray(visemeData) && visemeData.length) {
       audio.addEventListener("timeupdate", function () {
+        // Stale → Visuals stoppen, nicht weiter rendern
+        if (isEpochBlocked() || (startGeneration >= 0 && registryGen() !== startGeneration)) {
+          clearLipsyncStyles();
+          return;
+        }
         var currentMs = audio.currentTime * 1000;
         var match = null;
         for (var i = 0; i < visemeData.length; i++) {
@@ -206,15 +278,34 @@
         }
       });
     } else {
-      // Modus B — kein visemeData: Echtzeit-Amplitudenmessung
-      startAmplitudeLoop(audio, analyser);
+      // Modus B — kein visemeData: Echtzeit-Amplitudenmessung mit Generation-Guard
+      startAmplitudeLoop(audio, analyser, startGeneration);
     }
 
     var ended = false;
     function handleEnd() {
       if (ended) return;
       ended = true;
-      onSpeechEnd(ctx);
+
+      // onend-Guard: Generation gewechselt = Abort aufgetreten
+      // → kein onSpeechEnd (enthält onSpeakStop → würde Queue signalisieren)
+      var isStale =
+        isEpochBlocked() ||
+        (startGeneration >= 0 && registryGen() !== startGeneration);
+
+      if (_lipsyncRegEntry && global.OSG_AUDIO_REGISTRY) {
+        global.OSG_AUDIO_REGISTRY.unregister(_lipsyncRegEntry);
+      }
+      if (!isStale) {
+        onSpeechEnd(ctx);
+      } else {
+        // Nur aufräumen — keine Callbacks die Queue oder Avatar-State beeinflussen
+        cancelAnimationFrame(_animFrame);
+        _animFrame = null;
+        clearLipsyncStyles();
+        try { if (ctx) ctx.close(); } catch (_) {}
+        _audioCtx = null;
+      }
     }
     audio.addEventListener("ended", handleEnd);
     audio.addEventListener("error", handleEnd);
@@ -242,8 +333,6 @@
    * Verbindet Lip-Sync-Visuals an ein extern verwaltetes Audio-Element.
    * AudioContext + AnalyserNode werden vom Aufrufer bereitgestellt und
    * verwaltet — dieser Bridge schließt den Kontext nicht.
-   * Lipsync läuft bis OSGLipsyncStopVisuals() aufgerufen wird oder bis
-   * das Audio-Element ein "ended"/"error"-Event sendet.
    *
    * Genutzt von OSG_AUDIO_SEGMENT für Segment-Wiedergabe.
    *
@@ -251,10 +340,15 @@
    * @param {AnalyserNode|null} analyser  - bereits mit destination verbunden
    */
   global.OSGLipsyncBindToAudio = function (audio, analyser) {
+    // Epoch-Guard: kein Start während Abort aktiv
+    if (isEpochBlocked()) return;
+
     cancelAnimationFrame(_animFrame);
     clearLipsyncStyles();
+
+    var bindGen = registryGen();
     onSpeechStart(analyser);
-    if (analyser) startAmplitudeLoop(audio, analyser);
+    if (analyser) startAmplitudeLoop(audio, analyser, bindGen);
   };
 
   /**

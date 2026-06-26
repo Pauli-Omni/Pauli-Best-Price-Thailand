@@ -103,9 +103,43 @@
       });
   }
 
+  function isEpochBlocked() {
+    return !!(
+      global.OSG_AUDIO_REGISTRY &&
+      typeof global.OSG_AUDIO_REGISTRY.isAbortEpochActive === "function" &&
+      global.OSG_AUDIO_REGISTRY.isAbortEpochActive()
+    );
+  }
+
   function playSegmentOnAudio(audio, segment) {
     clearActivePlayback();
     activeAudio = audio;
+
+    // Epoch-Guard: Abort noch aktiv → kein Start
+    if (isEpochBlocked()) {
+      return Promise.resolve(false);
+    }
+
+    // Generation-Snapshot: alle async Callbacks prüfen diesen Wert.
+    // Abweichung = stopAll() wurde seit Start aufgerufen → stale.
+    var startGeneration =
+      global.OSG_AUDIO_REGISTRY &&
+      typeof global.OSG_AUDIO_REGISTRY.getGeneration === "function"
+        ? global.OSG_AUDIO_REGISTRY.getGeneration()
+        : -1;
+
+    // Registrierung in zentraler AudioRegistry
+    var _segRegEntry = null;
+    if (global.OSG_AUDIO_REGISTRY && typeof global.OSG_AUDIO_REGISTRY.register === "function") {
+      _segRegEntry = global.OSG_AUDIO_REGISTRY.register("segment", function () {
+        clearActivePlayback();
+        if (global.OSGLipsyncStopVisuals) global.OSGLipsyncStopVisuals();
+      });
+      // register() gibt null zurück wenn Epoch gesperrt
+      if (_segRegEntry === null) {
+        return Promise.resolve(false);
+      }
+    }
 
     // Lipsync-Analyser aufbauen (same-origin Master-MP3, kein crossOrigin nötig)
     var analyser = null;
@@ -122,16 +156,36 @@
 
     return new Promise(function (resolve, reject) {
       var ended = false;
+
+      function isStale() {
+        if (isEpochBlocked()) return true;
+        if (startGeneration < 0) return false;
+        return (
+          global.OSG_AUDIO_REGISTRY &&
+          typeof global.OSG_AUDIO_REGISTRY.getGeneration === "function" &&
+          global.OSG_AUDIO_REGISTRY.getGeneration() !== startGeneration
+        );
+      }
+
       function finish(ok) {
         if (ended) return;
         ended = true;
         clearActivePlayback();
-        // Lip-Sync-Visuals stoppen (AudioContext bleibt für das nächste Segment offen)
+        if (_segRegEntry && global.OSG_AUDIO_REGISTRY && typeof global.OSG_AUDIO_REGISTRY.unregister === "function") {
+          global.OSG_AUDIO_REGISTRY.unregister(_segRegEntry);
+        }
+        // Stale: Visuals aufräumen, aber kein resolve(true) — kein Signal zurück an Queue
+        if (isStale()) {
+          if (global.OSGLipsyncStopVisuals) global.OSGLipsyncStopVisuals();
+          resolve(false);
+          return;
+        }
         if (global.OSGLipsyncStopVisuals) global.OSGLipsyncStopVisuals();
         resolve(!!ok);
       }
 
       function onMeta() {
+        if (isStale()) { finish(false); return; }
         try {
           audio.currentTime = Math.max(0, segment.startMs / 1000);
         } catch (_) {}
@@ -144,15 +198,17 @@
         }
         var durationMs = Math.max(80, segment.endMs - segment.startMs);
 
-        // Lipsync starten — AnalyserNode treibt den rAF-Loop in tts-lipsync-bridge.js
         if (global.OSGLipsyncBindToAudio) {
           global.OSGLipsyncBindToAudio(audio, analyser);
         }
 
         activeStopTimer = setTimeout(function () {
+          if (isStale()) return;
           finish(true);
         }, durationMs + 120);
+
         activeTimeHandler = function () {
+          if (isStale()) return;
           if (audio.currentTime * 1000 >= segment.endMs - 20) {
             finish(true);
           }
@@ -177,7 +233,14 @@
     ) {
       return false;
     }
+    // Epoch-Guard: Abort noch aktiv → kein async Fetch/Play starten
+    if (isEpochBlocked()) return false;
+
     var cfg = await loadConfig();
+
+    // Nach await nochmals prüfen — Abort kann während loadConfig() aufgetreten sein
+    if (isEpochBlocked()) return false;
+
     var segmentKey = resolveSegmentKey(opts);
     if (!segmentKey || !cfg.segments || !cfg.segments[segmentKey]) {
       return false;
@@ -185,9 +248,11 @@
     var segment = cfg.segments[segmentKey];
     var urls = masterUrls(cfg);
     for (var i = 0; i < urls.length; i += 1) {
+      if (isEpochBlocked()) return false;
       var url = urls[i];
       var ok = await probeMasterUrl(url);
       if (!ok) continue;
+      if (isEpochBlocked()) return false;
       try {
         var audio = new Audio(url);
         audio.preload = "auto";
