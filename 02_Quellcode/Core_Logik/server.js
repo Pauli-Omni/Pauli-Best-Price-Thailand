@@ -2023,8 +2023,8 @@ async function resolveVoiceId(apiKey) {
   if (!r.ok) throw new Error(await r.text());
   const data = await r.json();
   const voices = data.voices || [];
-  // Primär: ELEVENLABS_VOICE_NAME_HINT (Standard: "Liam")
-  const hint = String(process.env.ELEVENLABS_VOICE_NAME_HINT || "Liam").trim();
+  // Primär: ELEVENLABS_VOICE_NAME_HINT (Standard: Pauli-Klon)
+  const hint = String(process.env.ELEVENLABS_VOICE_NAME_HINT || "Pauli").trim();
   const named = voices.find((v) => {
     try {
       return new RegExp(

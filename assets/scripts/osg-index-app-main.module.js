@@ -4072,7 +4072,26 @@
             }
           }
 
+          const clonedVoiceFirst =
+            !!opts.clonedVoiceFirst ||
+            (!!window.osgPauliLiveActive && opts.skipClonedVoiceFirst !== true);
+
           try {
+            if (
+              clonedVoiceFirst &&
+              !window.OSG_PAULI_DISABLE_CLOUD_TTS
+            ) {
+              try {
+                await playElevenLabs(spoken, {
+                  whisper: !!opts.whisper,
+                  langCode: langCode,
+                });
+                return;
+              } catch (e) {
+                if (String(e && e.message) === "rate_limited") throw e;
+              }
+            }
+
             if (!dynamicSpeech) {
               const SEG = window.OSG_AUDIO_SEGMENT;
               if (SEG && typeof SEG.playSegment === "function") {
@@ -5134,7 +5153,8 @@
                 speechKey: extra.speechKey || "",
                 segmentKey: extra.segmentKey || "",
                 intent: extra.intent || "",
-                dynamicSpeech: dynamicSpeech,
+                dynamicSpeech: true,
+                clonedVoiceFirst: true,
                 allowCloudTts: !window.OSG_PAULI_DISABLE_CLOUD_TTS,
                 emotion:
                   window.OSG_DIGITAL_HUMAN &&
