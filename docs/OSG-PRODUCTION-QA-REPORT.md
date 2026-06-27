@@ -3,7 +3,8 @@
 **Datum:** 2026-06-27  
 **Production URL:** https://pauli-best-price-api.onrender.com  
 **Alternate URL:** https://pauli-best-price-api-nzbl.onrender.com  
-**Git commit (QA run):** `1c7a099` (dialogue recovery + CORS + verify scripts)  
+**Git commit (QA run):** `cbb0aac` (QA suite + dialogue recovery deployed)  
+**Post-deploy re-verify:** 23/23 PASS after push to `main`  
 **Status:** **PASS — production ready for users**
 
 ---
@@ -31,7 +32,7 @@ Automated production QA completed successfully. All 23 checks passed including 1
 
 | Check | Result |
 |-------|--------|
-| `GET /` (index.html) | **200** — 268ms |
+| `GET /` (index.html) | **200** — 269ms |
 | Viewport meta (mobile-first) | **PASS** |
 | Critical JS/CSS assets (55) | **0 failures** |
 | `osg-runtime-config.js` | **404** (expected — same-origin `/api`, no split host) |
@@ -57,20 +58,20 @@ Automated production QA completed successfully. All 23 checks passed including 1
 
 | # | Question | Latency | Result |
 |---|----------|---------|--------|
-| 1 | Hallo Pauli | 245ms | Local GREETING — OK |
-| 2 | Wie spät ist es? | 1374ms | OpenAI reply — no marketing |
-| 3 | Wie viel Uhr ist es? | 1848ms | OpenAI reply — no marketing |
-| 4 | Ich suche einen Fernseher. | 1634ms | Shopping conversation — OK |
-| 5 | Günstige Gummistiefel? | 1980ms | Shopping conversation — OK |
-| 6 | Kurzer Witz | 609ms | Local FUN_SMALLTALK — OK |
-| 7 | Smartphone Preis | 262ms | Local READ_PRICE — OK |
-| 8 | สวัสดี (Thai) | 1377ms | Thai greeting — OK |
-| 9 | Reklamation Entwurf | 3115ms | Complaint draft text — OK |
-| 10 | Lazada Empfehlung | 1302ms | Follow-up shopping — OK |
-| 11 | Wie geht es dir? | 1215ms | Smalltalk — OK |
-| 12 | What time is it? | 1018ms | English time — OK |
+| 1 | Hallo Pauli | 273ms | Local GREETING — OK |
+| 2 | Wie spät ist es? | 1506ms | OpenAI reply — no marketing |
+| 3 | Wie viel Uhr ist es? | 1348ms | OpenAI reply — no marketing |
+| 4 | Ich suche einen Fernseher. | 1071ms | Shopping conversation — OK |
+| 5 | Günstige Gummistiefel? | 1032ms | Shopping conversation — OK |
+| 6 | Kurzer Witz | 268ms | Local FUN_SMALLTALK — OK |
+| 7 | Smartphone Preis | 259ms | Local READ_PRICE — OK |
+| 8 | สวัสดี (Thai) | 1000ms | Thai greeting — OK |
+| 9 | Reklamation Entwurf | 2808ms | Complaint draft text — OK |
+| 10 | Lazada Empfehlung | 1044ms | Follow-up shopping — OK |
+| 11 | Wie geht es dir? | 1007ms | Smalltalk — OK |
+| 12 | What time is it? | 1201ms | English time — OK |
 
-**Average latency:** 1332ms | **Max:** 3115ms (complaint draft)
+**Average latency:** 1068ms | **Max:** 2808ms (complaint draft)
 
 ---
 
@@ -78,7 +79,7 @@ Automated production QA completed successfully. All 23 checks passed including 1
 
 | Endpoint | Result |
 |----------|--------|
-| `POST /api/tts` | **200** — 1398ms (ElevenLabs/OpenAI path alive) |
+| `POST /api/tts` | **200** — 2216ms (ElevenLabs/OpenAI path alive) |
 | `POST /api/stt/wake` (empty payload) | **400** — endpoint reachable, not 403/500 |
 
 *Full STT/TTS quality requires browser mic/speaker — API layer verified.*
@@ -132,10 +133,10 @@ Automated production QA completed successfully. All 23 checks passed including 1
 
 | Metric | Value |
 |--------|-------|
-| Health | 384ms |
-| Chat avg | 1332ms |
-| Chat max | 3115ms |
-| TTS | 1398ms |
+| Health | 808ms |
+| Chat avg | 1068ms |
+| Chat max | 2808ms |
+| TTS | 2216ms |
 
 **Observation (non-blocking):** Time questions receive honest „I can't show the clock“ LLM answers rather than local time — acceptable for QA pass; optional future improvement outside this freeze.
 
@@ -185,7 +186,7 @@ node scripts/osg-production-qa.mjs              PASS (23/23)
 ## Verdict
 
 **Production is fully operational for dialogue, shopping, complaint flow, and TTS API.**  
-No fixes required from this QA pass. No new commits needed beyond this report and QA script.
+No fixes required from this QA pass. Post-deploy re-verification on commit `cbb0aac` confirmed 23/23 PASS.
 
 ---
 
