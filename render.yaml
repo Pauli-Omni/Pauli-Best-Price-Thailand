@@ -1,5 +1,12 @@
 # Render.com — PAULI BEST PRICE API + statische App
 # Secrets (ELEVENLABS, OPENAI) im Render-Dashboard setzen: sync: false
+#
+# BLUEPRINT PFLICHT für generateValue (OSG_INSTALL_FP_SALT):
+#   Services nur per API angelegt erben render.yaml NICHT automatisch.
+#   Einmalig: Dashboard → Blueprints → New Instance → dieses Repo + render.yaml
+#   Sonst: GitHub auto-deploy kann vor gesetztem OSG_INSTALL_FP_SALT starten → exit 1.
+#   Preflight: npm run render:verify-env
+#   Siehe: docs/OSG-INFRASTRUCTURE-HARDENING.md
 
 services:
   - type: web
@@ -20,9 +27,9 @@ services:
       - key: PORT
         value: "3000"
       - key: OSG_CORS_ORIGINS
-        value: https://omnisolutionsglobal.com,https://www.omnisolutionsglobal.com
+        value: https://omnisolutionsglobal.com,https://www.omnisolutionsglobal.com,https://pauli-best-price-api.onrender.com
       - key: OSG_API_ALLOWED_ORIGINS
-        value: https://omnisolutionsglobal.com,https://www.omnisolutionsglobal.com
+        value: https://omnisolutionsglobal.com,https://www.omnisolutionsglobal.com,https://pauli-best-price-api.onrender.com
       - key: OSG_INSTALL_FP_SALT
         generateValue: true
       # --- Betrieb / Hosting ---

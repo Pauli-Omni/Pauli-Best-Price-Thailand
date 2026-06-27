@@ -52,6 +52,9 @@ assert(
   main.includes("rcFlow.isDraftRequest(gateText)"),
   "RC-P1-B: draftFlowActive must use isDraftRequest only"
 );
-assert(!main.includes("dynamicSpeech:"), "must not include RC-D2 audio changes");
+assert(
+  main.includes("function osgPauliHandleDraftPendingTurn"),
+  "RC-D1 re-entry pending handler missing"
+);
 
 console.log("PASS osg-rcd1-reentry-verify.mjs");

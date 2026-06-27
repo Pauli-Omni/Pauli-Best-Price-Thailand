@@ -132,17 +132,6 @@
     if (typeof RC.isDraftRequest === "function" && RC.isDraftRequest(user)) {
       return true;
     }
-    if (typeof RC.looksLikeDraft === "function" && RC.looksLikeDraft(reply)) {
-      return true;
-    }
-    if (
-      typeof RC.isReclamationTopic === "function" &&
-      RC.isReclamationTopic(user) &&
-      typeof RC.looksLikeDraft === "function" &&
-      RC.looksLikeDraft(reply)
-    ) {
-      return true;
-    }
     return false;
   }
 

@@ -4053,8 +4053,9 @@
           const langCode =
             opts.langCode || (I ? I.systemLangCode() : "de");
           const localFirst = window.OSG_PAULI_LOCAL_VOICE_FIRST !== false;
+          const dynamicSpeech = !!opts.dynamicSpeech;
           let speechKey = String(opts.speechKey || "").trim();
-          if (!speechKey) {
+          if (!speechKey && !dynamicSpeech) {
             speechKey = osgPauliResolveSpeechKeyFromText(spoken, langCode);
           }
 
@@ -4072,33 +4073,41 @@
           }
 
           try {
-            const SEG = window.OSG_AUDIO_SEGMENT;
-            if (SEG && typeof SEG.playSegment === "function") {
-              const segOk = await SEG.playSegment({
-                segmentKey: String(opts.segmentKey || "").trim(),
-                speechKey: speechKey,
-                intent: String(opts.intent || "").trim(),
-              });
-              if (segOk) return;
-            }
-
-            if (await tryLocalVoice(speechKey)) return;
-
-            if (
-              !opts.skipBundled &&
-              speechKey &&
-              osgPauliBundledVoiceAllowed(speechKey)
-            ) {
-              try {
-                await playPauliBundledFallbackVoice({
-                  whisper: !!opts.whisper,
-                  fullVolume: true,
+            if (!dynamicSpeech) {
+              const SEG = window.OSG_AUDIO_SEGMENT;
+              if (SEG && typeof SEG.playSegment === "function") {
+                const segOk = await SEG.playSegment({
+                  segmentKey: String(opts.segmentKey || "").trim(),
+                  speechKey: speechKey,
+                  intent: String(opts.intent || "").trim(),
                 });
-                return;
-              } catch (_) {}
+                if (segOk) return;
+              }
+
+              if (await tryLocalVoice(speechKey)) return;
+
+              if (
+                !opts.skipBundled &&
+                speechKey &&
+                osgPauliBundledVoiceAllowed(speechKey)
+              ) {
+                try {
+                  await playPauliBundledFallbackVoice({
+                    whisper: !!opts.whisper,
+                    fullVolume: true,
+                  });
+                  return;
+                } catch (_) {}
+              }
             }
 
-            if (!localFirst || (opts.allowCloudTts && !window.OSG_PAULI_DISABLE_CLOUD_TTS)) {
+            const cloudAllowed =
+              !window.OSG_PAULI_DISABLE_CLOUD_TTS &&
+              (dynamicSpeech ||
+                !!opts.allowCloudTts ||
+                window.OSG_PAULI_ALLOW_CLOUD_TTS ||
+                !localFirst);
+            if (cloudAllowed) {
               try {
                 await playElevenLabs(spoken, {
                   whisper: !!opts.whisper,
@@ -4113,6 +4122,7 @@
             if (await playPauliWebSpeechFallback(spoken, langCode)) return;
 
             if (
+              !dynamicSpeech &&
               !opts.skipBundled &&
               speechKey &&
               osgPauliBundledVoiceAllowed(speechKey)
@@ -5059,7 +5069,14 @@
             osgAlertRateLimitedIfSo(res, pack);
             throw new Error("rate_limited");
           }
-          if (!res.ok) return "";
+          if (!res.ok) {
+            var errCode = "chat_failed";
+            try {
+              var errData = await res.json();
+              if (errData && errData.error) errCode = String(errData.error);
+            } catch (_) {}
+            throw new Error(errCode);
+          }
           const data = await res.json();
           if (data && data.local && data.packKey) {
             const pack =
@@ -5088,7 +5105,10 @@
 
         async function osgPauliLiveSpeakReply(reply, pack, lang, isNight, extra) {
           extra = extra || {};
+          const hasIntentAudio =
+            !!(extra.speechKey || extra.segmentKey) && !extra.dynamicSpeech;
           if (!reply) reply = pack.pauliChatError || "";
+          const dynamicSpeech = !!extra.dynamicSpeech || !hasIntentAudio;
           const LS = window.OSG_LANG_SWITCH_LOGIC;
           const parts =
             LS && typeof LS.splitSequentialBlocks === "function"
@@ -5114,10 +5134,8 @@
                 speechKey: extra.speechKey || "",
                 segmentKey: extra.segmentKey || "",
                 intent: extra.intent || "",
-                allowCloudTts: !!(
-                  window.OSG_PAULI_ALLOW_CLOUD_TTS &&
-                  !window.OSG_PAULI_DISABLE_CLOUD_TTS
-                ),
+                dynamicSpeech: dynamicSpeech,
+                allowCloudTts: !window.OSG_PAULI_DISABLE_CLOUD_TTS,
                 emotion:
                   window.OSG_DIGITAL_HUMAN &&
                   window.OSG_DIGITAL_HUMAN.state
@@ -5263,21 +5281,7 @@
           const wakeBtn = document.getElementById("pauli-voice-wake-btn");
           let turns = 0;
 
-          // fromGreeting: skip opening Spruch, go straight to listening
-          if ((opts.fromCoin || opts.fromWake) && !opts.fromGreeting && !opts.initialText) {
-            try {
-              const trend = pickNextPauliSpruch(osgVcCurrentLangCode());
-              if (trend && trend.text) {
-                await osgPauliLiveSpeakReply(
-                  trend.text,
-                  osgVcCurrentPack(),
-                  osgVcCurrentLangCode(),
-                  isNight,
-                  { speechKey: trend.speechKey || "" }
-                );
-              }
-            } catch (_) {}
-          }
+          // Live dialogue: no marketing trend snippets — listen immediately after wake/coin.
 
           async function osgPauliHandleDraftPendingTurn(rawText, userText, pack, lang, isNight) {
             var draftOwn = window.OSG_DRAFT_OWNERSHIP;
@@ -5448,6 +5452,7 @@
                 return;
               }
             } else {
+              var osgPauliLiveDialogueOnly = true;
               if (window.__OSG_AVATAR_PENDING_NAME_ASK__ && userText) {
                 var spokenName = osgExtractSpokenName(userText);
                 if (spokenName) {
@@ -5549,6 +5554,7 @@
                 }
               }
               if (
+                !osgPauliLiveDialogueOnly &&
                 window.osgAvatarController &&
                 typeof window.osgAvatarController.noPressureCheck ===
                   "function" &&
@@ -5562,6 +5568,7 @@
                 return;
               }
               if (
+                !osgPauliLiveDialogueOnly &&
                 window.OSG_INCLUSION_LOGIC &&
                 window.osgAvatarController &&
                 typeof window.osgAvatarController.speakInclusionBuddy ===
@@ -5581,6 +5588,7 @@
                 }
               }
               if (
+                !osgPauliLiveDialogueOnly &&
                 window.OSG_CROSS_SELL_LOGIC &&
                 window.osgAvatarController &&
                 typeof window.osgAvatarController.speakCrossSellModule ===
@@ -5610,6 +5618,7 @@
                 }
               }
               if (
+                !osgPauliLiveDialogueOnly &&
                 window.OSG_EMPATHY_LOGIC &&
                 window.osgAvatarController &&
                 typeof window.osgAvatarController.speakEmpathyChain ===
@@ -5715,7 +5724,12 @@
                     osgPauliLiveStop();
                     return;
                   }
-                  reply = "";
+                  reply = String(pack.pauliChatError || "").trim();
+                  await osgPauliLiveSpeakReply(reply, pack, lang, isNight, {
+                    dynamicSpeech: true,
+                  });
+                  await listenOnce();
+                  return;
                 } finally {
                   if (
                     window.OSG_DIGITAL_HUMAN &&
@@ -5729,6 +5743,15 @@
             }
 
             reply = osgReclamationComplianceReply(reply, lang, userText);
+
+            if (!reply && userText) {
+              reply = String(pack.pauliChatError || "").trim();
+              await osgPauliLiveSpeakReply(reply, pack, lang, isNight, {
+                dynamicSpeech: true,
+              });
+              await listenOnce();
+              return;
+            }
 
             var draftOwnWrap = window.OSG_DRAFT_OWNERSHIP;
             if (
@@ -5752,12 +5775,15 @@
                 platform: draftPlatform,
               });
               osgShowDraftConfirmOverlay(reply, lang);
-              await osgPauliLiveSpeakReply(reply, pack, lang, isNight);
+              await osgPauliLiveSpeakReply(reply, pack, lang, isNight, {
+                dynamicSpeech: true,
+              });
               await osgPauliLiveSpeakReply(
                 draftOwnWrap.reviewPrompt(lang),
                 pack,
                 lang,
-                isNight
+                isNight,
+                { dynamicSpeech: true }
               );
               await listenOnce();
               return;
@@ -5774,6 +5800,10 @@
             await osgPauliLiveSpeakReply(reply, pack, lang, isNight, {
               speechKey: window.__OSG_LAST_INTENT_SPEECH_KEY__ || "",
               segmentKey: window.__OSG_LAST_INTENT_SEGMENT_KEY__ || "",
+              dynamicSpeech: !(
+                window.__OSG_LAST_INTENT_SPEECH_KEY__ ||
+                window.__OSG_LAST_INTENT_SEGMENT_KEY__
+              ),
             });
             if (!osgPauliLiveActive) return;
             await listenOnce();

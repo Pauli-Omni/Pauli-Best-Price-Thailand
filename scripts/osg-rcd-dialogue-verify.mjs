@@ -77,8 +77,8 @@ assert(
   "RC-D4: empty initialText must listenOnce, not processUserText('')"
 );
 assert(
-  !main.includes("dynamicSpeech:"),
-  "RC-D2 guard: dynamicSpeech must not be in this fix commit"
+  main.includes("osgPauliHandleDraftPendingTurn"),
+  "RC-D1 re-entry pending handler required"
 );
 
 const clientClassify = loadClientClassifier();
