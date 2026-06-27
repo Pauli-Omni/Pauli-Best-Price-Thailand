@@ -8266,12 +8266,17 @@
           }
           var coinEl = document.getElementById("coin-stage");
           if (coinEl) coinEl.setAttribute("aria-label", pack.coinAriaLabel);
+          var a11yHint = document.getElementById("pauli-a11y-access-hint");
+          if (a11yHint && pack.pauliA11yAccessHint) {
+            a11yHint.textContent = pack.pauliA11yAccessHint;
+          }
           var wakeBtn = document.getElementById("pauli-voice-wake-btn");
           if (wakeBtn) {
             wakeBtn.textContent = pack.pauliWakeMicBtn || "Hallo / Hey Pauli";
             wakeBtn.setAttribute(
               "aria-label",
-              pack.pauliWakeMicAria || "Sprich Hallo Pauli oder Hi Pauli"
+              pack.pauliWakeMicAria ||
+                "Tap to talk without speaking, or say Hello Pauli"
             );
           }
         }

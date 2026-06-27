@@ -205,7 +205,7 @@ window.OSG_LOCALES = {
               "Festes Münzmotiv — Garuda-Rückseite, PAULI BEST PRICE THAILAND",
             avatarThaiReliefLabel: "พอลลี่ · เบสต์ไพรซ์",
             coinAriaLabel:
-              "Pauli-Avatar — tippen für Begrüßung, frei beweglich; oder „Hallo Pauli“ / Chat",
+              "Pauli-Avatar — tippen oder Enter für Gespräch ohne Sprechen; frei beweglich",
             navLinkAria: {
               de: "Oberfläche auf Deutsch stellen",
               en: "Oberfläche auf Englisch stellen",
@@ -277,9 +277,14 @@ window.OSG_LOCALES = {
               "Mit First-Class-Zulassung direkt zum besten Deal. Ich berate dich nicht, ich weise dir nur den Weg zum gesparten Geld!",
             pauliSpeechBubbleAria: "Pauli — gesprochene Antwort und Text",
             pauliWakeMicBtn: "Hallo / Hey Pauli (Mikro)",
-            pauliWakeMicAria: "Kurz zuhören: Sprich „Hallo Pauli“, „Hey Pauli“ oder „Hi Pauli“",
+            pauliWakeMicAria:
+              "Tippen für Gespräch ohne Sprechen, oder sage „Hallo Pauli“, „Hi Pauli“ oder „Hey Paulie“ — Pauli hört dauerhaft zu",
+            pauliA11yAccessHint:
+              "Barrierefrei starten: Sage „Hi Pauli“ oder „Hallo Paulie“ — kein Tippen nötig. Kannst du nicht sprechen? Tippe die Münze oder den Mikro-Button. Tastatur: Münze oder Mikro-Button fokussieren und Enter drücken. Shortcut: Alt+Shift+P.",
+            pauliWakeListeningAnnounce:
+              "Pauli hört zu — sage Hallo Pauli oder Hi Paulie",
             pauliWakePhrases:
-              "hallo pauli|hey pauli|hi pauli|hello pauli",
+              "hallo pauli|hey pauli|hi pauli|hi paulie|hello pauli|hello paulie|pauli",
             pauliChatToggleBtn: "Chat mit Pauli",
             pauliChatToggleAria: "Text-Chat mit Pauli öffnen oder schließen",
             pauliChatInputLabel: "Nachricht an Pauli",
@@ -301,7 +306,7 @@ window.OSG_LOCALES = {
               "Spracherkennung wird von diesem Browser nicht unterstützt.",
             vipRedeemHeading: "Pauli-Freunde — VIP-Zugang",
             vipRedeemLead:
-              "Mit gültigem Code oder Einladungslink: sofort Lifetime-Freischaltung ohne 7-Tage-Druck und ohne Werben-Freunde-Pflicht.",
+              "Mit gültigem Code oder Einladungslink: sofort Premium-Freischaltung ohne 30-Tage-Testdruck und ohne Werben-Freunde-Pflicht.",
             vipCodeLabel: "VIP-Gutscheincode",
             vipRedeemBtn: "Code einlösen",
             vipRedeemBtnAria: "VIP-Code einlösen und Zugang aktivieren",
@@ -310,7 +315,7 @@ window.OSG_LOCALES = {
             vipStatusLine:
               "VIP „Pauli-Freunde“ aktiv — Trial- und Referral-Sperre umgangen.",
             vipBypassTrialLine:
-              "VIP aktiv: kein 7-Tage-Countdown; keine kostenpflichtige In-App-Freischaltung in dieser Oberfläche.",
+              "VIP aktiv: kein 30-Tage-Premium-Countdown; Trial- und Referral-Sperre umgangen.",
             vipCodeInputAria: "VIP-Gutscheincode eingeben",
             vipRedeemSectionAria: "Bereich Pauli-Freunde VIP-Zugang",
             vipLiveWrapAria: "Live-Statistik für VIP-Code",
@@ -599,20 +604,22 @@ window.OSG_LOCALES = {
             affiliateMobilityToyota: "Toyota Thailand (Orientierung)",
             premiumWallHeading: "Premium-Funktionen gesperrt",
             premiumWallLead:
-              "Die 7-Tage-Vollzugangsphase ist ohne Lifetime (sechs qualifizierte Geräte im Referral-Fenster) oder VIP-Freischaltung abgelaufen. Nutze Einladungslink oder gültigen Pauli-Freunde-Code — in dieser Web-Oberfläche erfolgt kein Kaufabschluss.",
+              "Die 30-Tage-Premium-Testphase ist abgelaufen. Freischaltung nur noch über die einmalige Erweiterung (49,90 THB) — oder gültigen Pauli-Freunde-/VIP-Code bzw. soziale Befreiung.",
             premiumWallPromptpayNote:
-              "Keine Zahlungsabwicklung in dieser Shell — Freischaltung nur über Referrals oder VIP-Code.",
-            premiumWallDemoUnlockBtn: "Demo: Vollzugriff simulieren",
+              "Empfehlungs-Freischaltung galt nur innerhalb der 30-Tage-Testphase. Danach: Erweiterung 49,90 THB.",
+            premiumWallDemoUnlockBtn: "Demo: Premium simulieren",
             premiumLockedAlert:
-              "Nach Ende der Testphase: Lifetime, VIP-Code oder Einladungslink erforderlich.",
+              "Premium abgelaufen — Erweiterung (49,90 THB), VIP-Code oder soziale Befreiung erforderlich.",
             avatarTrialExpiredMessage:
-              "Ich bin eine begrenzte Funktion für 90 Tagen. Danach kann ich als Erweiterung gebucht werden.",
-            avatarTrialDaysRemainingTpl: "Testphase aktiv — noch {DAYS} Tage.",
+              "Die 30-Tage-Premium-Testphase ist vorbei. Freischaltung nur noch über die Erweiterung (49,90 THB) — Empfehlungen zählen nicht mehr.",
+            avatarTrialDaysRemainingTpl: "Premium-Testphase aktiv — noch {DAYS} Tage.",
             avatarExtensionPriceTpl: "Erweiterung: {PRICE} THB",
             avatarSocialExemptMessage:
               "Dauerhafte Freischaltung für soziales Engagement / Barrierefreiheit.",
             avatarReferralProgressTpl:
               "Empfehlungen mit Händlerkauf: {COUNT} von {TARGET}",
+            avatarReferralExpiredNote:
+              "Empfehlungs-Freischaltung nur innerhalb der 30-Tage-Premium-Testphase.",
             avatarReferralSuccess: "Empfehlung mit aktivem Kauf gewertet.",
             avatarReferralMissingIds: "Empfehlung unvollständig — IDs fehlen.",
             avatarReferralSelfBlocked: "Eigene Empfehlung ist ungültig.",
@@ -623,7 +630,7 @@ window.OSG_LOCALES = {
             avatarReferralNoPurchase: "Kein Händlerkauf nachgewiesen.",
             avatarLockAriaLabel: "Pauli Avatar — Testphase abgelaufen",
             avatarLockLead:
-              "Freischaltung: Erweiterung buchen, drei Käufer werben oder soziale Befreiung nachweisen.",
+              "Innerhalb von 30 Tagen: Erweiterung (49,90 THB) oder drei Käufer werben. Danach nur noch Erweiterung (49,90 THB) oder soziale Befreiung.",
             avatarPayModalTitle: "Pauli Avatar freischalten",
             avatarPayModalCloseLabel: "Bezahl-Dialog schließen",
             avatarPurchaseStandardTts:
@@ -775,24 +782,26 @@ window.OSG_LOCALES = {
               "Das Live-Tracking oben dokumentiert Aktivitäten dieser Sitzung für den Gutschein-Pfad — kein Zugriff auf deinen Stammdaten-Satz ohne deine konkreten Klicks.",
             personalPrivacyArchitectHtml:
               '<p class="arch-zero-cloud"><strong>Architekturfundament „Privacy‑first“:</strong> Suche‑Interessen, Affiliate‑Logs und Mitgliedstext werden priorisiert in <code>localStorage</code> gehalten — im Offline‑Modus weiterhin schreibbar, bei Netz automatisch geleert („Outbox“, <code>/api/lead</code>/<code>/api/referral</code>). <strong>Hinweis Referral:</strong> Zählung nur mit aktivem Express‑Ingest; zusätzlich sendet der Client einen lokalen <strong>Geräteanker</strong> mit, damit Reinstalls mit neuer <code>osg_cid</code> nicht mehrfach zählen. IP‑Anker (gehasht) bleibt serverseitig und erscheint nicht im Rohzustand im SPA.</p>',
-            referralArcTitle: "Trial (168 h) & Lifetime über sechs neue Geräte",
+            referralArcTitle: "30-Tage Premium & Freischaltung über drei Empfehlungen",
             referralArcLead:
-              "Teile QR oder Link (?osg_ref=…): Der Server zählt qualifizierte Kind-Geräte (Geräteanker gegen Reinstall-/CID-Tricks; zusätzlich IP-Anker serverseitig). Sechs verschiedene Geräte im 7-Tage-Fenster schalten Lifetime frei. Ohne Lifetime endet der kostenlose Vollzugriff nach der Testphase — Freischaltung über Einladung/VIP, nicht über einen Kauf in dieser Oberfläche.",
+              "Teile QR oder Link (?osg_ref=…): Drei qualifizierte Käufer-Empfehlungen innerhalb der 30-Tage-Premium-Testphase schalten dauerhaft frei — alternativ einmalig 49,90 THB. Nach Testende nur noch Erweiterung (49,90 THB), VIP-Code oder soziale Befreiung.",
+            referralTrialDaysTpl:
+              "{DAYS} Tage Premium-Test verbleibend — danach nur Erweiterung (49,90 THB), Empfehlungen (nur im Testfenster) oder VIP.",
             referralTrialHoursTpl:
-              "{HOURS} h kostenlose Vollnutzung — danach nur mit Lifetime (Referrals) oder VIP-Code.",
+              "{DAYS} Tage Premium-Test verbleibend — danach nur Erweiterung (49,90 THB), Empfehlungen (nur im Testfenster) oder VIP.",
             referralLifetimeLine:
-              "Lifetime aktiv — sechs neue Geräteregistrierungen wurden serverseitig gezählt.",
+              "Premium freigeschaltet — drei qualifizierte Empfehlungen im Testfenster verbucht.",
             referralCountTpl:
-              "Aktuell {CURRENT} dokumentierte neue Geräteregistrierungen (Ziel {TARGET}).",
+              "Aktuell {CURRENT} qualifizierte Empfehlungen (Ziel {TARGET}).",
             referralUnlockHintTpl:
-              "Ohne Lifetime: Nach der Testphase ist der volle Zugriff nur mit sechs Referrals im Fenster oder gültigem VIP-/Einladungs-Code möglich — es gibt hier keinen kostenpflichtigen App-Kauf.",
+              "Nach der 30-Tage-Testphase: einmalige Erweiterung 49,90 THB — Empfehlungen zählen nicht mehr.",
             referralFingerprintLineTpl:
               "Geräte-ID {CID} · Referral {REF} · IP-Anker (gehasht, Serversicht) {IPF}",
             referralQrCaption: "Persönlicher Installations‑QR:",
             referralShareLabel: "Kopierlink:",
             referralInterestLineTpl: "Silent‑Ranking lokal aktiv — Top‑Signal: „{KW}“ ({HITS} Treffer)",
             referralFinalDayBannerHtml:
-              "<strong>Dringlicher Reminder Tag 7:</strong> Testläuft in &lt;24 h aus — jetzt Sparpfade absichern oder Freunde‑QR pushen.",
+              "<strong>Letzte Premium-Tage:</strong> Testphase läuft in &lt;24 h aus — jetzt freischalten, empfehlen oder Erweiterung (49,90 THB) wählen.",
             referralBankUpsellHtml:
               "Wenn Debit/Prepaid deine Vergünstigung bremst, prüfen Kartenprogramme klassischer Kasikorn/SCB/Bangkok Bank Routen ohne Kontowechsel oft Revolving‑Konditionen (nur wenn du dort selbst aktiv wirst — wir vermitteln, beraten keine Bankgeschäfte).",
             binCheckLabel: "Karten‑BIN (erste 6 – 8 Ziffern) — Heuristik",
@@ -1275,13 +1284,15 @@ window.OSG_LOCALES = {
             affiliateLinkRealty: "Property listings Thailand (orientation)",
             affiliateBuyTracking: "Buy (tracking)",
             avatarTrialExpiredMessage:
-              "I'm a limited feature for 90 days. After that I can be booked as an extension.",
-            avatarTrialDaysRemainingTpl: "Trial active — {DAYS} days left.",
+              "The 30-day Premium trial ended. Unlock with the one-time extension (49.90 THB) — referrals no longer count.",
+            avatarTrialDaysRemainingTpl: "Premium trial — {DAYS} days left.",
             avatarExtensionPriceTpl: "Extension: {PRICE} THB",
             avatarSocialExemptMessage:
               "Permanent unlock for social engagement / accessibility.",
             avatarReferralProgressTpl:
               "Referrals with merchant purchase: {COUNT} of {TARGET}",
+            avatarReferralExpiredNote:
+              "Referral unlock only within the 30-day Premium trial.",
             avatarReferralSuccess: "Referral counted with verified purchase.",
             avatarReferralMissingIds: "Referral incomplete — missing IDs.",
             avatarReferralSelfBlocked: "Self-referral is not valid.",
@@ -1292,7 +1303,7 @@ window.OSG_LOCALES = {
             avatarReferralNoPurchase: "No merchant purchase verified.",
             avatarLockAriaLabel: "Pauli avatar — trial expired",
             avatarLockLead:
-              "Unlock via extension, three buyer referrals, or verified social exemption.",
+              "Within 30 days: extension (49.90 THB) or three buyer referrals. After that: extension (49.90 THB) or social exemption only.",
             avatarPayModalTitle: "Unlock Pauli avatar",
             avatarPayModalCloseLabel: "Close payment dialog",
             avatarPurchaseStandardTts:
@@ -1788,7 +1799,7 @@ window.OSG_LOCALES = {
             pauliMicUnsupported: "เบราว์เซอร์นี้ไม่รองรับการรู้จำเสียงพูด",
             vipRedeemHeading: "Pauli-Friends — VIP",
             vipRedeemLead:
-              "ใส่รหัสที่ถูกต้องหรือเปิดลิงก์เชิญ: ปลดล็อกแบบถาวรทันที — ไม่ต้องนับ 7 วัน ไม่ต้องชำระเงินในเว็บนี้ ไม่ต้องชวนเพื่อน",
+              "ใส่รหัสที่ถูกต้องหรือเปิดลิงก์เชิญ: ปลดล็อก Premium ทันที — ไม่ต้องนับ 30 วัน ไม่ต้องชวนเพื่อน",
             vipCodeLabel: "รหัสคูปอง VIP",
             vipRedeemBtn: "ใช้รหัส",
             vipRedeemBtnAria: "ใช้รหัส VIP และเปิดการเข้าถึง",
@@ -1797,7 +1808,7 @@ window.OSG_LOCALES = {
             vipStatusLine:
               "VIP Pauli-Friends เปิดอยู่ — ข้ามการล็อกทดลองและการอ้างอิง",
             vipBypassTrialLine:
-              "เปิด VIP แล้ว: ไม่มีการนับ 7 วัน และไม่มีการชำระเงินเพื่อปลดล็อกในเชลล์นี้",
+              "เปิด VIP แล้ว: ไม่มีการนับ 30 วัน Premium และข้ามการล็อกทดลอง/แนะนำ",
             vipCodeInputAria: "กรอกรหัสคูปอง VIP",
             vipRedeemSectionAria: "ส่วน Pauli-Friends VIP",
             vipLiveWrapAria: "สถิติสดสำหรับรหัส VIP",
@@ -2061,8 +2072,8 @@ window.OSG_LOCALES = {
             affiliateLinkRealty: "ประกาศที่อยู่อาศัยไทย — ภาพรวมรายการ",
             affiliateBuyTracking: "ซื้อ (ติดตาม)",
             avatarTrialExpiredMessage:
-              "ผมเป็นฟีเจอร์จำกัด 90 วัน หลังจากนั้นสามารถจองเป็นส่วนขยายได้",
-            avatarTrialDaysRemainingTpl: "ทดลองใช้ — เหลือ {DAYS} วัน",
+              "หมดช่วงทดลอง Premium 30 วันแล้ว — ปลดล็อกด้วยการขยายครั้งเดียว (49.90 THB) การแนะนำไม่นับอีกต่อไป",
+            avatarTrialDaysRemainingTpl: "Premium — เหลือ {DAYS} วัน",
             avatarExtensionPriceTpl: "ส่วนขยาย: {PRICE} บาท",
             avatarSocialExemptMessage:
               "ปลดล็อกถาวรสำหรับสังคม / การเข้าถึง",
@@ -2078,7 +2089,7 @@ window.OSG_LOCALES = {
             avatarReferralNoPurchase: "ยังไม่พบการซื้อจากร้านค้า",
             avatarLockAriaLabel: "อวตาร Pauli — หมดช่วงทดลอง",
             avatarLockLead:
-              "ปลดล็อก: จองส่วนขยาย แนะนำผู้ซื้อ 3 คน หรือยืนยันสิทธิสังคม",
+              "ภายใน 30 วัน: ขยาย (49.90 THB) หรือแนะนำผู้ซื้อ 3 คน หลังจากนั้น: ขยาย (49.90 THB) หรือยืนยันสิทธิสังคมเท่านั้น",
             avatarPayModalTitle: "ปลดล็อกอวตาร Pauli",
             avatarPayModalCloseLabel: "ปิดหน้าต่างชำระเงิน",
             avatarPurchaseStandardTts:
@@ -2909,7 +2920,7 @@ window.OSG_LOCALES = {
             affiliateLinkRealty: "Ogłoszenia mieszkań Tajlandia (orientacja)",
             affiliateBuyTracking: "Kup (tracking)",
             avatarTrialExpiredMessage:
-              "Jestem funkcją ograniczoną do 90 dni. Potem można mnie wykupić jako rozszerzenie.",
+              "30-dniowy okres Premium minął. Odblokuj jednorazowym rozszerzeniem (49,90 THB) — polecenia nie liczą się już.",
             avatarTrialDaysRemainingTpl: "Okres próbny — pozostało {DAYS} dni.",
             avatarExtensionPriceTpl: "Rozszerzenie: {PRICE} THB",
             avatarSocialExemptMessage:
@@ -2926,7 +2937,7 @@ window.OSG_LOCALES = {
             avatarReferralNoPurchase: "Brak potwierdzonego zakupu u handlowca.",
             avatarLockAriaLabel: "Avatar Pauli — koniec okresu próbnego",
             avatarLockLead:
-              "Odblokowanie: rozszerzenie, trzech kupujących poleconych lub zwolnienie społeczne.",
+              "W ciągu 30 dni: rozszerzenie (49,90 THB) lub trzech kupujących. Potem tylko rozszerzenie (49,90 THB) lub zwolnienie społeczne.",
             avatarPayModalTitle: "Odblokuj awatar Pauli",
             avatarPayModalCloseLabel: "Zamknij okno płatności",
             avatarPurchaseStandardTts:
@@ -3728,7 +3739,7 @@ window.OSG_LOCALES = {
             affiliateLinkRealty: "Подбор объявлений Таиланд (ориентация)",
             affiliateBuyTracking: "Купить (трекинг)",
             avatarTrialExpiredMessage:
-              "Я ограниченная функция на 90 дней. После этого меня можно оформить как расширение.",
+              "30-дневный Premium-тrial завершён. Разблокировка — разовое расширение (49,90 THB); рефералы больше не учитываются.",
             avatarTrialDaysRemainingTpl: "Пробный период — осталось {DAYS} дн.",
             avatarExtensionPriceTpl: "Расширение: {PRICE} THB",
             avatarSocialExemptMessage:
@@ -3745,7 +3756,7 @@ window.OSG_LOCALES = {
             avatarReferralNoPurchase: "Покупка у продавца не подтверждена.",
             avatarLockAriaLabel: "Аватар Pauli — пробный период истёк",
             avatarLockLead:
-              "Разблокировка: расширение, три покупателя по рефералу или социальное освобождение.",
+              "В течение 30 дней: расширение (49,90 THB) или три покупателя. После — только расширение (49,90 THB) или социальное освобождение.",
             avatarPayModalTitle: "Разблокировать аватар Pauli",
             avatarPayModalCloseLabel: "Закрыть окно оплаты",
             avatarPurchaseStandardTts:
@@ -4529,7 +4540,7 @@ window.OSG_LOCALES = {
             affiliateLinkRealty: "房源浏览定向（泰国）",
             affiliateBuyTracking: "购买（带追踪）",
             avatarTrialExpiredMessage:
-              "我是限用 90 天的功能。之后可作为扩展功能预订。",
+              "30 天 Premium 试用已结束。请通过一次性扩展（49.90 THB）解锁 — 推荐不再计入。",
             avatarTrialDaysRemainingTpl: "试用中 — 剩余 {DAYS} 天",
             avatarExtensionPriceTpl: "扩展：{PRICE} THB",
             avatarSocialExemptMessage:
@@ -4545,7 +4556,7 @@ window.OSG_LOCALES = {
             avatarReferralNoPurchase: "未验证商户购买。",
             avatarLockAriaLabel: "Pauli 头像 — 试用已结束",
             avatarLockLead:
-              "解锁：购买扩展、推荐 3 位买家或提交社会豁免证明。",
+              "30 天内：扩展（49.90 THB）或推荐 3 位买家。之后仅扩展（49.90 THB）或社会豁免。",
             avatarPayModalTitle: "解锁 Pauli 头像",
             avatarPayModalCloseLabel: "关闭付款对话框",
             avatarPurchaseStandardTts: "选得好——我为这次购买感到高兴！",
@@ -4784,17 +4795,19 @@ window.OSG_LOCALES = {
               "Nickname (voluntary)",
             personalOnboardingNamePlaceholder: "Any script you like…",
             referralArcTitle:
-              "168-hour sandbox · Lifetime unlock after six handset installs",
+              "30-day Premium trial · unlock via three qualified referrals or 49.90 THB",
             referralArcLead:
-              "Share your QR or URL (?osg_ref=…): the server counts qualifying child devices (device anchor limits reinstall tricks; IP anchor stays hashed server-side). Six distinct devices inside the 7-day window unlock Lifetime. Without Lifetime, free full access ends after the trial — unlock via invite/VIP; there is no purchase checkout in this web shell.",
+              "Share your QR or URL (?osg_ref=…): three qualified buyer referrals within the 30-day Premium trial unlock permanently — or pay 49.90 THB once. After the trial, only the 49.90 THB extension (or VIP / social exemption) remains.",
+            referralTrialDaysTpl:
+              "{DAYS} days Premium trial left — after that: 49.90 THB extension, referrals (trial window only), or VIP.",
             referralTrialHoursTpl:
-              "{HOURS}h full-feature trial — after that you need Lifetime (referrals) or a VIP code.",
+              "{DAYS} days Premium trial left — after that: 49.90 THB extension, referrals (trial window only), or VIP.",
             referralLifetimeLine:
-              "Lifetime flag — six qualifying handset activations recorded.",
+              "Premium unlocked — three qualified referrals recorded in the trial window.",
             referralCountTpl:
-              "{CURRENT} handset activations recorded (goal {TARGET}).",
+              "{CURRENT} qualified referrals recorded (goal {TARGET}).",
             referralUnlockHintTpl:
-              "Without Lifetime: after the trial, full access needs six referrals in the window or a valid invite/VIP code — no paid unlock is offered in this UI.",
+              "After the 30-day trial: one-time 49.90 THB extension only — referrals no longer count.",
 
             referralFingerprintLineTpl:
               "Customer id {CID} · referral {REF} · server-side hashed IP anchor {IPF}",
@@ -4902,7 +4915,7 @@ window.OSG_LOCALES = {
             pauliMicUnsupported: "Speech recognition is not supported in this browser.",
             vipRedeemHeading: "Pauli friends — VIP access",
             vipRedeemLead:
-              "With a valid code or invite link: instant lifetime unlock — no 7-day pressure, no paid unlock in this shell, no refer-friends requirement.",
+              "With a valid code or invite link: instant Premium unlock — no 30-day trial pressure, no refer-friends requirement.",
             vipCodeLabel: "VIP voucher code",
             vipRedeemBtn: "Redeem code",
             vipRedeemBtnAria: "Redeem VIP code and activate access",
@@ -4911,7 +4924,7 @@ window.OSG_LOCALES = {
             vipStatusLine:
               "Pauli-friends VIP active — trial and referral gates bypassed.",
             vipBypassTrialLine:
-              "VIP active: no 7-day countdown; no paid in-app unlock in this shell.",
+              "VIP active: no 30-day Premium countdown; trial and referral gates bypassed.",
             vipCodeInputAria: "Enter VIP voucher code",
             vipRedeemSectionAria: "Pauli-friends VIP access section",
             vipLiveWrapAria: "Live statistics for VIP code",
@@ -5126,12 +5139,12 @@ window.OSG_LOCALES = {
 
             premiumWallHeading: "Premium features locked",
             premiumWallLead:
-              "The 7-day full-access trial ended without Lifetime (six qualifying installs) or VIP unlock. Use your invite link or a valid Pauli-Friends code — this web shell does not collect payment.",
+              "The 30-day Premium trial ended. Unlock with the one-time 49.90 THB extension — or a valid Pauli-Friends / VIP code or social exemption.",
             premiumWallPromptpayNote:
-              "No payment is processed here — unlocks are referral- or VIP-code-based.",
+              "Referral unlock only within the 30-day Premium trial. After that: 49.90 THB extension.",
             premiumWallDemoUnlockBtn: "Demo: simulate full unlock",
             premiumLockedAlert:
-              "After the trial you need Lifetime, a VIP code, or an invite link.",
+              "Premium expired — 49.90 THB extension, VIP code, or social exemption required.",
 
             legalFooterAffiliateBtn: "Affiliate disclosure",
             legalTabAffiliate: "Affiliate disclosure",

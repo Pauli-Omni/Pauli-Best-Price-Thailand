@@ -72,5 +72,9 @@
   "pauliId.referralConfirm": "Confirm",
   "pauliId.referralInvalid": "Invalid format. Example: 1 M 000 123",
   "pauliId.referralSaved": "Saved ✓",
-  "coinAriaLabel": "Pauli avatar — tap for greeting, draggable; or say “Hallo / Hey Pauli”, or use chat"
+  "coinAriaLabel": "Pauli avatar — tap or press Enter to start without speaking; draggable",
+  "pauliWakeMicBtn": "Hello / Hey Pauli (mic)",
+  "pauliWakeMicAria": "Tap to talk without speaking, or say Hello Pauli, Hi Pauli, or Hey Paulie — Pauli listens continuously",
+  "pauliA11yAccessHint": "Accessible entry: say “Hi Pauli” or “Hello Paulie” with no tap needed. Cannot speak? Tap the coin or the mic button below. Keyboard: focus the coin or mic button and press Enter.",
+  "pauliWakeListeningAnnounce": "Pauli is listening — say Hello Pauli or Hi Paulie"
 }

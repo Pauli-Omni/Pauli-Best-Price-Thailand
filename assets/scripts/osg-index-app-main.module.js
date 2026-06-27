@@ -3312,11 +3312,8 @@
             } else {
               window.__OSG_AVATAR_COMPANION_BOOT_RETRY_COUNT__ = 0;
             }
-            // Signal that greeting is done: mic starts on the NEXT user gesture.
-            // The _osgAnyClickMicStart listener (registered in installPauliVoiceWake)
-            // and the wake-button click handler both react to this flag.
+            // Signal optional tap-to-start after silent boot (voice wake stays active).
             window.__OSG_GREETING_DONE_PENDING_MIC__ = true;
-            // Show and pulse the wake button as a clear call-to-action
             try {
               var _wb = document.getElementById("pauli-voice-wake-btn");
               if (_wb) {
@@ -3324,6 +3321,9 @@
                 _wb.classList.add("osg-pulse-ready");
               }
             } catch (_) {}
+            if (typeof osgWakeMaybeStart === "function") {
+              setTimeout(osgWakeMaybeStart, 280);
+            }
           }
         }
 
@@ -4269,12 +4269,17 @@
 
         const PAULI_WAKE_GREETINGS =
           "hallo|hi|hey|hello|hej|halo|cześć|czesc|witaj|привет|privet|алло|allo|эй|ey|здравствуй|салют|salut|สวัสดี|你好|您好";
-        const PAULI_WAKE_NAMES = "pauli|พอลลี่|paulie|保利";
+        const PAULI_WAKE_NAMES = "pauli|paulie|paulies|paulí|พอลลี่|保利";
         const PAULI_WAKE_RE = new RegExp(
           "\\b(" +
             PAULI_WAKE_GREETINGS +
-            ")\\s+(" +
+            ")\\s*[,!?.\\-–—]*\\s*(" +
             PAULI_WAKE_NAMES +
+            ")\\b|" +
+            "\\b(" +
+            PAULI_WAKE_NAMES +
+            ")\\s*[,!?.\\-–—]*\\s*(" +
+            PAULI_WAKE_GREETINGS +
             ")\\b",
           "i"
         );
@@ -4733,11 +4738,14 @@
           const t = String(text || "").trim();
           if (!t) return false;
           if (PAULI_WAKE_RE.test(t)) return true;
+          if (/^\s*(pauli|paulie|paulies|พอลลี่|保利)\s*[!.?]*\s*$/i.test(t)) {
+            return true;
+          }
           if (
-            /(你好|您好)(pauli|保利)/i.test(t) ||
-            /(สวัสดี)(pauli|พอลลี่)/i.test(t) ||
-            /(привет|privet|эй|ey)(pauli|пauli)/i.test(t) ||
-            /(cześć|czesc|hej|halo|witaj)(pauli)/i.test(t)
+            /(你好|您好)\s*(pauli|paulie|保利)/i.test(t) ||
+            /(สวัสดี)\s*(pauli|paulie|พอลลี่)/i.test(t) ||
+            /(привет|privet|эй|ey)\s*(pauli|paulie|пauli)/i.test(t) ||
+            /(cześć|czesc|hej|halo|witaj)\s*(pauli|paulie)/i.test(t)
           ) {
             return true;
           }
@@ -5263,7 +5271,17 @@
           } else if (typeof window.stopAllSpeech === "function") {
             window.stopAllSpeech();
           }
-          if (window.__OSG_AVATAR_COMPANION_BOOT_RUNNING__) return;
+          if (
+            window.__OSG_AVATAR_COMPANION_BOOT_RUNNING__ &&
+            (opts.fromWake || opts.fromCoin || opts.fromGreeting)
+          ) {
+            window.__OSG_AVATAR_COMPANION_BOOT_RUNNING__ = false;
+            window.__OSG_AVATAR_COMPANION_BOOT_DONE__ = true;
+            busy = false;
+            container.classList.remove("is-busy");
+          } else if (window.__OSG_AVATAR_COMPANION_BOOT_RUNNING__) {
+            return;
+          }
           const freshConversation = !!(opts.fromWake || opts.fromCoin);
           if (osgPauliLiveActive) {
             if (freshConversation) {
@@ -6171,6 +6189,18 @@
 
           function osgWakeSetListening(on) {
             if (wakeBtn) wakeBtn.classList.toggle("is-listening", !!on);
+            var statusEl = document.getElementById("pauli-wake-status");
+            if (!statusEl) return;
+            if (on) {
+              var pack =
+                window.__OSG_CURRENT_PACK_CACHE ||
+                (typeof T !== "undefined" ? T.de : {});
+              statusEl.textContent =
+                (pack && pack.pauliWakeListeningAnnounce) ||
+                "Pauli is listening — say Hello Pauli or Hi Paulie";
+            } else {
+              statusEl.textContent = "";
+            }
           }
 
           function osgWakeOnPhraseDetected() {
@@ -6249,7 +6279,7 @@
           }
 
           function osgWakeStartSr() {
-            if (!SR || wakeSrActive || busy || wakeMediaActive) return;
+            if (!SR || wakeSrActive || wakeMediaActive || osgPauliLiveActive) return;
             const I = window.__OSG_I18N;
             const code = I ? I.systemLangCode() : "en";
             try {
@@ -6273,7 +6303,10 @@
               rec.onend = function () {
                 wakeSrActive = false;
                 osgWakeSetListening(false);
-                if (!busy && document.visibilityState === "visible") {
+                if (
+                  !osgPauliLiveActive &&
+                  document.visibilityState === "visible"
+                ) {
                   wakeRestartTimer = setTimeout(osgWakeStart, 900);
                 }
               };
@@ -6288,7 +6321,7 @@
           }
 
           async function osgWakeRecordOnceAndCheck() {
-            if (!hasMedia || busy) return false;
+            if (!hasMedia || osgPauliLiveActive) return false;
             let stream = wakeMediaStream;
             try {
               if (!stream) {
@@ -6354,12 +6387,12 @@
           }
 
           async function osgWakeMediaLoop() {
-            if (!hasMedia || wakeSrActive || busy) return;
+            if (!hasMedia || wakeSrActive || osgPauliLiveActive) return;
             wakeMediaActive = true;
             osgWakeSetListening(true);
             while (
               wakeMediaActive &&
-              !busy &&
+              !osgPauliLiveActive &&
               document.visibilityState === "visible"
             ) {
               const hit = await osgWakeRecordOnceAndCheck();
@@ -6376,7 +6409,7 @@
           }
 
           function osgWakeStart() {
-            if (busy) return;
+            if (osgPauliLiveActive) return;
             if (SR) {
               osgWakeStopMedia();
               osgWakeStartSr();
@@ -6388,23 +6421,19 @@
             }
           }
 
+          function osgWakeStartLiveFromAccessibility(opts) {
+            opts = opts || {};
+            unlockAudioSystemFromCoinGesture();
+            osgWakeStopAll();
+            void startPauliLiveConversation(
+              Object.assign({ fromCoin: true }, opts)
+            );
+          }
+
           async function osgWakePushToTalk() {
             unlockAudioSystemFromCoinGesture();
             osgWakeStopAll();
-            osgWakeSetListening(true);
-            if (SR) {
-              osgWakeStartSr();
-              return;
-            }
-            if (hasMedia) {
-              const hit = await osgWakeRecordOnceAndCheck();
-              if (hit) {
-                osgWakeOnPhraseDetected();
-                return;
-              }
-            }
-            osgWakeSetListening(false);
-            void startPauliLiveConversation({ fromCoin: true });
+            osgWakeStartLiveFromAccessibility();
           }
 
           if (wakeBtn) {
@@ -6475,11 +6504,31 @@
             once: true,
           });
 
+          document.addEventListener("keydown", function (ev) {
+            if (osgPauliLiveActive) return;
+            if (!ev.altKey || !ev.shiftKey) return;
+            if (String(ev.key || "").toLowerCase() !== "p") return;
+            var tag = (ev.target && ev.target.tagName) || "";
+            tag = String(tag).toUpperCase();
+            if (
+              tag === "INPUT" ||
+              tag === "TEXTAREA" ||
+              tag === "SELECT" ||
+              (ev.target && ev.target.isContentEditable)
+            ) {
+              return;
+            }
+            ev.preventDefault();
+            osgWakeStartLiveFromAccessibility({ fromKeyboard: true });
+          });
+
           setTimeout(osgWakeMaybeStart, 600);
 
           if (typeof window !== "undefined") {
             window.osgWakeStopAll = osgWakeStopAll;
             window.osgWakeStart = osgWakeStart;
+            window.osgWakeStartLiveFromAccessibility =
+              osgWakeStartLiveFromAccessibility;
           }
         }
 

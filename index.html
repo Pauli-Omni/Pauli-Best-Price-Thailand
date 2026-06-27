@@ -1138,13 +1138,18 @@
       </div>
     </div>
 
+    <p
+      id="pauli-a11y-access-hint"
+      class="visually-hidden"
+      data-i18n="pauliA11yAccessHint"
+    ></p>
     <div
       class="coin-stage pauli-main-avatar"
       id="coin-stage"
       role="button"
       tabindex="0"
       data-i18n-aria="coinAriaLabel"
-      aria-describedby="pauli-avatar-thai-label"
+      aria-describedby="pauli-a11y-access-hint pauli-avatar-thai-label"
     >
       <div class="coin-visual-shadow-host coin-visual-shadow-host--main" aria-hidden="true">
         <img
@@ -1207,13 +1212,20 @@
       aria-hidden="true"
       hidden
     ></div>
+    <p
+      id="pauli-wake-status"
+      class="visually-hidden"
+      aria-live="polite"
+      aria-atomic="true"
+    ></p>
     <button
       type="button"
       class="pauli-voice-wake-btn"
       id="pauli-voice-wake-btn"
-    >
-      Hallo / Hey Pauli
-    </button>
+      data-i18n="pauliWakeMicBtn"
+      data-i18n-aria="pauliWakeMicAria"
+      aria-describedby="pauli-a11y-access-hint pauli-wake-status"
+    ></button>
     <div class="coin-debug-wrap" id="coin-debug-wrap">
       <button type="button" class="coin-debug-toggle" id="coin-debug-toggle">
         Coin DBG
