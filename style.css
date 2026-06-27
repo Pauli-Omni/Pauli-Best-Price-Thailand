@@ -266,8 +266,10 @@ body {
   background-image: none !important;
 }
 
-#coin-stage:not(.is-dragging-session) .coin-visual-shadow-host--main,
-#coin-stage:not(.is-dragging-session) #pauli-main-avatar-img {
+#coin-stage:not(.is-dragging-session):not(.is-anim-idle-spin):not(.is-anim-locked-flip)
+  .coin-visual-shadow-host--main,
+#coin-stage:not(.is-dragging-session):not(.is-anim-idle-spin):not(.is-anim-locked-flip)
+  #pauli-main-avatar-img {
   animation: none !important;
   transform: none !important;
   transition: none !important;
@@ -1215,17 +1217,21 @@ body {
 #coin-stage.is-dragging-session,
 #coin-stage.is-user-positioned,
 #coin-stage.is-avatar-running {
-  right: auto !important;
   bottom: auto !important;
   background: transparent !important;
   background-color: transparent !important;
   background-image: none !important;
   box-shadow: none !important;
   border: none !important;
+  filter: none !important;
+}
+
+#coin-stage.is-user-positioned,
+#coin-stage.is-dragging-session {
+  right: auto !important;
   transform: none !important;
   animation: none !important;
   transition: none !important;
-  filter: none !important;
 }
 
 .coin-visual-img[data-knockout-applied] {
@@ -1307,7 +1313,8 @@ body {
   :root {
     --coin-size: 118px;
     --coin-size-stand: 96px;
-    --coin-bubble-align-top: auto;
+    --coin-bubble-align-top: clamp(3.25rem, 8vh, 4.75rem);
+    --coin-stage-margin-right: clamp(0.35rem, 2vw, 0.85rem);
   }
 
   #coin-stage,
@@ -1332,9 +1339,9 @@ body {
   .coin-stage#coin-stage:not(.is-user-positioned):not(.is-dragging-session):not(
       .is-avatar-running
     ) {
-    top: auto !important;
-    bottom: calc(0.85rem + var(--safe-bottom)) !important;
-    right: calc(0.65rem + max(0px, var(--safe-right))) !important;
+    top: var(--coin-stage-position-top) !important;
+    bottom: auto !important;
+    right: var(--coin-stage-position-right) !important;
     left: auto !important;
   }
 
@@ -1386,15 +1393,16 @@ body {
   #coin-stage,
   #coin-stage.pauli-main-avatar,
   .coin-stage#coin-stage {
-    z-index: 700;
-    animation: none !important;
-    transform: none !important;
+    z-index: 920;
   }
 
-  #coin-stage img,
-  #coin-stage .pauli-main-avatar__img,
-  #pauli-main-avatar-img,
-  #coin-stage .coin-visual-shadow-host--main {
+  #coin-stage:not(.is-anim-idle-spin):not(.is-anim-locked-flip) img,
+  #coin-stage:not(.is-anim-idle-spin):not(.is-anim-locked-flip)
+    .pauli-main-avatar__img,
+  #coin-stage:not(.is-anim-idle-spin):not(.is-anim-locked-flip)
+    #pauli-main-avatar-img,
+  #coin-stage:not(.is-anim-idle-spin):not(.is-anim-locked-flip)
+    .coin-visual-shadow-host--main {
     animation: none !important;
     transform: none !important;
   }
@@ -2496,8 +2504,9 @@ body.osg-clip-scan-open {
   transform: rotateY(180deg);
 }
 
-#coin-stage.is-anim-locked-flip .pauli-avatar-flip__inner {
-  animation: pauli-avatar-coin-spin 18s linear infinite;
+#coin-stage.is-anim-locked-flip .pauli-avatar-flip__inner,
+#coin-stage.is-anim-idle-spin .pauli-avatar-flip__inner {
+  animation: pauli-avatar-coin-spin 12s linear infinite;
   will-change: transform;
   transform: translateZ(0);
 }
@@ -5781,6 +5790,11 @@ body.osg-vip-gift-open {
   .osg-voice-confirm__btn,
   .osg-geo-btn {
     transition: none !important;
+  }
+
+  #coin-stage.is-anim-idle-spin .pauli-avatar-flip__inner,
+  #coin-stage.is-anim-locked-flip .pauli-avatar-flip__inner {
+    animation: none !important;
   }
 }
 

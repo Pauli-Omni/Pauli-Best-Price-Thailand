@@ -11,6 +11,7 @@
     "is-anim-purchase-std",
     "is-anim-purchase-premium",
     "is-anim-locked-flip",
+    "is-anim-idle-spin",
   ];
 
   var CSS_BY_SLOT = {
@@ -148,22 +149,62 @@
     }
   }
 
+  function applyIdleSpin() {
+    if (root.locked) {
+      applyCssFallback("locked_carousel");
+      return;
+    }
+    if (!root.stage || !root.flip) {
+      showStatic(true);
+      return;
+    }
+    root.flip.hidden = false;
+    if (root.img) root.img.hidden = true;
+    root.stage.classList.add("is-anim-idle-spin");
+  }
+
+  function clearIdleSpin() {
+    if (root.stage) root.stage.classList.remove("is-anim-idle-spin");
+    if (root.flip) root.flip.hidden = true;
+    if (root.img) root.img.hidden = false;
+  }
+
   function setState(key) {
     key = String(key || "idle");
     if (root.locked && key !== "locked_carousel" && key !== "idle") return;
     if (key === "speak" && root.speakRefCount <= 0 && !root.locked) {
       key = "idle";
     }
-    root.current = key;if (key === "purchase_standard") {
-      tryPlayVideo("purchase_standard", function () {
-        applyCssFallback("purchase_standard");
+    root.current = key;
+
+    if (key === "purchase_standard" || key === "purchase_premium") {
+      tryPlayVideo(key, function () {
+        applyCssFallback(key);
       });
+      return;
     }
+
+    if (key === "locked_carousel") {
+      stopVideo();
+      applyCssFallback("locked_carousel");
+      return;
+    }
+
+    if (key === "speak") {
+      stopVideo();
+      clearStateClasses();
+      clearIdleSpin();
+      showStatic(true);
+      return;
+    }
+
+    if (key === "wai_greeting") {
+      return;
+    }
+
     stopVideo();
     clearStateClasses();
-    showStatic(true);
-    if (root.flip) root.flip.hidden = true;
-    if (root.img) root.img.hidden = false;
+    applyIdleSpin();
   }
 
   function buildFlipLayer() {
@@ -297,6 +338,7 @@
       root.video.hidden = true;
       root.video.style.display = "none";
     }
+    if (!root.locked) applyIdleSpin();
     try {
       global.addEventListener("osg-terms-audio-unlocked", function () {
         if (!termsAudioOk()) return;
@@ -333,10 +375,10 @@
     if (root.locked) return;
     root.speakRefCount = Math.max(0, root.speakRefCount + (delta || 0));
     if (root.speakRefCount > 0) {
-      /* Kein Speak-Video (oft weißer Poster-Hintergrund) — nur Standbild + Lip-Sync */
       stopVideo();
-      showStatic(true);
       clearStateClasses();
+      clearIdleSpin();
+      showStatic(true);
       root.current = "speak";
       return;
     }
@@ -360,6 +402,7 @@
     if (root.locked || !root.stage) return;
     root.current = "wai_greeting";
     clearStateClasses();
+    clearIdleSpin();
     root.stage.classList.add("is-anim-wai");
     showStatic(true);
   }
