@@ -27,9 +27,9 @@ services:
       - key: PORT
         value: "3000"
       - key: OSG_CORS_ORIGINS
-        value: https://omnisolutionsglobal.com,https://www.omnisolutionsglobal.com,https://pauli-best-price-api.onrender.com
+        value: https://omnisolutionsglobal.com,https://www.omnisolutionsglobal.com,https://pauli-best-price-api.onrender.com,https://pauli-best-price-api-nzbl.onrender.com
       - key: OSG_API_ALLOWED_ORIGINS
-        value: https://omnisolutionsglobal.com,https://www.omnisolutionsglobal.com,https://pauli-best-price-api.onrender.com
+        value: https://omnisolutionsglobal.com,https://www.omnisolutionsglobal.com,https://pauli-best-price-api.onrender.com,https://pauli-best-price-api-nzbl.onrender.com
       - key: OSG_INSTALL_FP_SALT
         generateValue: true
       # --- Betrieb / Hosting ---
