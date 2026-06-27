@@ -3781,11 +3781,26 @@
                 window.__OSG_DRAFT_CONFIRM_HANDLER__("confirm");
                 return;
               }
+              if (typeof window.osgClearComplaintConversationState === "function") {
+                window.osgClearComplaintConversationState();
+                return;
+              }
               if (
+                window.OSG_DRAFT_OWNERSHIP &&
+                typeof window.OSG_DRAFT_OWNERSHIP.clearWorkflow === "function"
+              ) {
+                window.OSG_DRAFT_OWNERSHIP.clearWorkflow();
+              } else if (
                 window.OSG_DRAFT_OWNERSHIP &&
                 typeof window.OSG_DRAFT_OWNERSHIP.clearPending === "function"
               ) {
                 window.OSG_DRAFT_OWNERSHIP.clearPending();
+              }
+              if (
+                window.OSG_RECLAMATION_COMPLIANCE &&
+                typeof window.OSG_RECLAMATION_COMPLIANCE.clearSession === "function"
+              ) {
+                window.OSG_RECLAMATION_COMPLIANCE.clearSession();
               }
               osgHideDraftConfirmOverlay();
             });
@@ -3796,11 +3811,26 @@
                 window.__OSG_DRAFT_CONFIRM_HANDLER__("reject");
                 return;
               }
+              if (typeof window.osgClearComplaintConversationState === "function") {
+                window.osgClearComplaintConversationState();
+                return;
+              }
               if (
+                window.OSG_DRAFT_OWNERSHIP &&
+                typeof window.OSG_DRAFT_OWNERSHIP.clearWorkflow === "function"
+              ) {
+                window.OSG_DRAFT_OWNERSHIP.clearWorkflow();
+              } else if (
                 window.OSG_DRAFT_OWNERSHIP &&
                 typeof window.OSG_DRAFT_OWNERSHIP.clearPending === "function"
               ) {
                 window.OSG_DRAFT_OWNERSHIP.clearPending();
+              }
+              if (
+                window.OSG_RECLAMATION_COMPLIANCE &&
+                typeof window.OSG_RECLAMATION_COMPLIANCE.clearSession === "function"
+              ) {
+                window.OSG_RECLAMATION_COMPLIANCE.clearSession();
               }
               osgHideDraftConfirmOverlay();
             });

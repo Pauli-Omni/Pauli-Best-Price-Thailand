@@ -473,6 +473,13 @@
     });
   }
 
+  function clearSession() {
+    try {
+      global.sessionStorage.removeItem(SS_ROLE_SAID);
+      global.sessionStorage.removeItem(SS_SUPPORT_SAID);
+    } catch (_) {}
+  }
+
   global.OSG_RECLAMATION_COMPLIANCE = {
     ROLE: ROLE,
     LANGS: LANGS,
@@ -493,5 +500,6 @@
     complianceWrap: complianceWrap,
     buildDraftSkeleton: buildDraftSkeleton,
     needsComplianceWrap: needsComplianceWrap,
+    clearSession: clearSession,
   };
 })(typeof window !== "undefined" ? window : globalThis);

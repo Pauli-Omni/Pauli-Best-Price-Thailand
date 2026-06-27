@@ -3200,6 +3200,11 @@
           if (window.__OSG_AVATAR_COMPANION_BOOT_DONE__) return;
           if (osgPauliLiveActive) return;
           window.__OSG_AVATAR_COMPANION_BOOT_RUNNING__ = true;
+          try {
+            if (typeof window.osgClearComplaintConversationState === "function") {
+              window.osgClearComplaintConversationState();
+            }
+          } catch (_) {}
           busy = true;
           container.classList.add("is-busy");
           try {
@@ -4792,9 +4797,38 @@
           let t = String(text || "").trim();
           if (!t) return "";
           if (typeof osgPauliWakeMatches === "function" && osgPauliWakeMatches(t)) {
-            t = t.replace(PAULI_WAKE_RE, "").trim();
+            return t.replace(PAULI_WAKE_RE, "").trim();
           }
           return t;
+        }
+
+        function osgPauliIsPureWakePhrase(text) {
+          const t = String(text || "").trim();
+          if (!t) return false;
+          return (
+            typeof osgPauliWakeMatches === "function" && osgPauliWakeMatches(t)
+          );
+        }
+
+        function osgPauliWakeGreetingReply(pack) {
+          const IC = window.OSG_INTENT_CLASSIFIER;
+          if (IC && typeof IC.classify === "function") {
+            const hit = IC.classify("hello");
+            if (hit && hit.packKey && pack && pack[hit.packKey]) {
+              return {
+                text: String(pack[hit.packKey] || "").trim(),
+                speechKey: hit.speechKey || "pauliSawadee",
+                segmentKey: hit.segmentKey || "welcome_short",
+              };
+            }
+          }
+          return {
+            text: String(
+              (pack && (pack.pauliSawadeeTts || pack.pauliLiveStartPrompt)) || ""
+            ).trim(),
+            speechKey: "pauliSawadee",
+            segmentKey: "welcome_short",
+          };
         }
 
         /** Pauli-Weisheit: Politik & Religion — keine Debatte, charmante Ablenkung. */
@@ -4878,6 +4912,34 @@
           var overlay = document.getElementById("osg-draft-confirm-overlay");
           if (overlay) overlay.hidden = true;
         }
+
+        function osgClearComplaintConversationState() {
+          try {
+            if (
+              window.OSG_DRAFT_OWNERSHIP &&
+              typeof window.OSG_DRAFT_OWNERSHIP.clearWorkflow === "function"
+            ) {
+              window.OSG_DRAFT_OWNERSHIP.clearWorkflow();
+            } else if (
+              window.OSG_DRAFT_OWNERSHIP &&
+              typeof window.OSG_DRAFT_OWNERSHIP.clearPending === "function"
+            ) {
+              window.OSG_DRAFT_OWNERSHIP.clearPending();
+            }
+          } catch (_) {}
+          try {
+            if (
+              window.OSG_RECLAMATION_COMPLIANCE &&
+              typeof window.OSG_RECLAMATION_COMPLIANCE.clearSession === "function"
+            ) {
+              window.OSG_RECLAMATION_COMPLIANCE.clearSession();
+            }
+          } catch (_) {}
+          try {
+            osgHideDraftConfirmOverlay();
+          } catch (_) {}
+        }
+        window.osgClearComplaintConversationState = osgClearComplaintConversationState;
 
         function osgReclamationComplianceReply(reply, lang, userText) {
           if (
@@ -5118,7 +5180,7 @@
           osgTweenAvatarReturn();
           window.__OSG_DRAFT_CONFIRM_HANDLER__ = null;
           try {
-            osgHideDraftConfirmOverlay();
+            osgClearComplaintConversationState();
           } catch (_) {}
           if (!(opts && opts.skipWakeRestart)) {
             setTimeout(function () {
@@ -5165,6 +5227,7 @@
           if (busy && !opts.fromGreeting) return;
           osgPauliLiveActive = true;
           if (!opts.continueSession) osgPauliLiveHistory = [];
+          osgClearComplaintConversationState();
           busy = true;
           autoWaiDone = true;
           unlockAudioSystemFromCoinGesture();
@@ -5244,8 +5307,7 @@
                   typeof draftOwn.isConfirmIntent === "function" &&
                   draftOwn.isConfirmIntent(userText)
                 ) {
-                  osgHideDraftConfirmOverlay();
-                  draftOwn.clearPending();
+                  osgClearComplaintConversationState();
                   await osgPauliLiveSpeakReply(
                     draftOwn.confirmedHandoffReply(lang),
                     pack,
@@ -5259,8 +5321,7 @@
                   typeof draftOwn.isRejectIntent === "function" &&
                   draftOwn.isRejectIntent(userText)
                 ) {
-                  osgHideDraftConfirmOverlay();
-                  draftOwn.clearPending();
+                  osgClearComplaintConversationState();
                   await osgPauliLiveSpeakReply(
                     draftOwn.rejectedReply(lang),
                     pack,
@@ -5270,7 +5331,17 @@
                   await listenOnce();
                   return;
                 }
-                if (
+                var rcFlow = window.OSG_RECLAMATION_COMPLIANCE;
+                var draftFlowActive =
+                  (rcFlow &&
+                    typeof rcFlow.isDraftRequest === "function" &&
+                    rcFlow.isDraftRequest(userText)) ||
+                  (rcFlow &&
+                    typeof rcFlow.isReclamationTopic === "function" &&
+                    rcFlow.isReclamationTopic(userText));
+                if (!draftFlowActive && !osgVoiceMatchCommand(userText, pack)) {
+                  osgClearComplaintConversationState();
+                } else if (
                   typeof draftOwn.remindConfirmReply === "function" &&
                   !osgVoiceMatchCommand(userText, pack)
                 ) {
@@ -5313,6 +5384,17 @@
 
             let reply = "";
             if (!userText) {
+              if (osgPauliIsPureWakePhrase(rawText)) {
+                const greet = osgPauliWakeGreetingReply(pack);
+                if (greet.text) {
+                  await osgPauliLiveSpeakReply(greet.text, pack, lang, isNight, {
+                    speechKey: greet.speechKey,
+                    segmentKey: greet.segmentKey,
+                  });
+                }
+                await listenOnce();
+                return;
+              }
               if (turns === 1) {
                 reply =
                   pack.pauliLiveStartPrompt || pack.voiceCmdListening || "";
@@ -5703,7 +5785,11 @@
             });
           }
 
-          await processUserText(opts.initialText || "");
+          if (opts.initialText) {
+            await processUserText(opts.initialText);
+          } else {
+            await listenOnce();
+          }
         }
 
         window.startPauliLiveConversation = startPauliLiveConversation;

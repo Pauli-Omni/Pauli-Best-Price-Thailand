@@ -220,6 +220,10 @@
     return line(COPY.remind, lang);
   }
 
+  function clearWorkflow() {
+    clearPending();
+  }
+
   global.OSG_DRAFT_OWNERSHIP = {
     LANGS: LANGS,
     normalizeLang: normalizeLang,
@@ -235,5 +239,6 @@
     confirmedHandoffReply: confirmedHandoffReply,
     rejectedReply: rejectedReply,
     remindConfirmReply: remindConfirmReply,
+    clearWorkflow: clearWorkflow,
   };
 })(typeof window !== "undefined" ? window : globalThis);
