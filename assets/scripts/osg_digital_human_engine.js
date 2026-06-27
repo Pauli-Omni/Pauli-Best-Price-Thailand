@@ -319,20 +319,7 @@
     var t = now || performance.now();
     delta = delta || 0.016;
 
-    if (
-      (root.phase === "idle" || root.phase === "idle_breathing") &&
-      t >= root.nextBlinkAt
-    ) {
-      root.lastBlinkAt = t;
-      var el = coinStage();
-      if (el) {
-        el.classList.add(DH_PREFIX + "idle-blink");
-        global.setTimeout(function () {
-          if (el) el.classList.remove(DH_PREFIX + "idle-blink");
-        }, 180);
-      }
-      scheduleBlink();
-    }
+    /* Blink: exclusively handled by OSG_DIGITAL_HUMAN_MOTION — no duplicate here. */
 
     if (root.phase === "thinking" || root.phase === "thinking_deep") {
       var host = coinHost();
@@ -470,6 +457,7 @@
     if (global.OSG_PAULI_ALLOW_CLOUD_TTS && !global.OSG_PAULI_DISABLE_CLOUD_TTS) {
       opts.allowCloudTts = true;
     }
+    opts.dynamicSpeech = true;
     await global.playPauliVoice(String(reply || ""), opts);
   }
 

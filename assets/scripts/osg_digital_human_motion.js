@@ -305,39 +305,34 @@
   // ── Blink system (Aufgabe 8) ───────────────────────────────────────────
 
   function scheduleBlink() {
-    _blink.timer = 2 + Math.random() * 5;
+    _blink.timer = 2.2 + Math.random() * 4.8;
     _blink.nextInterval = _blink.timer;
   }
 
   function tickBlink(dt) {
-    // Phase-based impulse shortens interval
-    var ph = _phase.current;
-    var impulse = (PHASE_MOTION[ph] || {}).blinkImpulse || 0;
-    _blink.impulse = lerp(_blink.impulse, impulse, 3, dt);
-
-    _blink.timer -= dt * (1 + _blink.impulse * 0.35);
-
-    var el = coinStage();
     if (_blink.blinking) {
       _blink.blinkProgress = Math.min(1, _blink.blinkProgress + dt / _blink.blinkDuration);
-      // ease in-out
       var eased = _blink.blinkProgress < 0.5
         ? 2 * _blink.blinkProgress * _blink.blinkProgress
         : 1 - Math.pow(-2 * _blink.blinkProgress + 2, 2) / 2;
-      setCssVar(el, "--dh2-blink", eased.toFixed(3));
+      setCssVar(coinStage(), "--dh2-blink", eased.toFixed(3));
       if (_blink.blinkProgress >= 1) {
         _blink.blinking = false;
         _blink.blinkProgress = 0;
-        setCssVar(el, "--dh2-blink", "0");
+        setCssVar(coinStage(), "--dh2-blink", "0");
+        removeCssClass(coinStage(), "is-dh2-blinking");
         scheduleBlink();
       }
-    } else if (_blink.timer <= 0) {
+      return;
+    }
+
+    _blink.timer -= dt;
+
+    if (_blink.timer <= 0) {
       _blink.blinking = true;
       _blink.blinkProgress = 0;
-      addCssClass(el, "is-dh2-blinking");
-      global.setTimeout(function () {
-        removeCssClass(coinStage(), "is-dh2-blinking");
-      }, Math.ceil(_blink.blinkDuration * 1000));
+      _blink.timer = _blink.nextInterval;
+      addCssClass(coinStage(), "is-dh2-blinking");
     }
   }
 
