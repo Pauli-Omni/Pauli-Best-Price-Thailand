@@ -4939,7 +4939,15 @@
             osgHideDraftConfirmOverlay();
           } catch (_) {}
         }
+
+        function osgResetComplaintLiveContext() {
+          osgPauliLiveHistory = [];
+          try {
+            osgClearComplaintConversationState();
+          } catch (_) {}
+        }
         window.osgClearComplaintConversationState = osgClearComplaintConversationState;
+        window.osgResetComplaintLiveContext = osgResetComplaintLiveContext;
 
         function osgReclamationComplianceReply(reply, lang, userText) {
           if (
@@ -5223,11 +5231,28 @@
             window.stopAllSpeech();
           }
           if (window.__OSG_AVATAR_COMPANION_BOOT_RUNNING__) return;
-          if (osgPauliLiveActive) return;
+          const freshConversation = !!(opts.fromWake || opts.fromCoin);
+          if (osgPauliLiveActive) {
+            if (freshConversation) {
+              if (osgPauliLiveStopper) {
+                try {
+                  osgPauliLiveStopper();
+                } catch (_) {}
+                osgPauliLiveStopper = null;
+              }
+              const liveWakeBtn = document.getElementById("pauli-voice-wake-btn");
+              if (liveWakeBtn) liveWakeBtn.classList.remove("is-listening");
+              osgResetComplaintLiveContext();
+            }
+            return;
+          }
           if (busy && !opts.fromGreeting) return;
           osgPauliLiveActive = true;
-          if (!opts.continueSession) osgPauliLiveHistory = [];
-          osgClearComplaintConversationState();
+          if (!opts.continueSession) {
+            osgResetComplaintLiveContext();
+          } else {
+            osgClearComplaintConversationState();
+          }
           busy = true;
           autoWaiDone = true;
           unlockAudioSystemFromCoinGesture();
@@ -5252,6 +5277,81 @@
                 );
               }
             } catch (_) {}
+          }
+
+          async function osgPauliHandleDraftPendingTurn(rawText, userText, pack, lang, isNight) {
+            var draftOwn = window.OSG_DRAFT_OWNERSHIP;
+            if (
+              !draftOwn ||
+              typeof draftOwn.hasPending !== "function" ||
+              !draftOwn.hasPending()
+            ) {
+              return false;
+            }
+
+            if (osgPauliIsPureWakePhrase(rawText)) {
+              osgResetComplaintLiveContext();
+              return false;
+            }
+
+            var gateText = String(userText || "").trim();
+
+            if (
+              gateText &&
+              typeof draftOwn.isConfirmIntent === "function" &&
+              draftOwn.isConfirmIntent(gateText)
+            ) {
+              osgResetComplaintLiveContext();
+              await osgPauliLiveSpeakReply(
+                draftOwn.confirmedHandoffReply(lang),
+                pack,
+                lang,
+                isNight
+              );
+              await listenOnce();
+              return true;
+            }
+            if (
+              gateText &&
+              typeof draftOwn.isRejectIntent === "function" &&
+              draftOwn.isRejectIntent(gateText)
+            ) {
+              osgResetComplaintLiveContext();
+              await osgPauliLiveSpeakReply(
+                draftOwn.rejectedReply(lang),
+                pack,
+                lang,
+                isNight
+              );
+              await listenOnce();
+              return true;
+            }
+
+            var rcFlow = window.OSG_RECLAMATION_COMPLIANCE;
+            var draftFlowActive =
+              rcFlow &&
+              typeof rcFlow.isDraftRequest === "function" &&
+              rcFlow.isDraftRequest(gateText);
+
+            if (!draftFlowActive && gateText && !osgVoiceMatchCommand(gateText, pack)) {
+              osgResetComplaintLiveContext();
+              return false;
+            }
+            if (
+              gateText &&
+              typeof draftOwn.remindConfirmReply === "function" &&
+              !osgVoiceMatchCommand(gateText, pack)
+            ) {
+              await osgPauliLiveSpeakReply(
+                draftOwn.remindConfirmReply(lang),
+                pack,
+                lang,
+                isNight
+              );
+              await listenOnce();
+              return true;
+            }
+            return false;
           }
 
           async function processUserText(rawText) {
@@ -5296,65 +5396,8 @@
               }
             }
 
-            if (userText) {
-              var draftOwn = window.OSG_DRAFT_OWNERSHIP;
-              if (
-                draftOwn &&
-                typeof draftOwn.hasPending === "function" &&
-                draftOwn.hasPending()
-              ) {
-                if (
-                  typeof draftOwn.isConfirmIntent === "function" &&
-                  draftOwn.isConfirmIntent(userText)
-                ) {
-                  osgClearComplaintConversationState();
-                  await osgPauliLiveSpeakReply(
-                    draftOwn.confirmedHandoffReply(lang),
-                    pack,
-                    lang,
-                    isNight
-                  );
-                  await listenOnce();
-                  return;
-                }
-                if (
-                  typeof draftOwn.isRejectIntent === "function" &&
-                  draftOwn.isRejectIntent(userText)
-                ) {
-                  osgClearComplaintConversationState();
-                  await osgPauliLiveSpeakReply(
-                    draftOwn.rejectedReply(lang),
-                    pack,
-                    lang,
-                    isNight
-                  );
-                  await listenOnce();
-                  return;
-                }
-                var rcFlow = window.OSG_RECLAMATION_COMPLIANCE;
-                var draftFlowActive =
-                  (rcFlow &&
-                    typeof rcFlow.isDraftRequest === "function" &&
-                    rcFlow.isDraftRequest(userText)) ||
-                  (rcFlow &&
-                    typeof rcFlow.isReclamationTopic === "function" &&
-                    rcFlow.isReclamationTopic(userText));
-                if (!draftFlowActive && !osgVoiceMatchCommand(userText, pack)) {
-                  osgClearComplaintConversationState();
-                } else if (
-                  typeof draftOwn.remindConfirmReply === "function" &&
-                  !osgVoiceMatchCommand(userText, pack)
-                ) {
-                  await osgPauliLiveSpeakReply(
-                    draftOwn.remindConfirmReply(lang),
-                    pack,
-                    lang,
-                    isNight
-                  );
-                  await listenOnce();
-                  return;
-                }
-              }
+            if (await osgPauliHandleDraftPendingTurn(rawText, userText, pack, lang, isNight)) {
+              return;
             }
 
             if (userText) {
@@ -5385,6 +5428,8 @@
             let reply = "";
             if (!userText) {
               if (osgPauliIsPureWakePhrase(rawText)) {
+                osgResetComplaintLiveContext();
+                turns = 0;
                 const greet = osgPauliWakeGreetingReply(pack);
                 if (greet.text) {
                   await osgPauliLiveSpeakReply(greet.text, pack, lang, isNight, {

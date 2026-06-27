@@ -3781,6 +3781,10 @@
                 window.__OSG_DRAFT_CONFIRM_HANDLER__("confirm");
                 return;
               }
+              if (typeof window.osgResetComplaintLiveContext === "function") {
+                window.osgResetComplaintLiveContext();
+                return;
+              }
               if (typeof window.osgClearComplaintConversationState === "function") {
                 window.osgClearComplaintConversationState();
                 return;
@@ -3809,6 +3813,10 @@
             draftCancel.addEventListener("click", function () {
               if (typeof window.__OSG_DRAFT_CONFIRM_HANDLER__ === "function") {
                 window.__OSG_DRAFT_CONFIRM_HANDLER__("reject");
+                return;
+              }
+              if (typeof window.osgResetComplaintLiveContext === "function") {
+                window.osgResetComplaintLiveContext();
                 return;
               }
               if (typeof window.osgClearComplaintConversationState === "function") {
