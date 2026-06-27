@@ -372,6 +372,11 @@ function osgApiOriginAllowlist(req, res, next) {
       .filter(Boolean),
   );
   if (!allowed.size) return next();
+  const host = String(req.get("host") || req.get("Host") || "").trim();
+  const proto = String(req.get("x-forwarded-proto") || "https").trim();
+  if (host) {
+    allowed.add(`${proto}://${host}`.replace(/\/$/, ""));
+  }
   const origin = req.get("Origin");
   let cand = typeof origin === "string" ? origin.trim() : "";
   if (!cand) {
