@@ -3255,7 +3255,7 @@
                     } catch (_) {}
                   }, 420);
                 },
-              });
+              }, { playAudio: false });
             }
 
             if (SB && typeof SB.runTrustPledgePresentation === "function") {
@@ -3393,12 +3393,7 @@
             // Mic auto-start is handled by _osgAnyClickMicStart listener in installPauliVoiceWake
             // (added after boot completes). No action needed here for that flag.
 
-            if (typeof window.osgScheduleAvatarCompanionBoot === "function") {
-              var sb = window.OSG_STARTUP_BOOT;
-              if (!sb || !sb.sessionGreetDone()) {
-                window.osgScheduleAvatarCompanionBoot(160);
-              }
-            }
+            // Session greeting audio only on explicit live start — not on first gesture.
 
             if (!osgEventTargetsCoinStage(ev)) return;
             if (osgCoinIntroGestureDone) return;

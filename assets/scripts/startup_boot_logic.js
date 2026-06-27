@@ -449,16 +449,24 @@
   }
 
   /**
-   * Jeder App-Start (Session): Thai-Wai + festes „Sawadee krab“ (immer Thai),
-   * danach rotierende i18n-Zeile aus dem Begrüßungspaket.
+   * Session-Begrüßung — Audio nur bei explizitem Aufruf (opts.playAudio === true).
+   * Standard: still markieren, kein Sawadee-/MP3-Autostart beim Seitenladen.
    */
-  async function runSessionGreeting(pack, speakApi) {
+  async function runSessionGreeting(pack, speakApi, greetOpts) {
     pack = pack || {};
     speakApi = speakApi || {};
+    greetOpts = greetOpts || {};
     if (!termsAccepted()) return;
     if (sessionGreetDone() || sessionGreetInFlight) return;
     sessionGreetInFlight = true;
     try {
+    var playAudio = greetOpts.playAudio === true;
+
+    if (!playAudio) {
+      markSessionGreetDone();
+      return;
+    }
+
     var firstName = "";
     try {
       if (typeof global.osgResolveCustomerDisplayName === "function") {
