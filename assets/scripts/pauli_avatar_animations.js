@@ -338,7 +338,18 @@
       root.video.hidden = true;
       root.video.style.display = "none";
     }
-    if (!root.locked) applyIdleSpin();
+    if (!root.locked) {
+      var startIdle = function () {
+        applyIdleSpin();
+      };
+      if (global.OSG_DOM_BOOT && typeof global.OSG_DOM_BOOT.whenWindowLoad === "function") {
+        global.OSG_DOM_BOOT.whenWindowLoad(startIdle);
+      } else if (global.document && global.document.readyState === "complete") {
+        startIdle();
+      } else {
+        global.addEventListener("load", startIdle, { once: true });
+      }
+    }
     try {
       global.addEventListener("osg-terms-audio-unlocked", function () {
         if (!termsAudioOk()) return;

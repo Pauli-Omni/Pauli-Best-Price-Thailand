@@ -22,14 +22,30 @@
     }
   }
 
-  /** @param {{ ignoreTerms?: boolean }} [opts] */
+  function userGestureUnlocked() {
+    try {
+      return global.__OSG_AUDIO_GESTURE_UNLOCKED__ === true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  /** @param {{ ignoreTerms?: boolean, ignoreGesture?: boolean }} [opts] */
   function osgPauliAudioAllowed(opts) {
     opts = opts || {};
+    if (!opts.ignoreGesture && !userGestureUnlocked()) return false;
     if (opts.ignoreTerms) return true;
     return termsAccepted();
   }
 
+  function osgPauliMarkUserGestureForAudio() {
+    try {
+      global.__OSG_AUDIO_GESTURE_UNLOCKED__ = true;
+    } catch (_) {}
+  }
+
   function osgPauliOnTermsAudioUnlock() {
+    osgPauliMarkUserGestureForAudio();
     try {
       global.dispatchEvent(new CustomEvent("osg-terms-audio-unlocked"));
     } catch (_) {}
@@ -38,4 +54,5 @@
   global.osgPauliAudioAllowed = osgPauliAudioAllowed;
   global.osgPauliTermsAudioUnlocked = termsAccepted;
   global.osgPauliOnTermsAudioUnlock = osgPauliOnTermsAudioUnlock;
+  global.osgPauliMarkUserGestureForAudio = osgPauliMarkUserGestureForAudio;
 })(typeof window !== "undefined" ? window : globalThis);

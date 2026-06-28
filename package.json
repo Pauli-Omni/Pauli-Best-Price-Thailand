@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "start": "node 02_Quellcode/Core_Logik/server.js",
+    "dev": "node 02_Quellcode/Core_Logik/server.js",
     "voice:gen": "node scripts/generate-pauli-voice-mp3.mjs",
     "voice:rebuild": "node scripts/pauli-voice-rebuild-all.mjs",
     "check:html": "html-validate index.html",
@@ -11,6 +12,7 @@
     "email:probe": "node scripts/email-connectivity-probe.mjs",
     "render:sync-involve": "node scripts/render-sync-involve-env.mjs",
     "render:deploy-api": "node scripts/render-deploy-pauli-api.mjs",
+    "render:verify-env": "node scripts/render-verify-production-env.mjs",
     "render:bootstrap": "node scripts/render-bootstrap-and-wait.mjs",
     "render:finish": "node scripts/render-finish-deploy.mjs",
     "render:go-live-check": "node scripts/render-go-live-check.mjs",

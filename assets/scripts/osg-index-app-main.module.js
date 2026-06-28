@@ -3321,7 +3321,7 @@
                 _wb.classList.add("osg-pulse-ready");
               }
             } catch (_) {}
-            if (typeof osgWakeMaybeStart === "function") {
+            if (typeof osgWakeMaybeStart === "function" && window.__OSG_AUDIO_GESTURE_UNLOCKED__) {
               setTimeout(osgWakeMaybeStart, 280);
             }
           }
@@ -3388,6 +3388,9 @@
                 const ctx = window.__OSG_audioCtxUnlock;
                 if (ctx && ctx.state === "suspended") await ctx.resume();
               } catch (_) {}
+              if (typeof osgWakeMaybeStart === "function") {
+                setTimeout(osgWakeMaybeStart, 280);
+              }
             }
 
             // Mic auto-start is handled by _osgAnyClickMicStart listener in installPauliVoiceWake
@@ -3978,6 +3981,13 @@
             } catch (_) {}
             const utter = new SpeechSynthesisUtterance(spoken);
             utter.lang = speechTag;
+            if (
+              window.OSG_SPEECH_VOICES &&
+              typeof window.OSG_SPEECH_VOICES.pickForLang === "function"
+            ) {
+              const voice = window.OSG_SPEECH_VOICES.pickForLang(speechTag);
+              if (voice) utter.voice = voice;
+            }
             let settled = false;
             // Registrierung in AudioRegistry
             var _regEntryWS = null;
@@ -4037,6 +4047,9 @@
             typeof osgPauliAudioAllowed === "function" &&
             !osgPauliAudioAllowed()
           ) {
+            return;
+          }
+          if (!opts.ignoreGesture && !window.__OSG_AUDIO_GESTURE_UNLOCKED__) {
             return;
           }
           const spoken = String(text || "").trim();
@@ -4205,8 +4218,22 @@
          * Aktiviert Web Audio & HTMLAudio / Speech einmal gegen Mobil‑Autoplay-Sperren.
          */
         function unlockAudioSystemFromCoinGesture() {
+          if (typeof window.osgPauliMarkUserGestureForAudio === "function") {
+            window.osgPauliMarkUserGestureForAudio();
+          } else {
+            window.__OSG_AUDIO_GESTURE_UNLOCKED__ = true;
+          }
           if (osgAudioGestureUnlocked) return;
           osgAudioGestureUnlocked = true;
+
+          if (
+            window.OSG_SPEECH_VOICES &&
+            typeof window.OSG_SPEECH_VOICES.refresh === "function"
+          ) {
+            try {
+              window.OSG_SPEECH_VOICES.refresh();
+            } catch (_) {}
+          }
 
           try {
             const Ctx = window.AudioContext || window.webkitAudioContext;
@@ -6506,7 +6533,9 @@
 
           document.addEventListener("visibilitychange", function () {
             if (document.visibilityState === "hidden") osgWakeStopAll();
-            else wakeRestartTimer = setTimeout(osgWakeMaybeStart, 700);
+            else if (window.__OSG_AUDIO_GESTURE_UNLOCKED__) {
+              wakeRestartTimer = setTimeout(osgWakeMaybeStart, 700);
+            }
           });
 
           function osgWakeArmAfterGesture() {
@@ -6540,8 +6569,6 @@
             osgWakeStartLiveFromAccessibility({ fromKeyboard: true });
           });
 
-          setTimeout(osgWakeMaybeStart, 600);
-
           if (typeof window !== "undefined") {
             window.osgWakeStopAll = osgWakeStopAll;
             window.osgWakeStart = osgWakeStart;
@@ -6551,6 +6578,9 @@
         }
 
         function osgWakeMaybeStart() {
+          if (!window.__OSG_AUDIO_GESTURE_UNLOCKED__) {
+            return;
+          }
           if (
             typeof osgPauliAudioAllowed === "function" &&
             !osgPauliAudioAllowed()
@@ -6642,7 +6672,21 @@
             coinDbgRender();
           }
         }
-        animate();
+        function startAnimateLoop() {
+          if (window.__OSG_ANIM_LOOP_STARTED__) return;
+          window.__OSG_ANIM_LOOP_STARTED__ = true;
+          animate();
+        }
+        if (
+          window.OSG_DOM_BOOT &&
+          typeof window.OSG_DOM_BOOT.whenWindowLoad === "function"
+        ) {
+          window.OSG_DOM_BOOT.whenWindowLoad(startAnimateLoop);
+        } else if (document.readyState === "complete") {
+          startAnimateLoop();
+        } else {
+          window.addEventListener("load", startAnimateLoop, { once: true });
+        }
 
         installOsgGlobalFirstGestureUnlock();
         installPauliVoiceWake();

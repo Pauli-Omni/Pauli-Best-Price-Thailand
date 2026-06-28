@@ -8235,7 +8235,7 @@
           if (brandImg) {
             brandImg.setAttribute("alt", pack.brandStandAvatarAlt || pack.brandAvatarAlt);
             if (typeof osgAssignCoinImageSrc === "function") {
-              osgAssignCoinImageSrc(brandImg, "/hinterseite.png", "/hinterseite.jpg");
+              osgAssignCoinImageSrc(brandImg, "/hinterseite.png");
             } else {
               brandImg.setAttribute("src", "/hinterseite.png");
             }

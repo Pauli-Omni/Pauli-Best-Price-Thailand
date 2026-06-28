@@ -623,11 +623,22 @@
     resume: function () { _paused = false; },
   };
 
-  if (global.document) {
-    if (global.document.readyState === "loading") {
-      global.document.addEventListener("DOMContentLoaded", install);
-    } else {
+  function osgDhBootInstall() {
+    try {
       install();
+    } catch (_) {}
+  }
+
+  if (global.document) {
+    if (
+      global.OSG_DOM_BOOT &&
+      typeof global.OSG_DOM_BOOT.whenAvatarRuntimeReady === "function"
+    ) {
+      global.OSG_DOM_BOOT.whenAvatarRuntimeReady(osgDhBootInstall);
+    } else if (global.document.readyState === "loading") {
+      global.document.addEventListener("DOMContentLoaded", osgDhBootInstall);
+    } else {
+      osgDhBootInstall();
     }
   }
 })(typeof window !== "undefined" ? window : globalThis);

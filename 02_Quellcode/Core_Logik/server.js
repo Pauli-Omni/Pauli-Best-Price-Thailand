@@ -373,9 +373,18 @@ function osgApiOriginAllowlist(req, res, next) {
   );
   if (!allowed.size) return next();
   const host = String(req.get("host") || req.get("Host") || "").trim();
-  const proto = String(req.get("x-forwarded-proto") || "https").trim();
+  const proto = String(
+    req.get("x-forwarded-proto") ||
+      (typeof req.protocol === "string" ? req.protocol : "") ||
+      (process.env.NODE_ENV === "production" ? "https" : "http"),
+  ).trim();
   if (host) {
-    allowed.add(`${proto}://${host}`.replace(/\/$/, ""));
+    const base = `${proto}://${host}`.replace(/\/$/, "");
+    allowed.add(base);
+    if (/^(localhost|127\.0\.0\.1)(:\d+)?$/i.test(host)) {
+      allowed.add(`http://${host}`.replace(/\/$/, ""));
+      allowed.add(`https://${host}`.replace(/\/$/, ""));
+    }
   }
   const origin = req.get("Origin");
   let cand = typeof origin === "string" ? origin.trim() : "";
@@ -390,6 +399,9 @@ function osgApiOriginAllowlist(req, res, next) {
     }
   }
   if (!cand || !allowed.has(cand)) {
+    if (host && /^(localhost|127\.0\.0\.1)(:\d+)?$/i.test(host)) {
+      return next();
+    }
     return res.status(403).type("json").json({ error: "origin_not_allowed" });
   }
   return next();
@@ -2182,6 +2194,15 @@ function osgStaticGuard(req, res, next) {
   }
   next();
 }
+
+/** Same-origin default when gitignored osg-runtime-config.js is absent (local dev). */
+app.get("/osg-runtime-config.js", (_req, res) => {
+  res
+    .type("application/javascript")
+    .send(
+      "/* same-origin default — copy osg-runtime-config.example.js for split-host API */\n",
+    );
+});
 
 app.use(osgStaticGuard);
 app.get(["/download", "/download/"], (req, res) => {
