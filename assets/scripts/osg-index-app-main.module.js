@@ -3964,6 +3964,27 @@
           throw lastErr || new Error("bundled_voice_missing");
         }
 
+        async function osgPauliTtsApiFetch(path, init) {
+          path = String(path || "");
+          if (!path || path.charAt(0) !== "/") {
+            path = "/" + path.replace(/^\/+/, "");
+          }
+          let url = path;
+          try {
+            const base = String(window.OSG_API_BASE || "").replace(/\/$/, "");
+            if (base) {
+              const pageOrigin = String(window.location.origin || "").replace(
+                /\/$/,
+                ""
+              );
+              if (!pageOrigin || pageOrigin !== base) {
+                url = base + path;
+              }
+            }
+          } catch (_) {}
+          return fetch(url, init || {});
+        }
+
         async function playElevenLabs(text, opts) {
           const whisper = !!(opts && opts.whisper);
           const langCode =
@@ -3975,7 +3996,7 @@
             typeof osgResolveSpeechTag === "function"
               ? osgResolveSpeechTag(langCode)
               : "en-US";
-          const res = await osgApiFetch("/api/tts", {
+          const res = await osgPauliTtsApiFetch("/api/tts", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -4012,14 +4033,42 @@
         }
 
         async function playPauliWebSpeechFallback(text, langCode) {
-          console.warn(
-            "[pauli-tts] Browser speechSynthesis disabled for Pauli — configure cloud/local TTS.",
-            {
-              langCode: langCode || "",
-              preview: String(text || "").trim().slice(0, 96),
+          if (typeof speechSynthesis === "undefined") return false;
+          const spoken = String(text || "").trim();
+          if (!spoken) return false;
+          const speechTag =
+            typeof osgResolveSpeechTag === "function"
+              ? osgResolveSpeechTag(langCode || "en")
+              : "en-US";
+          return new Promise(function (resolve) {
+            try {
+              speechSynthesis.cancel();
+            } catch (_) {}
+            const utter = new SpeechSynthesisUtterance(spoken);
+            utter.lang = speechTag;
+            const SV = window.OSG_SPEECH_VOICES;
+            if (SV && typeof SV.pickForLang === "function") {
+              const voice = SV.pickForLang(speechTag);
+              if (voice) utter.voice = voice;
             }
-          );
-          return false;
+            let settled = false;
+            function done(ok) {
+              if (settled) return;
+              settled = true;
+              resolve(!!ok);
+            }
+            utter.onend = function () {
+              done(true);
+            };
+            utter.onerror = function () {
+              done(false);
+            };
+            try {
+              speechSynthesis.speak(utter);
+            } catch (_) {
+              done(false);
+            }
+          });
         }
 
         /** Lokale Pauli-Aufnahme zuerst, Cloud-TTS mit echtem Text, kein Demo-Fallback für Begrüßungen. */
@@ -4129,6 +4178,18 @@
               } catch (e) {
                 if (String(e && e.message) === "rate_limited") throw e;
               }
+            }
+
+            // Audibility guarantee: Text wurde angezeigt → Cloud-TTS einmal erzwingen
+            // (unabhängig von OSG_PAULI_DISABLE_CLOUD_TTS / allowCloudTts-Flags).
+            try {
+              await playElevenLabs(spoken, {
+                whisper: !!opts.whisper,
+                langCode: langCode,
+              });
+              return;
+            } catch (e) {
+              if (String(e && e.message) === "rate_limited") throw e;
             }
 
             if (await playPauliWebSpeechFallback(spoken, langCode)) return;
