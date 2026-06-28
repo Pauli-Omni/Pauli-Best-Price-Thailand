@@ -11,7 +11,7 @@
   "avatarStartupSawadeeTts": "Sawadee Krab.",
   "avatarStartupSawadeeBubble": "Sawadee Krab",
   "avatarStartupGreetCanonical": "Ich bin Pauli. Dein persönlicher Einkaufsbegleiter. Ich helfe dir dabei, bessere Kaufentscheidungen zu treffen und Geld zu sparen. Was möchtest du heute kaufen?",
-  "pauliLiveStartPrompt": "",
+  "pauliLiveStartPrompt": "Wie kann ich dir heute helfen?",
   "avatarStartupGreetWithName0": "Ich bin Pauli, dein virtueller Einkaufsbegleiter — schön, dich zu sehen, {NAME}.",
   "avatarStartupGreetWithName1": "{NAME}, willkommen zurück! Ich begleite dich durch die besten Preise in Thailand.",
   "avatarStartupGreetWithName2": "Hallo {NAME}! Pauli hier — dein Wegweiser fürs smarte Shoppen, ganz ohne Anmeldung.",
@@ -78,5 +78,9 @@
   "pauliId.referralLabel": "Geworben von App-ID (z. B. 1 M 000 123)",
   "pauliId.referralConfirm": "Bestätigen",
   "pauliId.referralInvalid": "Ungültiges Format. Beispiel: 1 M 000 123",
-  "pauliId.referralSaved": "Gespeichert ✓"
+  "pauliId.referralSaved": "Gespeichert ✓",
+  "devToolsResetPauliFull": "🔄 Pauli komplett zurücksetzen",
+  "devToolsResetPauliFullAria": "Alle Pauli-Browserdaten löschen und App wie beim ersten Besuch neu starten",
+  "devToolsSimulateFirstStart": "🧪 Ersten Start simulieren",
+  "devToolsSimulateFirstStartAria": "Wai, Sawadee Krab und Begrüßung ausführen ohne Browserdaten zu löschen"
 }

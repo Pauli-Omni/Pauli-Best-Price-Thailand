@@ -1234,7 +1234,10 @@
                     line,
                     Object.assign({}, speakOpts || {}, {
                       allowCloudTts: true,
-                      clonedVoiceFirst: true,
+                      clonedVoiceFirst: !!(
+                        speakOpts && speakOpts.clonedVoiceFirst
+                      ),
+                      dynamicSpeech: !!(speakOpts && speakOpts.dynamicSpeech),
                       pointTarget: container,
                       pointDuration: Math.min(
                         14000,
@@ -1253,7 +1256,14 @@
               },
               { playAudio: true }
             );
-            window.__OSG_GREETING_DONE_PENDING_MIC__ = true;
+            if (typeof startPauliLiveConversation === "function") {
+              try {
+                await startPauliLiveConversation({ fromGreeting: true });
+              } catch (handoffErr) {
+                console.warn("[Pauli] greeting→live handoff failed", handoffErr);
+              }
+            }
+            window.__OSG_GREETING_DONE_PENDING_MIC__ = false;
             window.__OSG_SESSION_GREET_COMPLETE__ = true;
             try {
               const _wb = document.getElementById("pauli-voice-wake-btn");
@@ -1287,6 +1297,13 @@
           }
           unlockAudioSystemFromCoinGesture();
           autoWaiDone = true;
+          const SB = window.OSG_STARTUP_BOOT;
+          if (SB && SB.sessionGreetDone()) {
+            if (!osgPauliLiveActive) {
+              void startPauliLiveConversation({ fromGreeting: true });
+            }
+            return;
+          }
           void osgPauliRunUserSessionGreeting({ fromCoin: true });
         }
 
@@ -1853,6 +1870,7 @@
               speechKey: opts.speechKey || "",
               allowCloudTts: !!opts.allowCloudTts,
               clonedVoiceFirst: !!opts.clonedVoiceFirst,
+              dynamicSpeech: !!opts.dynamicSpeech,
               skipCaptionClear: !!opts.skipCaptionClear,
             });
           } catch (e) {
@@ -5346,10 +5364,12 @@
 
         async function startPauliLiveConversation(opts) {
           opts = opts || {};
-          if (typeof window.osgPauliTtsAbort === "function") {
-            window.osgPauliTtsAbort();
-          } else if (typeof window.stopAllSpeech === "function") {
-            window.stopAllSpeech();
+          if (!opts.fromGreeting) {
+            if (typeof window.osgPauliTtsAbort === "function") {
+              window.osgPauliTtsAbort();
+            } else if (typeof window.stopAllSpeech === "function") {
+              window.stopAllSpeech();
+            }
           }
           if (
             window.__OSG_AVATAR_COMPANION_BOOT_RUNNING__ &&
@@ -6371,7 +6391,15 @@
           }
 
           function osgWakeStartSr() {
-            if (!SR || wakeSrActive || wakeMediaActive || osgPauliLiveActive) return;
+            if (
+              !SR ||
+              wakeSrActive ||
+              wakeMediaActive ||
+              osgPauliLiveActive ||
+              window.__OSG_SESSION_GREET_RUNNING__
+            ) {
+              return;
+            }
             const I = window.__OSG_I18N;
             const code = I ? I.systemLangCode() : "en";
             try {
@@ -6400,6 +6428,7 @@
                 osgWakeSetListening(false);
                 if (
                   !osgPauliLiveActive &&
+                  !window.__OSG_SESSION_GREET_RUNNING__ &&
                   document.visibilityState === "visible"
                 ) {
                   wakeRestartTimer = setTimeout(osgWakeStart, 900);
@@ -6482,12 +6511,20 @@
           }
 
           async function osgWakeMediaLoop() {
-            if (!hasMedia || wakeSrActive || osgPauliLiveActive) return;
+            if (
+              !hasMedia ||
+              wakeSrActive ||
+              osgPauliLiveActive ||
+              window.__OSG_SESSION_GREET_RUNNING__
+            ) {
+              return;
+            }
             wakeMediaActive = true;
             osgWakeSetListening(true);
             while (
               wakeMediaActive &&
               !osgPauliLiveActive &&
+              !window.__OSG_SESSION_GREET_RUNNING__ &&
               document.visibilityState === "visible"
             ) {
               const hit = await osgWakeRecordOnceAndCheck();
@@ -6504,7 +6541,15 @@
           }
 
           function osgWakeStart() {
-            if (osgPauliLiveActive) return;
+            if (osgPauliLiveActive || window.__OSG_SESSION_GREET_RUNNING__) {
+              return;
+            }
+            if (
+              typeof window.osgIsPauliSpeaking === "function" &&
+              window.osgIsPauliSpeaking()
+            ) {
+              return;
+            }
             if (SR) {
               osgWakeStopMedia();
               osgWakeStartSr();
@@ -6603,6 +6648,15 @@
 
         function osgWakeMaybeStart() {
           if (!window.__OSG_AUDIO_GESTURE_UNLOCKED__) {
+            return;
+          }
+          if (window.__OSG_SESSION_GREET_RUNNING__) {
+            return;
+          }
+          if (
+            typeof window.osgIsPauliSpeaking === "function" &&
+            window.osgIsPauliSpeaking()
+          ) {
             return;
           }
           if (

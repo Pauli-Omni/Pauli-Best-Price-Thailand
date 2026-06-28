@@ -79,6 +79,13 @@
     writeSs(SS_SESSION_GREET, "1");
   }
 
+  function resetSessionGreetState() {
+    sessionGreetInFlight = false;
+    try {
+      global.sessionStorage.removeItem(SS_SESSION_GREET);
+    } catch (_) {}
+  }
+
   function tpl(line, name) {
     return String(line || "").replace(/\{NAME\}/g, name || "");
   }
@@ -103,6 +110,35 @@
       return "ผมชื่อเปาลี ผู้ช่วยช้อปปิ้งส่วนตัวของคุณ ผมช่วยคุณตัดสินใจซื้อได้ดีขึ้นและประหยัดเงิน วันนี้อยากซื้ออะไรครับ";
     }
     return "I am Pauli. Your personal shopping companion. I help you make better purchase decisions and save money. What would you like to buy today?";
+  }
+
+  function pickSessionGreetIntroLine(pack, firstName) {
+    pack = pack || {};
+    var nm = String(firstName || "").trim();
+    var pool = nm
+      ? [
+          pack.avatarStartupGreetWithName0,
+          pack.avatarStartupGreetWithName1,
+          pack.avatarStartupGreetWithName2,
+        ]
+      : [
+          pack.avatarStartupGreetNoName0,
+          pack.avatarStartupGreetNoName1,
+          pack.avatarStartupGreetNoName2,
+        ];
+    pool = pool
+      .map(function (s) {
+        return String(s || "").trim();
+      })
+      .filter(Boolean);
+    if (pool.length) {
+      return tpl(pool[Math.floor(Math.random() * pool.length)], nm);
+    }
+    return pickSessionGreetLine(pack, firstName);
+  }
+
+  function pickSessionEntryPromptLine(pack) {
+    return String((pack && pack.pauliLiveStartPrompt) || "").trim();
   }
 
   function startThaiWaiVisual() {
@@ -478,10 +514,13 @@
       }
     } catch (_) {}
 
-    var greetLine = pickSessionGreetLine(pack, firstName);
+    var greetLine = pickSessionGreetIntroLine(pack, firstName);
     var greetBubble = String(greetLine || pack.avatarCompanionIntroBubble || "").trim();
+    var entryLine = pickSessionEntryPromptLine(pack);
+    var entryBubble = String(entryLine || "").trim();
     var sawadeeDone = false;
     var greetDone = false;
+    var entryDone = false;
 
     await new Promise(function (r) {
       setTimeout(r, OSG_PRE_WAI_PAUSE_MS);
@@ -515,7 +554,24 @@
       greetDone = true;
     }
 
-    if (sawadeeDone && greetDone) {
+    if (entryLine && typeof speakApi.speakLine === "function") {
+      try {
+        if (typeof global.pauliLiveCaptionShow === "function" && entryBubble) {
+          global.pauliLiveCaptionShow(entryBubble);
+        }
+      } catch (_) {}
+      await speakApi.speakLine(entryLine, {
+        gesture: "greet",
+        speechKey: "pauliLiveStartPrompt",
+        skipBridge: true,
+        allowCloudTts: true,
+        clonedVoiceFirst: false,
+        dynamicSpeech: true,
+      });
+      entryDone = true;
+    }
+
+    if (sawadeeDone && greetDone && (entryDone || !entryLine)) {
       markSessionGreetDone();
     }
     } finally {
@@ -696,7 +752,10 @@
     markFirstBootComplete: markFirstBootComplete,
     sessionGreetDone: sessionGreetDone,
     markSessionGreetDone: markSessionGreetDone,
+    resetSessionGreetState: resetSessionGreetState,
     pickSessionGreetLine: pickSessionGreetLine,
+    pickSessionGreetIntroLine: pickSessionGreetIntroLine,
+    pickSessionEntryPromptLine: pickSessionEntryPromptLine,
     hydrateTermsGate: hydrateTermsGate,
     hydrateTermsDeclineOverlay: hydrateTermsDeclineOverlay,
     hydrateLocationGate: hydrateLocationGate,

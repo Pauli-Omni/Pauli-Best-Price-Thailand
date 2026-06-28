@@ -11,7 +11,7 @@
   "avatarStartupSawadeeTts": "Sawadee Krab.",
   "avatarStartupSawadeeBubble": "Sawadee Krab",
   "avatarStartupGreetCanonical": "I am Pauli. Your personal shopping companion. I help you make better purchase decisions and save money. What would you like to buy today?",
-  "pauliLiveStartPrompt": "",
+  "pauliLiveStartPrompt": "How can I help you today?",
   "avatarStartupGreetWithName0": "I'm Pauli, your virtual shopping companion — good to see you, {NAME}.",
   "avatarStartupGreetWithName1": "{NAME}, welcome back! I'll guide you to the best prices in Thailand today.",
   "avatarStartupGreetWithName2": "Hi {NAME}! Pauli here — your pathfinder for smart shopping, no sign-in needed.",
@@ -79,5 +79,9 @@
   "pauliWakeMicBtn": "Hello / Hey Pauli (mic)",
   "pauliWakeMicAria": "Tap to talk without speaking, or say Hello Pauli, Hi Pauli, or Hey Paulie — Pauli listens continuously",
   "pauliA11yAccessHint": "Accessible entry: say “Hi Pauli” or “Hello Paulie” with no tap needed. Cannot speak? Tap the coin or the mic button below. Keyboard: focus the coin or mic button and press Enter.",
-  "pauliWakeListeningAnnounce": "Pauli is listening — say Hello Pauli or Hi Paulie"
+  "pauliWakeListeningAnnounce": "Pauli is listening — say Hello Pauli or Hi Paulie",
+  "devToolsResetPauliFull": "🔄 Reset Pauli completely",
+  "devToolsResetPauliFullAria": "Delete all Pauli browser data and restart the app like the first visit",
+  "devToolsSimulateFirstStart": "🧪 Simulate first start",
+  "devToolsSimulateFirstStartAria": "Run Wai, Sawadee Krab and greeting without clearing browser data"
 }

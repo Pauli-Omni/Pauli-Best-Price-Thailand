@@ -296,8 +296,7 @@ window.OSG_LOCALES = {
               "Zu viele Anfragen an den Server. Bitte in einigen Minuten erneut versuchen.",
             pauliChatUnavailable:
               "OpenAI-/Chat-Endpunkt nicht konfiguriert oder nicht erreichbar.",
-            pauliLiveStartPrompt:
-              "Ich höre zu. Erzähl mir, was dich beschäftigt — zuhause, bei der Arbeit oder was du kaufen möchtest.",
+            pauliLiveStartPrompt: "Wie kann ich dir heute helfen?",
             pauliLiveAckPool:
               "Mhm …|Verstehe …|Ah, okay …|Das klingt nach viel.",
             pauliWisdomPoliticsReligionDeflect:
@@ -1790,8 +1789,7 @@ window.OSG_LOCALES = {
               "ส่งคำขอถี่เกินไป ลองใหม่ในอีกสักครู่",
             pauliChatUnavailable:
               "ยังไม่ตั้งค่า OpenAI / แชท หรือเซิร์ฟเวอร์ไม่ตอบ",
-            pauliLiveStartPrompt:
-              "ผมพร้อมฟังครับ เล่าให้ฟังได้เลย — เรื่องบ้าน ที่ทำงาน หรือสิ่งที่อยากซื้อ",
+            pauliLiveStartPrompt: "",
             pauliLiveAckPool:
               "ครับ …|เข้าใจครับ …|อ๋อ …|ฟังดูหนักเลยนะครับ",
             pauliWisdomPoliticsReligionDeflect:
@@ -2637,8 +2635,7 @@ window.OSG_LOCALES = {
               "Zbyt wiele żądań do serwera. Spróbuj ponownie za kilka minut.",
             pauliChatUnavailable:
               "Endpoint czatu / OpenAI nie jest skonfigurowany lub nie odpowiada.",
-            pauliLiveStartPrompt:
-              "Słucham. Opowiedz, co cię zajmuje — w domu, w pracy albo co chcesz kupić.",
+            pauliLiveStartPrompt: "",
             pauliLiveAckPool:
               "Mhm …|Rozumiem …|Aha …|To brzmi jak sporo.",
             pauliWisdomPoliticsReligionDeflect:
@@ -3456,8 +3453,7 @@ window.OSG_LOCALES = {
               "Слишком много запросов. Повторите через несколько минут.",
             pauliChatUnavailable:
               "Чат / OpenAI не настроен или сервер не отвечает.",
-            pauliLiveStartPrompt:
-              "Я слушаю. Расскажите, что вас волнует — дома, на работе или что хотите купить.",
+            pauliLiveStartPrompt: "",
             pauliLiveAckPool:
               "М-м …|Понимаю …|Ага …|Звучит непросто.",
             pauliWisdomPoliticsReligionDeflect:
@@ -4264,8 +4260,7 @@ window.OSG_LOCALES = {
             pauliChatError: "聊天暂时不可用，请稍后重试。",
             apiRateLimitedToast: "请求过于频繁，请几分钟后再试。",
             pauliChatUnavailable: "未配置 OpenAI/聊天或服务端无响应。",
-            pauliLiveStartPrompt:
-              "我在听。说说您的心事——家里、工作，或想买什么，都可以。",
+            pauliLiveStartPrompt: "",
             pauliLiveAckPool:
               "嗯 …|明白 …|哦 …|听起来不容易。",
             pauliWisdomPoliticsReligionDeflect:
@@ -4906,8 +4901,7 @@ window.OSG_LOCALES = {
               "Too many requests to the server. Please try again in a few minutes.",
             pauliChatUnavailable:
               "OpenAI / chat endpoint not configured or unreachable.",
-            pauliLiveStartPrompt:
-              "I'm listening. Tell me what's on your mind — home, work, or what you'd like to buy.",
+            pauliLiveStartPrompt: "How can I help you today?",
             pauliLiveAckPool:
               "Mhm …|I see …|Ah, okay …|That sounds like a lot.",
             pauliWisdomPoliticsReligionDeflect:
