@@ -28,9 +28,9 @@ const STATIC_ENV = {
   NODE_ENV: "production",
   PORT: "3000",
   OSG_CORS_ORIGINS:
-    "https://omnisolutionsglobal.com,https://www.omnisolutionsglobal.com",
+    "https://omnisolutionsglobal.com,https://www.omnisolutionsglobal.com,https://pauli-best-price-api.onrender.com,https://pauli-best-price-api-nzbl.onrender.com",
   OSG_API_ALLOWED_ORIGINS:
-    "https://omnisolutionsglobal.com,https://www.omnisolutionsglobal.com",
+    "https://omnisolutionsglobal.com,https://www.omnisolutionsglobal.com,https://pauli-best-price-api.onrender.com,https://pauli-best-price-api-nzbl.onrender.com",
   DISABLE_HTTPS: "1",
   OSG_PUBLIC_ORIGIN: "https://omnisolutionsglobal.com",
   OSG_API_PUBLIC_ORIGIN: "https://api.omnisolutionsglobal.com",

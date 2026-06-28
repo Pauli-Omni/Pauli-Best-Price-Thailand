@@ -2,9 +2,10 @@ import crypto from "crypto";
 import fs from "fs";
 import path from "path";
 
-export const AVATAR_TRIAL_DAYS = 90;
-export const AVATAR_EXTENSION_PRICE_THB = 99.9;
+export const AVATAR_TRIAL_DAYS = 30;
+export const AVATAR_EXTENSION_PRICE_THB = 49.9;
 export const AVATAR_REFERRAL_TARGET = 3;
+export const AVATAR_REFERRAL_WINDOW_DAYS = 30;
 
 function avatarReferralFile(dataDir) {
   return path.join(dataDir, "avatar_referral_edges.jsonl");
@@ -168,23 +169,25 @@ export function avatarStatusPayload(dataDir, body) {
     };
   }
 
-  const qualified = userRef ? qualifiedReferralCount(dataDir, userRef) : 0;
-  if (qualified >= AVATAR_REFERRAL_TARGET) {
-    return {
-      avatarActive: true,
-      statusCode: "REFERRAL_UNLOCK",
-      qualifiedReferrals: qualified,
-      referralTarget: AVATAR_REFERRAL_TARGET,
-      upgradeCostThb: AVATAR_EXTENSION_PRICE_THB,
-    };
-  }
-
   let daysElapsed = 0;
   if (registrationDate) {
     const start = Date.parse(registrationDate + "T00:00:00.000Z");
     if (Number.isFinite(start)) {
       daysElapsed = Math.floor((Date.now() - start) / 86400000);
     }
+  }
+
+  const qualified = userRef ? qualifiedReferralCount(dataDir, userRef) : 0;
+  const inReferralWindow = daysElapsed <= AVATAR_REFERRAL_WINDOW_DAYS;
+  if (inReferralWindow && qualified >= AVATAR_REFERRAL_TARGET) {
+    return {
+      avatarActive: true,
+      statusCode: "REFERRAL_UNLOCK",
+      qualifiedReferrals: qualified,
+      referralTarget: AVATAR_REFERRAL_TARGET,
+      upgradeCostThb: AVATAR_EXTENSION_PRICE_THB,
+      referralWindowOpen: true,
+    };
   }
 
   if (daysElapsed <= AVATAR_TRIAL_DAYS) {
@@ -195,6 +198,7 @@ export function avatarStatusPayload(dataDir, body) {
       qualifiedReferrals: qualified,
       referralTarget: AVATAR_REFERRAL_TARGET,
       upgradeCostThb: AVATAR_EXTENSION_PRICE_THB,
+      referralWindowOpen: inReferralWindow,
     };
   }
 
@@ -205,6 +209,7 @@ export function avatarStatusPayload(dataDir, body) {
     qualifiedReferrals: qualified,
     referralTarget: AVATAR_REFERRAL_TARGET,
     upgradeCostThb: AVATAR_EXTENSION_PRICE_THB,
+    referralWindowOpen: false,
     deviceId: deviceId.slice(0, 48),
   };
 }

@@ -88,6 +88,13 @@ if [[ -f "$ENV_FILE" ]]; then
 fi
 
 echo ""
+echo "=== Render preflight (remote host) ==="
+echo "Lokal reicht .env — auf Render müssen Pflichtvariablen im Dashboard/Blueprint stehen,"
+echo "bevor autoDeploy auf main läuft (sonst OSG_INSTALL_FP_SALT-Race → start exit 1)."
+echo "Remote prüfen: npm run render:verify-env"
+echo "Doku: docs/OSG-INFRASTRUCTURE-HARDENING.md"
+echo ""
+
 if [[ "$FAIL_COUNT" -gt 0 ]]; then
   fail "Deploy check failed with ${FAIL_COUNT} blocking issue(s)."
   exit 1

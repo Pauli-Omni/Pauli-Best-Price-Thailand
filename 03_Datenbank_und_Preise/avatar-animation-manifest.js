@@ -56,7 +56,7 @@
       locked_carousel: Object.freeze({
         id: 5,
         key: "locked_carousel",
-        label: "Silent coin carousel (90-day lock)",
+        label: "Silent coin carousel (30-day lock)",
         prompt:
           "Animate this gold coin to perform a seamless, endless 360-degree rotation on its vertical axis against a perfectly transparent background. The speed must be very slow and precise: a 180-degree turn must take exactly 6 seconds (meaning a full 360-degree rotation takes 12 seconds). The coin shows the avatar face on the front and the Garuda symbol on the back as provided in the images. The movement must be completely smooth and loopable for a top-right mobile app UI position.",
         webm: BASE + "05-locked-carousel.webm",

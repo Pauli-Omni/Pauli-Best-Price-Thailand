@@ -11,9 +11,10 @@
 
   function constants() {
     return global.OSG_AVATAR_MONETIZATION || {
-      AVATAR_TRIAL_DAYS: 90,
+      AVATAR_TRIAL_DAYS: 30,
       AVATAR_EXTENSION_PRICE_THB: 49.9,
       AVATAR_REFERRAL_TARGET: 3,
+      AVATAR_REFERRAL_WINDOW_DAYS: 30,
       AVATAR_MERCHANT_NETWORK_SIZE: 40,
       SOCIAL_TYPES: ["disability_card", "welfare_card", "red_cross_id"],
     };
@@ -122,15 +123,6 @@
       };
     }
 
-    if (qualifiedReferrals >= target) {
-      return {
-        avatarActive: true,
-        statusCode: "REFERRAL_UNLOCK",
-        qualifiedReferrals: qualifiedReferrals,
-        referralTarget: target,
-      };
-    }
-
     if (typeof global.osgVipActive === "function" && global.osgVipActive()) {
       return { avatarActive: true, statusCode: "VIP_BYPASS" };
     }
@@ -143,12 +135,33 @@
     }
 
     var days = this._daysElapsed();
+    var referralWindowDays =
+      c.AVATAR_REFERRAL_WINDOW_DAYS != null
+        ? Number(c.AVATAR_REFERRAL_WINDOW_DAYS)
+        : this.testPhaseDays;
+    if (!Number.isFinite(referralWindowDays) || referralWindowDays < 0) {
+      referralWindowDays = this.testPhaseDays;
+    }
+    var inReferralWindow = days <= referralWindowDays;
+
+    if (inReferralWindow && qualifiedReferrals >= target) {
+      return {
+        avatarActive: true,
+        statusCode: "REFERRAL_UNLOCK",
+        qualifiedReferrals: qualifiedReferrals,
+        referralTarget: target,
+      };
+    }
+
     if (days <= this.testPhaseDays) {
       return {
         avatarActive: true,
         statusCode: "TRIAL_PHASE",
         daysRemaining: Math.max(0, this.testPhaseDays - days),
         messageKey: "avatarTrialDaysRemainingTpl",
+        qualifiedReferrals: qualifiedReferrals,
+        referralTarget: target,
+        referralWindowOpen: inReferralWindow,
       };
     }
 
@@ -159,6 +172,7 @@
       upgradeCostThb: this.avatarPriceThb,
       qualifiedReferrals: qualifiedReferrals,
       referralTarget: target,
+      referralWindowOpen: false,
       deviceId: String(deviceId || "").slice(0, 48),
     };
   };
