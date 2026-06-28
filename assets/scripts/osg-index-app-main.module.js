@@ -1187,6 +1187,93 @@
 
         installPauliMainAvatarDrag(container);
 
+        async function osgPauliRunUserSessionGreeting(opts) {
+          opts = opts || {};
+          const SB = window.OSG_STARTUP_BOOT;
+          if (!SB || typeof SB.runSessionGreeting !== "function") return false;
+          if (SB.sessionGreetDone()) {
+            return false;
+          }
+          if (
+            typeof osgPauliAudioAllowed === "function" &&
+            !osgPauliAudioAllowed()
+          ) {
+            return false;
+          }
+          if (
+            typeof osgAvatarAccessUnlocked === "function" &&
+            !osgAvatarAccessUnlocked()
+          ) {
+            return false;
+          }
+          if (window.__OSG_SESSION_GREET_RUNNING__) return false;
+          window.__OSG_SESSION_GREET_RUNNING__ = true;
+          busy = true;
+          container.classList.add("is-busy");
+          osgPauliLiveStopWake();
+          try {
+            if (window.OSG_AVATAR_LOCALE) {
+              await window.OSG_AVATAR_LOCALE.loadAvatarPacks({});
+            }
+            const pack =
+              (typeof osgAvatarCompanionPack === "function"
+                ? osgAvatarCompanionPack()
+                : null) ||
+              window.__OSG_CURRENT_PACK_CACHE ||
+              (typeof T !== "undefined" ? T.de : {});
+            await SB.runSessionGreeting(
+              pack,
+              {
+                gesture: function (type) {
+                  if (typeof osgAvatarGestureStart === "function") {
+                    osgAvatarGestureStart(type || "greet", 2400);
+                  }
+                },
+                speakLine: function (line, speakOpts) {
+                  return osgAvatarSpeakLine(
+                    line,
+                    Object.assign({}, speakOpts || {}, {
+                      allowCloudTts: true,
+                      clonedVoiceFirst: true,
+                      pointTarget: container,
+                      pointDuration: Math.min(
+                        14000,
+                        Math.max(4800, String(line || "").length * 72)
+                      ),
+                    })
+                  );
+                },
+                onNameAsk: function () {
+                  setTimeout(function () {
+                    try {
+                      osgShowPersonalOnboarding();
+                    } catch (_) {}
+                  }, 420);
+                },
+              },
+              { playAudio: true }
+            );
+            window.__OSG_GREETING_DONE_PENDING_MIC__ = true;
+            window.__OSG_SESSION_GREET_COMPLETE__ = true;
+            try {
+              const _wb = document.getElementById("pauli-voice-wake-btn");
+              if (_wb) {
+                _wb.removeAttribute("hidden");
+                _wb.classList.add("osg-pulse-ready");
+              }
+            } catch (_) {}
+            return true;
+          } catch (_) {
+            return false;
+          } finally {
+            window.__OSG_SESSION_GREET_RUNNING__ = false;
+            busy = false;
+            container.classList.remove("is-busy");
+          }
+        }
+
+        window.osgPauliRunUserSessionGreeting = osgPauliRunUserSessionGreeting;
+
         function osgCoinActivateFromGesture() {
           if (Date.now() < osgCoinDragSuppressClickUntil) return;
           if (avatarDrag && avatarDrag.moved) return;
@@ -1200,7 +1287,7 @@
           }
           unlockAudioSystemFromCoinGesture();
           autoWaiDone = true;
-          void startPauliLiveConversation({ fromCoin: true });
+          void osgPauliRunUserSessionGreeting({ fromCoin: true });
         }
 
         let busy = false;
@@ -1755,7 +1842,7 @@
             osgAvatarPoint(pointTarget, line, pointDuration);
           }
           osgAvatarGestureStart(gesture, Math.max(2200, pointDuration - 500));
-          if (gesture === "wai" && typeof beginWai === "function" && !waiActive) {
+          if (gesture === "wai" && typeof beginWai === "function" && !waiActive && !opts.skipWaiGesture) {
             beginWai();
           }
           ttsLoading = true;
@@ -1764,6 +1851,9 @@
               whisper,
               langCode,
               speechKey: opts.speechKey || "",
+              allowCloudTts: !!opts.allowCloudTts,
+              clonedVoiceFirst: !!opts.clonedVoiceFirst,
+              skipCaptionClear: !!opts.skipCaptionClear,
             });
           } catch (e) {
             osgLipSyncStop();
@@ -3232,31 +3322,6 @@
               (typeof T !== "undefined" ? T.de : {});
 
             const SB = window.OSG_STARTUP_BOOT;
-            if (SB && typeof SB.runSessionGreeting === "function") {
-              await SB.runSessionGreeting(pack, {
-                gesture: function (type) {
-                  if (typeof osgAvatarGestureStart === "function") {
-                    osgAvatarGestureStart(type || "greet", 2400);
-                  }
-                },
-                speakLine: function (line, opts) {
-                  return osgAvatarSpeakLine(line, Object.assign({}, opts || {}, {
-                    pointTarget: container,
-                    pointDuration: Math.min(
-                      14000,
-                      Math.max(4800, String(line || "").length * 72)
-                    ),
-                  }));
-                },
-                onNameAsk: function () {
-                  setTimeout(function () {
-                    try {
-                      osgShowPersonalOnboarding();
-                    } catch (_) {}
-                  }, 420);
-                },
-              }, { playAudio: false });
-            }
 
             if (SB && typeof SB.runTrustPledgePresentation === "function") {
               await SB.runTrustPledgePresentation(pack, {
@@ -3311,18 +3376,6 @@
               }
             } else {
               window.__OSG_AVATAR_COMPANION_BOOT_RETRY_COUNT__ = 0;
-            }
-            // Signal optional tap-to-start after silent boot (voice wake stays active).
-            window.__OSG_GREETING_DONE_PENDING_MIC__ = true;
-            try {
-              var _wb = document.getElementById("pauli-voice-wake-btn");
-              if (_wb) {
-                _wb.removeAttribute("hidden");
-                _wb.classList.add("osg-pulse-ready");
-              }
-            } catch (_) {}
-            if (typeof osgWakeMaybeStart === "function" && window.__OSG_AUDIO_GESTURE_UNLOCKED__) {
-              setTimeout(osgWakeMaybeStart, 280);
             }
           }
         }
@@ -3393,10 +3446,9 @@
               }
             }
 
-            // Mic auto-start is handled by _osgAnyClickMicStart listener in installPauliVoiceWake
-            // (added after boot completes). No action needed here for that flag.
+            // After session greeting: mic only via explicit wake-button tap (no auto document listener).
 
-            // Session greeting audio only on explicit live start — not on first gesture.
+            // Session greeting audio only on explicit coin / wake start — not on first page gesture.
 
             if (!osgEventTargetsCoinStage(ev)) return;
             if (osgCoinIntroGestureDone) return;
@@ -3960,81 +4012,14 @@
         }
 
         async function playPauliWebSpeechFallback(text, langCode) {
-          if (typeof speechSynthesis === "undefined") return false;
-          const spoken = String(text || "").trim();
-          if (!spoken) return false;
-          // Re-Entry-Guard: kein Start unmittelbar nach stopAll()
-          if (
-            window.OSG_AUDIO_REGISTRY &&
-            typeof window.OSG_AUDIO_REGISTRY.isReEntryBlocked === "function" &&
-            window.OSG_AUDIO_REGISTRY.isReEntryBlocked()
-          ) {
-            return false;
-          }
-          const speechTag =
-            typeof osgResolveSpeechTag === "function"
-              ? osgResolveSpeechTag(langCode || "en")
-              : "en-US";
-          return new Promise(function (resolve) {
-            try {
-              speechSynthesis.cancel();
-            } catch (_) {}
-            const utter = new SpeechSynthesisUtterance(spoken);
-            utter.lang = speechTag;
-            if (
-              window.OSG_SPEECH_VOICES &&
-              typeof window.OSG_SPEECH_VOICES.pickForLang === "function"
-            ) {
-              const voice = window.OSG_SPEECH_VOICES.pickForLang(speechTag);
-              if (voice) utter.voice = voice;
+          console.warn(
+            "[pauli-tts] Browser speechSynthesis disabled for Pauli — configure cloud/local TTS.",
+            {
+              langCode: langCode || "",
+              preview: String(text || "").trim().slice(0, 96),
             }
-            let settled = false;
-            // Registrierung in AudioRegistry
-            var _regEntryWS = null;
-            if (window.OSG_AUDIO_REGISTRY) {
-              _regEntryWS = window.OSG_AUDIO_REGISTRY.register("web-speech", function () {
-                try { speechSynthesis.cancel(); } catch (_) {}
-              });
-              // register() gibt null zurück wenn Re-Entry-Guard aktiv
-              if (_regEntryWS === null) {
-                resolve(false);
-                return;
-              }
-            }
-            // Generation-Snapshot für onend-Guard
-            const startGen =
-              window.OSG_AUDIO_REGISTRY &&
-              typeof window.OSG_AUDIO_REGISTRY.getGeneration === "function"
-                ? window.OSG_AUDIO_REGISTRY.getGeneration()
-                : -1;
-            function done(ok, fromEnd) {
-              if (settled) return;
-              settled = true;
-              if (_regEntryWS && window.OSG_AUDIO_REGISTRY) window.OSG_AUDIO_REGISTRY.unregister(_regEntryWS);
-              // onend-Guard: nach Abort (Generation gewechselt) kein resolve(true) aus onend
-              if (fromEnd && startGen >= 0 && window.OSG_AUDIO_REGISTRY &&
-                  typeof window.OSG_AUDIO_REGISTRY.getGeneration === "function" &&
-                  window.OSG_AUDIO_REGISTRY.getGeneration() !== startGen) {
-                osgDhLeaveSpeaking();
-                resolve(false);
-                return;
-              }
-              osgDhLeaveSpeaking();
-              resolve(!!ok);
-            }
-            utter.onend = function () {
-              done(true, true);
-            };
-            utter.onerror = function () {
-              done(false, false);
-            };
-            osgDhEnterSpeaking();
-            try {
-              speechSynthesis.speak(utter);
-            } catch (_) {
-              done(false, false);
-            }
-          });
+          );
+          return false;
         }
 
         /** Lokale Pauli-Aufnahme zuerst, Cloud-TTS mit echtem Text, kein Demo-Fallback für Begrüßungen. */
@@ -4291,7 +4276,7 @@
         }
 
         async function handleCoinActivate() {
-          await startPauliLiveConversation({ fromCoin: true });
+          await osgPauliRunUserSessionGreeting({ fromCoin: true });
         }
 
         const PAULI_WAKE_GREETINGS =
@@ -4518,8 +4503,40 @@
           }
         }
 
+        function osgPauliTtsIsActive() {
+          if (ttsLoading) return true;
+          try {
+            if (
+              window.OSG_AUDIO_REGISTRY &&
+              typeof window.OSG_AUDIO_REGISTRY.isActive === "function" &&
+              window.OSG_AUDIO_REGISTRY.isActive()
+            ) {
+              return true;
+            }
+          } catch (_) {}
+          return false;
+        }
+
+        function osgPauliWaitTtsIdle(maxMs) {
+          const cap = Math.max(1200, Number(maxMs) || 30000);
+          const t0 = Date.now();
+          return new Promise(function (resolve) {
+            (function tick() {
+              if (!osgPauliTtsIsActive() || Date.now() - t0 >= cap) {
+                resolve();
+                return;
+              }
+              setTimeout(tick, 80);
+            })();
+          });
+        }
+
         /* ── Hybrid STT for confirmation: Web Speech API first, fallback to MediaRecorder + /api/stt/wake ── */
         function osgVcStartListening(langCode, onText, onError, listenMs) {
+          if (osgPauliTtsIsActive()) {
+            if (onError) onError();
+            return function () {};
+          }
           const listenDur = Math.max(3500, Number(listenMs) || OSG_VC_LISTEN_MS);
           const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
           const bcp = osgSpeechLangForUi(langCode);
@@ -4859,9 +4876,7 @@
             }
           }
           return {
-            text: String(
-              (pack && (pack.pauliSawadeeTts || pack.pauliLiveStartPrompt)) || ""
-            ).trim(),
+            text: "",
             speechKey: "pauliSawadee",
             segmentKey: "welcome_short",
           };
@@ -5470,23 +5485,11 @@
               if (osgPauliIsPureWakePhrase(rawText)) {
                 osgResetComplaintLiveContext();
                 turns = 0;
-                const greet = osgPauliWakeGreetingReply(pack);
-                if (greet.text) {
-                  await osgPauliLiveSpeakReply(greet.text, pack, lang, isNight, {
-                    speechKey: greet.speechKey,
-                    segmentKey: greet.segmentKey,
-                  });
-                }
-                await listenOnce();
+                osgPauliLiveStop({ skipWakeRestart: true });
                 return;
               }
-              if (turns === 1) {
-                reply =
-                  pack.pauliLiveStartPrompt || pack.voiceCmdListening || "";
-              } else {
-                await listenOnce();
-                return;
-              }
+              osgPauliLiveStop({ skipWakeRestart: true });
+              return;
             } else {
               var osgPauliLiveDialogueOnly = true;
               if (window.__OSG_AVATAR_PENDING_NAME_ASK__ && userText) {
@@ -5858,84 +5861,63 @@
                 resolve();
                 return;
               }
-              const listenLang = osgVcCurrentLangCode();
-              if (wakeBtn) wakeBtn.classList.add("is-listening");
-              if (
-                window.OSG_DIGITAL_HUMAN &&
-                typeof window.OSG_DIGITAL_HUMAN.enterListening === "function"
-              ) {
-                window.OSG_DIGITAL_HUMAN.enterListening(true);
-              }
-              osgPauliLiveStopper = osgVcStartListening(
-                listenLang,
-                function (text) {
-                  osgPauliLiveStopper = null;
-                  if (wakeBtn) wakeBtn.classList.remove("is-listening");
-                  if (
-                    window.OSG_DIGITAL_HUMAN &&
-                    typeof window.OSG_DIGITAL_HUMAN.leaveListening === "function"
-                  ) {
-                    window.OSG_DIGITAL_HUMAN.leaveListening();
-                  }
-                  void processUserText(text).then(resolve);
-                },
-                function () {
-                  osgPauliLiveStopper = null;
-                  if (wakeBtn) wakeBtn.classList.remove("is-listening");
-                  if (
-                    window.OSG_DIGITAL_HUMAN &&
-                    typeof window.OSG_DIGITAL_HUMAN.leaveListening === "function"
-                  ) {
-                    window.OSG_DIGITAL_HUMAN.leaveListening();
-                  }
-                  if (!osgPauliLiveActive) {
-                    resolve();
-                    return;
-                  }
-                  void (async function () {
-                    try {
-                      const pack = osgVcCurrentPack();
-                      const lang = osgVcCurrentLangCode();
-                      const prompt =
-                        pack.pauliLiveStartPrompt ||
-                        pack.voiceCmdListening ||
-                        "";
-                      if (prompt) {
-                        await osgPauliLiveSpeakReply(prompt, pack, lang, isNight, {
-                          dynamicSpeech: true,
-                        });
-                      }
-                      if (osgPauliLiveActive) await listenOnce();
-                    } catch (_) {
-                      osgPauliLiveStop();
+              void (async function () {
+                await osgPauliWaitTtsIdle(30000);
+                if (!osgPauliLiveActive) {
+                  resolve();
+                  return;
+                }
+                const listenLang = osgVcCurrentLangCode();
+                if (wakeBtn) wakeBtn.classList.add("is-listening");
+                if (
+                  window.OSG_DIGITAL_HUMAN &&
+                  typeof window.OSG_DIGITAL_HUMAN.enterListening === "function"
+                ) {
+                  window.OSG_DIGITAL_HUMAN.enterListening(true);
+                }
+                osgPauliLiveStopper = osgVcStartListening(
+                  listenLang,
+                  function (text) {
+                    osgPauliLiveStopper = null;
+                    if (wakeBtn) wakeBtn.classList.remove("is-listening");
+                    if (
+                      window.OSG_DIGITAL_HUMAN &&
+                      typeof window.OSG_DIGITAL_HUMAN.leaveListening === "function"
+                    ) {
+                      window.OSG_DIGITAL_HUMAN.leaveListening();
                     }
+                    void processUserText(text).then(resolve);
+                  },
+                  function () {
+                    osgPauliLiveStopper = null;
+                    if (wakeBtn) wakeBtn.classList.remove("is-listening");
+                    if (
+                      window.OSG_DIGITAL_HUMAN &&
+                      typeof window.OSG_DIGITAL_HUMAN.leaveListening === "function"
+                    ) {
+                      window.OSG_DIGITAL_HUMAN.leaveListening();
+                    }
+                    if (!osgPauliLiveActive) {
+                      resolve();
+                      return;
+                    }
+                    osgPauliLiveStop({ skipWakeRestart: true });
                     resolve();
-                  })();
-                },
-                OSG_PAULI_LIVE_LISTEN_MS
-              );
+                  },
+                  OSG_PAULI_LIVE_LISTEN_MS
+                );
+              })();
             });
           }
 
           if (opts.initialText) {
             await processUserText(opts.initialText);
-          } else if (
-            opts.fromCoin ||
-            opts.fromKeyboard ||
-            opts.fromGreeting ||
-            opts.fromWake
-          ) {
-            const pack = osgVcCurrentPack();
-            const lang = osgVcCurrentLangCode();
-            const greet = osgPauliWakeGreetingReply(pack);
-            if (greet.text) {
-              await osgPauliLiveSpeakReply(greet.text, pack, lang, isNight, {
-                speechKey: greet.speechKey,
-                segmentKey: greet.segmentKey,
-                dynamicSpeech: true,
-              });
-            }
+          } else if (opts.fromGreeting || opts.fromKeyboard) {
             await listenOnce();
+          } else if (opts.fromWake) {
+            await listenOnce();
+          } else if (opts.fromCoin) {
+            return;
           } else {
             await listenOnce();
           }
@@ -6247,6 +6229,11 @@
           function osgWakeOnPhraseDetected(transcript) {
             osgWakeStopAll();
             unlockAudioSystemFromCoinGesture();
+            const SB = window.OSG_STARTUP_BOOT;
+            if (SB && !SB.sessionGreetDone()) {
+              void osgPauliRunUserSessionGreeting({ fromWake: true });
+              return;
+            }
             void startPauliLiveConversation({
               fromWake: true,
               initialText: String(transcript || "").trim(),
@@ -6472,8 +6459,13 @@
             opts = opts || {};
             unlockAudioSystemFromCoinGesture();
             osgWakeStopAll();
+            const SB = window.OSG_STARTUP_BOOT;
+            if (SB && !SB.sessionGreetDone()) {
+              void osgPauliRunUserSessionGreeting({ fromWake: true });
+              return;
+            }
             void startPauliLiveConversation(
-              Object.assign({ fromCoin: true }, opts)
+              Object.assign({ fromWake: true }, opts)
             );
           }
 
@@ -6486,8 +6478,6 @@
           if (wakeBtn) {
             wakeBtn.addEventListener("click", function (e) {
               e.stopPropagation();
-              // If the boot greeting just finished, start the live conversation
-              // immediately (no wake-word phase needed, no Spruch — user just heard the greeting)
               if (window.__OSG_GREETING_DONE_PENDING_MIC__) {
                 window.__OSG_GREETING_DONE_PENDING_MIC__ = false;
                 wakeBtn.classList.remove("osg-pulse-ready");
@@ -6503,33 +6493,6 @@
               void osgWakePushToTalk();
             });
           }
-
-          // One-time any-click listener: if boot greeting done but user clicks
-          // somewhere OTHER than the wake button, still start the mic.
-          (function () {
-            function _osgAnyClickMicStart(ev) {
-              if (!window.__OSG_GREETING_DONE_PENDING_MIC__) return;
-              // Wake button click already handled above (stopPropagation = not reaching here)
-              window.__OSG_GREETING_DONE_PENDING_MIC__ = false;
-              document.removeEventListener("click", _osgAnyClickMicStart, true);
-              document.removeEventListener("touchend", _osgAnyClickMicStart, true);
-              var _wb = document.getElementById("pauli-voice-wake-btn");
-              if (_wb) _wb.classList.remove("osg-pulse-ready");
-              if (
-                !osgPauliLiveActive &&
-                typeof startPauliLiveConversation === "function"
-              ) {
-                unlockAudioSystemFromCoinGesture();
-                void startPauliLiveConversation({ fromGreeting: true });
-              }
-            }
-            document.addEventListener("click", _osgAnyClickMicStart, true);
-            document.addEventListener("touchend", _osgAnyClickMicStart, { capture: true, passive: true });
-            window.__OSG_CLEAR_MIC_GESTURE_LISTENER__ = function () {
-              document.removeEventListener("click", _osgAnyClickMicStart, true);
-              document.removeEventListener("touchend", _osgAnyClickMicStart, true);
-            };
-          })();
 
           document.addEventListener("visibilitychange", function () {
             if (document.visibilityState === "hidden") osgWakeStopAll();

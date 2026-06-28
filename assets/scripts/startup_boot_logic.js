@@ -8,9 +8,11 @@
   var LS_FIRST_BOOT = "osg-first-boot-complete-v1";
   var SS_SESSION_GREET = "osg-session-greet-v1";
   var LS_GREET_ROTATE = "osg-startup-greet-rotate-v1";
-  /** Immer Thai — unabhängig von der UI-Sprache (Einkauf in Thailand). */
-  var OSG_THAI_SAWADEE_TTS = "สวัสดีครับ";
-  var OSG_THAI_SAWADEE_BUBBLE = "Sawadee krab";
+  /** Immer zuerst — unabhängig von der UI-Sprache (Einkauf in Thailand). */
+  var OSG_THAI_SAWADEE_TTS = "Sawadee Krab.";
+  var OSG_THAI_SAWADEE_BUBBLE = "Sawadee Krab";
+  var OSG_PRE_WAI_PAUSE_MS = 500;
+  var OSG_POST_SAWADEE_PAUSE_MS = 360;
   var LS_TRUST_LAUNCH_COUNT = "osg-trust-pledge-launch-count-v1";
   var LS_TRUST_LAST_SHOWN = "osg-trust-pledge-last-shown-v1";
   var LS_TRUST_NEXT_DUE = "osg-trust-pledge-next-due-v1";
@@ -84,32 +86,23 @@
   function pickSessionGreetLine(pack, firstName) {
     pack = pack || {};
     var nm = String(firstName || "").trim();
-    var pool = nm
-      ? [
-          pack.avatarStartupGreetWithName0,
-          pack.avatarStartupGreetWithName1,
-          pack.avatarStartupGreetWithName2,
-        ]
-      : [
-          pack.avatarStartupGreetNoName0,
-          pack.avatarStartupGreetNoName1,
-          pack.avatarStartupGreetNoName2,
-        ];
-    var lines = pool
-      .map(function (x) {
-        return String(x || "").trim();
-      })
-      .filter(Boolean);
-    if (!lines.length) {
-      return tpl(
-        String(pack.avatarCompanionIntroTts || "").trim(),
-        nm
-      );
+    var canonical = String(pack.avatarStartupGreetCanonical || "").trim();
+    if (canonical) {
+      return tpl(canonical, nm);
     }
-    var lastIdx = parseInt(readLs(LS_GREET_ROTATE), 10);
-    var idx = Number.isFinite(lastIdx) ? (lastIdx + 1) % lines.length : 0;
-    writeLs(LS_GREET_ROTATE, String(idx));
-    return tpl(lines[idx], nm);
+    var lang = "en";
+    try {
+      if (global.__OSG_I18N && typeof global.__OSG_I18N.systemLangCode === "function") {
+        lang = String(global.__OSG_I18N.systemLangCode() || "en").slice(0, 2);
+      }
+    } catch (_) {}
+    if (lang === "de") {
+      return "Ich bin Pauli. Dein persönlicher Einkaufsbegleiter. Ich helfe dir dabei, bessere Kaufentscheidungen zu treffen und Geld zu sparen. Was möchtest du heute kaufen?";
+    }
+    if (lang === "th") {
+      return "ผมชื่อเปาลี ผู้ช่วยช้อปปิ้งส่วนตัวของคุณ ผมช่วยคุณตัดสินใจซื้อได้ดีขึ้นและประหยัดเงิน วันนี้อยากซื้ออะไรครับ";
+    }
+    return "I am Pauli. Your personal shopping companion. I help you make better purchase decisions and save money. What would you like to buy today?";
   }
 
   function startThaiWaiVisual() {
@@ -134,21 +127,33 @@
     }
   }
 
-  async function playThaiSawadeeWithWai(speakApi) {
+  async function playThaiSawadeeWithWai(speakApi, pack) {
     speakApi = speakApi || {};
+    pack = pack || global.__OSG_CURRENT_PACK_CACHE || {};
+    var sawadeeLine = String(
+      pack.pauliSawadeeKrabTts ||
+        pack.pauliSawadeeTts ||
+        OSG_THAI_SAWADEE_TTS
+    ).trim();
+    var sawadeeBubble = String(
+      pack.avatarStartupSawadeeBubble || OSG_THAI_SAWADEE_BUBBLE
+    ).trim();
     startThaiWaiVisual();
     try {
       if (typeof global.pauliLiveCaptionShow === "function") {
-        global.pauliLiveCaptionShow(OSG_THAI_SAWADEE_BUBBLE);
+        global.pauliLiveCaptionShow(sawadeeBubble);
       }
     } catch (_) {}
-    if (typeof speakApi.speakLine === "function") {
-      await speakApi.speakLine(OSG_THAI_SAWADEE_TTS, {
+    if (typeof speakApi.speakLine === "function" && sawadeeLine) {
+      await speakApi.speakLine(sawadeeLine, {
         gesture: "wai",
         langCode: "th",
         speechKey: "pauliSawadee",
         skipBridge: true,
         returnHome: false,
+        skipWaiGesture: true,
+        allowCloudTts: true,
+        clonedVoiceFirst: true,
       });
     }
     stopThaiWaiVisual();
@@ -463,7 +468,6 @@
     var playAudio = greetOpts.playAudio === true;
 
     if (!playAudio) {
-      markSessionGreetDone();
       return;
     }
 
@@ -476,11 +480,18 @@
 
     var greetLine = pickSessionGreetLine(pack, firstName);
     var greetBubble = String(greetLine || pack.avatarCompanionIntroBubble || "").trim();
-
-    await playThaiSawadeeWithWai(speakApi);
+    var sawadeeDone = false;
+    var greetDone = false;
 
     await new Promise(function (r) {
-      setTimeout(r, 280);
+      setTimeout(r, OSG_PRE_WAI_PAUSE_MS);
+    });
+
+    await playThaiSawadeeWithWai(speakApi, pack);
+    sawadeeDone = true;
+
+    await new Promise(function (r) {
+      setTimeout(r, OSG_POST_SAWADEE_PAUSE_MS);
     });
 
     if (greetLine && typeof speakApi.speakLine === "function") {
@@ -498,27 +509,15 @@
         gesture: "greet",
         speechKey: "avatarStartupGreet",
         skipBridge: true,
+        allowCloudTts: true,
+        clonedVoiceFirst: true,
       });
+      greetDone = true;
     }
 
-    if (
-      needsNameOnboarding() &&
-      !global.__OSG_AVATAR_PENDING_NAME_ASK__
-    ) {
-      global.__OSG_AVATAR_PENDING_NAME_ASK__ = true;
-      var follow = String(pack.avatarNameAskFollowTts || "").trim();
-      if (follow && typeof speakApi.speakLine === "function") {
-        await speakApi.speakLine(follow, {
-          gesture: "help",
-          speechKey: "avatarNameAskFollowTts",
-        });
-      }
-      if (typeof speakApi.onNameAsk === "function") {
-        speakApi.onNameAsk(pack);
-      }
+    if (sawadeeDone && greetDone) {
+      markSessionGreetDone();
     }
-
-    markSessionGreetDone();
     } finally {
       sessionGreetInFlight = false;
     }

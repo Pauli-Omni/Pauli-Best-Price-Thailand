@@ -414,8 +414,11 @@
     root.current = "wai_greeting";
     clearStateClasses();
     clearIdleSpin();
-    root.stage.classList.add("is-anim-wai");
-    showStatic(true);
+    tryPlayVideo("wai_greeting", function () {
+      if (!root.stage) return;
+      root.stage.classList.add("is-anim-wai");
+      showStatic(true);
+    });
   }
 
   function stopWaiGreeting() {
