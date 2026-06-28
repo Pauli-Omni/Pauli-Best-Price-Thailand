@@ -4507,48 +4507,13 @@
               rec.maxAlternatives = 3;
               rec.continuous = false;
 
-              // ── Acoustic whisper detection: parallel getUserMedia + AnalyserNode ──
-              // Web Speech API gives no direct stream access, so we open a parallel
-              // microphone read just for RMS measurement, then close it immediately.
+              // Whisper-RMS: kein zweites getUserMedia parallel zu SpeechRecognition
+              // (Chrome/macOS blockiert sonst oft STT — nur Mikro-Anzeige, kein Text).
               window.osgUserInputIsWhisper = false;
-              let _srRmsSum = 0, _srRmsSamples = 0;
-              let _srWhisperStream = null, _srWhisperTick = null, _srActx = null;
 
-              (async function () {
-                try {
-                  _srWhisperStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
-                  const _Ctx = window.AudioContext || window.webkitAudioContext;
-                  if (!_Ctx) return;
-                  _srActx = new _Ctx();
-                  const _src = _srActx.createMediaStreamSource(_srWhisperStream);
-                  const _analyser = _srActx.createAnalyser();
-                  _analyser.fftSize = 256;
-                  _src.connect(_analyser);
-                  const _buf = new Float32Array(_analyser.fftSize);
-                  _srWhisperTick = setInterval(function () {
-                    _analyser.getFloatTimeDomainData(_buf);
-                    let rms = 0;
-                    for (let i = 0; i < _buf.length; i++) rms += _buf[i] * _buf[i];
-                    _srRmsSum += Math.sqrt(rms / _buf.length);
-                    _srRmsSamples++;
-                  }, 80);
-                } catch (_) { /* whisper detection optional — never block speech recognition */ }
-              })();
-
-              function _srCleanupWhisper() {
-                if (_srWhisperTick) { clearInterval(_srWhisperTick); _srWhisperTick = null; }
-                if (_srRmsSamples > 0) {
-                  window.osgUserInputIsWhisper = (_srRmsSum / _srRmsSamples) < 0.07;
-                }
-                try { if (_srWhisperStream) _srWhisperStream.getTracks().forEach(function (t) { t.stop(); }); } catch (_) {}
-                try { if (_srActx) _srActx.close(); } catch (_) {}
-                _srWhisperStream = null; _srActx = null;
-              }
-              // ─────────────────────────────────────────────────────────────────────
-
+              let gotResult = false;
               rec.onresult = function (ev) {
                 if (stopped) return;
-                _srCleanupWhisper();
                 let best = "";
                 for (let i = 0; i < ev.results.length; i += 1) {
                   for (let j = 0; j < ev.results[i].length; j += 1) {
@@ -4556,14 +4521,26 @@
                     if (t.length > best.length) best = t;
                   }
                 }
+                if (!best.trim()) return;
+                gotResult = true;
+                stopped = true;
+                try {
+                  rec.stop();
+                } catch (_) {}
                 onText && onText(best);
               };
-              rec.onerror = function () { _srCleanupWhisper(); onError && onError(); };
-              rec.onend = function () { _srCleanupWhisper(); if (!stopped) onError && onError(); };
+              rec.onerror = function () {
+                if (!stopped) {
+                  stopped = true;
+                  onError && onError();
+                }
+              };
+              rec.onend = function () {
+                if (!stopped && !gotResult) onError && onError();
+              };
               rec.start();
               stopper = function () {
                 stopped = true;
-                _srCleanupWhisper();
                 try { rec.stop(); } catch (_) {}
               };
               return stopper;
@@ -5283,21 +5260,20 @@
             return;
           }
           const freshConversation = !!(opts.fromWake || opts.fromCoin);
+          const userInitiated = !!(
+            opts.fromWake ||
+            opts.fromCoin ||
+            opts.fromGreeting ||
+            opts.fromKeyboard
+          );
           if (osgPauliLiveActive) {
             if (freshConversation) {
-              if (osgPauliLiveStopper) {
-                try {
-                  osgPauliLiveStopper();
-                } catch (_) {}
-                osgPauliLiveStopper = null;
-              }
-              const liveWakeBtn = document.getElementById("pauli-voice-wake-btn");
-              if (liveWakeBtn) liveWakeBtn.classList.remove("is-listening");
-              osgResetComplaintLiveContext();
+              osgPauliLiveStop({ skipWakeRestart: true });
+            } else {
+              return;
             }
-            return;
           }
-          if (busy && !opts.fromGreeting) return;
+          if (busy && !userInitiated) return;
           osgPauliLiveActive = true;
           if (!opts.continueSession) {
             osgResetComplaintLiveContext();
@@ -5885,8 +5861,29 @@
                   ) {
                     window.OSG_DIGITAL_HUMAN.leaveListening();
                   }
-                  osgPauliLiveStop();
-                  resolve();
+                  if (!osgPauliLiveActive) {
+                    resolve();
+                    return;
+                  }
+                  void (async function () {
+                    try {
+                      const pack = osgVcCurrentPack();
+                      const lang = osgVcCurrentLangCode();
+                      const prompt =
+                        pack.pauliLiveStartPrompt ||
+                        pack.voiceCmdListening ||
+                        "";
+                      if (prompt) {
+                        await osgPauliLiveSpeakReply(prompt, pack, lang, isNight, {
+                          dynamicSpeech: true,
+                        });
+                      }
+                      if (osgPauliLiveActive) await listenOnce();
+                    } catch (_) {
+                      osgPauliLiveStop();
+                    }
+                    resolve();
+                  })();
                 },
                 OSG_PAULI_LIVE_LISTEN_MS
               );
@@ -5895,6 +5892,23 @@
 
           if (opts.initialText) {
             await processUserText(opts.initialText);
+          } else if (
+            opts.fromCoin ||
+            opts.fromKeyboard ||
+            opts.fromGreeting ||
+            opts.fromWake
+          ) {
+            const pack = osgVcCurrentPack();
+            const lang = osgVcCurrentLangCode();
+            const greet = osgPauliWakeGreetingReply(pack);
+            if (greet.text) {
+              await osgPauliLiveSpeakReply(greet.text, pack, lang, isNight, {
+                speechKey: greet.speechKey,
+                segmentKey: greet.segmentKey,
+                dynamicSpeech: true,
+              });
+            }
+            await listenOnce();
           } else {
             await listenOnce();
           }
@@ -6203,10 +6217,13 @@
             }
           }
 
-          function osgWakeOnPhraseDetected() {
+          function osgWakeOnPhraseDetected(transcript) {
             osgWakeStopAll();
             unlockAudioSystemFromCoinGesture();
-            void startPauliLiveConversation({ fromWake: true });
+            void startPauliLiveConversation({
+              fromWake: true,
+              initialText: String(transcript || "").trim(),
+            });
           }
 
           function osgWakeTestPhrase(text) {
@@ -6293,7 +6310,10 @@
                   const t = String(
                     ev.results[i][0] && ev.results[i][0].transcript
                   ).trim();
-                  if (osgWakeTestPhrase(t)) osgWakeOnPhraseDetected();
+                  if (osgWakeTestPhrase(t)) {
+                    osgWakeOnPhraseDetected(t);
+                    return;
+                  }
                 }
               };
               rec.onerror = function () {
@@ -6397,7 +6417,7 @@
             ) {
               const hit = await osgWakeRecordOnceAndCheck();
               if (hit) {
-                osgWakeOnPhraseDetected();
+                osgWakeOnPhraseDetected("");
                 return;
               }
               await new Promise(function (r) {
@@ -6446,7 +6466,6 @@
                 wakeBtn.classList.remove("osg-pulse-ready");
                 if (
                   !osgPauliLiveActive &&
-                  !busy &&
                   typeof startPauliLiveConversation === "function"
                 ) {
                   unlockAudioSystemFromCoinGesture();
@@ -6471,7 +6490,6 @@
               if (_wb) _wb.classList.remove("osg-pulse-ready");
               if (
                 !osgPauliLiveActive &&
-                !busy &&
                 typeof startPauliLiveConversation === "function"
               ) {
                 unlockAudioSystemFromCoinGesture();
