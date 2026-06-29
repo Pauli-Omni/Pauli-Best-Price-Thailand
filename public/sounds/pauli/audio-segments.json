@@ -1,8 +1,8 @@
 {
-  "info": "Master-Aufnahme (~78 s) pauli-avatar-voice.mp3 — Segmente 0–14 s für Kurzintents. Timings sync mit config/audio-segments.json.",
+  "info": "Master-Aufnahme liam-voice-reference.mp3 (~44 s) — Segmente 0–14 s für Kurzintents. Timings sync mit config/audio-segments.json.",
   "masterUrl": "/sounds/pauli/th/search_intro_long.mp3",
   "masterFallbackUrls": [
-    "/sounds/pauli-avatar-voice.mp3"
+    "/sounds/pauli/liam-voice-reference.mp3"
   ],
   "segments": {
     "welcome_short": { "startMs": 0, "endMs": 4000 },

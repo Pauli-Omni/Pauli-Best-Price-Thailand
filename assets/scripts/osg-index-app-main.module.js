@@ -1297,13 +1297,6 @@
           }
           unlockAudioSystemFromCoinGesture();
           autoWaiDone = true;
-          const SB = window.OSG_STARTUP_BOOT;
-          if (SB && SB.sessionGreetDone()) {
-            if (!osgPauliLiveActive) {
-              void startPauliLiveConversation({ fromGreeting: true });
-            }
-            return;
-          }
           void osgPauliRunUserSessionGreeting({ fromCoin: true });
         }
 
@@ -3625,18 +3618,11 @@
           if (bufs.length) osgPauliBundledVoiceCache.buffers = bufs;
         }
         const OSG_PAULI_BUNDLED_VOICE_URLS = [
+          "/sounds/pauli/liam-voice-reference.mp3",
           "/sounds/pauli/th/pauliIntro.mp3",
           "/sounds/pauli/th/pauliIntro.m4a",
           "/sounds/pauli/th/pauliSawadee.m4a",
           "/sounds/pauli/th/pauliSawadee.mp3",
-          "/sounds/pauli-avatar-voice.mp3",
-          "/sounds/pauli-avatar-voice.m4a",
-          "./sounds/pauli-avatar-voice.mp3",
-          "./sounds/pauli-avatar-voice.m4a",
-          "/public/sounds/pauli-avatar-voice.mp3",
-          "/public/sounds/pauli-avatar-voice.m4a",
-          "./public/sounds/pauli-avatar-voice.mp3",
-          "./public/sounds/pauli-avatar-voice.m4a",
         ];
 
         function osgPauliLocalVoiceUrlCandidates(speechKey, langCode, whisper) {
@@ -4051,42 +4037,9 @@
         }
 
         async function playPauliWebSpeechFallback(text, langCode) {
-          if (typeof speechSynthesis === "undefined") return false;
-          const spoken = String(text || "").trim();
-          if (!spoken) return false;
-          const speechTag =
-            typeof osgResolveSpeechTag === "function"
-              ? osgResolveSpeechTag(langCode || "en")
-              : "en-US";
-          return new Promise(function (resolve) {
-            try {
-              speechSynthesis.cancel();
-            } catch (_) {}
-            const utter = new SpeechSynthesisUtterance(spoken);
-            utter.lang = speechTag;
-            const SV = window.OSG_SPEECH_VOICES;
-            if (SV && typeof SV.pickForLang === "function") {
-              const voice = SV.pickForLang(speechTag);
-              if (voice) utter.voice = voice;
-            }
-            let settled = false;
-            function done(ok) {
-              if (settled) return;
-              settled = true;
-              resolve(!!ok);
-            }
-            utter.onend = function () {
-              done(true);
-            };
-            utter.onerror = function () {
-              done(false);
-            };
-            try {
-              speechSynthesis.speak(utter);
-            } catch (_) {
-              done(false);
-            }
-          });
+          void text;
+          void langCode;
+          return false;
         }
 
         /** Lokale Pauli-Aufnahme zuerst, Cloud-TTS mit echtem Text, kein Demo-Fallback für Begrüßungen. */
@@ -4137,21 +4090,8 @@
             (!!window.osgPauliLiveActive && opts.skipClonedVoiceFirst !== true);
 
           try {
-            if (
-              clonedVoiceFirst &&
-              !window.OSG_PAULI_DISABLE_CLOUD_TTS
-            ) {
-              try {
-                await playElevenLabs(spoken, {
-                  whisper: !!opts.whisper,
-                  langCode: langCode,
-                });
-                return;
-              } catch (e) {
-                if (String(e && e.message) === "rate_limited") throw e;
-              }
-            }
-
+            // Pauli-Klon: feste Texte zuerst aus lokalen Aufnahmen (deine Vorlage),
+            // danach Cloud nur mit ELEVENLABS_VOICE_ID — nie Internet-Standardstimme vorspringen.
             if (!dynamicSpeech) {
               const SEG = window.OSG_AUDIO_SEGMENT;
               if (SEG && typeof SEG.playSegment === "function") {
@@ -4182,7 +4122,8 @@
 
             const cloudAllowed =
               !window.OSG_PAULI_DISABLE_CLOUD_TTS &&
-              (dynamicSpeech ||
+              (clonedVoiceFirst ||
+                dynamicSpeech ||
                 !!opts.allowCloudTts ||
                 window.OSG_PAULI_ALLOW_CLOUD_TTS ||
                 !localFirst);
@@ -4198,18 +4139,7 @@
               }
             }
 
-            // Audibility guarantee: Text wurde angezeigt → Cloud-TTS einmal erzwingen
-            // (unabhängig von OSG_PAULI_DISABLE_CLOUD_TTS / allowCloudTts-Flags).
-            try {
-              await playElevenLabs(spoken, {
-                whisper: !!opts.whisper,
-                langCode: langCode,
-              });
-              return;
-            } catch (e) {
-              if (String(e && e.message) === "rate_limited") throw e;
-            }
-
+            // Kein Fremd-Fallback: nur liam-Vorlage (lokal) oder ElevenLabs-Stimme.
             if (await playPauliWebSpeechFallback(spoken, langCode)) return;
 
             if (

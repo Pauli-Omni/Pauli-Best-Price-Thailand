@@ -47,9 +47,13 @@ function pickOpenAiVoice(speechKey) {
 }
 
 async function synthesizeElevenLabs(text, outFile) {
-  const voiceId = elevenVoiceId || "R6OIrb7V5SxlTzLEZVo";
+  if (!elevenVoiceId) {
+    throw new Error(
+      "ELEVENLABS_VOICE_ID fehlt — Pauli-Klon-Voice-ID in .env setzen",
+    );
+  }
   const res = await fetch(
-    `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
+    `https://api.elevenlabs.io/v1/text-to-speech/${elevenVoiceId}`,
     {
       method: "POST",
       headers: {
@@ -117,18 +121,12 @@ async function synthesize(rec) {
       );
       return "written";
     } catch (e) {
-      console.warn("ElevenLabs fail, fallback OpenAI:", rec.speechKey, e.message);
+      console.warn("ElevenLabs fail:", rec.speechKey, e.message);
     }
   }
-  if (!openAiKey) throw new Error("openai_key_missing");
-  const via = await synthesizeOpenAi(
-    rec.recordText,
-    pickOpenAiVoice(rec.speechKey),
-    outFile
+  throw new Error(
+    "Kein OpenAI-Fallback — nutze: node scripts/pauli-voice-rebuild-all.mjs (liam-voice-reference.mp3)",
   );
-  const buf = fs.statSync(outFile);
-  console.log("wrote:", path.relative(root, outFile), `(${buf.size} B, ${via})`);
-  return "written";
 }
 
 let written = 0;

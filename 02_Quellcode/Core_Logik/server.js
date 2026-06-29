@@ -399,6 +399,13 @@ function osgApiOriginAllowlist(req, res, next) {
     }
   }
   if (!cand || !allowed.has(cand)) {
+    // Co-hosted PWA: same Render host without Origin/Referer (privacy / same-origin fetch).
+    if (host) {
+      const selfOrigin = `${proto}://${host}`.replace(/\/$/, "");
+      if (allowed.has(selfOrigin)) {
+        return next();
+      }
+    }
     if (host && /^(localhost|127\.0\.0\.1)(:\d+)?$/i.test(host)) {
       return next();
     }
@@ -2019,11 +2026,9 @@ app.post("/api/pauli-chat", rlChat, async (req, res) => {
   }
 });
 
-/** Pauli-Stimme: Liam (Energetic, Social Media Creator) — ElevenLabs Pre-Made Voice.
- *  Voice-Settings aus dem Sample-Dateinamen destilliert:
- *    s=0.66 (stability), sb=0.42 (similarity_boost), sp=1.02 (speed)
- *  Priorität: ELEVENLABS_VOICE_ID > Name-Hint-Lookup ("Liam") > erster Account-Voice.
- *  Kein hardcodierter Fallback — erzwingt, dass der richtige Liam-Voice geladen wird.
+/** Pauli-Stimme: dein ElevenLabs-Stimmklon (Vorlage/Upload) — keine vorgefertigte Internet-Stimme.
+ *  Priorität: ELEVENLABS_VOICE_ID > Name-Hint (ELEVENLABS_VOICE_NAME_HINT, Standard „Pauli“).
+ *  Kein Fallback auf „erste Stimme im Account“ — ohne Treffer bleibt Cloud-TTS aus.
  */
 let resolvedVoiceId = (process.env.ELEVENLABS_VOICE_ID || "").trim() || null;
 
@@ -2035,8 +2040,7 @@ async function resolveVoiceId(apiKey) {
   if (!r.ok) throw new Error(await r.text());
   const data = await r.json();
   const voices = data.voices || [];
-  // Primär: ELEVENLABS_VOICE_NAME_HINT (Standard: Pauli-Klon)
-  const hint = String(process.env.ELEVENLABS_VOICE_NAME_HINT || "Pauli").trim();
+  const hint = String(process.env.ELEVENLABS_VOICE_NAME_HINT || "Liam").trim();
   const named = voices.find((v) => {
     try {
       return new RegExp(
@@ -2047,7 +2051,14 @@ async function resolveVoiceId(apiKey) {
       return false;
     }
   });
-  resolvedVoiceId = named?.voice_id || voices[0]?.voice_id || null;
+  resolvedVoiceId = named?.voice_id || null;
+  if (!resolvedVoiceId) {
+    console.warn(
+      "[tts] Pauli-Klon nicht gefunden — ELEVENLABS_VOICE_ID im Dashboard setzen (Hint: " +
+        hint +
+        ")",
+    );
+  }
   return resolvedVoiceId;
 }
 
@@ -2100,16 +2111,12 @@ app.post("/api/tts", rlTts, async (req, res) => {
 
     const apiKey = process.env.ELEVENLABS_API_KEY;
     if (!apiKey) {
-      const mp3 = await osgOpenAiTtsMp3(text.trim(), whisper);
-      res.send(mp3);
-      return;
+      return res.status(503).json({ error: "elevenlabs_not_configured" });
     }
 
     const voiceId = await resolveVoiceId(apiKey);
     if (!voiceId) {
-      const mp3 = await osgOpenAiTtsMp3(text.trim(), whisper);
-      res.send(mp3);
-      return;
+      return res.status(503).json({ error: "pauli_voice_id_missing" });
     }
 
     /* Streaming-Endpoint: ElevenLabs liefert Audio-Chunks sofort aus,
@@ -2117,8 +2124,7 @@ app.post("/api/tts", rlTts, async (req, res) => {
     const ttsUrl =
       `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}/stream` +
       `?optimize_streaming_latency=3&output_format=mp3_44100_128`;
-    /* Voice-Settings: Liam (Energetic, Social Media Creator)
-       Destilliert aus Sample-Dateiname: s=0.66, sb=0.42, sp=1.02
+    /* Voice-Settings für Pauli-Klon (aus Referenz-Sample kalibriert)
        Whisper-Modus: etwas stabiler + leicht langsamer (kein Klangwechsel, nur Tempo). */
     const voiceSettings = whisper
       ? { stability: 0.72, similarity_boost: 0.42, style: 0.00, speed: 0.92, use_speaker_boost: false }
@@ -2141,9 +2147,7 @@ app.post("/api/tts", rlTts, async (req, res) => {
     });
     if (!r.ok) {
       await r.text().catch(() => "");
-      const mp3 = await osgOpenAiTtsMp3(text.trim(), whisper);
-      res.send(mp3);
-      return;
+      return res.status(502).json({ error: "elevenlabs_tts_failed" });
     }
 
     /* WHATWG ReadableStream → Node Readable → direkt an Client pipen.

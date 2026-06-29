@@ -189,7 +189,6 @@
         returnHome: false,
         skipWaiGesture: true,
         allowCloudTts: true,
-        clonedVoiceFirst: true,
       });
     }
     stopThaiWaiVisual();
@@ -549,7 +548,6 @@
         speechKey: "avatarStartupGreet",
         skipBridge: true,
         allowCloudTts: true,
-        clonedVoiceFirst: true,
       });
       greetDone = true;
     }

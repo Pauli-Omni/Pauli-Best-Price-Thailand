@@ -1,5 +1,5 @@
 {
-  "info": "Segment-Zeiten (Sekunden) für 78s-Master pauli-avatar-voice.mp3 — sync mit public/sounds/pauli/audio-segments.json",
+  "info": "Segment-Zeiten (Sekunden) für liam-voice-reference.mp3 — sync mit public/sounds/pauli/audio-segments.json",
   "welcome_short": { "start": 0, "end": 4 },
   "search_action": { "start": 4, "end": 8 },
   "save_money": { "start": 8, "end": 14 }

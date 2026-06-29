@@ -39,14 +39,12 @@ services:
         value: https://omnisolutionsglobal.com
       - key: OSG_API_PUBLIC_ORIGIN
         value: https://api.omnisolutionsglobal.com
-      # --- ElevenLabs: Pauli-Stimme = Liam (Energetic, Social Media Creator) ---
-      # Voice-ID im Render-Dashboard setzen: ElevenLabs → Voices → Liam → Copy ID
-      # Fallback: Server sucht automatisch per Name-Hint "Liam" in deinem Account
+      # --- ElevenLabs: Pauli-Stimme = dein Stimmklon (Vorlage), nicht vorgefertigte Stimme ---
+      # Voice-ID im Render-Dashboard setzen: ElevenLabs → Voices → dein Pauli-Klon → Copy ID
       - key: ELEVENLABS_API_KEY
         sync: false
       - key: ELEVENLABS_VOICE_ID
         sync: false
-      # Liam wird per Name-Lookup gefunden, falls ELEVENLABS_VOICE_ID leer bleibt
       - key: ELEVENLABS_VOICE_NAME_HINT
         value: Liam
       - key: OPENAI_API_KEY

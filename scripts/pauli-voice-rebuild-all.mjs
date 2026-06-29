@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Pauli Avatar-Stimme — Rebuild aus MP3-Vorlage (lokal, ohne Cloud-TTS).
- * Extrahiert Segmente aus pauli-avatar-voice.mp3, ersetzt falsche MP3s, löscht Orphans.
+ * Extrahiert Segmente aus liam-voice-reference.mp3, ersetzt falsche MP3s, löscht Orphans.
  *
  *   node scripts/pauli-voice-rebuild-all.mjs
  *   node scripts/pauli-voice-rebuild-all.mjs --dry-run
@@ -32,7 +32,7 @@ function loadEnvMap(filePath) {
 
 const dryRun = process.argv.includes("--dry-run");
 
-const TEMPLATE_PATH = path.join(root, "public/sounds/pauli-avatar-voice.mp3");
+const TEMPLATE_PATH = path.join(root, "public/sounds/pauli/liam-voice-reference.mp3");
 const TH_DIR = path.join(root, "public/sounds/pauli/th");
 const VOICE_SCRIPT = path.join(root, "public/sounds/pauli/voice-script-de.json");
 const MANIFEST = path.join(root, "public/sounds/pauli/manifest.json");
@@ -214,7 +214,7 @@ function copyTemplate(outFile) {
 
 async function main() {
   if (!fs.existsSync(TEMPLATE_PATH)) {
-    console.error("FEHLT: public/sounds/pauli-avatar-voice.mp3");
+    console.error("FEHLT: public/sounds/pauli/liam-voice-reference.mp3");
     process.exit(1);
   }
 
@@ -225,7 +225,7 @@ async function main() {
     generatedAt: new Date().toISOString(),
     mode: "local-template-segments",
     templateMd5,
-    templatePath: "public/sounds/pauli-avatar-voice.mp3",
+    templatePath: "public/sounds/pauli/liam-voice-reference.mp3",
     dryRun,
     items: [],
     deleted: [],

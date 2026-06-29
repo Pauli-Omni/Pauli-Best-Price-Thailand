@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-06-23T05:14:19.430Z",
+  "generatedAt": "2026-06-28T22:21:11.236Z",
   "mode": "local-template-segments",
-  "templateMd5": "0aef10196bfebf2da53cef0b291f7267",
-  "templatePath": "public/sounds/pauli-avatar-voice.mp3",
+  "templateMd5": "c5f4a5d9271dc462dc03c8efa76e1642",
+  "templatePath": "public/sounds/pauli/liam-voice-reference.mp3",
   "dryRun": false,
   "items": [
     {
@@ -12,7 +12,7 @@
       "status": "template_segment",
       "via": "welcome_short",
       "segmentMs": "0-4000",
-      "bytes": 47435
+      "bytes": 41697
     },
     {
       "speechKey": "pauliIntro",
@@ -20,7 +20,7 @@
       "source": "voice-script",
       "status": "template_copy",
       "via": "user-template-full",
-      "bytes": 1282652
+      "bytes": 732199
     },
     {
       "speechKey": "pauliSpruch0",
@@ -29,7 +29,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "pauliSpruch1",
@@ -38,7 +38,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "pauliSpruch2",
@@ -47,7 +47,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "coinDoctorGreetTts",
@@ -56,7 +56,7 @@
       "status": "template_segment",
       "via": "welcome_short",
       "segmentMs": "0-4000",
-      "bytes": 47435
+      "bytes": 41697
     },
     {
       "speechKey": "avatarTourIntro",
@@ -65,7 +65,7 @@
       "status": "template_segment",
       "via": "welcome_short",
       "segmentMs": "0-4000",
-      "bytes": 47435
+      "bytes": 41697
     },
     {
       "speechKey": "avatarTourStep1",
@@ -74,7 +74,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "avatarTourStep2",
@@ -83,7 +83,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "avatarTourStep3",
@@ -92,7 +92,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "avatarTourStep4",
@@ -101,7 +101,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "avatarTourStep5",
@@ -110,7 +110,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "avatarTourStep6",
@@ -119,7 +119,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "avatarTourDone",
@@ -128,7 +128,7 @@
       "status": "template_segment",
       "via": "welcome_short",
       "segmentMs": "0-4000",
-      "bytes": 47435
+      "bytes": 41697
     },
     {
       "speechKey": "bookingSpeakTts",
@@ -137,7 +137,7 @@
       "status": "template_segment",
       "via": "search_action",
       "segmentMs": "4000-8000",
-      "bytes": 51729
+      "bytes": 49367
     },
     {
       "speechKey": "partnerHandoffSpeakTts",
@@ -146,7 +146,7 @@
       "status": "template_segment",
       "via": "search_action",
       "segmentMs": "4000-8000",
-      "bytes": 51729
+      "bytes": 49367
     },
     {
       "speechKey": "ageGateAvatarSpeakLine",
@@ -155,7 +155,7 @@
       "status": "template_segment",
       "via": "welcome_short",
       "segmentMs": "0-4000",
-      "bytes": 47435
+      "bytes": 41697
     },
     {
       "speechKey": "certificateAvatarTtsNoName",
@@ -164,7 +164,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "certificateAvatarTtsWithName",
@@ -173,7 +173,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "sevenVoucherRequireTrackingTtsNoName",
@@ -182,7 +182,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "sevenVoucherRequireTrackingTtsWithName",
@@ -191,7 +191,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "sevenVoucherPickupRewardTtsNoName",
@@ -200,7 +200,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "sevenVoucherPickupRewardTtsWithName",
@@ -209,7 +209,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "sevenVoucherActivatedTtsNoName",
@@ -218,7 +218,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "sevenVoucherActivatedTtsWithName",
@@ -227,7 +227,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "sevenVoucherQrOpenBriefingNoName",
@@ -236,7 +236,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "sevenVoucherQrOpenBriefingWithName",
@@ -245,7 +245,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "accessibility_activated",
@@ -254,7 +254,7 @@
       "status": "template_segment",
       "via": "welcome_short",
       "segmentMs": "0-4000",
-      "bytes": 47435
+      "bytes": 41697
     },
     {
       "speechKey": "search_processing",
@@ -263,7 +263,7 @@
       "status": "template_segment",
       "via": "search_action",
       "segmentMs": "4000-8000",
-      "bytes": 51729
+      "bytes": 49367
     },
     {
       "speechKey": "fun_crab_instinct",
@@ -272,7 +272,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "avatarFinanceDisclaimerTts",
@@ -281,7 +281,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "avatarFinanceGuideCreditTts",
@@ -290,7 +290,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "avatarFinanceGuideInsuranceTts",
@@ -299,7 +299,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "avatarFinanceGuideFinanceTts",
@@ -308,7 +308,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychCreditViewTts",
@@ -317,7 +317,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychCreditHesitateTts",
@@ -326,7 +326,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychCreditClickTts",
@@ -335,7 +335,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychInsuranceViewTts",
@@ -344,7 +344,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychInsuranceHesitateTts",
@@ -353,7 +353,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychInsuranceClickTts",
@@ -362,7 +362,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychRealEstateClickTts",
@@ -371,7 +371,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychAutomotiveClickTts",
@@ -380,7 +380,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychNoPressureTts",
@@ -389,7 +389,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychEmpathyGrief1Tts",
@@ -398,7 +398,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychEmpathyGrief2Tts",
@@ -407,7 +407,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychEmpathyHousing1Tts",
@@ -416,7 +416,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychEmpathyHousing2Tts",
@@ -425,7 +425,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychEmpathyHousing3Tts",
@@ -434,7 +434,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychEmpathySad1Tts",
@@ -443,7 +443,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychEmpathySad2Tts",
@@ -452,7 +452,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychEmpathyNew1Tts",
@@ -461,7 +461,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychEmpathyNew2Tts",
@@ -470,7 +470,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychEmpathyNew3Tts",
@@ -479,7 +479,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychEmpathyImprove1Tts",
@@ -488,7 +488,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychEmpathyImprove2Tts",
@@ -497,7 +497,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychEmpathyImprove3Tts",
@@ -506,7 +506,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychRelBridgeQuestionTts",
@@ -515,7 +515,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychRelBridgeRecommendTts",
@@ -524,7 +524,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychRelBridgeWarmthTts",
@@ -533,7 +533,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychRelBridgeAnchorTts",
@@ -542,7 +542,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychVerliebt1Tts",
@@ -551,7 +551,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychVerliebt2aTts",
@@ -560,7 +560,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychVerliebt2bTts",
@@ -569,7 +569,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychVerliebt3Tts",
@@ -578,7 +578,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychVerliebtFriendlyTts",
@@ -587,7 +587,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychInclusionClickTts",
@@ -596,7 +596,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychInclusionReadTts",
@@ -605,7 +605,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychGiftBundleTts",
@@ -614,7 +614,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychGiftBundleThTts",
@@ -623,7 +623,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychGiftBundleDeTts",
@@ -632,7 +632,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychCrossToolsTts",
@@ -641,7 +641,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychCrossCarpetTts",
@@ -650,7 +650,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychCrossMopedTts",
@@ -659,7 +659,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychCrossAuthTts",
@@ -668,7 +668,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "avatarNameAskFollowTts",
@@ -677,7 +677,7 @@
       "status": "template_segment",
       "via": "welcome_short",
       "segmentMs": "0-4000",
-      "bytes": 47435
+      "bytes": 41697
     },
     {
       "speechKey": "avatarNameSavedTts",
@@ -686,7 +686,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychHeroScanTts",
@@ -695,7 +695,7 @@
       "status": "template_segment",
       "via": "search_action",
       "segmentMs": "4000-8000",
-      "bytes": 51729
+      "bytes": 49367
     },
     {
       "speechKey": "psychHeroCouponTts",
@@ -704,7 +704,7 @@
       "status": "template_segment",
       "via": "search_action",
       "segmentMs": "4000-8000",
-      "bytes": 51729
+      "bytes": 49367
     },
     {
       "speechKey": "psychPurchaseUrgencyTts",
@@ -713,7 +713,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychMishapStumbleTts",
@@ -722,7 +722,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychMishapSnagTts",
@@ -731,7 +731,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychMishapTripTts",
@@ -740,7 +740,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychLangSwitchOfferTts",
@@ -749,7 +749,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychLangSwitchConfirmedTts",
@@ -758,7 +758,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychLangSwitchDeclinedTts",
@@ -767,7 +767,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychLangSwitchProactiveTts",
@@ -776,7 +776,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "psychLangSwitchAlreadyTts",
@@ -785,7 +785,7 @@
       "status": "template_segment",
       "via": "save_money",
       "segmentMs": "8000-14000",
-      "bytes": 75368
+      "bytes": 65967
     },
     {
       "speechKey": "search_intro_long",
@@ -793,7 +793,7 @@
       "source": "missing-text",
       "status": "template_copy",
       "via": "user-template-full",
-      "bytes": 1282652
+      "bytes": 732199
     }
   ],
   "deleted": [],

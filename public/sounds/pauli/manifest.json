@@ -1,5 +1,5 @@
 {
-  "info": "Lokale Pauli-Stimme — alle MP3s aus pauli-avatar-voice.mp3 (Vorlage). Segmente 0–14 s für Kurzzeilen; Intro/Master = volle Aufnahme.",
+  "info": "Lokale Pauli-Stimme — alle MP3s aus liam-voice-reference.mp3 (einzige Vorlage). Segmente 0–14 s für Kurzzeilen; Intro/Master = volle Aufnahme.",
   "folder": "public/sounds/pauli/th/",
   "script": "voice-script-de.json",
   "formats": ["m4a", "mp3", "wav"],

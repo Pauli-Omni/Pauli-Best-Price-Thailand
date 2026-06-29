@@ -1,8 +1,8 @@
 {
   "info": "Pauli Best Price — vollständiges Aufnahme-Skript (Akzent wie pauliIntro.mp3). Dateien nach public/sounds/pauli/th/{speechKey}.mp3 ablegen. Live-Untertitel (Barrierefreiheit) kommen aus i18n-locales.js — gleicher Wortlaut wie recordText.",
-  "referenceMp3": "th/pauliIntro.mp3",
+  "referenceMp3": "liam-voice-reference.mp3",
   "accentNotes": [
-    "Gleicher Sprecher, gleiche Mikrofon-Distanz und Tempo wie pauliIntro.mp3",
+    "Gleicher Sprecher, gleiche Mikrofon-Distanz und Tempo wie liam-voice-reference.mp3",
     "Emojis in Tour-Texten nicht vorlesen",
     "Mit-Namen-Varianten: Platzhalter {NAME} durch „Max“ ersetzen beim Aufnehmen",
     "Optional Nacht-Flüstern: zusätzliche Datei {speechKey}-whisper.mp3"
