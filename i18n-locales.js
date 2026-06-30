@@ -296,7 +296,7 @@ window.OSG_LOCALES = {
               "Zu viele Anfragen an den Server. Bitte in einigen Minuten erneut versuchen.",
             pauliChatUnavailable:
               "OpenAI-/Chat-Endpunkt nicht konfiguriert oder nicht erreichbar.",
-            pauliLiveStartPrompt: "Wie kann ich dir heute helfen?",
+            pauliLiveStartPrompt: "",
             pauliLiveAckPool:
               "Mhm …|Verstehe …|Ah, okay …|Das klingt nach viel.",
             pauliWisdomPoliticsReligionDeflect:
@@ -4901,7 +4901,7 @@ window.OSG_LOCALES = {
               "Too many requests to the server. Please try again in a few minutes.",
             pauliChatUnavailable:
               "OpenAI / chat endpoint not configured or unreachable.",
-            pauliLiveStartPrompt: "How can I help you today?",
+            pauliLiveStartPrompt: "",
             pauliLiveAckPool:
               "Mhm …|I see …|Ah, okay …|That sounds like a lot.",
             pauliWisdomPoliticsReligionDeflect:

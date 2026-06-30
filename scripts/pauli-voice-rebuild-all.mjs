@@ -1,10 +1,9 @@
 #!/usr/bin/env node
 /**
- * Pauli Avatar-Stimme — Rebuild aus MP3-Vorlage (lokal, ohne Cloud-TTS).
- * Extrahiert Segmente aus liam-voice-reference.mp3, ersetzt falsche MP3s, löscht Orphans.
- *
- *   node scripts/pauli-voice-rebuild-all.mjs
- *   node scripts/pauli-voice-rebuild-all.mjs --dry-run
+ * DEAKTIVIERT — keine Schnipsel mehr aus der Master-MP3 schneiden.
+ * Neue Sätze nur per ElevenLabs + ELEVENLABS_VOICE_ID erzeugen:
+ *   node scripts/generate-pauli-voice-mp3.mjs
+ * Master-Referenz: public/sounds/pauli/Einzige_Stimme_Paulis-Avatar.mp3
  */
 import crypto from "crypto";
 import fs from "fs";
@@ -32,7 +31,7 @@ function loadEnvMap(filePath) {
 
 const dryRun = process.argv.includes("--dry-run");
 
-const TEMPLATE_PATH = path.join(root, "public/sounds/pauli/liam-voice-reference.mp3");
+const TEMPLATE_PATH = path.join(root, "public/sounds/pauli/Einzige_Stimme_Paulis-Avatar.mp3");
 const TH_DIR = path.join(root, "public/sounds/pauli/th");
 const VOICE_SCRIPT = path.join(root, "public/sounds/pauli/voice-script-de.json");
 const MANIFEST = path.join(root, "public/sounds/pauli/manifest.json");
@@ -213,8 +212,21 @@ function copyTemplate(outFile) {
 }
 
 async function main() {
+  console.error(
+    "pauli-voice-rebuild-all: deaktiviert (keine Schnipsel aus Master schneiden).",
+  );
+  console.error(
+    "Neue Avatar-Sätze: node scripts/generate-pauli-voice-mp3.mjs (ElevenLabs + ELEVENLABS_VOICE_ID)",
+  );
+  console.error(
+    "Master-Referenz: public/sounds/pauli/Einzige_Stimme_Paulis-Avatar.mp3",
+  );
+  process.exit(1);
+}
+
+async function _mainDeprecated() {
   if (!fs.existsSync(TEMPLATE_PATH)) {
-    console.error("FEHLT: public/sounds/pauli/liam-voice-reference.mp3");
+    console.error("FEHLT: public/sounds/pauli/Einzige_Stimme_Paulis-Avatar.mp3");
     process.exit(1);
   }
 
@@ -225,7 +237,7 @@ async function main() {
     generatedAt: new Date().toISOString(),
     mode: "local-template-segments",
     templateMd5,
-    templatePath: "public/sounds/pauli/liam-voice-reference.mp3",
+    templatePath: "public/sounds/pauli/Einzige_Stimme_Paulis-Avatar.mp3",
     dryRun,
     items: [],
     deleted: [],

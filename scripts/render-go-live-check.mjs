@@ -3,7 +3,9 @@
  * Live-Check für S1 Deploy — HTTP-Status der Pauli-Render-URLs.
  * Usage: node scripts/render-go-live-check.mjs
  */
-const BASE = "https://pauli-best-price-api.onrender.com";
+import { OSG_CANONICAL_PRODUCTION_BASE } from "./osg-canonical-production-base.mjs";
+
+const BASE = OSG_CANONICAL_PRODUCTION_BASE;
 
 const PATHS = [
   { label: "Haupt-App & PWA", path: "/" },

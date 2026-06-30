@@ -3618,11 +3618,7 @@
           if (bufs.length) osgPauliBundledVoiceCache.buffers = bufs;
         }
         const OSG_PAULI_BUNDLED_VOICE_URLS = [
-          "/sounds/pauli/liam-voice-reference.mp3",
-          "/sounds/pauli/th/pauliIntro.mp3",
-          "/sounds/pauli/th/pauliIntro.m4a",
-          "/sounds/pauli/th/pauliSawadee.m4a",
-          "/sounds/pauli/th/pauliSawadee.mp3",
+          "/sounds/pauli/Einzige_Stimme_Paulis-Avatar.mp3",
         ];
 
         function osgPauliLocalVoiceUrlCandidates(speechKey, langCode, whisper) {
@@ -4037,12 +4033,13 @@
         }
 
         async function playPauliWebSpeechFallback(text, langCode) {
+          /* Browser speechSynthesis disabled for Pauli — ElevenLabs only. */
           void text;
           void langCode;
           return false;
         }
 
-        /** Lokale Pauli-Aufnahme zuerst, Cloud-TTS mit echtem Text, kein Demo-Fallback für Begrüßungen. */
+        /** Avatar spricht nur über ElevenLabs (/api/tts). Master-MP3 = Referenz, keine Schnipsel-Wiedergabe. */
         async function playPauliVoice(text, opts) {
           opts = opts || {};
           if (typeof window.stopAllSpeech === "function") {
@@ -4065,94 +4062,15 @@
           const I = window.__OSG_I18N;
           const langCode =
             opts.langCode || (I ? I.systemLangCode() : "de");
-          const localFirst = window.OSG_PAULI_LOCAL_VOICE_FIRST !== false;
-          const dynamicSpeech = !!opts.dynamicSpeech;
-          let speechKey = String(opts.speechKey || "").trim();
-          if (!speechKey && !dynamicSpeech) {
-            speechKey = osgPauliResolveSpeechKeyFromText(spoken, langCode);
-          }
-
-          async function tryLocalVoice(key) {
-            if (!key) return false;
-            try {
-              return await playPauliLocalVoiceFile({
-                speechKey: key,
-                langCode: langCode,
-                whisper: !!opts.whisper,
-              });
-            } catch (_) {
-              return false;
-            }
-          }
-
-          const clonedVoiceFirst =
-            !!opts.clonedVoiceFirst ||
-            (!!window.osgPauliLiveActive && opts.skipClonedVoiceFirst !== true);
 
           try {
-            // Pauli-Klon: feste Texte zuerst aus lokalen Aufnahmen (deine Vorlage),
-            // danach Cloud nur mit ELEVENLABS_VOICE_ID — nie Internet-Standardstimme vorspringen.
-            if (!dynamicSpeech) {
-              const SEG = window.OSG_AUDIO_SEGMENT;
-              if (SEG && typeof SEG.playSegment === "function") {
-                const segOk = await SEG.playSegment({
-                  segmentKey: String(opts.segmentKey || "").trim(),
-                  speechKey: speechKey,
-                  intent: String(opts.intent || "").trim(),
-                });
-                if (segOk) return;
-              }
-
-              if (await tryLocalVoice(speechKey)) return;
-
-              if (
-                !opts.skipBundled &&
-                speechKey &&
-                osgPauliBundledVoiceAllowed(speechKey)
-              ) {
-                try {
-                  await playPauliBundledFallbackVoice({
-                    whisper: !!opts.whisper,
-                    fullVolume: true,
-                  });
-                  return;
-                } catch (_) {}
-              }
-            }
-
-            const cloudAllowed =
-              !window.OSG_PAULI_DISABLE_CLOUD_TTS &&
-              (clonedVoiceFirst ||
-                dynamicSpeech ||
-                !!opts.allowCloudTts ||
-                window.OSG_PAULI_ALLOW_CLOUD_TTS ||
-                !localFirst);
-            if (cloudAllowed) {
-              try {
-                await playElevenLabs(spoken, {
-                  whisper: !!opts.whisper,
-                  langCode: langCode,
-                });
-                return;
-              } catch (e) {
-                if (String(e && e.message) === "rate_limited") throw e;
-              }
-            }
-
-            // Kein Fremd-Fallback: nur liam-Vorlage (lokal) oder ElevenLabs-Stimme.
-            if (await playPauliWebSpeechFallback(spoken, langCode)) return;
-
-            if (
-              !dynamicSpeech &&
-              !opts.skipBundled &&
-              speechKey &&
-              osgPauliBundledVoiceAllowed(speechKey)
-            ) {
-              await playPauliBundledFallbackVoice({
-                whisper: !!opts.whisper,
-                fullVolume: true,
-              });
-            }
+            if (window.OSG_PAULI_DISABLE_CLOUD_TTS) return;
+            await playElevenLabs(spoken, {
+              whisper: !!opts.whisper,
+              langCode: langCode,
+            });
+          } catch (e) {
+            if (String(e && e.message) === "rate_limited") throw e;
           } finally {
             if (
               !opts.skipCaptionClear &&
@@ -5342,6 +5260,8 @@
           const isNight = !isPauliDayPhase();
           const wakeBtn = document.getElementById("pauli-voice-wake-btn");
           let turns = 0;
+          let osgPauliEmptyListenStreak = 0;
+          const OSG_PAULI_EMPTY_LISTEN_MAX = 8;
 
           // Live dialogue: no marketing trend snippets — listen immediately after wake/coin.
 
@@ -5499,9 +5419,15 @@
                 osgPauliLiveStop({ skipWakeRestart: true });
                 return;
               }
-              osgPauliLiveStop({ skipWakeRestart: true });
+              osgPauliEmptyListenStreak += 1;
+              if (osgPauliEmptyListenStreak >= OSG_PAULI_EMPTY_LISTEN_MAX) {
+                osgPauliLiveStop({ skipWakeRestart: true });
+                return;
+              }
+              await listenOnce();
               return;
             } else {
+              osgPauliEmptyListenStreak = 0;
               var osgPauliLiveDialogueOnly = true;
               if (window.__OSG_AVATAR_PENDING_NAME_ASK__ && userText) {
                 var spokenName = osgExtractSpokenName(userText);
@@ -5912,8 +5838,13 @@
                       resolve();
                       return;
                     }
-                    osgPauliLiveStop({ skipWakeRestart: true });
-                    resolve();
+                    osgPauliEmptyListenStreak += 1;
+                    if (osgPauliEmptyListenStreak >= OSG_PAULI_EMPTY_LISTEN_MAX) {
+                      osgPauliLiveStop({ skipWakeRestart: true });
+                      resolve();
+                      return;
+                    }
+                    void listenOnce().then(resolve);
                   },
                   OSG_PAULI_LIVE_LISTEN_MS
                 );

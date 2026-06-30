@@ -7,6 +7,7 @@
     "dev": "node 02_Quellcode/Core_Logik/server.js",
     "voice:gen": "node scripts/generate-pauli-voice-mp3.mjs",
     "voice:rebuild": "node scripts/pauli-voice-rebuild-all.mjs",
+    "voice:hear": "node scripts/pauli-hear-voice.mjs",
     "check:html": "html-validate index.html",
     "vip:gen": "node scripts/generate-vip-zugang.mjs",
     "email:probe": "node scripts/email-connectivity-probe.mjs",
@@ -21,7 +22,10 @@
     "icons:app": "node scripts/build-app-icons.mjs",
     "build:stores": "bash scripts/build-store-artifacts.sh",
     "avatar:loops": "node scripts/generate-avatar-loops.mjs",
-    "avatar:verify": "node scripts/verify-avatar-assets.mjs"
+    "avatar:verify": "node scripts/verify-avatar-assets.mjs",
+    "docs:omni-projekt-start": "node scripts/osg-update-omni-projekt-start.mjs",
+    "docs:omni-projekt-start:deploy": "node scripts/osg-update-omni-projekt-start.mjs --deploy",
+    "elevenlabs:setup": "node scripts/osg-elevenlabs-go-live-setup.mjs"
   },
   "devDependencies": {
     "ffmpeg-static": "^5.2.0",

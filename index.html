@@ -48,6 +48,36 @@
         background-color: transparent !important;
         background-image: none !important;
       }
+      #osg-boot-splash {
+        position: fixed;
+        inset: 0;
+        z-index: 100000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        padding: 1.25rem;
+        background: rgba(8, 12, 20, 0.92);
+        color: #f5f7fa;
+        text-align: center;
+        font-family: "Noto Sans Thai", system-ui, sans-serif;
+      }
+      #osg-boot-splash[hidden] {
+        display: none !important;
+      }
+      .osg-boot-splash__mark {
+        width: 3.25rem;
+        height: 3.25rem;
+        border-radius: 50%;
+        background: center / cover no-repeat url("/Frontseite02.png");
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.18);
+      }
+      .osg-boot-splash__text {
+        margin: 0;
+        font-size: 1rem;
+        line-height: 1.4;
+      }
     </style>
     <!-- Production: serve minified/bundled assets; keep API keys only server-side. Client JS cannot be “sealed” against inspection — device anchors + rate limits complement abuse handling. -->
     <script
@@ -57,6 +87,16 @@
     <script src="assets/scripts/involve-asia-magic-bridge.js" defer></script>
   </head>
   <body>
+    <div id="osg-boot-splash" class="osg-boot-splash" role="status" aria-live="polite">
+      <span class="osg-boot-splash__mark" aria-hidden="true"></span>
+      <p class="osg-boot-splash__text" data-i18n="bootLoadingPauli">Starting…</p>
+    </div>
+    <script>
+      window.addEventListener("load", function () {
+        var splash = document.getElementById("osg-boot-splash");
+        if (splash) splash.setAttribute("hidden", "");
+      });
+    </script>
     <div class="personal-onboarding-overlay" id="personal-onboarding-overlay" hidden>
       <div
         role="dialog"
@@ -1473,6 +1513,12 @@
       ></div>
       <div class="pauli-dev-voice-panel" id="pauli-dev-voice-panel">
         <pre class="osg-lead-summary-pre" id="osg-lead-summary-pre"></pre>
+        <button type="button" id="pauli-dev-reset-full" tabindex="-1" data-i18n="devToolsResetPauliFull" data-i18n-aria="devToolsResetPauliFullAria">
+          Reset Pauli
+        </button>
+        <button type="button" id="pauli-dev-simulate-first" tabindex="-1" data-i18n="devToolsSimulateFirstStart" data-i18n-aria="devToolsSimulateFirstStartAria">
+          Simulate first start
+        </button>
         <button type="button" id="pauli-test-day" tabindex="-1">
           Tag-Ton
         </button>
@@ -1516,6 +1562,7 @@
     <script src="assets/scripts/osg_tts_guard.js"></script>
     <script src="assets/scripts/osg_tts_interrupt.js"></script>
     <script src="assets/scripts/startup_boot_logic.js"></script>
+    <script src="assets/scripts/osg_pauli_dev_reset.js"></script>
     <script src="assets/scripts/cultural_trend_pools.js"></script>
     <script src="assets/scripts/cultural_trends_logic.js"></script>
     <script src="assets/scripts/detective_logic.js"></script>

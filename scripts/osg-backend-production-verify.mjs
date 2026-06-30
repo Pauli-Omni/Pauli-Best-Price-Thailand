@@ -3,12 +3,14 @@
  * Production backend verification — health, pauli-chat origin, email status.
  * Usage: node scripts/osg-backend-production-verify.mjs [baseUrl]
  */
+import { OSG_CANONICAL_PRODUCTION_BASE } from "./osg-canonical-production-base.mjs";
+
 const BASE =
-  (process.argv[2] || "https://pauli-best-price-api.onrender.com").replace(/\/$/, "");
+  (process.argv[2] || OSG_CANONICAL_PRODUCTION_BASE).replace(/\/$/, "");
 
 const ORIGINS = [
   BASE,
-  "https://pauli-best-price-api-nzbl.onrender.com",
+  OSG_CANONICAL_PRODUCTION_BASE,
   "https://omnisolutionsglobal.com",
   "https://www.omnisolutionsglobal.com",
 ];

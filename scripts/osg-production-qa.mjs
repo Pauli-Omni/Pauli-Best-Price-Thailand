@@ -6,8 +6,9 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import vm from "node:vm";
+import { OSG_CANONICAL_PRODUCTION_BASE } from "./osg-canonical-production-base.mjs";
 
-const BASE = (process.argv[2] || "https://pauli-best-price-api.onrender.com").replace(/\/$/, "");
+const BASE = (process.argv[2] || OSG_CANONICAL_PRODUCTION_BASE).replace(/\/$/, "");
 const ORIGIN = BASE;
 
 const MARKETING_PATTERNS = [

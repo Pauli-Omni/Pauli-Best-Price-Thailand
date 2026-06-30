@@ -45,8 +45,6 @@ services:
         sync: false
       - key: ELEVENLABS_VOICE_ID
         sync: false
-      - key: ELEVENLABS_VOICE_NAME_HINT
-        value: Liam
       - key: OPENAI_API_KEY
         sync: false
       - key: OPENAI_MODEL

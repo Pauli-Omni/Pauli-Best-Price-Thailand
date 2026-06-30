@@ -59,11 +59,15 @@ REQUIRED_VARS=(
   OSG_API_ALLOWED_ORIGINS
 )
 
+# Required for Pauli voice (P0 go-live)
+VOICE_REQUIRED_VARS=(
+  ELEVENLABS_API_KEY
+  ELEVENLABS_VOICE_ID
+)
+
 # Recommended for full live feature set
 RECOMMENDED_VARS=(
   OPENAI_API_KEY
-  ELEVENLABS_API_KEY
-  ELEVENLABS_VOICE_ID
   INVOLVE_ASIA_API_KEY
   INVOLVE_ASIA_API_SECRET
 )
@@ -77,6 +81,15 @@ if [[ -f "$ENV_FILE" ]]; then
       FAIL_COUNT=$((FAIL_COUNT + 1))
     fi
   done < <(printf "%s\n" "${REQUIRED_VARS[@]}")
+
+  while IFS= read -r key; do
+    if rg -n "^${key}=.+" "$ENV_FILE" >/dev/null 2>&1; then
+      ok ".env has ${key} (voice P0)"
+    else
+      fail ".env missing voice P0 ${key}"
+      FAIL_COUNT=$((FAIL_COUNT + 1))
+    fi
+  done < <(printf "%s\n" "${VOICE_REQUIRED_VARS[@]}")
 
   while IFS= read -r key; do
     if rg -n "^${key}=.+" "$ENV_FILE" >/dev/null 2>&1; then

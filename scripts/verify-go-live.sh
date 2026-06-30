@@ -63,7 +63,7 @@ done
 [[ "$DNS_OK" -eq 1 ]] || warn "Domain noch nicht live — Partner-HTTPS-Checks schlagen fehl"
 
 # --- Render health ---
-RENDER_URL="${RENDER_HEALTH_URL:-https://pauli-best-price-api.onrender.com/api/health}"
+RENDER_URL="${RENDER_HEALTH_URL:-https://pauli-best-price-api-nzbl.onrender.com/api/health}"
 HTTP_BODY="$(curl -sS -m 45 "$RENDER_URL" 2>/dev/null || true)"
 if echo "$HTTP_BODY" | grep -q '"ok"'; then
   ok "Render health: $RENDER_URL"

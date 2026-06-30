@@ -110,6 +110,31 @@ assert(
   "completed session greet must not auto-start live on coin"
 );
 
+const devReset = read("assets/scripts/osg_pauli_dev_reset.js");
+const html = read("index.html");
+assert(
+  html.includes("osg_pauli_dev_reset.js") &&
+    html.includes('id="pauli-dev-reset-full"') &&
+    html.includes('id="pauli-dev-simulate-first"'),
+  "dev reset buttons and script wired in index.html"
+);
+assert(
+  devReset.includes("OSG_PAULI_DEV_RESET") &&
+    devReset.includes("factoryReset") &&
+    devReset.includes("simulateFirstStart") &&
+    devReset.includes("shouldWipeKey"),
+  "dev reset module exports factory + simulate"
+);
+assert(
+  boot.includes("resetSessionGreetState"),
+  "startup boot exposes resetSessionGreetState for dev simulate"
+);
+assert(
+  (main.includes("pauli-dev-reset-full") && main.includes("pauli-dev-simulate-first")) ||
+    devReset.includes("pauli-dev-reset-full"),
+  "main module wires dev reset button handlers"
+);
+
 const runRuntime = process.argv.includes("--runtime");
 if (runRuntime) {
   const puppeteer = await import("puppeteer").then((m) => m.default);

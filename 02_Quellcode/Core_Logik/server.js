@@ -2026,39 +2026,19 @@ app.post("/api/pauli-chat", rlChat, async (req, res) => {
   }
 });
 
-/** Pauli-Stimme: dein ElevenLabs-Stimmklon (Vorlage/Upload) — keine vorgefertigte Internet-Stimme.
- *  Priorität: ELEVENLABS_VOICE_ID > Name-Hint (ELEVENLABS_VOICE_NAME_HINT, Standard „Pauli“).
- *  Kein Fallback auf „erste Stimme im Account“ — ohne Treffer bleibt Cloud-TTS aus.
- */
+/** Pauli-Stimme: ausschließlich ELEVENLABS_VOICE_ID — kein Name-Hint, kein Katalog-Fallback. */
 let resolvedVoiceId = (process.env.ELEVENLABS_VOICE_ID || "").trim() || null;
 
-async function resolveVoiceId(apiKey) {
-  if (resolvedVoiceId) return resolvedVoiceId;
-  const r = await fetch("https://api.elevenlabs.io/v1/voices", {
-    headers: { "xi-api-key": apiKey },
-  });
-  if (!r.ok) throw new Error(await r.text());
-  const data = await r.json();
-  const voices = data.voices || [];
-  const hint = String(process.env.ELEVENLABS_VOICE_NAME_HINT || "Liam").trim();
-  const named = voices.find((v) => {
-    try {
-      return new RegExp(
-        hint.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
-        "i",
-      ).test(String(v.name || ""));
-    } catch {
-      return false;
-    }
-  });
-  resolvedVoiceId = named?.voice_id || null;
-  if (!resolvedVoiceId) {
+async function resolveVoiceId(_apiKey) {
+  const id = (process.env.ELEVENLABS_VOICE_ID || "").trim();
+  if (!id) {
+    resolvedVoiceId = null;
     console.warn(
-      "[tts] Pauli-Klon nicht gefunden — ELEVENLABS_VOICE_ID im Dashboard setzen (Hint: " +
-        hint +
-        ")",
+      "[tts] ELEVENLABS_VOICE_ID fehlt — Cloud-TTS deaktiviert bis Dashboard gesetzt.",
     );
+    return null;
   }
+  resolvedVoiceId = id;
   return resolvedVoiceId;
 }
 
@@ -2129,6 +2109,9 @@ app.post("/api/tts", rlTts, async (req, res) => {
     const voiceSettings = whisper
       ? { stability: 0.72, similarity_boost: 0.42, style: 0.00, speed: 0.92, use_speaker_boost: false }
       : { stability: 0.66, similarity_boost: 0.42, style: 0.00, speed: 1.02, use_speaker_boost: true };
+    /* eleven_multilingual_v2: Sprache aus Textinhalt — language_code würde Thai (th)
+       bei ElevenLabs mit 400/502 scheitern lassen; gleiche ELEVENLABS_VOICE_ID für alle Locales. */
+    void langCode;
     const r = await fetch(ttsUrl, {
       method: "POST",
       headers: {
@@ -2139,9 +2122,6 @@ app.post("/api/tts", rlTts, async (req, res) => {
       body: JSON.stringify({
         text,
         model_id: "eleven_multilingual_v2",
-        ...(langCode && /^[a-z]{2}$/.test(langCode)
-          ? { language_code: langCode }
-          : {}),
         voice_settings: voiceSettings,
       }),
     });

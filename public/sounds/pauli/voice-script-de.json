@@ -1,8 +1,8 @@
 {
-  "info": "Pauli Best Price — vollständiges Aufnahme-Skript (Akzent wie pauliIntro.mp3). Dateien nach public/sounds/pauli/th/{speechKey}.mp3 ablegen. Live-Untertitel (Barrierefreiheit) kommen aus i18n-locales.js — gleicher Wortlaut wie recordText.",
-  "referenceMp3": "liam-voice-reference.mp3",
+  "info": "Pauli Avatar — Texte für ElevenLabs-Erzeugung (ELEVENLABS_VOICE_ID). Referenz-Stimme: Einzige_Stimme_Paulis-Avatar.mp3. Ausgabe: public/sounds/pauli/th/{speechKey}.mp3 via scripts/generate-pauli-voice-mp3.mjs",
+  "referenceMp3": "Einzige_Stimme_Paulis-Avatar.mp3",
   "accentNotes": [
-    "Gleicher Sprecher, gleiche Mikrofon-Distanz und Tempo wie liam-voice-reference.mp3",
+    "Gleicher Sprecher, gleiche Mikrofon-Distanz und Tempo wie Einzige_Stimme_Paulis-Avatar.mp3",
     "Emojis in Tour-Texten nicht vorlesen",
     "Mit-Namen-Varianten: Platzhalter {NAME} durch „Max“ ersetzen beim Aufnehmen",
     "Optional Nacht-Flüstern: zusätzliche Datei {speechKey}-whisper.mp3"
@@ -13,210 +13,210 @@
       "file": "th/pauliSawadee.mp3",
       "i18nKey": "pauliSawadeeTts",
       "recordText": "สวัสดีครับ",
-      "status": "template_segment"
+      "status": "pending_elevenlabs"
     },
     {
       "speechKey": "pauliIntro",
       "file": "th/pauliIntro.mp3",
       "i18nKey": "pauliIntroTts",
       "recordText": "Ich bin Pauli, dein Wegweiser, der dafür sorgt, dass du deinen Geldbeutel dicker hast!",
-      "status": "template_copy"
+      "status": "pending_elevenlabs"
     },
     {
       "speechKey": "pauliSpruch0",
       "file": "th/pauliSpruch0.mp3",
       "i18nKey": "pauliSpruch0",
       "recordText": "Ich bin dein Wegweiser, aber kein Berater! Ich sorge nur dafür, dass du kräftig Geld sparst und dein Geldbeutel geschont wird.",
-      "status": "template_segment"
+      "status": "pending_elevenlabs"
     },
     {
       "speechKey": "pauliSpruch1",
       "file": "th/pauliSpruch1.mp3",
       "i18nKey": "pauliSpruch1",
       "recordText": "Denk daran, Pauli ist dein Wegweiser zum besten Preis. Kein Berater, der dir was aufquatscht, sondern dein Spar-Kompass!",
-      "status": "template_segment"
+      "status": "pending_elevenlabs"
     },
     {
       "speechKey": "pauliSpruch2",
       "file": "th/pauliSpruch2.mp3",
       "i18nKey": "pauliSpruch2",
       "recordText": "Mit First-Class-Zulassung direkt zum besten Deal. Ich berate dich nicht, ich weise dir nur den Weg zum gesparten Geld!",
-      "status": "template_segment"
+      "status": "pending_elevenlabs"
     },
     {
       "speechKey": "coinDoctorGreetTts",
       "file": "th/coinDoctorGreetTts.mp3",
       "i18nKey": "coinDoctorGreetTts",
       "recordText": "Sawatdee khrap! Ich bin Pauli. Was kann ich heute für dich tun?",
-      "status": "template_segment"
+      "status": "pending_elevenlabs"
     },
     {
       "speechKey": "avatarTourIntro",
       "file": "th/avatarTourIntro.mp3",
       "i18nKey": "avatarTourIntro",
       "recordText": "Hallo! Ich bin Pauli — ich zeige dir kurz die wichtigsten Bereiche.",
-      "status": "template_segment"
+      "status": "pending_elevenlabs"
     },
     {
       "speechKey": "avatarTourStep1",
       "file": "th/avatarTourStep1.mp3",
       "i18nKey": "avatarTourStep1",
       "recordText": "Hier Preise vergleichen — Lazada vs Shopee vs 7-Eleven",
-      "status": "template_segment"
+      "status": "pending_elevenlabs"
     },
     {
       "speechKey": "avatarTourStep2",
       "file": "th/avatarTourStep2.mp3",
       "i18nKey": "avatarTourStep2",
       "recordText": "Smartphones günstig — direkt bestellen",
-      "status": "template_segment"
+      "status": "pending_elevenlabs"
     },
     {
       "speechKey": "avatarTourStep3",
       "file": "th/avatarTourStep3.mp3",
       "i18nKey": "avatarTourStep3",
       "recordText": "Tarife vergleichen — monatlich sparen",
-      "status": "template_segment"
+      "status": "pending_elevenlabs"
     },
     {
       "speechKey": "avatarTourStep4",
       "file": "th/avatarTourStep4.mp3",
       "i18nKey": "avatarTourStep4",
       "recordText": "VIP-Code einlösen — exklusiver Zugang",
-      "status": "template_segment"
+      "status": "pending_elevenlabs"
     },
     {
       "speechKey": "avatarTourStep5",
       "file": "th/avatarTourStep5.mp3",
       "i18nKey": "avatarTourStep5",
       "recordText": "Internet für Zuhause — Glasfaser und Breitband vergleichen",
-      "status": "template_segment"
+      "status": "pending_elevenlabs"
     },
     {
       "speechKey": "avatarTourStep6",
       "file": "th/avatarTourStep6.mp3",
       "i18nKey": "avatarTourStep6",
       "recordText": "Autoservice — Werkstatt in deiner Nähe finden und Termin buchen",
-      "status": "template_segment"
+      "status": "pending_elevenlabs"
     },
     {
       "speechKey": "avatarTourDone",
       "file": "th/avatarTourDone.mp3",
       "i18nKey": "avatarTourDone",
       "recordText": "Das war die Tour. Sage jederzeit „Hey Pauli“ und nenne einen Bereich — ich helfe dir weiter.",
-      "status": "template_segment"
+      "status": "pending_elevenlabs"
     },
     {
       "speechKey": "bookingSpeakTts",
       "file": "th/bookingSpeakTts.mp3",
       "i18nKey": "bookingSpeakTts",
       "recordText": "Ich habe dich gerade angemeldet, der Händler erwartet dich!",
-      "status": "template_segment"
+      "status": "pending_elevenlabs"
     },
     {
       "speechKey": "partnerHandoffSpeakTts",
       "file": "th/partnerHandoffSpeakTts.mp3",
       "i18nKey": "partnerHandoffSpeakTts",
       "recordText": "Gute Wahl! Ich leite dich direkt zum Partner weiter, damit dein Bonus reserviert bleibt.",
-      "status": "template_segment"
+      "status": "pending_elevenlabs"
     },
     {
       "speechKey": "ageGateAvatarSpeakLine",
       "file": "th/ageGateAvatarSpeakLine.mp3",
       "i18nKey": "ageGateAvatarSpeakLine",
       "recordText": "Halt! Für diesen Bereich musst du laut thailändischem Gesetz mindestens 20 Jahre alt sein.",
-      "status": "template_segment"
+      "status": "pending_elevenlabs"
     },
     {
       "speechKey": "certificateAvatarTtsNoName",
       "file": "th/certificateAvatarTtsNoName.mp3",
       "i18nKey": "certificateAvatarTtsNoName",
       "recordText": "Ich habe dir ein exklusives Zertifikat für diesen Partner erstellt! Zeige es beim Termin vor, um deine Vorteile und den BestPrice-Service zu sichern.",
-      "status": "template_segment"
+      "status": "pending_elevenlabs"
     },
     {
       "speechKey": "certificateAvatarTtsWithName",
       "file": "th/certificateAvatarTtsWithName.mp3",
       "i18nKey": "certificateAvatarTtsWithName",
       "recordText": "Max, ich habe dir ein exklusives Zertifikat für diesen Partner erstellt! Zeige es beim Termin vor, um deine Vorteile und den BestPrice-Service zu sichern.",
-      "status": "template_segment"
+      "status": "pending_elevenlabs"
     },
     {
       "speechKey": "sevenVoucherRequireTrackingTtsNoName",
       "file": "th/sevenVoucherRequireTrackingTtsNoName.mp3",
       "i18nKey": "sevenVoucherRequireTrackingTtsNoName",
       "recordText": "Bitte schalte für diese Sitzung dein Live-Tracking ein — sonst können wir dir den 15-THB-Gutschein für die 7-Eleven-Abholung nicht freischalten. Nach Aktivierung bleibt er nur gültig, solange das Tracking aktiv ist, höchstens zwei Stunden.",
-      "status": "template_segment"
+      "status": "pending_elevenlabs"
     },
     {
       "speechKey": "sevenVoucherRequireTrackingTtsWithName",
       "file": "th/sevenVoucherRequireTrackingTtsWithName.mp3",
       "i18nKey": "sevenVoucherRequireTrackingTtsWithName",
       "recordText": "Max, schalte für diese Sitzung dein Live-Tracking ein — nur dann blenden wir den 15-THB-Gutschein für die Abholung bei 7-Eleven ein. Wenn du ihn aktivierst: er bleibt nur gültig, solange diese Tracking-Session aktiv bleibt, längstens zwei Stunden.",
-      "status": "template_segment"
+      "status": "pending_elevenlabs"
     },
     {
       "speechKey": "sevenVoucherPickupRewardTtsNoName",
       "file": "th/sevenVoucherPickupRewardTtsNoName.mp3",
       "i18nKey": "sevenVoucherPickupRewardTtsNoName",
       "recordText": "Prima — Live-Tracking ist aktiv und „7-Eleven“ ist eingestellt. Den Rabatt behältst du nur, solange diese Live-Tracking-Session aktiv bleibt — maximal zwei Stunden.",
-      "status": "template_segment"
+      "status": "pending_elevenlabs"
     },
     {
       "speechKey": "sevenVoucherPickupRewardTtsWithName",
       "file": "th/sevenVoucherPickupRewardTtsWithName.mp3",
       "i18nKey": "sevenVoucherPickupRewardTtsWithName",
       "recordText": "Max, prima — Live-Tracking ist aktiv und „7-Eleven“ ist gesetzt. Den Rabatt behältst du nur während aktiv bleibenden Live-Trackings dieser Sitzung, längstens zwei Stunden.",
-      "status": "template_segment"
+      "status": "pending_elevenlabs"
     },
     {
       "speechKey": "sevenVoucherActivatedTtsNoName",
       "file": "th/sevenVoucherActivatedTtsNoName.mp3",
       "i18nKey": "sevenVoucherActivatedTtsNoName",
       "recordText": "Pauli-001 ist freigeschaltet und der QR steht bereit — nutzen nur, solange dieses Live-Tracking aktiv bleibt, und höchstens zwei Stunden seit Aktivierung.",
-      "status": "template_segment"
+      "status": "pending_elevenlabs"
     },
     {
       "speechKey": "sevenVoucherActivatedTtsWithName",
       "file": "th/sevenVoucherActivatedTtsWithName.mp3",
       "i18nKey": "sevenVoucherActivatedTtsWithName",
       "recordText": "Max, Pauli-001 ist freigeschaltet und der QR steht bereit — nutz ihn nur, solange dieses Live-Tracking eingeschaltet bleibt, und spätestens bis zum angezeigten Abblenden nach zwei Stunden.",
-      "status": "template_segment"
+      "status": "pending_elevenlabs"
     },
     {
       "speechKey": "sevenVoucherQrOpenBriefingNoName",
       "file": "th/sevenVoucherQrOpenBriefingNoName.mp3",
       "i18nKey": "sevenVoucherQrOpenBriefingNoName",
       "recordText": "Ich habe deinen Gutschein über 15.00 THB aktiviert — er gilt 2 Stunden, wenn du beim selben 7-Eleven-Bon mindestens 45.00 THB ausgibst. Schnapp dir was Leckeres!",
-      "status": "template_segment"
+      "status": "pending_elevenlabs"
     },
     {
       "speechKey": "sevenVoucherQrOpenBriefingWithName",
       "file": "th/sevenVoucherQrOpenBriefingWithName.mp3",
       "i18nKey": "sevenVoucherQrOpenBriefingWithName",
       "recordText": "Max, ich habe deinen 15.00 THB Gutschein aktiviert! Er gilt für 2 Stunden, wenn du für mindestens 45.00 THB bei 7-Eleven einkaufst. Schnapp dir was Leckeres!",
-      "status": "template_segment"
+      "status": "pending_elevenlabs"
     },
     {
       "speechKey": "accessibility_activated",
       "file": "th/accessibility_activated.mp3",
       "i18nKey": "intentAccessibilityTts",
       "recordText": "Barrierefreiheit ist aktiv — größerer Kontrast und Vorlesen, wenn du willst.",
-      "status": "template_segment"
+      "status": "pending_elevenlabs"
     },
     {
       "speechKey": "search_processing",
       "file": "th/search_processing.mp3",
       "i18nKey": "intentReadPriceTts",
       "recordText": "Ich suche sofort den besten Preis für dich — sag mir Produkt oder Marke.",
-      "status": "template_segment"
+      "status": "pending_elevenlabs"
     },
     {
       "speechKey": "fun_crab_instinct",
       "file": "th/fun_crab_instinct.mp3",
       "i18nKey": "intentFunCrabTts",
       "recordText": "Mein Krabben-Instinkt sagt: Heute wird's richtig günstig!",
-      "status": "template_segment"
+      "status": "pending_elevenlabs"
     }
   ]
 }

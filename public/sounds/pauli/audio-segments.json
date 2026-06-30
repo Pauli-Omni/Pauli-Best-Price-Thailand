@@ -1,24 +1,8 @@
 {
-  "info": "Master-Aufnahme liam-voice-reference.mp3 (~44 s) — Segmente 0–14 s für Kurzintents. Timings sync mit config/audio-segments.json.",
-  "masterUrl": "/sounds/pauli/th/search_intro_long.mp3",
-  "masterFallbackUrls": [
-    "/sounds/pauli/liam-voice-reference.mp3"
-  ],
-  "segments": {
-    "welcome_short": { "startMs": 0, "endMs": 4000 },
-    "search_action": { "startMs": 4000, "endMs": 8000 },
-    "save_money": { "startMs": 8000, "endMs": 14000 }
-  },
-  "intentToSegment": {
-    "GREETING": "welcome_short",
-    "READ_PRICE": "search_action",
-    "FUN_SMALLTALK": "save_money",
-    "ACCESSIBILITY": "welcome_short"
-  },
-  "speechKeyToSegment": {
-    "pauliSawadee": "welcome_short",
-    "search_processing": "search_action",
-    "fun_crab_instinct": "save_money",
-    "accessibility_activated": "welcome_short"
-  }
+  "info": "Segment-Wiedergabe deaktiviert. Master-Referenz: Einzige_Stimme_Paulis-Avatar.mp3. Avatar-Sätze nur per ElevenLabs.",
+  "playbackEnabled": false,
+  "masterReference": "/sounds/pauli/Einzige_Stimme_Paulis-Avatar.mp3",
+  "segments": {},
+  "speechKeyToSegment": {},
+  "intentToSegment": {}
 }

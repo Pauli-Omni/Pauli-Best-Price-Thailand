@@ -11,7 +11,7 @@
   "avatarStartupSawadeeTts": "Sawadee Krab.",
   "avatarStartupSawadeeBubble": "Sawadee Krab",
   "avatarStartupGreetCanonical": "Ich bin Pauli. Dein persönlicher Einkaufsbegleiter. Ich helfe dir dabei, bessere Kaufentscheidungen zu treffen und Geld zu sparen. Was möchtest du heute kaufen?",
-  "pauliLiveStartPrompt": "Wie kann ich dir heute helfen?",
+  "pauliLiveStartPrompt": "",
   "avatarStartupGreetWithName0": "Ich bin Pauli, dein virtueller Einkaufsbegleiter — schön, dich zu sehen, {NAME}.",
   "avatarStartupGreetWithName1": "{NAME}, willkommen zurück! Ich begleite dich durch die besten Preise in Thailand.",
   "avatarStartupGreetWithName2": "Hallo {NAME}! Pauli hier — dein Wegweiser fürs smarte Shoppen, ganz ohne Anmeldung.",

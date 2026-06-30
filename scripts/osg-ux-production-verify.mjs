@@ -2,9 +2,10 @@
 /**
  * Production smoke checks for UX priorities P1–P5.
  */
+import { OSG_CANONICAL_PRODUCTION_BASE } from "./osg-canonical-production-base.mjs";
+
 const BASE =
-  process.env.OSG_PRODUCTION_URL ||
-  "https://pauli-best-price-api.onrender.com";
+  process.env.OSG_PRODUCTION_URL || OSG_CANONICAL_PRODUCTION_BASE;
 
 async function fetchText(path) {
   const t0 = Date.now();

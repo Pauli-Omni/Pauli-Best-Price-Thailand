@@ -226,41 +226,9 @@
   }
 
   async function playSegment(opts) {
-    opts = opts || {};
-    if (
-      typeof global.osgPauliAudioAllowed === "function" &&
-      !global.osgPauliAudioAllowed()
-    ) {
-      return false;
-    }
-    // Epoch-Guard: Abort noch aktiv → kein async Fetch/Play starten
-    if (isEpochBlocked()) return false;
-
-    var cfg = await loadConfig();
-
-    // Nach await nochmals prüfen — Abort kann während loadConfig() aufgetreten sein
-    if (isEpochBlocked()) return false;
-
-    var segmentKey = resolveSegmentKey(opts);
-    if (!segmentKey || !cfg.segments || !cfg.segments[segmentKey]) {
-      return false;
-    }
-    var segment = cfg.segments[segmentKey];
-    var urls = masterUrls(cfg);
-    for (var i = 0; i < urls.length; i += 1) {
-      if (isEpochBlocked()) return false;
-      var url = urls[i];
-      var ok = await probeMasterUrl(url);
-      if (!ok) continue;
-      if (isEpochBlocked()) return false;
-      try {
-        var audio = new Audio(url);
-        audio.preload = "auto";
-        audio.setAttribute("playsinline", "");
-        await playSegmentOnAudio(audio, segment);
-        return true;
-      } catch (_) {}
-    }
+    void opts;
+    /* Schnipsel-Wiedergabe aus — Sätze nur per ElevenLabs (ELEVENLABS_VOICE_ID).
+       Referenz: public/sounds/pauli/Einzige_Stimme_Paulis-Avatar.mp3 */
     return false;
   }
 

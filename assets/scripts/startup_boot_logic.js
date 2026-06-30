@@ -548,6 +548,7 @@
         speechKey: "avatarStartupGreet",
         skipBridge: true,
         allowCloudTts: true,
+        dynamicSpeech: true,
       });
       greetDone = true;
     }
@@ -569,8 +570,10 @@
       entryDone = true;
     }
 
-    if (sawadeeDone && greetDone && (entryDone || !entryLine)) {
-      markSessionGreetDone();
+    if (sawadeeDone && greetDone) {
+      if (entryDone || !entryLine) {
+        markSessionGreetDone();
+      }
     }
     } finally {
       sessionGreetInFlight = false;

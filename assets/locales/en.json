@@ -1,6 +1,7 @@
 {
   "brandAppTitleLine1": "Pauli Best Price",
   "brandAppTitleLine2": "Thailand",
+  "bootLoadingPauli": "Pauli is starting…",
   "coinDoctorGreetTts": "Hello! This is Pauli from Pauli Best Price Thailand — what can I help you with today?",
   "coinDoctorGreetBubble": "Hello! Pauli — your guide to real savings.",
   "pauliIntroTts": "I'm Pauli, your guide at Pauli Best Price Thailand — here to fatten your wallet and beat the queue at 7‑Eleven to the best deals!",
@@ -11,7 +12,7 @@
   "avatarStartupSawadeeTts": "Sawadee Krab.",
   "avatarStartupSawadeeBubble": "Sawadee Krab",
   "avatarStartupGreetCanonical": "I am Pauli. Your personal shopping companion. I help you make better purchase decisions and save money. What would you like to buy today?",
-  "pauliLiveStartPrompt": "How can I help you today?",
+  "pauliLiveStartPrompt": "",
   "avatarStartupGreetWithName0": "I'm Pauli, your virtual shopping companion — good to see you, {NAME}.",
   "avatarStartupGreetWithName1": "{NAME}, welcome back! I'll guide you to the best prices in Thailand today.",
   "avatarStartupGreetWithName2": "Hi {NAME}! Pauli here — your pathfinder for smart shopping, no sign-in needed.",

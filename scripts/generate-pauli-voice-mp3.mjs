@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
- * Generiert Pauli-Stimmen-MP3s aus voice-script-de.json.
- * Reihenfolge: ElevenLabs (deine geklonte Stimme) → OpenAI TTS (Platzhalter).
- * Vorhandene Dateien werden übersprungen, außer mit --force.
+ * Erzeugt Pauli-Avatar-MP3s per ElevenLabs (ELEVENLABS_VOICE_ID).
+ * Referenz-Stimme: public/sounds/pauli/Einzige_Stimme_Paulis-Avatar.mp3
+ * Ausgabe: public/sounds/pauli/th/{speechKey}.mp3
  *
  *   node scripts/generate-pauli-voice-mp3.mjs
  *   node scripts/generate-pauli-voice-mp3.mjs --only=accessibility_activated,search_processing
@@ -125,7 +125,7 @@ async function synthesize(rec) {
     }
   }
   throw new Error(
-    "Kein OpenAI-Fallback — nutze: node scripts/pauli-voice-rebuild-all.mjs (liam-voice-reference.mp3)",
+    "Kein Schnipsel-Fallback — ELEVENLABS_API_KEY + ELEVENLABS_VOICE_ID in .env setzen",
   );
 }
 

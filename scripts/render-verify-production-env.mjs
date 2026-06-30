@@ -25,6 +25,8 @@ const REQUIRED = [
   "OSG_INSTALL_FP_SALT",
   "OSG_API_ALLOWED_ORIGINS",
   "OSG_CORS_ORIGINS",
+  "ELEVENLABS_API_KEY",
+  "ELEVENLABS_VOICE_ID",
 ];
 
 /** Feature-critical — server starts but capability degraded */
@@ -118,6 +120,13 @@ if (!service) {
 
 console.log("Render env verify —", service.name, service.id);
 console.log("URL:", service.serviceDetails?.url || "(unknown)");
+console.log(
+  "Kanonisch:",
+  service.serviceDetails?.url || "https://pauli-best-price-api-nzbl.onrender.com",
+);
+console.log(
+  "Legacy-Hinweis: Service omni-solutions-global nutzt pauli-best-price-api.onrender.com — nicht für Voice-P0-Tests.",
+);
 console.log("");
 
 const env = await listEnvVars(apiKey, service.id);

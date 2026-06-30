@@ -6,7 +6,7 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 FLUTTER="${ROOT}/.flutter-sdk/bin/flutter"
 OUT="${ROOT}/build/store-exports"
 DL="${ROOT}/public/downloads"
-PAULI_WEB_URL="${PAULI_WEB_URL:-https://pauli-best-price-api.onrender.com/}"
+PAULI_WEB_URL="${PAULI_WEB_URL:-https://pauli-best-price-api-nzbl.onrender.com/}"
 DART_DEFINE=(--dart-define="PAULI_WEB_URL=${PAULI_WEB_URL}")
 export FLUTTER_SUPPRESS_ANALYTICS=true
 
