@@ -4616,21 +4616,36 @@
           );
         }
 
-        function osgOnPickupModeChanged(mode) {
+        function osgSetDeliveryPreference(mode, reason) {
+          var normalized =
+            mode === "seven_pickup" ? "seven_pickup" : "marketplace";
+          osgSetPickupMode(normalized);
+          var mr = document.getElementById("pickup-mode-marketplace");
+          var sv = document.getElementById("pickup-mode-seven");
+          if (mr) mr.checked = normalized !== "seven_pickup";
+          if (sv) sv.checked = normalized === "seven_pickup";
           var pack = window.__OSG_CURRENT_PACK_CACHE || null;
-          if (mode === "seven_pickup") {
-            osgRecordDeliveryPreferenceJournal(
-              "seven_pickup",
-              "convenience;bundle;safe_pickup"
-            );
-            osgRefreshDeliveryChoiceConfirm(pack);
+          osgHydratePickupModeTexts(pack);
+          osgRecordDeliveryPreferenceJournal(
+            normalized,
+            reason ||
+              (normalized === "seven_pickup"
+                ? "convenience;bundle;safe_pickup"
+                : "home_delivery")
+          );
+          osgRefreshDeliveryChoiceConfirm(pack);
+          osgSyncSevenVoucherExclusivePanel();
+        }
+
+        async function osgSpeakDeliveryModeVoice(mode) {
+          var normalized =
+            mode === "seven_pickup" ? "seven_pickup" : "marketplace";
+          if (normalized === "seven_pickup") {
             if (
               window.PauliVoice &&
               typeof window.PauliVoice.speakDeliveryConfirmSeven === "function"
             ) {
-              void window.PauliVoice.speakDeliveryConfirmSeven().catch(
-                function () {}
-              );
+              await window.PauliVoice.speakDeliveryConfirmSeven();
             }
             if (
               !osgGetLiveTrackingOn() &&
@@ -4638,31 +4653,48 @@
               typeof window.PauliVoice.speakSevenVoucherTrackingWarn ===
                 "function"
             ) {
-              void window.PauliVoice.speakSevenVoucherTrackingWarn().catch(
-                function () {}
-              );
+              await window.PauliVoice.speakSevenVoucherTrackingWarn();
             } else if (
               osgGetLiveTrackingOn() &&
               window.PauliVoice &&
               typeof window.PauliVoice.speakSevenPickupReward === "function"
             ) {
-              void window.PauliVoice.speakSevenPickupReward().catch(
-                function () {}
-              );
+              await window.PauliVoice.speakSevenPickupReward();
             }
             return;
           }
-          osgRecordDeliveryPreferenceJournal("marketplace", "home_delivery");
-          osgRefreshDeliveryChoiceConfirm(pack);
           if (
             window.PauliVoice &&
             typeof window.PauliVoice.speakDeliveryConfirmHome === "function"
           ) {
-            void window.PauliVoice.speakDeliveryConfirmHome().catch(
-              function () {}
-            );
+            await window.PauliVoice.speakDeliveryConfirmHome();
           }
         }
+
+        async function osgApplyDeliveryVoiceChoice(mode) {
+          var normalized =
+            mode === "seven_pickup" ? "seven_pickup" : "marketplace";
+          var reason =
+            normalized === "seven_pickup"
+              ? "voice_choice_seven"
+              : "voice_choice_home";
+          osgSetDeliveryPreference(normalized, reason);
+          await osgSpeakDeliveryModeVoice(normalized);
+        }
+
+        function osgOnPickupModeChanged(mode) {
+          var normalized =
+            mode === "seven_pickup" ? "seven_pickup" : "marketplace";
+          var reason =
+            normalized === "seven_pickup"
+              ? "convenience;bundle;safe_pickup"
+              : "home_delivery";
+          osgSetDeliveryPreference(normalized, reason);
+          void osgSpeakDeliveryModeVoice(normalized).catch(function () {});
+        }
+
+        window.osgSetDeliveryPreference = osgSetDeliveryPreference;
+        window.osgApplyDeliveryVoiceChoice = osgApplyDeliveryVoiceChoice;
 
         function osgRecordPartnerOutbound(
           partnerSlug,

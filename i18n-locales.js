@@ -169,6 +169,20 @@ window.OSG_LOCALES = {
             "delivery.benefitsListAria": "Vorteile der 7‑Eleven-Abholung",
             "delivery.pickupFieldsetAria":
               "Lieferart wählen: nach Hause oder 7‑Eleven-Abholung",
+            "delivery.voice.compareShortTts":
+              "Kurz verglichen: Bei Hauslieferung wartest du ggf. zu Hause oder nimmst Fahreranrufe an verschiedenen Tagen entgegen. Bei 7‑Eleven wartet dein Paket meist in einer Wunsch-Filiale — oft mit langen Öffnungszeiten, je nach Filiale. Du entscheidest; der Partner-Checkout setzt den Preis.",
+            "delivery.voice.recommendFullTts":
+              "Für diesen Einkauf würde ich die 7‑Eleven-Abholung empfehlen. Erstens: kein Warten auf den Fahrer zu Hause. Zweitens: weniger Telefonstress. Drittens: sichere Abholung im Store. Viertens: wenn verfügbar, kann der Hub mehrere Lieferungen bündeln.",
+            "delivery.voice.safeTts":
+              "Bei Abholung liegt dein Paket in der Regel nicht unbeaufsichtigt vor der Tür und ist weniger Regen oder Verlegen ausgesetzt.",
+            "delivery.voice.phoneTts":
+              "Abholung bedeutet oft mehr Flexibilität als klassische Zustellung — du bist weniger an jeden Fahreranruf gebunden, Marktplatzregeln gelten weiter.",
+            "delivery.voice.bundleTts":
+              "Wenn diese Option verfügbar ist, können mehrere Bestellungen über den Hub gebündelt werden — du wartest nicht auf viele einzelne Lieferungen.",
+            "delivery.voice.nightTts":
+              "Viele Filialen haben lange Öffnungszeiten — oft bis spät abends oder in der Nacht, je nach Filiale. Bitte deine Wunsch-Filiale prüfen.",
+            "delivery.voice.homeWaitTts":
+              "Bei Hauslieferung musst du ggf. erreichbar sein oder Fahreranrufe annehmen, wenn Pakete an verschiedenen Tagen kommen.",
             voucherNeedLiveTrackingExplain:
               "Der Gutschein erscheint nur mit LIVE‑TRACKING UND „Abholung bei 7‑Eleven“; Einlösung setzt WKZ ≥ 45 THB voraus.",
             sevenVoucherRequireTrackingTtsWithName:
@@ -1146,6 +1160,20 @@ window.OSG_LOCALES = {
             "delivery.benefitsListAria": "Benefits of 7‑Eleven pickup",
             "delivery.pickupFieldsetAria":
               "Choose delivery: home or 7‑Eleven pickup",
+            "delivery.voice.compareShortTts":
+              "Quick compare: home delivery can mean waiting at home or driver calls on different days. Seven-Eleven pickup usually lets your parcel wait at a branch you choose — often with long hours, depending on the store. You decide; partner checkout sets the final price.",
+            "delivery.voice.recommendFullTts":
+              "For this purchase I would recommend 7-Eleven pickup. First: no waiting at home for the driver. Second: less phone stress. Third: safer pickup at the store. Fourth: when available, the hub can bundle several deliveries.",
+            "delivery.voice.safeTts":
+              "With store pickup your parcel is usually not left unattended at your door, and it is less exposed to rain or being misplaced.",
+            "delivery.voice.phoneTts":
+              "Pickup often means more flexibility than classic home drops — you are less tied to every driver call, though marketplace rules still apply.",
+            "delivery.voice.bundleTts":
+              "When this option is available, several orders can be bundled through the hub so you are not waiting for many separate drop-offs.",
+            "delivery.voice.nightTts":
+              "Many branches stay open late — often into the evening or at night, depending on the store. Please check your chosen branch.",
+            "delivery.voice.homeWaitTts":
+              "With home delivery you may need to be available or answer driver calls when parcels arrive on different days.",
             voucherNeedLiveTrackingExplain:
               "This voucher renders only after LIVE‑TRACKING is toggled ON with Seven fulfilment; checkout requires tracking evidence plus the THB 45 basket rule documented in QR.",
             sevenVoucherRequireTrackingTtsWithName:
@@ -1752,6 +1780,20 @@ window.OSG_LOCALES = {
             "delivery.benefitsListAria": "ข้อดีการรับที่ 7‑Eleven",
             "delivery.pickupFieldsetAria":
               "เลือกการรับ: ส่งบ้านหรือรับที่ 7‑Eleven",
+            "delivery.voice.compareShortTts":
+              "สรุปสั้นๆ: ส่งบ้านอาจต้องรอที่บ้านหรือรับสายคนขับหลายวัน รับที่เซเว่นพัสดุมักรอที่สาขาที่เลือก — หลายสาขาเปิดนานขึ้นกับที่ตั้ง คุณตัดสินใจ ราคาจริงที่เช็คเอาต์พาร์ทเนอร์",
+            "delivery.voice.recommendFullTts":
+              "สำหรับการซื้อนี้ผมแนะนำรับที่ 7‑Eleven หนึ่ง: ไม่ต้องรอคนขับที่บ้าน สอง: โทรน้อยลง สาม: รับปลอดภัยที่ร้าน สี่: เมื่อมี ฮับอาจรวมหลายออเดอร์",
+            "delivery.voice.safeTts":
+              "รับที่ร้านพัสดุมักไม่วางหน้าประตูโดยไม่มีคนดู และเปียกหรือหายน้อยกว่า",
+            "delivery.voice.phoneTts":
+              "รับที่ร้านมักยืดหยุ่นกว่าส่งบ้าน — ไม่ต้องผูกกับทุกสายคนขับ กฎมาร์เก็ตเพลสยังใช้",
+            "delivery.voice.bundleTts":
+              "เมื่อตัวเลือกนี้มี หลายออเดอร์อาจรวมผ่านฮับ — ไม่ต้องรอส่งแยกหลายครั้ง",
+            "delivery.voice.nightTts":
+              "หลายสาขาเปิดดึก — บ่อยถึงค่ำหรือกลางคืน ขึ้นกับสาขา กรุณาตรวจสาขาที่เลือก",
+            "delivery.voice.homeWaitTts":
+              "ส่งบ้านอาจต้องอยู่บ้านหรือรับสายคนขับเมื่อพัสดุมาหลายวัน",
             voucherNeedLiveTrackingExplain:
               "คูปองปรากฏเมื่อเปิด Live‑Tracking และเลือก Seven เท่านั้น — ต้องมีหลักฐานการติดตามและยอดซื้อขั้นต่ำ 45 THB ตามข้อกำหนด",
             sevenVoucherRequireTrackingTtsWithName:
@@ -2638,6 +2680,20 @@ window.OSG_LOCALES = {
             "delivery.benefitsListAria": "Korzyści odbioru w 7‑Eleven",
             "delivery.pickupFieldsetAria":
               "Wybierz dostawę: do domu lub odbiór w 7‑Eleven",
+            "delivery.voice.compareShortTts":
+              "Krótko: przy dostawie do domu bywa czekanie lub telefony kurierów w różne dni. W 7‑Eleven paczka zwykle czeka w wybranym sklepie — wiele punktów ma długie godziny, zależnie od placówki. Ty decydujesz; cenę ustala checkout partnera.",
+            "delivery.voice.recommendFullTts":
+              "Do tego zakupu poleciłbym odbiór w 7‑Eleven. Po pierwsze: bez czekania na kuriera w domu. Po drugie: mniej stresu telefonicznego. Po trzecie: bezpieczniejszy odbiór w sklepie. Po czwarte: gdy dostępne, hub może połączyć kilka dostaw.",
+            "delivery.voice.safeTts":
+              "Przy odbiorze paczka zwykle nie leży bez opieki pod drzwiami i rzadziej moknie lub ginie.",
+            "delivery.voice.phoneTts":
+              "Odbiór często daje więcej elastyczności niż klasyczna dostawa — mniej wiążesz się z każdym telefonem kuriera, zasady marketplace nadal obowiązują.",
+            "delivery.voice.bundleTts":
+              "Gdy ta opcja jest dostępna, kilka zamówień może być połączonych przez hub — nie czekasz na wiele osobnych dostaw.",
+            "delivery.voice.nightTts":
+              "Wiele punktów jest otwartych długo — często do późna lub w nocy, zależnie od placówki. Sprawdź wybrany sklep.",
+            "delivery.voice.homeWaitTts":
+              "Przy dostawie do domu bywa, że musisz być dostępny lub odbierać telefony kurierów, gdy paczki przychodzą w różne dni.",
             voucherNeedLiveTrackingExplain:
               "Kupon pojawia się tylko przy włączonym live-trackingu i trybie Seven — potrzebny jest dowód śledzenia oraz minimum paragonowe 45 THB wg warunków.",
             sevenVoucherRequireTrackingTtsWithName:
@@ -3499,6 +3555,20 @@ window.OSG_LOCALES = {
             "delivery.benefitsListAria": "Плюсы самовывоза в 7‑Eleven",
             "delivery.pickupFieldsetAria":
               "Выберите доставку: на дом или самовывоз в 7‑Eleven",
+            "delivery.voice.compareShortTts":
+              "Кратко: домой — иногда ждёте или принимаете звонки курьеров в разные дни. В 7‑Eleven посылка обычно ждёт в выбранном магазине — у многих точек длинный график, зависит от филиала. Решаете вы; цену задаёт checkout партнёра.",
+            "delivery.voice.recommendFullTts":
+              "Для этой покупки я бы рекомендовал самовывоз в 7‑Eleven. Первое: не ждёте курьера дома. Второе: меньше звонков. Третье: безопаснее забрать в магазине. Четвёртое: когда доступно, хаб может объединить несколько доставок.",
+            "delivery.voice.safeTts":
+              "При самовывозе посылка обычно не остаётся без присмотра у двери и реже намокает или теряется.",
+            "delivery.voice.phoneTts":
+              "Самовывоз часто гибче классической доставки — меньше привязки к каждому звонку курьера, правила маркетплейса остаются.",
+            "delivery.voice.bundleTts":
+              "Когда опция доступна, несколько заказов можно объединить через хаб — не ждёте много отдельных доставок.",
+            "delivery.voice.nightTts":
+              "Многие точки работают долго — часто до позднего вечера или ночи, зависит от филиала. Проверьте выбранный магазин.",
+            "delivery.voice.homeWaitTts":
+              "При доставке на дом может понадобиться быть дома или отвечать на звонки, когда посылки приходят в разные дни.",
             voucherNeedLiveTrackingExplain:
               "Вкладка покажет ваучер только при активном live‑tracking и режиме Seven — нужно доказательство трекинга и условие чека минимум 45 THB.",
             sevenVoucherRequireTrackingTtsWithName:
@@ -4355,6 +4425,20 @@ window.OSG_LOCALES = {
             "delivery.benefitsListAria": "7‑Eleven 自取优点",
             "delivery.pickupFieldsetAria":
               "选择收货方式：送货上门或 7‑Eleven 自取",
+            "delivery.voice.compareShortTts":
+              "简要比对：送货上门可能需在家等或多天接快递员电话。7‑Eleven 自取通常在你选的门店等候——许多门店营业时间较长，视门店而定。由你决定；价格以合作方结账为准。",
+            "delivery.voice.recommendFullTts":
+              "这次购物我建议 7‑Eleven 自取。其一：不必在家等快递员。其二：电话更少。其三：在门店自取更安全。其四：若可用，枢纽可合并多笔配送。",
+            "delivery.voice.safeTts":
+              "门店自取时包裹通常不会无人看管放在门口，也更少淋湿或遗失。",
+            "delivery.voice.phoneTts":
+              "自取往往比传统送货上门更灵活——不必每次接快递员电话，平台规则仍适用。",
+            "delivery.voice.bundleTts":
+              "若此选项可用，多笔订单可经枢纽合并——不必等多次分开配送。",
+            "delivery.voice.nightTts":
+              "许多门店营业至较晚或夜间，视门店而定。请核对所选门店。",
+            "delivery.voice.homeWaitTts":
+              "送货上门时，包裹分多天到达可能需要你在场或接听快递员电话。",
             voucherNeedLiveTrackingExplain:
               "仅当实时追踪已开且选自取 Seven 时才显示代金券 — 须提供追踪佐证并满足单笔小票≥ 45 THB 条件。",
             sevenVoucherRequireTrackingTtsWithName:

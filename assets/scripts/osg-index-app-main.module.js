@@ -772,6 +772,94 @@
           });
         }
 
+        async function osgPauliSpeakDeliveryVoiceLine(pack, key, opts) {
+          opts = opts || {};
+          const line = osgDeliveryVoicePackLine(pack, key);
+          if (!line) return false;
+          try {
+            if (typeof window.pauliLiveCaptionShow === "function") {
+              window.pauliLiveCaptionShow(line);
+            }
+          } catch (_) {}
+          const code = packLangFromDocument();
+          const maxDur = opts.maxDuration || 22000;
+          const minDur = opts.minDuration || 5000;
+          if (typeof window.osgAvatarSpeakLine === "function") {
+            await window.osgAvatarSpeakLine(line, {
+              gesture: opts.gesture || "help",
+              emotion: opts.emotion,
+              speechKey: key,
+              pointTarget: opts.pointTarget || false,
+              pointDuration: Math.min(
+                maxDur,
+                Math.max(minDur, line.length * 68)
+              ),
+            });
+            return true;
+          }
+          await speakPauliLine(line, code, { speechKey: key });
+          return true;
+        }
+
+        async function speakPauliDeliveryCompareShort() {
+          const pack =
+            window.__OSG_CURRENT_PACK_CACHE ||
+            (window.__OSG_I18N?.T?.[packLangFromDocument()] || {});
+          const panel = document.getElementById("delivery-choice-panel");
+          return osgPauliSpeakDeliveryVoiceLine(
+            pack,
+            "delivery.voice.compareShortTts",
+            {
+              gesture: "help",
+              pointTarget: panel || false,
+              maxDuration: 20000,
+            }
+          );
+        }
+
+        async function speakPauliDeliveryRecommend() {
+          const pack =
+            window.__OSG_CURRENT_PACK_CACHE ||
+            (window.__OSG_I18N?.T?.[packLangFromDocument()] || {});
+          const sevenEl = document.getElementById("pickup-mode-seven");
+          const panel = document.getElementById("delivery-choice-panel");
+          const line = osgDeliveryVoicePackLine(
+            pack,
+            "delivery.voice.recommendFullTts"
+          );
+          if (!line) return false;
+          try {
+            if (typeof window.pauliLiveCaptionShow === "function") {
+              window.pauliLiveCaptionShow(line);
+            }
+          } catch (_) {}
+          const code = packLangFromDocument();
+          if (typeof window.osgAvatarSpeakLine === "function") {
+            await window.osgAvatarSpeakLine(line, {
+              gesture: "help",
+              emotion: "happy",
+              speechKey: "delivery.voice.recommendFullTts",
+              pointTarget: sevenEl || panel || false,
+              pointDuration: Math.min(22000, Math.max(7000, line.length * 68)),
+            });
+            if (typeof window.osgAvatarGestureStart === "function") {
+              window.osgAvatarGestureStart("confirm", 2600);
+            }
+            return true;
+          }
+          await speakPauliLine(line, code, {
+            speechKey: "delivery.voice.recommendFullTts",
+          });
+          return true;
+        }
+
+        async function speakPauliDeliveryInfo(packKey, opts) {
+          const pack =
+            window.__OSG_CURRENT_PACK_CACHE ||
+            (window.__OSG_I18N?.T?.[packLangFromDocument()] || {});
+          return osgPauliSpeakDeliveryVoiceLine(pack, packKey, opts || {});
+        }
+
         async function speakPauliSevenVoucherTrackingWarn() {
           const I = window.__OSG_I18N;
           if (!I) return;
@@ -855,6 +943,9 @@
           speakDeliveryChoicePrompt: speakPauliDeliveryChoicePrompt,
           speakDeliveryConfirmSeven: speakPauliDeliveryConfirmSeven,
           speakDeliveryConfirmHome: speakPauliDeliveryConfirmHome,
+          speakDeliveryCompareShort: speakPauliDeliveryCompareShort,
+          speakDeliveryRecommend: speakPauliDeliveryRecommend,
+          speakDeliveryInfo: speakPauliDeliveryInfo,
           speakSevenVoucherTrackingWarn: speakPauliSevenVoucherTrackingWarn,
           speakSevenVoucherActivated: speakPauliSevenVoucherActivated,
           speakSevenVoucherQrOpenBrief: speakPauliSevenVoucherQrOpenBrief,
@@ -5140,6 +5231,91 @@
           return String(pack[key] || "").trim();
         }
 
+        function osgPauliIsDeliveryIntent(intentHit) {
+          if (!intentHit || intentHit.allowOpenAI) return false;
+          const id = String(intentHit.intent || "");
+          return id.indexOf("delivery_") === 0;
+        }
+
+        async function osgPauliHandleDeliveryIntent(intentHit, pack, lang, isNight) {
+          if (!osgPauliIsDeliveryIntent(intentHit)) return false;
+          const sevenEl = document.getElementById("pickup-mode-seven");
+          const panel = document.getElementById("delivery-choice-panel");
+          const intent = String(intentHit.intent || "");
+          const PV = window.PauliVoice;
+
+          if (intent === "delivery_choose_seven") {
+            if (typeof window.osgApplyDeliveryVoiceChoice === "function") {
+              await window.osgApplyDeliveryVoiceChoice("seven_pickup");
+            }
+            return true;
+          }
+          if (intent === "delivery_choose_home") {
+            if (typeof window.osgApplyDeliveryVoiceChoice === "function") {
+              await window.osgApplyDeliveryVoiceChoice("marketplace");
+            }
+            return true;
+          }
+          if (intent === "delivery_compare") {
+            if (PV && typeof PV.speakDeliveryCompareShort === "function") {
+              await PV.speakDeliveryCompareShort();
+            } else {
+              const line = osgPauliResolveIntentReply(intentHit, pack);
+              if (line) {
+                await osgPauliLiveSpeakReply(line, pack, lang, isNight, {
+                  speechKey: intentHit.speechKey || "",
+                  segmentKey: intentHit.segmentKey || "",
+                });
+              }
+            }
+            return true;
+          }
+          if (intent === "delivery_recommend") {
+            if (PV && typeof PV.speakDeliveryRecommend === "function") {
+              await PV.speakDeliveryRecommend();
+            } else {
+              const line = osgPauliResolveIntentReply(intentHit, pack);
+              if (line) {
+                await osgPauliLiveSpeakReply(line, pack, lang, isNight, {
+                  speechKey: intentHit.speechKey || "",
+                  segmentKey: intentHit.segmentKey || "",
+                });
+              }
+            }
+            return true;
+          }
+          const infoKeyMap = {
+            delivery_safe: "delivery.voice.safeTts",
+            delivery_phone: "delivery.voice.phoneTts",
+            delivery_bundle: "delivery.voice.bundleTts",
+            delivery_night: "delivery.voice.nightTts",
+            delivery_home_wait: "delivery.voice.homeWaitTts",
+          };
+          const infoKey = infoKeyMap[intent];
+          if (infoKey) {
+            const pointTarget =
+              intent === "delivery_night" || intent === "delivery_safe"
+                ? sevenEl || panel || false
+                : panel || false;
+            if (PV && typeof PV.speakDeliveryInfo === "function") {
+              await PV.speakDeliveryInfo(infoKey, {
+                gesture: "help",
+                pointTarget: pointTarget,
+              });
+            } else {
+              const line = osgPauliResolveIntentReply(intentHit, pack);
+              if (line) {
+                await osgPauliLiveSpeakReply(line, pack, lang, isNight, {
+                  speechKey: intentHit.speechKey || "",
+                  segmentKey: intentHit.segmentKey || "",
+                });
+              }
+            }
+            return true;
+          }
+          return false;
+        }
+
         async function osgPauliHandleIntentHit(intentHit, pack, lang, isNight) {
           const line = osgPauliResolveIntentReply(intentHit, pack);
           if (!line) return false;
@@ -5818,6 +5994,19 @@
                   typeof window.OSG_INTENT_CLASSIFIER.classify === "function"
                     ? window.OSG_INTENT_CLASSIFIER.classify(userText, lang)
                     : null;
+                if (
+                  intentHit &&
+                  !intentHit.allowOpenAI &&
+                  (await osgPauliHandleDeliveryIntent(
+                    intentHit,
+                    pack,
+                    lang,
+                    isNight
+                  ))
+                ) {
+                  await listenOnce();
+                  return;
+                }
                 if (
                   intentHit &&
                   !intentHit.allowOpenAI &&

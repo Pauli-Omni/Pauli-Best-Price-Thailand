@@ -108,5 +108,12 @@
   "delivery.explainVoiceBtnAria": "Pauli reads a comparison of home delivery and 7-Eleven pickup aloud",
   "delivery.comparePriceNoteTpl": "Price: home delivery follows the marketplace. Our demo may show pickup comfort with tiers from {SHIP_S} to {SHIP_L} THB plus {PLATFORM_FEE} THB platform share — partner checkout counts.",
   "delivery.benefitsListAria": "Benefits of 7-Eleven pickup",
-  "delivery.pickupFieldsetAria": "Choose delivery: home or 7-Eleven pickup"
+  "delivery.pickupFieldsetAria": "Choose delivery: home or 7-Eleven pickup",
+  "delivery.voice.compareShortTts": "Quick compare: home delivery can mean waiting at home or driver calls on different days. Seven-Eleven pickup usually lets your parcel wait at a branch you choose — often with long hours, depending on the store. You decide; partner checkout sets the final price.",
+  "delivery.voice.recommendFullTts": "For this purchase I would recommend 7-Eleven pickup. First: no waiting at home for the driver. Second: less phone stress. Third: safer pickup at the store. Fourth: when available, the hub can bundle several deliveries.",
+  "delivery.voice.safeTts": "With store pickup your parcel is usually not left unattended at your door, and it is less exposed to rain or being misplaced.",
+  "delivery.voice.phoneTts": "Pickup often means more flexibility than classic home drops — you are less tied to every driver call, though marketplace rules still apply.",
+  "delivery.voice.bundleTts": "When this option is available, several orders can be bundled through the hub so you are not waiting for many separate drop-offs.",
+  "delivery.voice.nightTts": "Many branches stay open late — often into the evening or at night, depending on the store. Please check your chosen branch.",
+  "delivery.voice.homeWaitTts": "With home delivery you may need to be available or answer driver calls when parcels arrive on different days."
 }
