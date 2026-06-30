@@ -1,0 +1,36 @@
+---
+description: Pauli Auto-Run — sichere Tests ohne Run-Klick; Produktionsaktionen nur mit Freigabe
+alwaysApply: true
+---
+
+# Pauli Auto-Run (Voice P0 / Ops)
+
+Projekt-Hook: `.cursor/hooks/shell-auto-run-policy.mjs` (via `beforeShellExecution`).
+
+## Auto-Run erlaubt (ohne Freigabe)
+
+- `npm run render:verify-env`, `npm run render:go-live-check`
+- `bash deploy-check.sh`
+- `node scripts/osg-pauli-greeting-vision-verify.mjs`
+- `node scripts/osg-rcd-dialogue-verify.mjs`
+- `node scripts/osg-production-qa.mjs`, `osg-backend-production-verify.mjs`
+- `curl` nur Lesen: `/api/health`, `/api/tts`, `/api/pauli-chat` auf kanonischer URL (`pauli-best-price-api-nzbl.onrender.com`)
+- `ls`, `cat`, `grep`, `rg`, `find`, `pwd`, `git status|diff|log|show`
+- `npm test` (falls vorhanden)
+
+Kanonische Prod-URL: `scripts/osg-canonical-production-base.mjs` → `OSG_CANONICAL_PRODUCTION_BASE`.
+
+## Immer Gründerfreigabe (Hook → ask)
+
+- `git push`, `git commit`, `git reset --hard`, `git clean`
+- Deploy: `render:deploy-api`, `render:sync-involve`, `render:finish`, `render:bootstrap`
+- `npm publish`, `rm -rf`, Datei-Löschen
+- `.env` schreiben ohne direkte Anweisung
+- Render-API (`api.render.com`), Service suspend, Env-Sync-Skripte mit Deploy
+- API-Keys niemals in Chat/Logs ausgeben
+
+## Agent-Verhalten
+
+- Prüf-/Testbefehle direkt ausführen — nicht auf manuelles Run warten.
+- Keine produktionsverändernde Aktion ohne explizite Nutzerfreigabe.
+- Bei `permission: ask` vom Hook: Nutzer kurz informieren, warum Freigabe nötig ist.

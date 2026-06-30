@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "hooks": {
+    "beforeShellExecution": [
+      {
+        "command": "node .cursor/hooks/shell-auto-run-policy.mjs",
+        "timeout": 5
+      }
+    ]
+  }
+}
