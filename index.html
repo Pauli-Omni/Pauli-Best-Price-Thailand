@@ -670,14 +670,67 @@
             </button>
           </div>
         </div>
+        <section
+          class="delivery-choice-panel pickup-mode-fieldset"
+          id="delivery-choice-panel"
+          aria-labelledby="delivery-choice-heading"
+        >
+          <h2 id="delivery-choice-heading" class="pickup-mode-legend">&#8203;</h2>
+          <p id="delivery-choice-prompt" class="pickup-mode-hint"></p>
+          <div
+            class="delivery-option-grid"
+            role="group"
+            aria-labelledby="delivery-choice-heading"
+          >
+            <article
+              id="delivery-home-card"
+              class="delivery-option-card"
+              aria-labelledby="delivery-home-title"
+            >
+              <h3 id="delivery-home-title" class="delivery-option-title">&#8203;</h3>
+              <p id="delivery-home-short" class="delivery-option-body"></p>
+            </article>
+            <article
+              id="delivery-seven-card"
+              class="delivery-option-card delivery-option-card--preferred"
+              aria-labelledby="delivery-seven-title"
+            >
+              <h3 id="delivery-seven-title" class="delivery-option-title">&#8203;</h3>
+              <p id="delivery-seven-short" class="delivery-option-body"></p>
+              <ul
+                id="delivery-seven-benefits-list"
+                class="delivery-benefits-list"
+              ></ul>
+            </article>
+          </div>
+          <p id="delivery-bundle-note" class="pickup-mode-hint"></p>
+          <p
+            id="delivery-compare-price-note"
+            class="pickup-mode-hint"
+            aria-live="polite"
+          ></p>
+          <p
+            id="delivery-prepared-status"
+            class="pickup-mode-hint delivery-prepared-status"
+          ></p>
+          <p
+            id="delivery-choice-confirm"
+            class="pickup-mode-hint"
+            aria-live="polite"
+          ></p>
+          <button
+            type="button"
+            class="delivery-explain-btn"
+            id="delivery-explain-voice-btn"
+            aria-label=" "
+          >&#8203;</button>
+        </section>
         <fieldset
           class="pickup-mode-fieldset"
           id="pickup-mode-fieldset"
           aria-labelledby="pickup-mode-legend"
         >
-          <legend id="pickup-mode-legend" class="pickup-mode-legend">
-            Fulfillment‑Auswahl (wirkt auf Gutschein‑Sichtbarkeit)
-          </legend>
+          <legend id="pickup-mode-legend" class="pickup-mode-legend">&#8203;</legend>
           <div class="pickup-mode-options">
             <label class="pickup-mode-choice">
               <input

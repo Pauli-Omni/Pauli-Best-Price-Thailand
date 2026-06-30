@@ -111,6 +111,14 @@ function appendLeadLine(obj) {
       Number.isFinite(obj.voucherMinimumBasketThb)
         ? obj.voucherMinimumBasketThb
         : undefined,
+    deliveryPreference:
+      typeof obj.deliveryPreference === "string"
+        ? obj.deliveryPreference.slice(0, 40)
+        : "",
+    deliveryReason:
+      typeof obj.deliveryReason === "string"
+        ? obj.deliveryReason.slice(0, 96)
+        : "",
     ageConfirmed20: !!obj.ageConfirmed20,
     ageGateSector:
       typeof obj.ageGateSector === "string"

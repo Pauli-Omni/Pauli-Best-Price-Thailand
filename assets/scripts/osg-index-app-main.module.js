@@ -626,6 +626,152 @@
           });
         }
 
+        function osgDeliveryVoicePackLine(pack, key) {
+          const I = window.__OSG_I18N;
+          const code = packLangFromDocument();
+          const p =
+            pack ||
+            window.__OSG_CURRENT_PACK_CACHE ||
+            (I && I.T && (I.T[code] || I.T.en || I.T.de)) ||
+            {};
+          let line = String(
+            p[key] || (I?.T?.en && I.T.en[key]) || (I?.T?.de && I.T.de[key]) || ""
+          ).trim();
+          const C = window.OSG_COMMERCE;
+          if (C && line) {
+            line = line
+              .replace(/\{SHIP_S\}/g, String(C.SHIP_THB_TIER_S || 39))
+              .replace(/\{SHIP_M\}/g, String(C.SHIP_THB_TIER_M || 59))
+              .replace(/\{SHIP_L\}/g, String(C.SHIP_THB_TIER_L || 99))
+              .replace(
+                /\{PLATFORM_FEE\}/g,
+                String(C.PICKUP_SERVICE_MARGIN_THB || 59)
+              );
+          }
+          return line;
+        }
+
+        async function speakPauliDeliveryChoicePrompt() {
+          const I = window.__OSG_I18N;
+          if (!I) return;
+          const code = packLangFromDocument();
+          const pack =
+            window.__OSG_CURRENT_PACK_CACHE ||
+            (I.T && (I.T[code] || I.T.en || I.T.de)) ||
+            {};
+          const panel = document.getElementById("delivery-choice-panel");
+          const sevenEl = document.getElementById("pickup-mode-seven");
+          const promptUi = osgDeliveryVoicePackLine(pack, "delivery.choicePrompt");
+          const line1 = osgDeliveryVoicePackLine(pack, "delivery.choicePromptTts");
+          const line2 = osgDeliveryVoicePackLine(pack, "delivery.seven.recommendTts");
+          const spoken1 = line1 || promptUi;
+          if (!spoken1 && !line2) return;
+          try {
+            if (typeof window.pauliLiveCaptionShow === "function" && promptUi) {
+              window.pauliLiveCaptionShow(promptUi);
+            }
+          } catch (_) {}
+          if (typeof window.osgAvatarSpeakLine === "function") {
+            if (spoken1) {
+              await window.osgAvatarSpeakLine(spoken1, {
+                gesture: "help",
+                speechKey: "delivery.choicePromptTts",
+                pointTarget: panel || false,
+                pointDuration: Math.min(
+                  18000,
+                  Math.max(8000, spoken1.length * 68)
+                ),
+              });
+            }
+            if (line2) {
+              await window.osgAvatarSpeakLine(line2, {
+                gesture: "confirm",
+                speechKey: "delivery.seven.recommendTts",
+                pointTarget: sevenEl || panel || false,
+                pointDuration: Math.min(
+                  14000,
+                  Math.max(6000, line2.length * 68)
+                ),
+              });
+            }
+            return;
+          }
+          if (spoken1) {
+            await speakPauliLine(spoken1, code, {
+              speechKey: "delivery.choicePromptTts",
+            });
+          }
+          if (line2) {
+            await speakPauliLine(line2, code, {
+              speechKey: "delivery.seven.recommendTts",
+            });
+          }
+        }
+
+        async function speakPauliDeliveryConfirmSeven() {
+          const I = window.__OSG_I18N;
+          if (!I) return;
+          const code = packLangFromDocument();
+          const pack =
+            window.__OSG_CURRENT_PACK_CACHE ||
+            (I.T && (I.T[code] || I.T.en || I.T.de)) ||
+            {};
+          const sevenEl = document.getElementById("pickup-mode-seven");
+          const line =
+            osgDeliveryVoicePackLine(pack, "delivery.choiceConfirmSevenTts") ||
+            osgDeliveryVoicePackLine(pack, "delivery.choiceConfirmSeven");
+          if (!line) return;
+          try {
+            if (typeof window.pauliLiveCaptionShow === "function") {
+              window.pauliLiveCaptionShow(line);
+            }
+          } catch (_) {}
+          if (typeof window.osgAvatarSpeakLine === "function") {
+            await window.osgAvatarSpeakLine(line, {
+              gesture: "confirm",
+              speechKey: "delivery.choiceConfirmSevenTts",
+              pointTarget: sevenEl || false,
+              pointDuration: Math.min(12000, Math.max(5000, line.length * 68)),
+            });
+            return;
+          }
+          await speakPauliLine(line, code, {
+            speechKey: "delivery.choiceConfirmSevenTts",
+          });
+        }
+
+        async function speakPauliDeliveryConfirmHome() {
+          const I = window.__OSG_I18N;
+          if (!I) return;
+          const code = packLangFromDocument();
+          const pack =
+            window.__OSG_CURRENT_PACK_CACHE ||
+            (I.T && (I.T[code] || I.T.en || I.T.de)) ||
+            {};
+          const homeEl = document.getElementById("pickup-mode-marketplace");
+          const line =
+            osgDeliveryVoicePackLine(pack, "delivery.choiceConfirmHomeTts") ||
+            osgDeliveryVoicePackLine(pack, "delivery.choiceConfirmHome");
+          if (!line) return;
+          try {
+            if (typeof window.pauliLiveCaptionShow === "function") {
+              window.pauliLiveCaptionShow(line);
+            }
+          } catch (_) {}
+          if (typeof window.osgAvatarSpeakLine === "function") {
+            await window.osgAvatarSpeakLine(line, {
+              gesture: "acknowledge",
+              speechKey: "delivery.choiceConfirmHomeTts",
+              pointTarget: homeEl || false,
+              pointDuration: Math.min(10000, Math.max(4200, line.length * 68)),
+            });
+            return;
+          }
+          await speakPauliLine(line, code, {
+            speechKey: "delivery.choiceConfirmHomeTts",
+          });
+        }
+
         async function speakPauliSevenVoucherTrackingWarn() {
           const I = window.__OSG_I18N;
           if (!I) return;
@@ -706,6 +852,9 @@
           speakPartnerHandoff: speakPauliPartnerHandoff,
           speakSevenPickupReward: speakPauliSevenPickupReward,
           speakLiveTrackingFirstExplain: speakPauliLiveTrackingFirstExplain,
+          speakDeliveryChoicePrompt: speakPauliDeliveryChoicePrompt,
+          speakDeliveryConfirmSeven: speakPauliDeliveryConfirmSeven,
+          speakDeliveryConfirmHome: speakPauliDeliveryConfirmHome,
           speakSevenVoucherTrackingWarn: speakPauliSevenVoucherTrackingWarn,
           speakSevenVoucherActivated: speakPauliSevenVoucherActivated,
           speakSevenVoucherQrOpenBrief: speakPauliSevenVoucherQrOpenBrief,

@@ -127,6 +127,48 @@ window.OSG_LOCALES = {
               "Es werden keine Rabatt‑Gutscheine angezeigt; die Shop-Buttons nutzen ausschließlich osg_*‑Affiliate ohne Gutschein-Parameter.",
             pickupHintSevenChosen:
               "Wähle „7‑Eleven“ und Live‑Tracking — der 15 THB‑Gutschein gilt nur zusammen mit mindestens 45 THB Einkauf am selben Store und läuft 120 Min. nach Aktivierung.",
+            "delivery.panelHeading": "Lieferart vor dem Kauf",
+            "delivery.home.title": "Lieferung nach Hause",
+            "delivery.home.short":
+              "Der Marktplatz liefert an deine Adresse. Mehrere Pakete können an verschiedenen Tagen kommen — du musst ggf. zu Hause warten oder Anrufe von Fahrern annehmen.",
+            "delivery.seven.title": "Abholung bei 7‑Eleven",
+            "delivery.seven.short":
+              "Komfortoption: dein Paket wartet in einer Wunsch-Filiale — du holst ab, wenn es dir passt.",
+            "delivery.seven.benefits": "Vorteile der Abholung (Übersicht)",
+            "delivery.seven.bundle":
+              "Wenn mehrere Bestellungen zusammenkommen, kann der Hub sie bündeln — du wartest nicht auf fünf einzelne Lieferungen.",
+            "delivery.seven.nightPickup":
+              "Viele Filialen haben lange Öffnungszeiten — oft auch spät abends oder in der Nacht, je nach Filiale.",
+            "delivery.seven.safeStorage":
+              "Das Paket liegt nicht vor der Tür, wird nicht nass und verschwindet nicht unter einer Rampe.",
+            "delivery.seven.noPhoneStress":
+              "Weniger Telefonstress: du musst nicht jedem Fahrer extra antworten, nur weil ein anderes Paket unterwegs ist.",
+            "delivery.choicePrompt":
+              "Wie möchtest du dein Paket erhalten — nach Hause oder Abholung bei 7‑Eleven? Du entscheidest.",
+            "delivery.choicePromptTts":
+              "Ich vergleiche beide Wege kurz. Bei Hauslieferung kann es mehrere Fahrer an verschiedenen Tagen geben — du wartest ggf. zu Hause. Bei 7‑Eleven wartet dein Paket in der Regel sicher in deiner Wunsch-Filiale, viele Filialen haben lange Öffnungszeiten, je nach Standort. Über den vorbereiteten Hub können Bestellungen gebündelt werden. Preis bei Hauslieferung: Marktplatz. In unserer Demo zeigen wir Abhol-Komfort oft mit Staffeln von {SHIP_S} bis {SHIP_L} THB plus {PLATFORM_FEE} THB Plattformanteil — der Partner-Checkout zählt.",
+            "delivery.seven.recommend":
+              "Ich würde dir hier die 7‑Eleven-Abholung empfehlen. Du musst nicht zu Hause auf den Fahrer warten, bekommst weniger Telefonstress und kannst dein Paket später sicher in deiner Wunsch-Filiale abholen.",
+            "delivery.seven.recommendTts":
+              "Ich würde dir hier die 7‑Eleven-Abholung empfehlen. Du musst nicht zu Hause auf den Fahrer warten, bekommst weniger Telefonstress und kannst dein Paket später sicher in deiner Wunsch-Filiale abholen.",
+            "delivery.choiceConfirmSeven":
+              "Gute Wahl. Ich bereite die Abholung nach dem aktuell verfügbaren Systemstand vor. Sobald alles bereit ist, bekommst du deinen QR-Code.",
+            "delivery.choiceConfirmSevenTts":
+              "Gute Wahl. Ich bereite die Abholung nach dem aktuell verfügbaren Systemstand vor. Sobald alles bereit ist, bekommst du deinen QR-Code.",
+            "delivery.choiceConfirmHome":
+              "Alles klar — du bleibst bei der Hauslieferung über den Marktplatz.",
+            "delivery.choiceConfirmHomeTts":
+              "Alles klar — du bleibst bei der Hauslieferung über den Marktplatz.",
+            "delivery.preparedStatusNote":
+              "Status: Abholpfad vorbereitet (Demo/Rollout) — noch keine Live-Logistik-API. QR und Session-Tracking-Gate gelten wie dokumentiert.",
+            "delivery.explainVoiceBtn": "Pauli erklärt beide Optionen",
+            "delivery.explainVoiceBtnAria":
+              "Pauli liest Vergleich von Hauslieferung und 7‑Eleven-Abholung vor",
+            "delivery.comparePriceNoteTpl":
+              "Preis: Hauslieferung richtet sich nach dem Marktplatz. In unserer Demo zeigen wir Abhol-Komfort oft mit Staffeln ab {SHIP_S} bis {SHIP_L} THB plus {PLATFORM_FEE} THB Plattformanteil — der Partner-Checkout zählt.",
+            "delivery.benefitsListAria": "Vorteile der 7‑Eleven-Abholung",
+            "delivery.pickupFieldsetAria":
+              "Lieferart wählen: nach Hause oder 7‑Eleven-Abholung",
             voucherNeedLiveTrackingExplain:
               "Der Gutschein erscheint nur mit LIVE‑TRACKING UND „Abholung bei 7‑Eleven“; Einlösung setzt WKZ ≥ 45 THB voraus.",
             sevenVoucherRequireTrackingTtsWithName:
@@ -1062,6 +1104,48 @@ window.OSG_LOCALES = {
               "No discount vouchers appear here — shop buttons carry standard osg_* tagging without voucher parameters.",
             pickupHintSevenChosen:
               "Seven fulfilment plus live-tracking must both be ON. The Pauli‑001 THB 15 credit needs a qualifying ≥ THB 45 Seven basket and survives only 120 minutes after activation opens the QR.",
+            "delivery.panelHeading": "Delivery choice before purchase",
+            "delivery.home.title": "Home delivery",
+            "delivery.home.short":
+              "The marketplace ships to your address. Several parcels may arrive on different days — you may need to wait at home or take calls from drivers.",
+            "delivery.seven.title": "Pick up at 7‑Eleven",
+            "delivery.seven.short":
+              "Comfort option: your parcel waits at a store you choose — you collect when it suits you.",
+            "delivery.seven.benefits": "7‑Eleven pickup benefits (overview)",
+            "delivery.seven.bundle":
+              "When several orders come together, the hub can bundle them so you are not waiting for five separate drop-offs.",
+            "delivery.seven.nightPickup":
+              "Many stores stay open late — often into the evening or at night, depending on the branch.",
+            "delivery.seven.safeStorage":
+              "Your parcel is not left at the door, does not get wet, and is less likely to be misplaced.",
+            "delivery.seven.noPhoneStress":
+              "Less phone stress: you do not have to answer every driver call just because another parcel is on the way.",
+            "delivery.choicePrompt":
+              "How would you like to receive your parcel — home delivery or 7‑Eleven pickup? You decide.",
+            "delivery.choicePromptTts":
+              "Let me compare both options. Home delivery can mean waiting at home or several driver calls on different days. With 7‑Eleven pickup your parcel usually waits safely at a branch you pick — often with long opening hours, depending on the store. Bundling via our prepared hub path can reduce separate drop-offs. Price follows the marketplace for home delivery; our demo shows pickup tiers from {SHIP_S} to {SHIP_L} THB plus a {PLATFORM_FEE} THB platform share where displayed — partner checkout applies.",
+            "delivery.seven.recommend":
+              "I would recommend 7‑Eleven pickup here. You do not have to wait at home for the driver, you avoid unnecessary phone calls, and your parcel waits safely at your chosen store.",
+            "delivery.seven.recommendTts":
+              "I would recommend 7‑Eleven pickup here. You do not have to wait at home for the driver, you avoid unnecessary phone calls, and your parcel waits safely at your chosen store.",
+            "delivery.choiceConfirmSeven":
+              "Good choice. I am preparing pickup through the currently available setup. When everything is ready, you will get your QR code.",
+            "delivery.choiceConfirmSevenTts":
+              "Good choice. I am preparing pickup through the currently available setup. When everything is ready, you will get your QR code.",
+            "delivery.choiceConfirmHome":
+              "Understood — you stay on marketplace home delivery.",
+            "delivery.choiceConfirmHomeTts":
+              "Understood — you stay on marketplace home delivery.",
+            "delivery.preparedStatusNote":
+              "Status: pickup path prepared (demo / rollout) — no live logistics API yet. QR and session tracking gate apply as documented.",
+            "delivery.explainVoiceBtn": "Hear Pauli explain both options",
+            "delivery.explainVoiceBtnAria":
+              "Pauli reads a comparison of home delivery and 7‑Eleven pickup aloud",
+            "delivery.comparePriceNoteTpl":
+              "Price: home delivery follows the marketplace. Our demo may show pickup comfort with tiers from {SHIP_S} to {SHIP_L} THB plus {PLATFORM_FEE} THB platform share — partner checkout counts.",
+            "delivery.benefitsListAria": "Benefits of 7‑Eleven pickup",
+            "delivery.pickupFieldsetAria":
+              "Choose delivery: home or 7‑Eleven pickup",
             voucherNeedLiveTrackingExplain:
               "This voucher renders only after LIVE‑TRACKING is toggled ON with Seven fulfilment; checkout requires tracking evidence plus the THB 45 basket rule documented in QR.",
             sevenVoucherRequireTrackingTtsWithName:
@@ -1626,6 +1710,48 @@ window.OSG_LOCALES = {
               "ไม่แสดงคูปองส่วนลดในหน้านี้ — ปุ่มร้านใช้เฉพาะแท็ก osg_* ไม่มีพารามิเตอร์คูปองสำหรับ marketplace",
             pickupHintSevenChosen:
               "ต้องเลือกเซเว่นและเปิด Live‑Tracking; คูปอง 15 THB ใช้ได้ภายใน 120 นาทีหลังเปิด QR และต้องยอดซื้อครั้งนั้น ≥ 45 THB",
+            "delivery.panelHeading": "เลือกวิธีรับของก่อนซื้อ",
+            "delivery.home.title": "จัดส่งถึงบ้าน",
+            "delivery.home.short":
+              "มาร์เก็ตเพลสจัดส่งตามที่อยู่ของคุณ หลายพัสดุอาจมาคนละวัน — อาจต้องรอที่บ้านหรือรับสายจากคนขับ",
+            "delivery.seven.title": "รับที่ 7‑Eleven",
+            "delivery.seven.short":
+              "ทางเลือกสะดวก: พัสดุรอที่สาขาที่คุณเลือก — ไปรับเมื่อไหร่ก็ได้ที่สะดวก",
+            "delivery.seven.benefits": "ข้อดีการรับที่เซเว่น (สรุป)",
+            "delivery.seven.bundle":
+              "ถ้ามีหลายออเดอร์พร้อมกัน ระบบฮับอาจรวมให้ — ไม่ต้องรอรับของห้าครั้งแยกกัน",
+            "delivery.seven.nightPickup":
+              "หลายสาขาเปิดนาน — บ่อยครั้งถึงเย็นหรือดึก ขึ้นกับสาขา",
+            "delivery.seven.safeStorage":
+              "พัสดุไม่วางหน้าประตู ไม่เปียก และหายากกว่าที่วางริมทางเดิน",
+            "delivery.seven.noPhoneStress":
+              "โทรน้อยลง: ไม่ต้องรับสายคนขับทุกครั้งแค่เพราะมีอีกพัสดุหนึ่ง",
+            "delivery.choicePrompt":
+              "อยากรับพัสดุแบบไหน — ส่งถึงบ้านหรือรับที่ 7‑Eleven? คุณตัดสินใจเอง",
+            "delivery.choicePromptTts":
+              "ผมสรุปสองทางให้นะ ส่งบ้านอาจมีคนขับโทรหลายวันและต้องรอที่บ้าน รับที่เซเว่นพัสดุมักรอปลอดภัยที่สาขาที่เลือก หลายสาขาเปิดนานขึ้นกับที่ตั้ง ระบบฮับที่เตรียมไว้อาจรวมออเดอร์ได้ ราคาส่งบ้านตามมาร์เก็ตเพลส ในเดโมเราแสดงชั้นรับที่เซเว่นประมาณ {SHIP_S}–{SHIP_L} บาท บวกส่วนแพลตฟอร์ม {PLATFORM_FEE} บาทตามที่แสดง — ยอดจริงที่เช็คเอาต์พาร์ทเนอร์",
+            "delivery.seven.recommend":
+              "ผมแนะนำรับที่ 7‑Eleven ในเคสนี้ ไม่ต้องรอคนขับที่บ้าน โทรน้อยลง และพัสดุรอปลอดภัยที่สาขาที่คุณเลือก",
+            "delivery.seven.recommendTts":
+              "ผมแนะนำรับที่ 7‑Eleven ในเคสนี้ ไม่ต้องรอคนขับที่บ้าน โทรน้อยลง และพัสดุรอปลอดภัยที่สาขาที่คุณเลือก",
+            "delivery.choiceConfirmSeven":
+              "เลือกดีครับ ผมเตรียมการรับตามระบบที่มีตอนนี้ เมื่อพร้อมคุณจะได้ QR โค้ด",
+            "delivery.choiceConfirmSevenTts":
+              "เลือกดีครับ ผมเตรียมการรับตามระบบที่มีตอนนี้ เมื่อพร้อมคุณจะได้ QR โค้ด",
+            "delivery.choiceConfirmHome":
+              "รับทราบ — คุณใช้จัดส่งถึงบ้านผ่านมาร์เก็ตเพลส",
+            "delivery.choiceConfirmHomeTts":
+              "รับทราบ — คุณใช้จัดส่งถึงบ้านผ่านมาร์เก็ตเพลส",
+            "delivery.preparedStatusNote":
+              "สถานะ: เส้นทางรับที่เซเว่นเตรียมไว้ (เดโม/กำลังเปิด) — ยังไม่มี API โลจิสติกส์จริง QR และเกตติดตามเซสชันตามที่อธิบาย",
+            "delivery.explainVoiceBtn": "ให้ Pauli อธิบายทั้งสองทาง",
+            "delivery.explainVoiceBtnAria":
+              "Pauli อ่านเปรียบเทียบส่งบ้านกับรับที่ 7‑Eleven",
+            "delivery.comparePriceNoteTpl":
+              "ราคา: ส่งบ้านตามมาร์เก็ตเพลส เดโมอาจแสดงรับที่เซเว่นชั้น {SHIP_S}–{SHIP_L} บาท บวกแพลตฟอร์ม {PLATFORM_FEE} บาท — ยอดที่เช็คเอาต์พาร์ทเนอร์สำคัญ",
+            "delivery.benefitsListAria": "ข้อดีการรับที่ 7‑Eleven",
+            "delivery.pickupFieldsetAria":
+              "เลือกการรับ: ส่งบ้านหรือรับที่ 7‑Eleven",
             voucherNeedLiveTrackingExplain:
               "คูปองปรากฏเมื่อเปิด Live‑Tracking และเลือก Seven เท่านั้น — ต้องมีหลักฐานการติดตามและยอดซื้อขั้นต่ำ 45 THB ตามข้อกำหนด",
             sevenVoucherRequireTrackingTtsWithName:
@@ -2470,6 +2596,48 @@ window.OSG_LOCALES = {
               "Tu nie pojawiają się kupon rabatowy — przyciski sklepów noszą osg_* bez parametrów vouchera.",
             pickupHintSevenChosen:
               "Seven + aktywny live-tracking są obowiązkowe; bon 15 THB przez 120 min od otwarcia QR; minimum koszyka 45 THB przy tej transakcji.",
+            "delivery.panelHeading": "Wybór dostawy przed zakupem",
+            "delivery.home.title": "Dostawa do domu",
+            "delivery.home.short":
+              "Marketplace wysyła pod Twój adres. Kilka paczek może przyjść w różne dni — być może musisz czekać w domu lub odbierać telefony od kurierów.",
+            "delivery.seven.title": "Odbiór w 7‑Eleven",
+            "delivery.seven.short":
+              "Opcja wygodna: paczka czeka w wybranym sklepie — odbierasz, kiedy Ci pasuje.",
+            "delivery.seven.benefits": "Korzyści odbioru w 7‑Eleven (przegląd)",
+            "delivery.seven.bundle":
+              "Gdy kilka zamówień się łączy, hub może je zgrupować — nie czekasz na pięć osobnych dostaw.",
+            "delivery.seven.nightPickup":
+              "Wiele punktów jest otwartych długo — często do późnego wieczora lub w nocy, zależnie od placówki.",
+            "delivery.seven.safeStorage":
+              "Paczka nie leży pod drzwiami, nie moknie i rzadziej ginie pod schodami.",
+            "delivery.seven.noPhoneStress":
+              "Mniej stresu telefonicznego: nie musisz odbierać każdego kuriera tylko dlatego, że jedzie inna przesyłka.",
+            "delivery.choicePrompt":
+              "Jak chcesz odebrać paczkę — do domu czy w 7‑Eleven? Ty decydujesz.",
+            "delivery.choicePromptTts":
+              "Porównam obie opcje. Przy dostawie do domu bywa kilku kurierów w różne dni — możesz czekać w domu. Przy 7‑Eleven paczka zwykle czeka bezpiecznie w wybranym sklepie — wiele punktów ma długie godziny, zależnie od placówki. Przygotowany hub może grupować zamówienia. Cena do domu według marketplace; w demo pokazujemy odbiór od {SHIP_S} do {SHIP_L} THB plus {PLATFORM_FEE} THB udziału platformy — liczy się checkout partnera.",
+            "delivery.seven.recommend":
+              "Polecam tu odbiór w 7‑Eleven. Nie musisz czekać w domu na kuriera, masz mniej niepotrzebnych telefonów, a paczka czeka bezpiecznie w wybranym sklepie.",
+            "delivery.seven.recommendTts":
+              "Polecam tu odbiór w 7‑Eleven. Nie musisz czekać w domu na kuriera, masz mniej niepotrzebnych telefonów, a paczka czeka bezpiecznie w wybranym sklepie.",
+            "delivery.choiceConfirmSeven":
+              "Dobry wybór. Przygotowuję odbiór według aktualnie dostępnego systemu. Gdy wszystko będzie gotowe, dostaniesz kod QR.",
+            "delivery.choiceConfirmSevenTts":
+              "Dobry wybór. Przygotowuję odbiór według aktualnie dostępnego systemu. Gdy wszystko będzie gotowe, dostaniesz kod QR.",
+            "delivery.choiceConfirmHome":
+              "Jasne — zostajesz przy dostawie do domu przez marketplace.",
+            "delivery.choiceConfirmHomeTts":
+              "Jasne — zostajesz przy dostawie do domu przez marketplace.",
+            "delivery.preparedStatusNote":
+              "Status: ścieżka odbioru przygotowana (demo / wdrożenie) — bez live API logistyki. QR i bramka śledzenia sesji jak w dokumentacji.",
+            "delivery.explainVoiceBtn": "Niech Pauli wyjaśni obie opcje",
+            "delivery.explainVoiceBtnAria":
+              "Pauli czyta na głos porównanie dostawy do domu i odbioru w 7‑Eleven",
+            "delivery.comparePriceNoteTpl":
+              "Cena: dostawa do domu według marketplace. W demo odbiór może pokazywać progi od {SHIP_S} do {SHIP_L} THB plus {PLATFORM_FEE} THB platformy — liczy się checkout partnera.",
+            "delivery.benefitsListAria": "Korzyści odbioru w 7‑Eleven",
+            "delivery.pickupFieldsetAria":
+              "Wybierz dostawę: do domu lub odbiór w 7‑Eleven",
             voucherNeedLiveTrackingExplain:
               "Kupon pojawia się tylko przy włączonym live-trackingu i trybie Seven — potrzebny jest dowód śledzenia oraz minimum paragonowe 45 THB wg warunków.",
             sevenVoucherRequireTrackingTtsWithName:
@@ -3289,6 +3457,48 @@ window.OSG_LOCALES = {
               "На этой вкладке купоны скрыты — кнопки магазинов несут osg_* без параметров промокода.",
             pickupHintSevenChosen:
               "Нужен Seven и активный трекинг; ваучер 15 THB живёт 120 минут после открытия QR; минимальная сумма по чеку 45 THB.",
+            "delivery.panelHeading": "Выбор доставки перед покупкой",
+            "delivery.home.title": "Доставка на дом",
+            "delivery.home.short":
+              "Маркетплейс везёт по вашему адресу. Несколько посылок могут прийти в разные дни — возможно, придётся ждать дома или отвечать на звонки курьеров.",
+            "delivery.seven.title": "Самовывоз в 7‑Eleven",
+            "delivery.seven.short":
+              "Удобный вариант: посылка ждёт в выбранном магазине — забираете, когда удобно.",
+            "delivery.seven.benefits": "Плюсы самовывоза в 7‑Eleven (обзор)",
+            "delivery.seven.bundle":
+              "Если несколько заказов совпадают, хаб может объединить их — не ждёте пять отдельных доставок.",
+            "delivery.seven.nightPickup":
+              "Многие точки работают долго — часто до позднего вечера или ночи, зависит от филиала.",
+            "delivery.seven.safeStorage":
+              "Посылка не лежит у двери, не намокает и реже теряется под лестницей.",
+            "delivery.seven.noPhoneStress":
+              "Меньше звонков: не нужно отвечать каждому курьеру только из‑за другой посылки.",
+            "delivery.choicePrompt":
+              "Как получить посылку — на дом или в 7‑Eleven? Решаете вы.",
+            "delivery.choicePromptTts":
+              "Сравню оба варианта. Домой — иногда несколько курьеров в разные дни, ждёте дома. В 7‑Eleven посылка обычно ждёт в выбранном магазине — у многих точек длинный график, зависит от филиала. Подготовленный хаб может объединять заказы. Цена домой — по маркетплейсу; в демо показываем самовывоз от {SHIP_S} до {SHIP_L} THB плюс {PLATFORM_FEE} THB доли платформы — считается checkout партнёра.",
+            "delivery.seven.recommend":
+              "Здесь я бы рекомендовал самовывоз в 7‑Eleven. Не ждёте курьера дома, меньше лишних звонков, посылка ждёт в выбранном магазине.",
+            "delivery.seven.recommendTts":
+              "Здесь я бы рекомендовал самовывоз в 7‑Eleven. Не ждёте курьера дома, меньше лишних звонков, посылка ждёт в выбранном магазине.",
+            "delivery.choiceConfirmSeven":
+              "Хороший выбор. Готовлю самовывоз по текущей доступной схеме. Когда всё готово — получите QR‑код.",
+            "delivery.choiceConfirmSevenTts":
+              "Хороший выбор. Готовлю самовывоз по текущей доступной схеме. Когда всё готово — получите QR‑код.",
+            "delivery.choiceConfirmHome":
+              "Понял — остаётесь на доставку через маркетплейс.",
+            "delivery.choiceConfirmHomeTts":
+              "Понял — остаётесь на доставку через маркетплейс.",
+            "delivery.preparedStatusNote":
+              "Статус: путь самовывоза подготовлен (демо / внедрение) — live API логистики пока нет. QR и сессионный трекинг как в документации.",
+            "delivery.explainVoiceBtn": "Pauli объяснит оба варианта",
+            "delivery.explainVoiceBtnAria":
+              "Pauli вслух сравнивает доставку на дом и самовывоз в 7‑Eleven",
+            "delivery.comparePriceNoteTpl":
+              "Цена: домой — по маркетплейсу. В демо самовывоз может показывать уровни от {SHIP_S} до {SHIP_L} THB плюс {PLATFORM_FEE} THB платформы — важен checkout партнёра.",
+            "delivery.benefitsListAria": "Плюсы самовывоза в 7‑Eleven",
+            "delivery.pickupFieldsetAria":
+              "Выберите доставку: на дом или самовывоз в 7‑Eleven",
             voucherNeedLiveTrackingExplain:
               "Вкладка покажет ваучер только при активном live‑tracking и режиме Seven — нужно доказательство трекинга и условие чека минимум 45 THB.",
             sevenVoucherRequireTrackingTtsWithName:
@@ -4103,6 +4313,48 @@ window.OSG_LOCALES = {
               "本页不向 marketplace 结账展示代金券 — 购物按钮仅为 osg_* 追踪，不包含券参数。",
             pickupHintSevenChosen:
               "须选 Seven 并保持实时追踪；15 THB 券首次打开 QR 后 120 分钟内有效；当次消费须≥ 45 THB。",
+            "delivery.panelHeading": "购买前选择收货方式",
+            "delivery.home.title": "送货上门",
+            "delivery.home.short":
+              "平台按地址配送。多件包裹可能分几天到达——你可能需要在家等候或接听快递员电话。",
+            "delivery.seven.title": "7‑Eleven 自取",
+            "delivery.seven.short":
+              "更方便：包裹在你选的门店等候——方便时再去取。",
+            "delivery.seven.benefits": "7‑Eleven 自取优点（概览）",
+            "delivery.seven.bundle":
+              "多笔订单可经枢纽合并——不必等五次分开配送。",
+            "delivery.seven.nightPickup":
+              "许多门店营业时间长——常至晚间或夜间，视门店而定。",
+            "delivery.seven.safeStorage":
+              "包裹不会放在门口、不会淋湿，也更不容易丢在楼梯下。",
+            "delivery.seven.noPhoneStress":
+              "电话更少：不必因另一件包裹每次都接快递员电话。",
+            "delivery.choicePrompt":
+              "你想怎么收货——送货上门还是 7‑Eleven 自取？由你决定。",
+            "delivery.choicePromptTts":
+              "我简单对比两种方式。送货上门可能多天多位快递员、需在家等。7‑Eleven 自取通常在你选的门店安全等候——许多门店营业时间较长，视门店而定。已准备的枢纽路径可合并订单。送货上门价格按平台；演示中自取层级约 {SHIP_S}–{SHIP_L} 泰铢，另加平台份额 {PLATFORM_FEE} 泰铢——以合作方结账为准。",
+            "delivery.seven.recommend":
+              "这里我建议 7‑Eleven 自取。不必在家等快递员，少接无谓电话，包裹在你选的门店安全等候。",
+            "delivery.seven.recommendTts":
+              "这里我建议 7‑Eleven 自取。不必在家等快递员，少接无谓电话，包裹在你选的门店安全等候。",
+            "delivery.choiceConfirmSeven":
+              "选得好。我按当前可用系统准备自取。一切就绪后你会收到二维码。",
+            "delivery.choiceConfirmSevenTts":
+              "选得好。我按当前可用系统准备自取。一切就绪后你会收到二维码。",
+            "delivery.choiceConfirmHome":
+              "明白——你继续使用平台送货上门。",
+            "delivery.choiceConfirmHomeTts":
+              "明白——你继续使用平台送货上门。",
+            "delivery.preparedStatusNote":
+              "状态：自取路径已准备（演示/ rollout）——尚无实时物流 API。二维码与会话追踪门控按文档执行。",
+            "delivery.explainVoiceBtn": "请 Pauli 说明两种方式",
+            "delivery.explainVoiceBtnAria":
+              "Pauli 朗读送货上门与 7‑Eleven 自取的对比",
+            "delivery.comparePriceNoteTpl":
+              "价格：送货上门按平台。演示中自取可能显示 {SHIP_S}–{SHIP_L} 泰铢层级，另加平台 {PLATFORM_FEE} 泰铢——以合作方结账为准。",
+            "delivery.benefitsListAria": "7‑Eleven 自取优点",
+            "delivery.pickupFieldsetAria":
+              "选择收货方式：送货上门或 7‑Eleven 自取",
             voucherNeedLiveTrackingExplain:
               "仅当实时追踪已开且选自取 Seven 时才显示代金券 — 须提供追踪佐证并满足单笔小票≥ 45 THB 条件。",
             sevenVoucherRequireTrackingTtsWithName:

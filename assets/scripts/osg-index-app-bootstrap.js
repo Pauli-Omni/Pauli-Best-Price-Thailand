@@ -123,6 +123,13 @@
           if (!path || path.charAt(0) !== "/") path = "/" + path.replace(/^\/+/, "");
           var base = osgApiBase();
           if (!base) return path;
+          try {
+            if (typeof window !== "undefined" && window.location && window.location.origin) {
+              var pageOrigin = String(window.location.origin || "").replace(/\/$/, "");
+              var apiOrigin = String(base).replace(/\/$/, "");
+              if (pageOrigin && apiOrigin === pageOrigin) return path;
+            }
+          } catch (_) {}
           return base + path;
         }
 
@@ -2865,6 +2872,8 @@
             "provisionRealm",
             "marketplaceSubId",
             "voucherMinimumBasketThb",
+            "deliveryPreference",
+            "deliveryReason",
             "ageConfirmed20",
             "ageGateSector",
           ];
@@ -4426,6 +4435,233 @@
             row.pickupFulfillment = String(extra.pickupFulfillment);
           if ("voucherMinimumBasketThb" in extra && extra.voucherMinimumBasketThb != null)
             row.voucherMinimumBasketThb = Number(extra.voucherMinimumBasketThb);
+          if ("deliveryPreference" in extra && extra.deliveryPreference != null)
+            row.deliveryPreference = String(extra.deliveryPreference).slice(0, 40);
+          if ("deliveryReason" in extra && extra.deliveryReason != null)
+            row.deliveryReason = String(extra.deliveryReason).slice(0, 96);
+        }
+
+        function osgDeliveryPackLine(pack, key) {
+          return String(
+            (pack && pack[key]) ||
+              (T.en && T.en[key]) ||
+              (T.de && T.de[key]) ||
+              ""
+          ).trim();
+        }
+
+        function osgDeliveryInjectCommerceTpl(text) {
+          var s = String(text || "");
+          var C = window.OSG_COMMERCE;
+          if (!C) return s;
+          return s
+            .replace(/\{SHIP_S\}/g, String(C.SHIP_THB_TIER_S || 39))
+            .replace(/\{SHIP_M\}/g, String(C.SHIP_THB_TIER_M || 59))
+            .replace(/\{SHIP_L\}/g, String(C.SHIP_THB_TIER_L || 99))
+            .replace(
+              /\{PLATFORM_FEE\}/g,
+              String(C.PICKUP_SERVICE_MARGIN_THB || 59)
+            );
+        }
+
+        function osgRecordDeliveryPreferenceJournal(mode, reason) {
+          var pref =
+            mode === "seven_pickup" ? "seven_pickup" : "marketplace";
+          var ts = new Date().toISOString();
+          osgAppendLeadJournal({
+            leadId: osgNewLeadId(),
+            customerId: osgEnsureCustomerId(),
+            osg_partner: "delivery_preference",
+            osg_ch: "fulfillment_choice",
+            landingHref: "internal:delivery_preference_" + pref,
+            trackedHref: "",
+            clickedAtISO: ts,
+            conversionBasis: false,
+            leadIntent: "delivery_preference",
+            pickupFulfillment:
+              pref === "seven_pickup" ? "seven_eleven" : "marketplace",
+            deliveryPreference: pref,
+            deliveryReason: String(reason || "").slice(0, 96),
+          });
+        }
+
+        function osgHydrateDeliveryChoiceUi(pack) {
+          var heading = document.getElementById("delivery-choice-heading");
+          if (heading)
+            heading.textContent = osgDeliveryPackLine(
+              pack,
+              "delivery.panelHeading"
+            );
+          var prompt = document.getElementById("delivery-choice-prompt");
+          if (prompt)
+            prompt.textContent = osgDeliveryPackLine(
+              pack,
+              "delivery.choicePrompt"
+            );
+          var ht = document.getElementById("delivery-home-title");
+          if (ht)
+            ht.textContent = osgDeliveryPackLine(pack, "delivery.home.title");
+          var hs = document.getElementById("delivery-home-short");
+          if (hs)
+            hs.textContent = osgDeliveryPackLine(pack, "delivery.home.short");
+          var st = document.getElementById("delivery-seven-title");
+          if (st)
+            st.textContent = osgDeliveryPackLine(pack, "delivery.seven.title");
+          var ss = document.getElementById("delivery-seven-short");
+          if (ss)
+            ss.textContent = osgDeliveryPackLine(pack, "delivery.seven.short");
+          var bl = document.getElementById("delivery-seven-benefits-list");
+          if (bl) {
+            bl.setAttribute(
+              "aria-label",
+              osgDeliveryPackLine(pack, "delivery.benefitsListAria")
+            );
+            var benefitKeys = [
+              "delivery.seven.safeStorage",
+              "delivery.seven.noPhoneStress",
+              "delivery.seven.nightPickup",
+              "delivery.seven.bundle",
+            ];
+            var html = "";
+            for (var bi = 0; bi < benefitKeys.length; bi++) {
+              var bt = osgDeliveryPackLine(pack, benefitKeys[bi]);
+              if (bt) html += "<li>" + osgEscHtml(bt) + "</li>";
+            }
+            bl.innerHTML = html;
+          }
+          var bn = document.getElementById("delivery-bundle-note");
+          if (bn) {
+            var bundleLine = osgDeliveryPackLine(pack, "delivery.seven.bundle");
+            bn.textContent = bundleLine;
+            if (!bundleLine) bn.setAttribute("hidden", "");
+            else bn.removeAttribute("hidden");
+          }
+          var cp = document.getElementById("delivery-compare-price-note");
+          if (cp) {
+            cp.textContent = osgDeliveryInjectCommerceTpl(
+              osgDeliveryPackLine(pack, "delivery.comparePriceNoteTpl")
+            );
+          }
+          var ps = document.getElementById("delivery-prepared-status");
+          if (ps)
+            ps.textContent = osgDeliveryPackLine(
+              pack,
+              "delivery.preparedStatusNote"
+            );
+          var btn = document.getElementById("delivery-explain-voice-btn");
+          if (btn) {
+            btn.textContent = osgDeliveryPackLine(
+              pack,
+              "delivery.explainVoiceBtn"
+            );
+            btn.setAttribute(
+              "aria-label",
+              osgDeliveryPackLine(pack, "delivery.explainVoiceBtnAria")
+            );
+          }
+          var fs = document.getElementById("pickup-mode-fieldset");
+          if (fs) {
+            fs.setAttribute(
+              "aria-label",
+              osgDeliveryPackLine(pack, "delivery.pickupFieldsetAria")
+            );
+          }
+          var mr = document.getElementById("pickup-mode-marketplace");
+          var sv = document.getElementById("pickup-mode-seven");
+          var homeAria =
+            osgDeliveryPackLine(pack, "delivery.home.title") +
+            ". " +
+            osgDeliveryPackLine(pack, "delivery.home.short");
+          var sevenAria =
+            osgDeliveryPackLine(pack, "delivery.seven.title") +
+            ". " +
+            osgDeliveryPackLine(pack, "delivery.seven.short");
+          if (mr) mr.setAttribute("aria-label", homeAria);
+          if (sv) sv.setAttribute("aria-label", sevenAria);
+          osgRefreshDeliveryChoiceConfirm(pack);
+        }
+
+        function osgRefreshDeliveryChoiceConfirm(pack) {
+          var el = document.getElementById("delivery-choice-confirm");
+          if (!el) return;
+          var mode = osgGetPickupMode();
+          var key =
+            mode === "seven_pickup"
+              ? "delivery.choiceConfirmSeven"
+              : "delivery.choiceConfirmHome";
+          var line = osgDeliveryPackLine(pack, key);
+          el.textContent = line;
+          if (!line) el.setAttribute("hidden", "");
+          else el.removeAttribute("hidden");
+        }
+
+        function osgWireDeliveryChoiceOnce() {
+          var btn = document.getElementById("delivery-explain-voice-btn");
+          if (!btn || btn.dataset.osgDeliveryWired === "1") return;
+          btn.dataset.osgDeliveryWired = "1";
+          btn.addEventListener(
+            "click",
+            function () {
+              if (
+                window.PauliVoice &&
+                typeof window.PauliVoice.speakDeliveryChoicePrompt ===
+                  "function"
+              ) {
+                void window.PauliVoice.speakDeliveryChoicePrompt().catch(
+                  function () {}
+                );
+              }
+            },
+            false
+          );
+        }
+
+        function osgOnPickupModeChanged(mode) {
+          var pack = window.__OSG_CURRENT_PACK_CACHE || null;
+          if (mode === "seven_pickup") {
+            osgRecordDeliveryPreferenceJournal(
+              "seven_pickup",
+              "convenience;bundle;safe_pickup"
+            );
+            osgRefreshDeliveryChoiceConfirm(pack);
+            if (
+              window.PauliVoice &&
+              typeof window.PauliVoice.speakDeliveryConfirmSeven === "function"
+            ) {
+              void window.PauliVoice.speakDeliveryConfirmSeven().catch(
+                function () {}
+              );
+            }
+            if (
+              !osgGetLiveTrackingOn() &&
+              window.PauliVoice &&
+              typeof window.PauliVoice.speakSevenVoucherTrackingWarn ===
+                "function"
+            ) {
+              void window.PauliVoice.speakSevenVoucherTrackingWarn().catch(
+                function () {}
+              );
+            } else if (
+              osgGetLiveTrackingOn() &&
+              window.PauliVoice &&
+              typeof window.PauliVoice.speakSevenPickupReward === "function"
+            ) {
+              void window.PauliVoice.speakSevenPickupReward().catch(
+                function () {}
+              );
+            }
+            return;
+          }
+          osgRecordDeliveryPreferenceJournal("marketplace", "home_delivery");
+          osgRefreshDeliveryChoiceConfirm(pack);
+          if (
+            window.PauliVoice &&
+            typeof window.PauliVoice.speakDeliveryConfirmHome === "function"
+          ) {
+            void window.PauliVoice.speakDeliveryConfirmHome().catch(
+              function () {}
+            );
+          }
         }
 
         function osgRecordPartnerOutbound(
@@ -5130,26 +5366,7 @@
               osgHydratePickupModeTexts(
                 window.__OSG_CURRENT_PACK_CACHE || null
               );
-              if (String(tg.value) === "seven_pickup") {
-                if (
-                  window.PauliVoice &&
-                  typeof window.PauliVoice.speakSevenVoucherTrackingWarn ===
-                    "function" &&
-                  !osgGetLiveTrackingOn()
-                )
-                  void window.PauliVoice.speakSevenVoucherTrackingWarn().catch(
-                    function () {}
-                  );
-                else if (
-                  osgGetLiveTrackingOn() &&
-                  window.PauliVoice &&
-                  typeof window.PauliVoice.speakSevenPickupReward ===
-                    "function"
-                )
-                  void window.PauliVoice.speakSevenPickupReward().catch(
-                    function () {}
-                  );
-              }
+              osgOnPickupModeChanged(String(tg.value));
             },
             false
           );
@@ -8146,8 +8363,10 @@
           osgHydrateCommissionRefHost(pack);
           window.__OSG_CURRENT_PACK_CACHE = pack;
           osgHydratePickupModeTexts(pack);
+          osgHydrateDeliveryChoiceUi(pack);
           osgHydrateVoucherUiTexts(pack);
           osgWirePickupModeOnce();
+          osgWireDeliveryChoiceOnce();
           osgWireLiveTrackingOnce();
           osgStartVoucherExpiryTickerOnce();
           osgWireShopVoucherPanelOnce();
