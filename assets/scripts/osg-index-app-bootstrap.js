@@ -213,6 +213,8 @@
           return fetch(osgApiUrl(path), Object.assign({}, init, { headers: headers }));
         }
 
+        window.osgApiFetch = osgApiFetch;
+
         function osgEchoProtocol(eventType, meta) {
           if (!eventType || !navigator.onLine) return;
           var body = {
