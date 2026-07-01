@@ -85,11 +85,13 @@
 
   function pickVideoSrc(slot) {
     if (!slot) return "";
+    /* Deployed bundle ships MP4 loops only; prefer MP4 to avoid 404 on manifest webm paths. */
+    if (slot.mp4) return slot.mp4;
     var v = global.document.createElement("video");
     if (slot.webm && v.canPlayType && v.canPlayType('video/webm; codecs="vp9"')) {
       return slot.webm;
     }
-    return slot.mp4 || slot.webm || "";
+    return slot.webm || "";
   }
 
   function tryPlayVideo(key, onFail) {
@@ -112,7 +114,6 @@
     if (root.video.getAttribute("data-src") !== src) {
       root.video.setAttribute("data-src", src);
       root.video.src = src;
-      if (slot.poster) root.video.poster = slot.poster;
       root.video.loop = key !== "wai_greeting";
       root.video.load();
     }

@@ -13,6 +13,7 @@
   var OSG_THAI_SAWADEE_BUBBLE = "Sawadee Krab";
   var OSG_PRE_WAI_PAUSE_MS = 500;
   var OSG_POST_SAWADEE_PAUSE_MS = 360;
+  var OSG_WAI_MIN_VISIBLE_MS = 2000;
   var LS_TRUST_LAUNCH_COUNT = "osg-trust-pledge-launch-count-v1";
   var LS_TRUST_LAST_SHOWN = "osg-trust-pledge-last-shown-v1";
   var LS_TRUST_NEXT_DUE = "osg-trust-pledge-next-due-v1";
@@ -175,6 +176,7 @@
       pack.avatarStartupSawadeeBubble || OSG_THAI_SAWADEE_BUBBLE
     ).trim();
     startThaiWaiVisual();
+    var waiStartedAt = Date.now();
     try {
       if (typeof global.pauliLiveCaptionShow === "function") {
         global.pauliLiveCaptionShow(sawadeeBubble);
@@ -189,6 +191,12 @@
         returnHome: false,
         skipWaiGesture: true,
         allowCloudTts: true,
+      });
+    }
+    var waiElapsed = Date.now() - waiStartedAt;
+    if (waiElapsed < OSG_WAI_MIN_VISIBLE_MS) {
+      await new Promise(function (r) {
+        setTimeout(r, OSG_WAI_MIN_VISIBLE_MS - waiElapsed);
       });
     }
     stopThaiWaiVisual();
